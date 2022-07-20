@@ -1,0 +1,61 @@
+name: Go-url-shortenter-CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  golangci:
+    strategy:
+      matrix:
+        go-version: [1.17.x,1.18.x]
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v3
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3.1.0
+        with:
+          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
+          version: latest
+  Reviveci:
+    strategy:
+      matrix:
+        go-version: [1.17.x,1.18.x]
+    name: Run Revive Action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v3
+      - name: Run Revive Action
+        uses: morphy2k/revive-action@v2
+        with:
+          # Path to your Revive config within the repo (optional)
+          config: revive.toml
+
+
+  build:
+    runs-on: ubuntu-latest
+    
+    # strategy set
+    strategy:
+      matrix:
+        go: ["1.17", "1.18"]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version:  ${{ matrix.go }}
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: go test -v ./...
