@@ -1,0 +1,118 @@
+run:
+  skip-dirs: # 设置要忽略的目录
+    - util
+    - .*~
+    - api/swagger/docs
+  skip-files: # 设置不需要检查的go源码文件，支持正则匹配
+    - ".*.my.go$"
+    - ".*.pb.go$"
+    - _test.go
+
+linters:
+  # please, do not use `enable-all`: it's deprecated and will be removed soon.
+  # inverted configuration with `enable-all` and `disable` is not scalable during updates of golangci-lint
+  disable-all: true
+  enable:
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    - funlen
+    - goconst
+    #    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - goprintffuncname
+    #    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nolintlint
+    - revive
+    - rowserrcheck
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - whitespace
+
+issues:
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  include:
+    - EXC0002 # disable excluding of issues about comments from golint
+  exclude-rules:
+    - linters:
+        - stylecheck
+      text: "ST1000:"
+    - path: _test\.go
+      linters:
+        - gomnd
+
+    # https://github.com/go-critic/go-critic/issues/926
+    - linters:
+        - gocritic
+      text: "unnecessaryDefer:"
+
+linters-settings:
+  #  errcheck:
+  #    check-type-assertions: true # 这里建议设置为true，如果确实不需要检查，可以写成`num, _ := strconv.Atoi(numStr)`
+  #    check-blank: false
+  lll:
+    line-length: 240 # 一行的长度
+  godox:
+    keywords: # 建议设置为BUG、FIXME、OPTIMIZE、HACK
+      - BUG
+      - FIXME
+      - OPTIMIZE
+      - HACK
+  misspell:
+    locale: US
+    ignore-words:
+      - cancelled
+  goimports:
+    local-prefixes: github.com/houseme/go-push-api
+  godot:
+    # Comments to be checked: `declarations`, `toplevel`, or `all`.
+    # Default: declarations
+    scope: toplevel
+    exclude:
+      # Exclude sentence fragments for lists.
+      - '^[ ]*[-•]'
+      # Exclude sentences prefixing a list.
+      - ':$'
+    # Check that each sentence ends with a period.
+    # Default: true
+    period: false
+    # Check that each sentence starts with a capital letter.
+    # Default: false
+    capital: false
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: atomic
+      - name: line-length-limit
+        severity: error
+        arguments: [ 140 ]
+      - name: unhandled-error
+        arguments: [ "fmt.Printf", "myFunction" ]
+  funlen:
+    # Checks the number of lines in a function.
+    # If lower than 0, disable the check.
+    # Default: 60
+    lines: 110
+    # Checks the number of statements in a function.
+    # If lower than 0, disable the check.
+    # Default: 40
+    statements: 60
+  goconst:
+    # Ignore test files.
+    # Default: false
+    ignore-tests: true
