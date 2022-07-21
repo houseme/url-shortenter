@@ -1,0 +1,87 @@
+{{define "dashboard.html" -}}
+{{template "header.html" . -}}
+{{template "sidebar.html" . -}}
+<div class="pusher">
+{{template "admin-left-menu.html" . -}}
+{{template "admin-top-menu.html" . -}}
+<div id="admin-right-content" class="ui basic segment">
+  <div class="ui center aligned grid stackable padded">
+    <div class="four wide computer eight wide tablet sixteen wide mobile column">
+      <div class="ui fluid card">
+        <div class="content">
+          <div class="header">
+            <div class="ui red header">{{.total_count}}</div>
+          </div>
+          <div class="meta">总链接数</div>
+          <div class="description">当前总短链接数</div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a href="/admin/urls" target="_self" class="ui red button">查看详情</a>
+          </div>
+        </div>
+      </div>
+    </div><!--end of column-->
+    <div class="four wide computer eight wide tablet sixteen wide mobile column">
+      <div class="ui fluid card">
+        <div class="content">
+          <div class="header">
+            <div class="ui header green">{{.stats.TodayCount}}</div>
+          </div>
+          <div class="meta">今日点击量</div>
+          <div class="description">所有链接今日产生的总点击量</div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a href="/admin/stats" target="_self" class="ui green button">查看详情</a>
+          </div>
+        </div>
+      </div>
+    </div><!--end of column-->
+    <div class="four wide computer eight wide tablet sixteen wide mobile column">
+      <div class="ui fluid card">
+        <div class="content">
+          <div class="header">
+            <div class="ui teal header">{{.stats.DistinctTodayCount}}</div>
+          </div>
+          <div class="meta">今日独立IP数</div>
+          <div class="description">所有短链接今日点击的总IP数</div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a href="/admin/stats" target="_self" class="ui teal button">查看详情</a>            
+          </div>
+        </div>
+      </div>
+    </div><!--end of column-->
+  </div><!--end of grid-->
+  
+  <div class="ui grid stackable padded">
+    <div class="column">
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th>今日点击量 Top25</th>
+            <th class="center aligned">创建时间</th>
+            <th>备注</th>
+            <th class="center aligned">点击量</th>
+            <th class="center aligned">独立IP数</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range .top25}}
+            <tr>
+              <td class="collapsing"><a href="{{$.prefix}}{{.ShortUrl.ShortUrl}}" target="_blank">{{.ShortUrl.ShortUrl}}</a></td>                          
+              <td class="collapsing">{{.CreatedAt | date "2006-01-02 15:04:05"}}</td>
+              <td>{{.Memo.String}}</td>
+              <td class="center aligned">{{.TodayCount}}</td>
+              <td class="center aligned">{{.DistinctTodayCount}}</td>
+            </tr>
+          {{end}}          
+        </tbody>
+      </table>
+    </div>
+  </div><!--end fo grid-->
+</div><!--end of segment-->
+</div><!--end of pusher-->
+{{end -}}
