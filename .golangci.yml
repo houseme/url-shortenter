@@ -35,11 +35,11 @@ linters:
     - rowserrcheck
     - staticcheck
     - structcheck
-    - stylecheck
+#    - stylecheck
     - typecheck
     - unconvert
     - unparam
-    - unused
+#    - unused
     - varcheck
     - whitespace
 
