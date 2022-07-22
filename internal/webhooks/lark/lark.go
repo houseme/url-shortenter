@@ -9,14 +9,8 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-var (
-	appID             = "cli_a1d80430c1fXXXXXX"
-	appSecret         = "tIVGn0avbrYN0nQCZnHb4g21XXXXXXXXX"
-	encryptKey        = ""
-	verificationToken = "oZwu6fN7TeNtlJKRxnousbZkXXXXXXXX"
-)
-
 type iLark struct {
+	ctx  context.Context
 	lark *lark.Lark
 }
 
@@ -28,6 +22,7 @@ func Lark() *iLark {
 // NewLark create iLark
 func NewLark(ctx context.Context, appID, appSecret, encryptKey, verificationToken string) *iLark {
 	return &iLark{
+		ctx: ctx,
 		lark: lark.New(
 			lark.WithAppCredential(appID, appSecret),
 			lark.WithEventCallbackVerify(encryptKey, verificationToken),
@@ -39,6 +34,7 @@ func NewLark(ctx context.Context, appID, appSecret, encryptKey, verificationToke
 func NewCustomBot(ctx context.Context, customBotWebHookURL, customBotSecret string) *iLark {
 	g.Log().Debug(ctx, "customBotWebHookURL: ", customBotWebHookURL)
 	return &iLark{
+		ctx:  ctx,
 		lark: lark.New(lark.WithCustomBot(customBotWebHookURL, customBotSecret)),
 	}
 }
