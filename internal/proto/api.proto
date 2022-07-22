@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package request;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "/protocol";
+
+message access_log_request {
+  google.protobuf.UInt64Value YearTime = 1;
+  google.protobuf.UInt64Value MonthTime = 2;
+  google.protobuf.UInt64Value DayTime = 3;
+  google.protobuf.StringValue ShortUrl = 4;
+  google.protobuf.StringValue UserAgent = 5;
+  google.protobuf.StringValue Ip = 6;
+  google.protobuf.StringValue Referer = 7;
+  google.protobuf.StringValue ShortAll = 8;
+  google.protobuf.StringValue TraceID = 9;
+  google.protobuf.UInt64Value VisitState = 10;
+  google.protobuf.Timestamp AccessTime = 11;
+  google.protobuf.Timestamp AccessDate = 12;
+  google.protobuf.UInt64Value ShortNo = 13;
+  google.protobuf.UInt64Value AccountNo = 14;
+  google.protobuf.StringValue ServerIP = 15;
+}
