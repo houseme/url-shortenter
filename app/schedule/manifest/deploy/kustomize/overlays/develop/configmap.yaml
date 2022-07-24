@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eros-template-configmap
+data:
+  config.yaml: |
+    # Database configuration.
+    database:
+      logger:
+        level:  "all"
+        stdout: true
+      default:
+        link:  "mysql:root:12345678&@tcp(127.0.0.1:3306)/gf?loc=Local&parseTime=true"
+        debug: true
+
+    # Logger configuration.
+    logger:
+      level : "all"
+      stdout: true

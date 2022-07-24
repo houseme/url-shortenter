@@ -5,13 +5,13 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	_ "github.com/houseme/url-shortenter/app/api/internal/packed"
+	_ "github.com/houseme/url-shortenter/app/schedule/internal/packed"
 	"github.com/houseme/url-shortenter/utility/env"
 	"github.com/houseme/url-shortenter/utility/tracing"
 
-	_ "github.com/houseme/url-shortenter/app/api/internal/logic"
+	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic"
 
-	"github.com/houseme/url-shortenter/app/api/internal/cmd"
+	"github.com/houseme/url-shortenter/app/schedule/internal/cmd"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	if err != nil {
 		g.Log().Fatal(ctx, err)
 	}
-	_, err = tracing.InitJaeger("tracing-shortenter-api", appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx), appEnv.HostIP(ctx))
+	_, err = tracing.InitJaeger("tracing-shortenter-schedule", appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx), appEnv.HostIP(ctx))
 	if err != nil {
 		g.Log().Fatal(ctx, err)
 	}
