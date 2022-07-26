@@ -1,6 +1,6 @@
 ROOT_DIR    = $(shell pwd)
 NAMESPACE   = "default"
-DEPLOY_NAME = "api-template"
-DOCKER_NAME = "api-template"
+DEPLOY_NAME = "url-shortenter-api"
+DOCKER_NAME = "url-shortenter-api"
 
 include ../../hack/common.mk

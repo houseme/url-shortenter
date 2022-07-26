@@ -1,6 +1,6 @@
 ROOT_DIR    = $(shell pwd)
 NAMESPACE   = "default"
-DEPLOY_NAME = "svc-template"
-DOCKER_NAME = "svc-template"
+DEPLOY_NAME = "url-shortenter-console"
+DOCKER_NAME = "url-shortenter-console"
 
 include ../../hack/common.mk
