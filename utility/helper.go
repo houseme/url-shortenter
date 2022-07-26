@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"math/big"
 	"math/rand"
 	"net"
 	"net/http"
@@ -16,7 +17,7 @@ import (
 	"unicode"
 	"unsafe"
 
-	"github.com/btcsuite/btcutil/base58"
+	"github.com/btcsuite/btcd/btcutil/base58"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
@@ -380,4 +381,32 @@ func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
 // Base58Encode encodes the input byte array to base58 string
 func (u *utilHelper) Base58Encode(data []byte) string {
 	return base58.Encode(data)
+}
+
+// PasswordBase58Hash password base58 hash
+func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
+	data, err := u.Sha256OfShort(password)
+	if err != nil {
+		err = gerror.Wrap(err, "utilHelper PasswordBase58Hash Sha256OfShort error")
+		return "", err
+	}
+	return u.Base58Encode(data), nil
+}
+
+// GenerateShortLink generate short link
+func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
+	var (
+		err     error
+		urlHash []byte
+		logger  = u.Logger(ctx)
+	)
+	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink url:", url)
+	if urlHash, err = u.Sha256OfShort(url); err != nil {
+		err = gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
+		return "", err
+	}
+	number := new(big.Int).SetBytes(urlHash).Uint64()
+	str := u.Base58Encode(gconv.Bytes(number))
+	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str, " number:", number)
+	return str[:8], nil
 }
