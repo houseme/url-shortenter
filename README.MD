@@ -14,7 +14,7 @@
 ## 快速使用
 
 ```shell
-$ go install -u -v github.com/houseme/url-shortenter@latest
+go install -u -v github.com/houseme/url-shortenter@latest
 ```
 
 
