@@ -19,6 +19,7 @@ import (
 	"github.com/gogf/gf/v2/util/grand"
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/consts"
+	"github.com/houseme/url-shortenter/app/schedule/internal/service"
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
@@ -31,11 +32,11 @@ type sShort struct {
 }
 
 func init() {
-	service.RegisterShort(new())
+	service.RegisterShort(initShort())
 }
 
-// new create a new sShort.
-func new() *sShort {
+// initShort create a initShort sShort.
+func initShort() *sShort {
 	return &sShort{}
 }
 
