@@ -3,7 +3,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/houseme/url-shortenter.svg)](https://pkg.go.dev/github.com/houseme/url-shortenter)
 [![Go-Url-Shortenter CI](https://github.com/houseme/url-shortenter/actions/workflows/go.yml/badge.svg)](https://github.com/houseme/url-shortenter/actions/workflows/go.yml)
 [![License](https://img.shields.io/github/license/houseme/url-shortenter.svg?style=flat)](https://github.com/houseme/url-shortenter)
-----
+![GitHub go.mod Go version (branch)](https://img.shields.io/github/go-mod/go-version/houseme/url-shortenter/main)
 
 
  A short link service system suitable for small and medium-sized community websites.
