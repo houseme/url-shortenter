@@ -23,14 +23,6 @@ import (
 	"github.com/houseme/url-shortenter/utility"
 )
 
-// QueryResp is a struct for icp data
-type QueryResp struct {
-	IcpNumber string `json:"icp_number"`
-	IcpName   string `json:"icp_name"`
-	Attr      string `json:"attr"`
-	Date      string `json:"date"`
-}
-
 // Query is a function for icp query
 func Query(url string) (*QueryResp, error) {
 	url = "https://icp.chinaz.com/" + url

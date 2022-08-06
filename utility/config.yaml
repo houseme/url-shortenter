@@ -1,0 +1,18 @@
+app:
+  env: "local"
+  environment: "develop"
+  version: "1.0.0"
+  jaegerEndpoint: ""
+  uploadPath: ""
+  visitPath: ""
+  site: ""
+  roleModel: ""
+
+logger:
+  path:    "/tmp/logs/default"
+  level : "erro"
+  stdout: false
+
+snowflake:
+  datacenter: 1
+  worker: 1

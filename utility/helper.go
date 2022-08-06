@@ -30,9 +30,6 @@ import (
 	"github.com/houseme/gocrypto"
 	"github.com/houseme/gocrypto/aes"
 	"github.com/houseme/snowflake"
-	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
-	"go.opentelemetry.io/otel/trace"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/houseme/url-shortenter/utility/env"
@@ -48,10 +45,11 @@ const (
 
 	// userAgent .
 	httpHeaderUserAgent = `Mozilla/5.0 (lanren; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36`
-	telemetrySDKName    = "opentelemetry"
 )
 
-var uHelper = utilHelper{}
+var uHelper = utilHelper{
+	ctx: context.Background(),
+}
 
 // Helper .
 func Helper() *utilHelper {
@@ -59,10 +57,12 @@ func Helper() *utilHelper {
 }
 
 type utilHelper struct {
+	ctx context.Context
 }
 
 // UserAgent is a default http userAgent
 func (u *utilHelper) UserAgent(ctx context.Context) string {
+	u.ctx = ctx
 	return httpHeaderUserAgent
 }
 
@@ -78,7 +78,6 @@ func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, "config get fail err:", err)
-		span.RecordError(err, trace.WithAttributes(attribute.String("Helper-InitTrxID-env.new-err", err.Error())))
 		return u.InitTrxID(ctx, ano)
 	}
 	g.Log(u.Logger(ctx)).Debug(ctx, "appEnv DatacenterID:", appEnv.Datacenter(ctx), " WorkerID:", appEnv.Worker(ctx))
@@ -186,17 +185,6 @@ func (u *utilHelper) SetLogger(ctx context.Context, logger string) context.Conte
 	return context.WithValue(ctx, "logger", logger)
 }
 
-// CommonEventOption .
-func (u *utilHelper) CommonEventOption(ctx context.Context, namespace string) trace.SpanStartEventOption {
-	return trace.WithAttributes(
-		semconv.ServiceNamespaceKey.String(namespace),
-		semconv.TelemetrySDKNameKey.String(telemetrySDKName),
-		semconv.TelemetrySDKVersionKey.String("1.0.0"),
-		semconv.TelemetryAutoVersionKey.String("1.0.0"),
-		semconv.TelemetrySDKLanguageGo,
-	)
-}
-
 // EncryptSignData sign data
 func (u *utilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-EncryptSignData")
@@ -223,40 +211,6 @@ func (u *utilHelper) Header(ctx context.Context) map[string]string {
 		"User-Agent":      httpHeaderUserAgent,
 	}
 }
-
-// // GetAccountNo get account no
-// func (u *utilHelper) GetAccountNo(ctx context.Context) uint64 {
-// 	ctx, span := gtrace.NewSpan(ctx, "tracing-enterprise-utility-GetAccountNo")
-// 	defer span.End()
-//
-// 	var (
-// 		conn, err = g.Redis(RedisCache().WelfareConnection(ctx)).Conn(ctx)
-// 		logger    = u.Logger(ctx)
-// 		maxKey    = RedisCache().WelfareAccountNoMax(ctx)
-// 		queueKey  = RedisCache().WelfareAccountNoQueue(ctx)
-// 	)
-// 	if err != nil {
-// 		g.Log(logger).Error(ctx, "redis conn error", err)
-// 		return 0
-// 	}
-//
-// 	defer conn.Close(ctx)
-// 	v, err := conn.Do(ctx, "RPOP", queueKey)
-// 	if err != nil {
-// 		g.Log(logger).Error(ctx, "GetUserNo Get redis.UserNoMax error:", err)
-// 		return u.GetAccountNo(ctx)
-// 	}
-// 	if v.IsNil() || v.IsEmpty() {
-// 		if v, err = conn.Do(ctx, "INCR", maxKey); err != nil {
-// 			g.Log(logger).Error(ctx, "GetUserNo INCR redis.UserNoMax error:", err)
-// 			return u.GetAccountNo(ctx)
-// 		}
-// 		g.Log(logger).Info(ctx, "GetUserNo from INCR,", v.Uint64())
-// 	} else {
-// 		g.Log(logger).Info(ctx, "GetUserNo from Redis ,", v.Uint64())
-// 	}
-// 	return v.Uint64()
-// }
 
 // HeaderToMap covert request headers to map.
 func (u *utilHelper) HeaderToMap(header http.Header) map[string]interface{} {
@@ -286,6 +240,7 @@ func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 
 // RequestTime .request time
 func (u *utilHelper) RequestTime(ctx context.Context, ts string) *gtime.Time {
+	u.ctx = ctx
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
