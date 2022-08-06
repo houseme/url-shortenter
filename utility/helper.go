@@ -72,7 +72,7 @@ func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	defer span.End()
 
 	var (
-		appEnv, err = env.New(ctx)
+		appEnv, err = env.NewSnowflakeEnv(ctx)
 		workerID    int64
 	)
 
@@ -81,24 +81,24 @@ func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 		span.RecordError(err, trace.WithAttributes(attribute.String("Helper-InitTrxID-env.new-err", err.Error())))
 		return u.InitTrxID(ctx, ano)
 	}
-	g.Log(u.Logger(ctx)).Info(ctx, "appEnv DatacenterID:", appEnv.DatacenterID(ctx), " WorkerID:", appEnv.WorkerID(ctx))
-	workerID = appEnv.WorkerID(ctx)
+	g.Log(u.Logger(ctx)).Debug(ctx, "appEnv DatacenterID:", appEnv.Datacenter(ctx), " WorkerID:", appEnv.Worker(ctx))
+	workerID = appEnv.Worker(ctx)
 	if ano > 0 {
 		workerID = int64(ano % 32)
 	}
-	return uint64(u.InitOrderID(ctx, appEnv.DatacenterID(ctx), workerID))
+	return uint64(u.InitOrderID(ctx, appEnv.Datacenter(ctx), workerID))
 }
 
 // InitOrderID init64 order id
 func (u *utilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int64) int64 {
-	g.Log(u.Logger(ctx)).Info(ctx, "InitOrderID DatacenterID:", datacenterID, " WorkerID:", workerID)
+	g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID DatacenterID:", datacenterID, " WorkerID:", workerID)
 	if datacenterID < 0 || datacenterID > snowflake.GetDatacenterIDMax() {
 		g.Log(u.Logger(ctx)).Info(ctx, "InitOrderID datacenter ID error datacenterID", datacenterID)
 		return 0
 	}
 
 	if workerID < 0 || workerID > snowflake.GetWorkerIDMax() {
-		g.Log(u.Logger(ctx)).Info(ctx, "InitOrderID worker ID error workerID", workerID)
+		g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID worker ID error workerID", workerID)
 		return 0
 	}
 	return int64(u.SnowflakeInstance(ctx, datacenterID, workerID).NextVal())
@@ -109,7 +109,7 @@ func (u *utilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int
 // workerID Worker ID must be greater than or equal to 0
 func (u *utilHelper) SnowflakeInstance(ctx context.Context, datacenterID, workerID int64) *snowflake.Snowflake {
 	instanceKey := fmt.Sprintf("%s.%02d.%02d", helperUtilSnowflake, datacenterID, workerID)
-	g.Log(u.Logger(ctx)).Info(ctx, "InitOrderID SnowflakeInstance ", instanceKey, workerID, datacenterID)
+	g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID SnowflakeInstance ", instanceKey, workerID, datacenterID)
 	return gins.GetOrSetFuncLock(instanceKey, func() interface{} {
 		s, err := snowflake.NewSnowflake(datacenterID, workerID)
 		if err != nil {
@@ -168,7 +168,9 @@ func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
 	if err != nil {
 		g.Log(u.Logger(ctx)).Fatal(ctx, err)
 	}
-	defer conn.Close()
+	defer func() {
+		_ = conn.Close()
+	}()
 
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
 	return localAddr.IP.String()
@@ -199,9 +201,13 @@ func (u *utilHelper) CommonEventOption(ctx context.Context, namespace string) tr
 func (u *utilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-EncryptSignData")
 	defer span.End()
-
-	byteInfo, err := gjson.Encode(data)
+	var (
+		logger        = u.Logger(ctx)
+		byteInfo, err = gjson.Encode(data)
+	)
+	g.Log(logger).Debug(ctx, "EncryptSignData data:", data)
 	if err != nil {
+		err = gerror.Wrap(err, "EncryptSignData gjson.Encode error")
 		return byteInfo, err
 	}
 	return aes.NewAESCrypt(key).Encrypt(byteInfo, gocrypto.ECB)
@@ -214,7 +220,7 @@ func (u *utilHelper) Header(ctx context.Context) map[string]string {
 		"Accept-Language": "zh-CN,zh;q=0.9",
 		"Accept":          "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
 		"Connection":      "keep-alive",
-		"User-Agent":      "Mozilla/5.0 (lanren; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36",
+		"User-Agent":      httpHeaderUserAgent,
 	}
 }
 
@@ -371,8 +377,9 @@ func (u *utilHelper) UserAgentIPHash(useragent string, ip string) string {
 // Sha256OfShort returns the sha256 of the input string
 func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
-	_, err := algorithm.Write([]byte(strings.TrimSpace(input)))
-	if err != nil {
+
+	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
+		err = gerror.Wrap(err, "Sha256OfShort write error")
 		return nil, err
 	}
 	return algorithm.Sum(nil), nil
