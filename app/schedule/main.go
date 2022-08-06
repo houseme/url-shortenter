@@ -6,10 +6,11 @@ import (
 	"github.com/gogf/gf/v2/os/gctx"
 
 	_ "github.com/houseme/url-shortenter/app/schedule/internal/packed"
-	"github.com/houseme/url-shortenter/utility/env"
-	"github.com/houseme/url-shortenter/utility/tracing"
 
 	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic"
+
+	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/tracing"
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/cmd"
 )
