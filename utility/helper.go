@@ -410,3 +410,48 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str, " number:", number)
 	return str[:8], nil
 }
+
+// AESEncrypt encrypts the input byte array with the given key
+func (u *utilHelper) AESEncrypt(ctx context.Context, key, data []byte) (dst string, err error) {
+	var (
+		logger = u.Logger(ctx)
+	)
+	g.Log(logger).Debug(ctx, "utilHelper AESEncrypt key:", string(key), " data:", string(data))
+	if dst, err = aes.NewAESCrypt(key).EncryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
+		err = gerror.Wrap(err, "utilHelper AESEncrypt EncryptToString error")
+		return
+	}
+	g.Log(logger).Debug(ctx, "utilHelper AESEncrypt dst:", dst)
+	return
+}
+
+// AESDecrypt decrypts the input byte array with the given key
+func (u *utilHelper) AESDecrypt(ctx context.Context, key, data []byte) (dst string, err error) {
+	var (
+		logger = u.Logger(ctx)
+	)
+	g.Log(logger).Debug(ctx, "utilHelper AESDecrypt key:", string(key), " data:", string(data))
+	if dst, err = aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
+		err = gerror.Wrap(err, "utilHelper AESDecrypt DecryptToString error")
+		return
+	}
+	g.Log(logger).Debug(ctx, "utilHelper AESDecrypt dst:", dst)
+	return
+}
+
+// CreateAccessToken create access token
+func (u *utilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (token string, err error) {
+	var (
+		logger    = u.Logger(ctx)
+		hash      []byte
+		initTrxID = u.InitTrxID(ctx, accountNo)
+	)
+	g.Log(logger).Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
+	if hash, err = u.Sha256OfShort(gconv.String(initTrxID)); err != nil {
+		err = gerror.Wrap(err, "utilHelper CreateAccessToken Sha256OfShort error")
+		return
+	}
+	token = hex.EncodeToString(hash)
+	g.Log(logger).Debug(ctx, "utilHelper CreateAccessToken token:", token)
+	return
+}
