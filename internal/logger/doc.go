@@ -1,2 +1,0 @@
-// Package logger
-package logger
