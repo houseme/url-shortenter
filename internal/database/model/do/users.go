@@ -13,11 +13,12 @@ import (
 type Users struct {
 	g.Meta     `orm:"table:users, do:true"`
 	Id         interface{} // ID
-	AccountNo  interface{} // 账号唯一标识
+	UserNo     interface{} // 账号唯一标识
 	Account    interface{} // 账号
 	Password   interface{} // 密码
 	State      interface{} // 状态 0 默认 100正常 200失效
-	GroupLevel interface{} // 用户登记 0 默认超级 10000普通
+	GroupLevel interface{} // 用户等级 0 默认超级 1000商户管理员，10000普通管理员
+	AccountNo  interface{} // 用户关联企业ID 同企业管理员ID一致
 	CreateTime *gtime.Time // 创建时间
 	ModifyTime *gtime.Time // 更新时间
 }

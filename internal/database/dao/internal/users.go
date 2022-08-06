@@ -21,11 +21,12 @@ type UsersDao struct {
 // UsersColumns defines and stores column names for table users.
 type UsersColumns struct {
 	Id         string // ID
-	AccountNo  string // 账号唯一标识
+	UserNo     string // 账号唯一标识
 	Account    string // 账号
 	Password   string // 密码
 	State      string // 状态 0 默认 100正常 200失效
-	GroupLevel string // 用户登记 0 默认超级 10000普通
+	GroupLevel string // 用户等级 0 默认超级 1000商户管理员，10000普通管理员
+	AccountNo  string // 用户关联企业ID 同企业管理员ID一致
 	CreateTime string // 创建时间
 	ModifyTime string // 更新时间
 }
@@ -33,11 +34,12 @@ type UsersColumns struct {
 //  usersColumns holds the columns for table users.
 var usersColumns = UsersColumns{
 	Id:         "id",
-	AccountNo:  "account_no",
+	UserNo:     "user_no",
 	Account:    "account",
 	Password:   "password",
 	State:      "state",
 	GroupLevel: "group_level",
+	AccountNo:  "account_no",
 	CreateTime: "create_time",
 	ModifyTime: "modify_time",
 }
