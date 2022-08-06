@@ -9,8 +9,8 @@ import (
 
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic"
 
+	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility/env"
-	"github.com/houseme/url-shortenter/utility/tracing"
 
 	"github.com/houseme/url-shortenter/app/console/internal/cmd"
 )

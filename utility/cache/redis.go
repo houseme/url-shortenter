@@ -22,6 +22,12 @@ const (
 	shortCacheObject = "short_cache_object_"
 
 	shortAccessLogSummaryQueue = "short_access_log_summary_queue"
+
+	shortAccessTokenConn = "short_access_token"
+
+	shortAccessTokenKey = "short_access_token_key_"
+
+	shortAuthorizationKey = "short_authorization_key_"
 )
 
 var insRedisCache = iRedisCache{}
@@ -77,4 +83,19 @@ func (r *iRedisCache) ShortCacheObject(ctx context.Context, shortURL string) str
 // ShortAccessLogSummaryQueue returns the redis access log summary queue
 func (r *iRedisCache) ShortAccessLogSummaryQueue(ctx context.Context) string {
 	return shortAccessLogSummaryQueue
+}
+
+// ShortAccessTokenConn returns the redis access token connection
+func (r *iRedisCache) ShortAccessTokenConn(ctx context.Context) string {
+	return shortAccessTokenConn
+}
+
+// ShortAccessTokenKey returns the redis access token key
+func (r *iRedisCache) ShortAccessTokenKey(ctx context.Context, accessToken string) string {
+	return shortAccessTokenKey + accessToken
+}
+
+// ShortAuthorizationKey returns the redis authorization key
+func (r *iRedisCache) ShortAuthorizationKey(ctx context.Context, authorization string) string {
+	return shortAuthorizationKey + authorization
 }
