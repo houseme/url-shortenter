@@ -36,6 +36,9 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 
 	defer func() {
 		_ = conn.Close(ctx)
+		if err != nil {
+			g.Log(logger).Error(ctx, "access log error is ", err)
+		}
 	}()
 
 	var val *gvar.Var
@@ -48,15 +51,16 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 		err = gerror.New("access log queue is empty")
 		return err
 	}
-	llen := val.Int()
-	g.Log(logger).Info(ctx, "access log queue length is ", llen)
-	if llen <= 0 {
+	allen := val.Int()
+	g.Log(logger).Info(ctx, "access log queue length is ", allen)
+	if allen <= 0 {
 		err = gerror.New("access log queue is empty length is zero")
 		return err
 	}
-	for i := 0; i < llen; i++ {
+	for i := 0; i < allen; i++ {
 		if err = s.dealAccessLog(ctx); err != nil {
 			err = gerror.Wrap(err, "access log deal error")
+			return err
 		}
 	}
 	g.Log(logger).Info(ctx, "access log queue end")
