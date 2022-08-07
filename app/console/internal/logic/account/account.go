@@ -100,6 +100,9 @@ func (s *sAccount) ModifyAccount(ctx context.Context, in *model.ModifyAccountInp
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-account-ModifyAccount")
 	defer span.End()
 
+	var logger = utility.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "account-ModifyAccount in:", in)
+
 	return
 }
 

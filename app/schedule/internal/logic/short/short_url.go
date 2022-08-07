@@ -73,11 +73,13 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	defer func() {
 		if statusCode == http.StatusFound || statusCode == http.StatusMovedPermanently {
 			g.Log(logger).Info(ctx, "site redirect to:", shortURL.DestUrl, " statusCode:", statusCode)
-			dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).Update(g.Map{
+			if _, errs := dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).Update(g.Map{
 				dao.ShortUrls.Columns().IsValid:     consts.ShortInvalid,
 				dao.ShortUrls.Columns().DisableTime: gdb.Raw("current_timestamp(6)"),
 				dao.ShortUrls.Columns().ModifyTime:  gdb.Raw("current_timestamp(6)"),
-			})
+			}); errs != nil {
+				g.Log(logger).Error(ctx, "GrabImage shortURL.ShortNo:", shortURL.ShortNo, " update failed:", errs)
+			}
 		}
 	}()
 
@@ -167,16 +169,18 @@ func (s *sShort) Execute(ctx context.Context) {
 		ctx = utility.Helper().SetLogger(ctx, "schedule")
 		g.Log(logger).Info(ctx, "Execute loop")
 		for i := 0; i < 3; i++ {
-			pool.Add(ctx, s.QueryShortAndGrab)
+			if err := pool.Add(ctx, s.queryShortAndGrab); err != nil {
+				g.Log(logger).Error(ctx, "Execute pool.Add failed:", err)
+			}
 		}
 		g.Log(logger).Info(ctx, "Execute loop end")
 	})
 	select {}
 }
 
-// QueryShortAndGrab .
-func (s *sShort) QueryShortAndGrab(ctx context.Context) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-QueryShortAndGrab")
+// queryShortAndGrab .
+func (s *sShort) queryShortAndGrab(ctx context.Context) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-queryShortAndGrab")
 	defer span.End()
 	var (
 		logger    = utility.Helper().Logger(ctx)
@@ -185,70 +189,72 @@ func (s *sShort) QueryShortAndGrab(ctx context.Context) {
 	)
 
 	if err != nil {
-		g.Log(logger).Error(ctx, "QueryShortAndGrab Redis failed:", err)
+		g.Log(logger).Error(ctx, "queryShortAndGrab Redis failed:", err)
 		return
 	}
 
 	defer func() {
 		if err != nil {
-			g.Log(logger).Error(ctx, "QueryShortAndGrab defer error failed:", err)
+			g.Log(logger).Error(ctx, "queryShortAndGrab defer error failed:", err)
 		}
 		// 关闭redis连接
 		if err = conn.Close(ctx); err != nil {
-			g.Log(logger).Error(ctx, "QueryShortAndGrab Redis Close failed:", err)
+			g.Log(logger).Error(ctx, "queryShortAndGrab Redis Close failed:", err)
 		}
 	}()
 
-	var val *gvar.Var
-	g.Log(logger).Info(ctx, "QueryShortAndGrab start")
+	g.Log(logger).Info(ctx, "queryShortAndGrab start")
 	// 取出队列中的镜像
+	var val *gvar.Var
 	if val, err = conn.Do(ctx, "RPOP", redisKey); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrab right pop failed")
+		err = gerror.Wrap(err, "queryShortAndGrab right pop failed")
 		return
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		g.Log(logger).Info(ctx, "QueryShortAndGrab right pop is empty")
+		g.Log(logger).Info(ctx, "queryShortAndGrab right pop is empty")
 		return
 	}
-	g.Log(logger).Info(ctx, "QueryShortAndGrab right pop success shortNo:", val.String())
+	g.Log(logger).Info(ctx, "queryShortAndGrab right pop success shortNo:", val.String())
 	var (
 		shortNo  = val.Uint64()
 		shortKey = cache.RedisCache().ShortMirrorKey(ctx, val.String())
 	)
 	if val, err = conn.Do(ctx, "SETNX", shortKey, 1); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrab setnx failed")
+		err = gerror.Wrap(err, "queryShortAndGrab setnx failed")
 		return
 	}
 	if !val.IsNil() && !val.IsEmpty() && val.Int() < 1 {
-		g.Log(logger).Info(ctx, "QueryShortAndGrab setnx success shortNo:", val.String())
+		g.Log(logger).Info(ctx, "queryShortAndGrab setnx success shortNo:", val.String())
 		return
 	}
 	defer func() {
 		// 删除锁
-		conn.Do(ctx, "DEL", shortKey)
+		if _, err = conn.Do(ctx, "DEL", shortKey); err != nil {
+			g.Log(logger).Error(ctx, "queryShortAndGrab del failed:", err)
+		}
 	}()
 	var shortURL = (*entity.ShortUrls)(nil)
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&shortURL, "short_no = ?", shortNo); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrab ShortUrls.Scan failed")
+		err = gerror.Wrap(err, "queryShortAndGrab ShortUrls.Scan failed")
 		return
 	}
 
 	if shortURL == nil {
-		g.Log(logger).Info(ctx, "QueryShortAndGrab ShortUrls.Scan no data")
+		g.Log(logger).Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
 		return
 	}
 
 	if shortURL.CollectState != consts.ShortCollectStateProcessing {
-		g.Log(logger).Info(ctx, "QueryShortAndGrab ShortUrls.Scan no data")
+		g.Log(logger).Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
 		return
 	}
 
 	if err = s.GrabImage(ctx, shortURL); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrab GrabImage failed")
+		err = gerror.Wrap(err, "queryShortAndGrab GrabImage failed")
 		return
 	}
-	g.Log(logger).Info(ctx, "QueryShortAndGrab end")
+	g.Log(logger).Info(ctx, "queryShortAndGrab end")
 }
 
 // RequestContent request content from url.

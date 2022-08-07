@@ -1,6 +1,7 @@
 package consts
 
 const (
+	// Logger is the name of the logger.
 	Logger = "schedule"
 	// ShortValid 有效状态 0默认 100正常 200失效
 	ShortValid = 100

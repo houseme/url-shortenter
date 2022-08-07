@@ -35,7 +35,9 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 		return err
 	}
 
-	defer conn.Close(ctx)
+	defer func() {
+		_ = conn.Close(ctx)
+	}()
 
 	var val *gvar.Var
 

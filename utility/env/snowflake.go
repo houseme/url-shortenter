@@ -11,22 +11,26 @@ import (
 
 // SnowflakeEnv .
 type SnowflakeEnv struct {
-	datacenter int64 `json:"datacenter"`
-	worker     int64 `json:"worker"`
+	datacenter int64
+	worker     int64
+	ctx        context.Context
 }
 
 // Datacenter .
 func (s *SnowflakeEnv) Datacenter(ctx context.Context) int64 {
+	s.ctx = ctx
 	return s.datacenter
 }
 
 // Worker .
 func (s *SnowflakeEnv) Worker(ctx context.Context) int64 {
+	s.ctx = ctx
 	return s.worker
 }
 
 // String .
-func (s *SnowflakeEnv) String() string {
+func (s *SnowflakeEnv) String(ctx context.Context) string {
+	s.ctx = ctx
 	return `{"datacenter":"` + gconv.String(s.datacenter) + `","worker":"` + gconv.String(s.worker) + `"}`
 }
 
@@ -58,6 +62,6 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 		err = gerror.Wrap(err, "config snowflake scan failed")
 		return nil, err
 	}
-	g.Log(logger).Debug(ctx, " config snowflake:", env)
+	g.Log(logger).Debug(ctx, " config snowflake:", env.String(ctx))
 	return env, nil
 }

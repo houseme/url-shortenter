@@ -22,7 +22,6 @@ type IShort interface {
 	GetShortCache(ctx context.Context, short string) (*entity.ShortUrls, error)
 	GrabImage(ctx context.Context, shortURL *entity.ShortUrls) error
 	Execute(ctx context.Context)
-	QueryShortAndGrab(ctx context.Context)
 	RequestContent(ctx context.Context, url, fileName string) ([]byte, error)
 	RequestStatusCode(ctx context.Context, url string) (int, error)
 	DownloadFullScreenshot(ctx context.Context, url, fileName string) (err error)

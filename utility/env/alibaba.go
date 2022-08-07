@@ -11,11 +11,11 @@ import (
 
 // AlibabaEnv .
 type AlibabaEnv struct {
-	accessKeyID     string `json:"accessKeyId"`
-	accessKeySecret string `json:"accessKeySecret"`
-	bucketName      string `json:"bucketName"`
-	endpoint        string `json:"endpoint"`
-	region          string `json:"region"`
+	accessKeyID     string
+	accessKeySecret string
+	bucketName      string
+	endpoint        string
+	region          string
 }
 
 // AccessKeyID .
@@ -45,7 +45,8 @@ func (a *AlibabaEnv) Region(ctx context.Context) string {
 
 // String .
 func (a *AlibabaEnv) String() string {
-	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret + `","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
+	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret +
+		`","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
 }
 
 // NewAlibabaEnv .

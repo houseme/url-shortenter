@@ -73,7 +73,7 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 		code = gerror.Code(err)
 	)
 	if err != nil {
-		span.RecordError(err, utility.Helper().CommonEventOption(r.GetCtx(), "console-service-middleware-HandlerResponse"))
+		span.RecordError(err, tracing.CommonEventOption(r.GetCtx(), "console-service-middleware-HandlerResponse"))
 		if code == gcode.CodeNil {
 			code = gcode.CodeInternalError
 		}

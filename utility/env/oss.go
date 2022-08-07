@@ -12,12 +12,13 @@ import (
 
 // ossEnv is the environment variable for oss
 type ossEnv struct {
-	accessKeyID     string                 `json:"accessKeyId"`
-	accessKeySecret string                 `json:"accessKeySecret"`
-	endpoint        string                 `json:"endpoint"`
-	bucket          string                 `json:"bucket"`
-	domain          string                 `json:"domain"`
-	config          map[string]interface{} `json:"config"`
+	accessKeyID     string
+	accessKeySecret string
+	endpoint        string
+	bucket          string
+	domain          string
+	config          map[string]interface{}
+	ctx             context.Context
 }
 
 // NewOssEnv create a new oss env
@@ -57,30 +58,43 @@ func NewOssEnv(ctx context.Context, key string) (*ossEnv, error) {
 
 // AccessKeyID get access key id
 func (o *ossEnv) AccessKeyID(ctx context.Context) string {
+	o.ctx = ctx
 	return o.accessKeyID
 }
 
 // AccessKeySecret get access key secret
 func (o *ossEnv) AccessKeySecret(ctx context.Context) string {
+	o.ctx = ctx
 	return o.accessKeySecret
 }
 
 // Endpoint get endpoint
 func (o *ossEnv) Endpoint(ctx context.Context) string {
+	o.ctx = ctx
 	return o.endpoint
 }
 
 // Bucket get bucket
 func (o *ossEnv) Bucket(ctx context.Context) string {
+	o.ctx = ctx
 	return o.bucket
 }
 
 // Domain get domain
 func (o *ossEnv) Domain(ctx context.Context) string {
+	o.ctx = ctx
 	return o.domain
 }
 
 // Config get config
 func (o *ossEnv) Config(ctx context.Context) map[string]interface{} {
+	o.ctx = ctx
 	return o.config
+}
+
+// String get string
+func (o *ossEnv) String(ctx context.Context) string {
+	o.ctx = ctx
+	return `{"accessKeyID":` + o.accessKeyID + `,"accessKeySecret":` + o.accessKeySecret + `,"endpoint":` + o.endpoint +
+		`,"bucket":` + o.bucket + `,"domain":` + o.domain + `}`
 }
