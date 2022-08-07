@@ -7,7 +7,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gipv4"
 	"github.com/gogf/gf/v2/net/gtrace"
-	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // New  创建APP环境
@@ -28,21 +27,21 @@ func New(ctx context.Context) (*AppEnv, error) {
 		err = gerror.New("config app is empty")
 		return nil, err
 	}
-	var config = v.MapStrAny()
+	var config = v.MapStrStr()
 
 	hostIP, _ := gipv4.GetIntranetIp()
 	config["hostIP"] = hostIP
 	return &AppEnv{
 		config:         config,
-		env:            gconv.String(config["env"]),
-		environment:    gconv.String(config["environment"]),
-		version:        gconv.String(config["version"]),
-		jaegerEndpoint: gconv.String(config["jaegerEndpoint"]),
+		env:            config["env"],
+		environment:    config["environment"],
+		version:        config["version"],
+		jaegerEndpoint: config["jaegerEndpoint"],
 		hostIP:         hostIP,
-		uploadPath:     gconv.String(config["uploadPath"]),
-		visitPath:      gconv.String(config["visitPath"]),
-		site:           gconv.String(config["site"]),
-		roleModel:      gconv.String(config["roleModel"]),
-		frontSite:      gconv.String(config["frontSite"]),
+		uploadPath:     config["uploadPath"],
+		visitPath:      config["visitPath"],
+		site:           config["site"],
+		roleModel:      config["roleModel"],
+		frontSite:      config["frontSite"],
 	}, nil
 }

@@ -3,6 +3,7 @@ package env
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
@@ -13,6 +14,7 @@ import (
 type SnowflakeEnv struct {
 	datacenter int64
 	worker     int64
+	config     map[string]*gvar.Var
 	ctx        context.Context
 }
 
@@ -44,10 +46,6 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 		logger = gconv.String(ctx.Value("logger"))
 	)
 
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
 		err = gerror.Wrap(err, "config snowflake get failed")
 		return nil, err
@@ -57,11 +55,15 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 		return nil, err
 	}
 
-	var env *SnowflakeEnv
-	if err = v.Scan(&env); err != nil {
-		err = gerror.Wrap(err, "config snowflake scan failed")
-		return nil, err
-	}
+	var (
+		config = v.MapStrVar()
+		env    = &SnowflakeEnv{
+			worker:     config["worker"].Int64(),
+			datacenter: config["datacenter"].Int64(),
+			ctx:        ctx,
+			config:     config,
+		}
+	)
 	g.Log(logger).Debug(ctx, " config snowflake:", env.String(ctx))
 	return env, nil
 }

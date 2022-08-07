@@ -16,7 +16,7 @@ func Upload(ctx context.Context, fileName, basePath string) error {
 		logger          = utility.Helper().Logger(ctx)
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
-	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String())
+	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
 	if err != nil {
 		g.Log(logger).Error(ctx, "alibabaEnv.NewAlibabaEnv error: ", err)
 		return err

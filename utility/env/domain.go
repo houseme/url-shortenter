@@ -11,7 +11,7 @@ type AppEnv struct {
 	version        string
 	jaegerEndpoint string
 	hostIP         string
-	config         map[string]interface{}
+	config         map[string]string
 	uploadPath     string
 	visitPath      string
 	site           string
@@ -45,7 +45,7 @@ func (a *AppEnv) JaegerEndpoint(ctx context.Context) string {
 }
 
 // Config .获取配置信息
-func (a *AppEnv) Config(ctx context.Context) map[string]interface{} {
+func (a *AppEnv) Config(ctx context.Context) map[string]string {
 	a.ctx = ctx
 	return a.config
 }
@@ -84,4 +84,13 @@ func (a *AppEnv) RoleModel(ctx context.Context) string {
 func (a *AppEnv) FrontSite(ctx context.Context) string {
 	a.ctx = ctx
 	return a.frontSite
+}
+
+// String
+func (a *AppEnv) String(ctx context.Context) string {
+	a.ctx = ctx
+	return `{"env":"` + a.env + `","environment":"` + a.environment + `","version":"` + a.version +
+		`","jaegerEndpoint":"` + a.jaegerEndpoint + `","hostIP":"` + a.hostIP +
+		`","uploadPath":"` + a.uploadPath + `","visitPath":"` + a.visitPath +
+		`","site":"` + a.site + `","roleModel":"` + a.roleModel + `","frontSite":"` + a.frontSite + `"}`
 }

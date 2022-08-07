@@ -22,7 +22,6 @@ const (
 	// environment
 	develop    = "develop"
 	production = "production"
-	testing    = "testing"
 )
 
 // Dev .
@@ -48,9 +47,4 @@ func (u *utilEnv) Develop(ctx context.Context) string {
 // Production .
 func (u *utilEnv) Production(ctx context.Context) string {
 	return production
-}
-
-// Testing .
-func (u *utilEnv) Testing(ctx context.Context) string {
-	return testing
 }

@@ -59,28 +59,28 @@ func NewTencentEnv(ctx context.Context) (*TencentEnv, error) {
 		logger = gconv.String(ctx.Value("logger"))
 	)
 
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
-		g.Log(logger).Error(ctx, " config app fail err:", err)
-		err = gerror.Wrap(err, "config app get failed")
+		g.Log(logger).Error(ctx, " config tencent fail err:", err)
+		err = gerror.Wrap(err, "config tencent get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
-		g.Log(logger).Info(ctx, " config app is empty")
-		err = gerror.New("config app is empty")
+		g.Log(logger).Info(ctx, " config tencent is empty")
+		err = gerror.New("config tencent is empty")
 		return nil, err
 	}
 
-	var env *TencentEnv
-	if err = v.Scan(&env); err != nil {
-		g.Log(logger).Error(ctx, " config app scan fail err:", err)
-		err = gerror.Wrap(err, "config app scan failed")
-		return nil, err
-	}
-	env.ctx = ctx
+	var (
+		config = v.MapStrStr()
+		env    = &TencentEnv{
+			secretID:  config["secretID"],
+			secretKey: config["secretKey"],
+			region:    config["region"],
+			endpoint:  config["endpoint"],
+			ctx:       ctx,
+		}
+	)
+
 	g.Log(logger).Info(ctx, " config app:", env.String(ctx))
 	return env, nil
 }

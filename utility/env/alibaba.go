@@ -71,23 +71,27 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 	}()
 
 	if err != nil {
-		g.Log(logger).Error(ctx, " config app fail err:", err)
-		err = gerror.Wrap(err, "config app get failed")
+		g.Log(logger).Error(ctx, " config alibaba fail err:", err)
+		err = gerror.Wrap(err, "config alibaba get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
-		g.Log(logger).Info(ctx, " config app is empty")
-		err = gerror.New("config app is empty")
+		g.Log(logger).Info(ctx, " config alibaba is empty")
+		err = gerror.New("config alibaba is empty")
 		return nil, err
 	}
-
-	var env *AlibabaEnv
-	if err = v.Scan(&env); err != nil {
-		g.Log(logger).Error(ctx, " config app scan fail err:", err)
-		err = gerror.Wrap(err, "config app scan failed")
-		return nil, err
-	}
-	env.ctx = ctx
-	g.Log(logger).Info(ctx, " config app:", env.String(ctx))
+	g.Log(logger).Debug(ctx, " config alibaba:", v)
+	var (
+		config = v.MapStrStr()
+		env    = &AlibabaEnv{
+			accessKeyID:     config["accessKeyID"],
+			accessKeySecret: config["accessKeySecret"],
+			region:          config["region"],
+			endpoint:        config["endpoint"],
+			bucketName:      config["bucketName"],
+			ctx:             ctx,
+		}
+	)
+	g.Log(logger).Debug(ctx, " config alibaba:", env.String(ctx))
 	return env, nil
 }

@@ -17,7 +17,7 @@ type ossEnv struct {
 	endpoint        string
 	bucket          string
 	domain          string
-	config          map[string]interface{}
+	config          map[string]string
 	ctx             context.Context
 }
 
@@ -45,13 +45,13 @@ func NewOssEnv(ctx context.Context, key string) (*ossEnv, error) {
 		err = gerror.Wrap(errors.New("config oss is empty"), "config oss is empty")
 		return nil, err
 	}
-	var config = v.MapStrAny()
+	var config = v.MapStrStr()
 	return &ossEnv{
-		domain:          gconv.String(config["domain"]),
-		accessKeyID:     gconv.String(config["accessKeyId"]),
-		accessKeySecret: gconv.String(config["accessKeySecret"]),
-		endpoint:        gconv.String(config["endpoint"]),
-		bucket:          gconv.String(config["bucket"]),
+		domain:          config["domain"],
+		accessKeyID:     config["accessKeyId"],
+		accessKeySecret: config["accessKeySecret"],
+		endpoint:        config["endpoint"],
+		bucket:          config["bucket"],
 		config:          config,
 	}, nil
 }
@@ -87,7 +87,7 @@ func (o *ossEnv) Domain(ctx context.Context) string {
 }
 
 // Config get config
-func (o *ossEnv) Config(ctx context.Context) map[string]interface{} {
+func (o *ossEnv) Config(ctx context.Context) map[string]string {
 	o.ctx = ctx
 	return o.config
 }
