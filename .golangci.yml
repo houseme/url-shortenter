@@ -33,7 +33,7 @@ linters:
     - nolintlint
     - revive
     - rowserrcheck
-    - staticcheck
+    # - staticcheck
     - structcheck
     # - stylecheck
     - typecheck
