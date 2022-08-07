@@ -22,24 +22,24 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 
 	// 请替换成您的AccessKey ID、AccessKey Secret。
 	var (
-		cpf        = profile.NewClientProfile()
-		logger     = utility.Helper().Logger(ctx)
-		credential *common.Credential
-		env, err   = env.NewTencentEnv(ctx)
+		cpf             = profile.NewClientProfile()
+		logger          = utility.Helper().Logger(ctx)
+		credential      *common.Credential
+		tencentEnv, err = env.NewTencentEnv(ctx)
 	)
 	if err != nil {
-		g.Log(logger).Error(ctx, "env.NewTencentEnv error: ", err)
+		g.Log(logger).Error(ctx, "tencentEnv.NewTencentEnv error: ", err)
 		return "", err
 	}
-	g.Log(logger).Debug(ctx, "env: ", env.String())
+	g.Log(logger).Debug(ctx, "tencentEnv: ", tencentEnv.String(ctx))
 
-	credential = common.NewCredential(env.SecretID(ctx), env.SecretKey(ctx))
-	cpf.HttpProfile.Endpoint = env.Endpoint(ctx)
+	credential = common.NewCredential(tencentEnv.SecretID(ctx), tencentEnv.SecretKey(ctx))
+	cpf.HttpProfile.Endpoint = tencentEnv.Endpoint(ctx)
 	var (
 		client   *ims.Client
 		response *ims.ImageModerationResponse
 	)
-	if client, err = ims.NewClient(credential, env.Region(ctx), cpf); err != nil {
+	if client, err = ims.NewClient(credential, tencentEnv.Region(ctx), cpf); err != nil {
 		g.Log(logger).Error(ctx, "ims.NewClient error: ", err)
 		return "", err
 	}

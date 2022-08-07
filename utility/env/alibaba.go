@@ -16,35 +16,42 @@ type AlibabaEnv struct {
 	bucketName      string
 	endpoint        string
 	region          string
+	ctx             context.Context
 }
 
 // AccessKeyID .
 func (a *AlibabaEnv) AccessKeyID(ctx context.Context) string {
+	a.ctx = ctx
 	return a.accessKeyID
 }
 
 // AccessKeySecret .
 func (a *AlibabaEnv) AccessKeySecret(ctx context.Context) string {
+	a.ctx = ctx
 	return a.accessKeySecret
 }
 
 // BucketName .
 func (a *AlibabaEnv) BucketName(ctx context.Context) string {
+	a.ctx = ctx
 	return a.bucketName
 }
 
 // Endpoint .
 func (a *AlibabaEnv) Endpoint(ctx context.Context) string {
+	a.ctx = ctx
 	return a.endpoint
 }
 
 // Region .
 func (a *AlibabaEnv) Region(ctx context.Context) string {
+	a.ctx = ctx
 	return a.region
 }
 
 // String .
-func (a *AlibabaEnv) String() string {
+func (a *AlibabaEnv) String(ctx context.Context) string {
+	a.ctx = ctx
 	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret +
 		`","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
 }
@@ -80,6 +87,7 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 		err = gerror.Wrap(err, "config app scan failed")
 		return nil, err
 	}
-	g.Log(logger).Info(ctx, " config app:", env)
+	env.ctx = ctx
+	g.Log(logger).Info(ctx, " config app:", env.String(ctx))
 	return env, nil
 }

@@ -23,16 +23,16 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 
 	// 请替换成您的AccessKey ID、AccessKey Secret。
 	var (
-		logger   = utility.Helper().Logger(ctx)
-		client   *green.Client
-		env, err = env.NewAlibabaEnv(ctx)
+		logger          = utility.Helper().Logger(ctx)
+		client          *green.Client
+		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
-	g.Log(logger).Debug(ctx, "env: ", env.String())
+	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
 	if err != nil {
-		g.Log(logger).Error(ctx, "env.NewAlibabaEnv error: ", err)
+		g.Log(logger).Error(ctx, "alibabaEnv.NewAlibabaEnv error: ", err)
 		return "", err
 	}
-	if client, err = green.NewClientWithAccessKey(env.Region(ctx), env.AccessKeyID(ctx), env.AccessKeySecret(ctx)); err != nil {
+	if client, err = green.NewClientWithAccessKey(alibabaEnv.Region(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx)); err != nil {
 		g.Log(logger).Error(ctx, "green.NewClientWithAccessKey error: ", err)
 		return "", err
 	}
