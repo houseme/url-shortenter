@@ -11,41 +11,49 @@ import (
 
 // AlibabaEnv .
 type AlibabaEnv struct {
-	accessKeyID     string `json:"accessKeyId"`
-	accessKeySecret string `json:"accessKeySecret"`
-	bucketName      string `json:"bucketName"`
-	endpoint        string `json:"endpoint"`
-	region          string `json:"region"`
+	accessKeyID     string
+	accessKeySecret string
+	bucketName      string
+	endpoint        string
+	region          string
+	ctx             context.Context
 }
 
 // AccessKeyID .
 func (a *AlibabaEnv) AccessKeyID(ctx context.Context) string {
+	a.ctx = ctx
 	return a.accessKeyID
 }
 
 // AccessKeySecret .
 func (a *AlibabaEnv) AccessKeySecret(ctx context.Context) string {
+	a.ctx = ctx
 	return a.accessKeySecret
 }
 
 // BucketName .
 func (a *AlibabaEnv) BucketName(ctx context.Context) string {
+	a.ctx = ctx
 	return a.bucketName
 }
 
 // Endpoint .
 func (a *AlibabaEnv) Endpoint(ctx context.Context) string {
+	a.ctx = ctx
 	return a.endpoint
 }
 
 // Region .
 func (a *AlibabaEnv) Region(ctx context.Context) string {
+	a.ctx = ctx
 	return a.region
 }
 
 // String .
-func (a *AlibabaEnv) String() string {
-	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret + `","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
+func (a *AlibabaEnv) String(ctx context.Context) string {
+	a.ctx = ctx
+	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret +
+		`","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
 }
 
 // NewAlibabaEnv .
@@ -63,22 +71,27 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 	}()
 
 	if err != nil {
-		g.Log(logger).Error(ctx, " config app fail err:", err)
-		err = gerror.Wrap(err, "config app get failed")
+		g.Log(logger).Error(ctx, " config alibaba fail err:", err)
+		err = gerror.Wrap(err, "config alibaba get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
-		g.Log(logger).Info(ctx, " config app is empty")
-		err = gerror.New("config app is empty")
+		g.Log(logger).Info(ctx, " config alibaba is empty")
+		err = gerror.New("config alibaba is empty")
 		return nil, err
 	}
-
-	var env *AlibabaEnv
-	if err = v.Scan(&env); err != nil {
-		g.Log(logger).Error(ctx, " config app scan fail err:", err)
-		err = gerror.Wrap(err, "config app scan failed")
-		return nil, err
-	}
-	g.Log(logger).Info(ctx, " config app:", env)
+	g.Log(logger).Debug(ctx, " config alibaba:", v)
+	var (
+		config = v.MapStrStr()
+		env    = &AlibabaEnv{
+			accessKeyID:     config["accessKeyID"],
+			accessKeySecret: config["accessKeySecret"],
+			region:          config["region"],
+			endpoint:        config["endpoint"],
+			bucketName:      config["bucketName"],
+			ctx:             ctx,
+		}
+	)
+	g.Log(logger).Debug(ctx, " config alibaba:", env.String(ctx))
 	return env, nil
 }

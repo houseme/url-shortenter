@@ -11,35 +11,42 @@ import (
 
 // TencentEnv .
 type TencentEnv struct {
-	secretID  string `json:"secretId"`
-	secretKey string `json:"secretKey"`
-	region    string `json:"region"`
-	endpoint  string `json:"endpoint"`
+	secretID  string
+	secretKey string
+	region    string
+	endpoint  string
+	ctx       context.Context
 }
 
 // SecretID .
 func (a *TencentEnv) SecretID(ctx context.Context) string {
+	a.ctx = ctx
 	return a.secretID
 }
 
 // SecretKey .
 func (a *TencentEnv) SecretKey(ctx context.Context) string {
+	a.ctx = ctx
 	return a.secretKey
 }
 
 // Region .
 func (a *TencentEnv) Region(ctx context.Context) string {
+	a.ctx = ctx
 	return a.region
 }
 
 // Endpoint .
 func (a *TencentEnv) Endpoint(ctx context.Context) string {
+	a.ctx = ctx
 	return a.endpoint
 }
 
 // String .
-func (a *TencentEnv) String() string {
-	return `{"secretId":"` + a.secretID + `","secretKey":"` + a.secretKey + `","region":"` + a.region + `","endpoint":"` + a.endpoint + `"}`
+func (a *TencentEnv) String(ctx context.Context) string {
+	a.ctx = ctx
+	return `{"secretId":"` + a.secretID + `","secretKey":"` + a.secretKey +
+		`","region":"` + a.region + `","endpoint":"` + a.endpoint + `"}`
 }
 
 // NewTencentEnv .
@@ -52,27 +59,28 @@ func NewTencentEnv(ctx context.Context) (*TencentEnv, error) {
 		logger = gconv.String(ctx.Value("logger"))
 	)
 
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
-		g.Log(logger).Error(ctx, " config app fail err:", err)
-		err = gerror.Wrap(err, "config app get failed")
+		g.Log(logger).Error(ctx, " config tencent fail err:", err)
+		err = gerror.Wrap(err, "config tencent get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
-		g.Log(logger).Info(ctx, " config app is empty")
-		err = gerror.New("config app is empty")
+		g.Log(logger).Info(ctx, " config tencent is empty")
+		err = gerror.New("config tencent is empty")
 		return nil, err
 	}
 
-	var env *TencentEnv
-	if err = v.Scan(&env); err != nil {
-		g.Log(logger).Error(ctx, " config app scan fail err:", err)
-		err = gerror.Wrap(err, "config app scan failed")
-		return nil, err
-	}
-	g.Log(logger).Info(ctx, " config app:", env)
+	var (
+		config = v.MapStrStr()
+		env    = &TencentEnv{
+			secretID:  config["secretID"],
+			secretKey: config["secretKey"],
+			region:    config["region"],
+			endpoint:  config["endpoint"],
+			ctx:       ctx,
+		}
+	)
+
+	g.Log(logger).Info(ctx, " config app:", env.String(ctx))
 	return env, nil
 }

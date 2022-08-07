@@ -1,0 +1,31 @@
+app:
+  env: "local"
+  environment: "develop"
+  version: "1.0.0"
+  jaegerEndpoint: ""
+  uploadPath: ""
+  visitPath: ""
+  site: ""
+  roleModel: ""
+
+logger:
+  path:    "/tmp/logs/default"
+  level : "erro"
+  stdout: false
+
+snowflake:
+  datacenter: 1
+  worker: 1
+
+alibaba:
+  accessKeyID: "12345"
+  accessKeySecret: "12345"
+  bucketName: "static-short-12345"
+  endpoint: "https://oss-cn-beijing.aliyuncs.com"
+  region: "cn-beijing"
+
+tencent:
+  secretID: "12345"
+  secretKey: "12345"
+  endpoint: "ims.tencentcloudapi.com"
+  region: "ap-beijing"

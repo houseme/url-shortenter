@@ -18,48 +18,48 @@ var Domain = &cDomain{}
 
 // CreateDomainAuthorization creates a new domain.
 func (c *cDomain) CreateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationReq) (res *v1.DomainAuthorizationRes, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorization")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
 	defer span.End()
 
 	res = &v1.DomainAuthorizationRes{}
-	if res.DomainAuthorizationOutput, err = service.Domain().CreateDomainAuthorization(ctx, req.DomainAuthorizationInput); err != nil {
-		g.Log().Error(ctx, "CreateDomainAuthorization failed err:", err)
+	if res.DomainAuthorizeOutput, err = service.Domain().CreateDomainAuthorize(ctx, req.DomainAuthorizeInput); err != nil {
+		g.Log().Error(ctx, "CreateDomainAuthorize failed err:", err)
 	}
 	return
 }
 
 // QueryDomainAuthorization queries the domain.
 func (c *cDomain) QueryDomainAuthorization(ctx context.Context, req *v1.QueryDomainAuthorizationReq) (res *v1.QueryDomainAuthorizationRes, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorization")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorize")
 	defer span.End()
 
 	res = &v1.QueryDomainAuthorizationRes{}
-	if res.QueryDomainAuthorizationOutput, err = service.Domain().QueryDomainAuthorization(ctx, req.QueryDomainAuthorizationInput); err != nil {
-		g.Log().Error(ctx, "QueryDomainAuthorization failed err:", err)
+	if res.QueryDomainAuthorizeOutput, err = service.Domain().QueryDomainAuthorize(ctx, req.QueryDomainAuthorizeInput); err != nil {
+		g.Log().Error(ctx, "QueryDomainAuthorize failed err:", err)
 	}
 	return
 }
 
 // UpdateDomainAuthorization updates the domain.
 func (c *cDomain) UpdateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationUpdateReq) (res *v1.DomainAuthorizationUpdateRes, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorization")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorize")
 	defer span.End()
 
 	res = &v1.DomainAuthorizationUpdateRes{}
-	if res.DomainAuthorizationUpdateOutput, err = service.Domain().UpdateDomainAuthorization(ctx, req.DomainAuthorizationUpdateInput); err != nil {
-		g.Log().Error(ctx, "UpdateDomainAuthorization failed err:", err)
+	if res.DomainAuthorizeUpdateOutput, err = service.Domain().UpdateDomainAuthorize(ctx, req.DomainAuthorizeUpdateInput); err != nil {
+		g.Log().Error(ctx, "UpdateDomainAuthorize failed err:", err)
 	}
 	return
 }
 
 // DeleteDomainAuthorization deletes the domain.
 func (c *cDomain) DeleteDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationDeleteReq) (res *v1.DomainAuthorizationDeleteRes, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorization")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorize")
 	defer span.End()
 
 	res = &v1.DomainAuthorizationDeleteRes{}
-	if res.DomainAuthorizationDeleteOutput, err = service.Domain().DeleteDomainAuthorization(ctx, req.DomainAuthorizationDeleteInput); err != nil {
-		g.Log().Error(ctx, "DeleteDomainAuthorization failed err:", err)
+	if res.DomainAuthorizeDeleteOutput, err = service.Domain().DeleteDomainAuthorize(ctx, req.DomainAuthorizeDeleteInput); err != nil {
+		g.Log().Error(ctx, "DeleteDomainAuthorize failed err:", err)
 	}
 	return
 }
@@ -70,7 +70,7 @@ func (c *cDomain) DomainAuthorizationList(ctx context.Context, req *v1.DomainAut
 	defer span.End()
 
 	res = &v1.DomainAuthorizationListRes{}
-	if res.DomainAuthorizationListOutput, err = service.Domain().DomainAuthorizationList(ctx, req.DomainAuthorizationListInput); err != nil {
+	if res.DomainAuthorizeListOutput, err = service.Domain().DomainAuthorizeList(ctx, req.DomainAuthorizeListInput); err != nil {
 		g.Log().Error(ctx, "ListDomainAuthorization failed err:", err)
 	}
 	return
@@ -78,12 +78,12 @@ func (c *cDomain) DomainAuthorizationList(ctx context.Context, req *v1.DomainAut
 
 // DomainAuthorizationDetail gets the domain.
 func (c *cDomain) DomainAuthorizationDetail(ctx context.Context, req *v1.DomainAuthorizationDetailReq) (res *v1.DomainAuthorizationDetailRes, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizationDetail")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeDetail")
 	defer span.End()
 
 	res = &v1.DomainAuthorizationDetailRes{}
-	if res.DomainAuthorizationDetailOutput, err = service.Domain().DomainAuthorizationDetail(ctx, req.DomainAuthorizationDetailInput); err != nil {
-		g.Log().Error(ctx, "DomainAuthorizationDetail failed err:", err)
+	if res.DomainAuthorizeDetailOutput, err = service.Domain().DomainAuthorizeDetail(ctx, req.DomainAuthorizeDetailInput); err != nil {
+		g.Log().Error(ctx, "DomainAuthorizeDetail failed err:", err)
 	}
 	return
 }

@@ -9,65 +9,65 @@ import (
 // DomainAuthorizationReq is the request for DomainAuthorization
 type DomainAuthorizationReq struct {
 	g.Meta `path:"/domain/create" tags:"Domain Service" method:"Post" summary:"create an domain authorization"`
-	*model.DomainAuthorizationInput
+	*model.DomainAuthorizeInput
 }
 
 // DomainAuthorizationRes is the response for DomainAuthorization
 type DomainAuthorizationRes struct {
-	*model.DomainAuthorizationOutput
+	*model.DomainAuthorizeOutput
 }
 
 // DomainAuthorizationListReq is the request for DomainAuthorizationList
 type DomainAuthorizationListReq struct {
 	g.Meta `path:"/domain/list" tags:"Domain Service" method:"Get" summary:"list domain authorization"`
-	*model.DomainAuthorizationListInput
+	*model.DomainAuthorizeListInput
 }
 
 // DomainAuthorizationListRes is the response for DomainAuthorizationList
 type DomainAuthorizationListRes struct {
-	*model.DomainAuthorizationListOutput
+	*model.DomainAuthorizeListOutput
 }
 
 // DomainAuthorizationDeleteReq is the request for DomainAuthorizationDelete
 type DomainAuthorizationDeleteReq struct {
 	g.Meta `path:"/domain/delete" tags:"Domain Service" method:"Post" summary:"delete domain authorization"`
-	*model.DomainAuthorizationDeleteInput
+	*model.DomainAuthorizeDeleteInput
 }
 
 // DomainAuthorizationDeleteRes is the response for DomainAuthorizationDelete
 type DomainAuthorizationDeleteRes struct {
-	*model.DomainAuthorizationDeleteOutput
+	*model.DomainAuthorizeDeleteOutput
 }
 
 // DomainAuthorizationUpdateReq is the request for DomainAuthorizationUpdate
 type DomainAuthorizationUpdateReq struct {
 	g.Meta `path:"/domain/update" tags:"Domain Service" method:"Post" summary:"update domain authorization"`
-	*model.DomainAuthorizationUpdateInput
+	*model.DomainAuthorizeUpdateInput
 }
 
 // DomainAuthorizationUpdateRes is the response for DomainAuthorizationUpdate
 type DomainAuthorizationUpdateRes struct {
-	*model.DomainAuthorizationUpdateOutput
+	*model.DomainAuthorizeUpdateOutput
 }
 
-// QueryDomainAuthorizationReq is the request for QueryDomainAuthorization
+// QueryDomainAuthorizationReq is the request for QueryDomainAuthorize
 type QueryDomainAuthorizationReq struct {
 	g.Meta `path:"/domain/query" tags:"Domain Service" method:"Get" summary:"query domain authorization"`
-	*model.QueryDomainAuthorizationInput
+	*model.QueryDomainAuthorizeInput
 }
 
-// QueryDomainAuthorizationRes is the response for QueryDomainAuthorization
+// QueryDomainAuthorizationRes is the response for QueryDomainAuthorize
 type QueryDomainAuthorizationRes struct {
-	*model.QueryDomainAuthorizationOutput
+	*model.QueryDomainAuthorizeOutput
 }
 
-// DomainAuthorizationDetailReq is the request for DomainAuthorizationDetail
+// DomainAuthorizationDetailReq is the request for DomainAuthorizeDetail
 type DomainAuthorizationDetailReq struct {
 	g.Meta `path:"/domain/detail" tags:"Domain Service" method:"Get" summary:"detail domain authorization"`
-	*model.DomainAuthorizationDetailInput
+	*model.DomainAuthorizeDetailInput
 }
 
-// DomainAuthorizationDetailRes is the response for DomainAuthorizationDetail
+// DomainAuthorizationDetailRes is the response for DomainAuthorizeDetail
 type DomainAuthorizationDetailRes struct {
-	*model.DomainAuthorizationDetailOutput
+	*model.DomainAuthorizeDetailOutput
 }

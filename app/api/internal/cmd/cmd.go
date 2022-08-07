@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	// Main command.
 	Main = gcmd.Command{
 		Name:  "main",
 		Usage: "main",

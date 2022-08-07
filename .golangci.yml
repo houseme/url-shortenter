@@ -17,29 +17,29 @@ linters:
     - deadcode
     - depguard
     - dogsled
-    - dupl
+    # - dupl
     - errcheck
     - funlen
     - goconst
-    #    - gocritic
+    # - gocritic
     - gocyclo
     - gofmt
     - goimports
     - goprintffuncname
-    #    - gosimple
+    # - gosimple
     - govet
     - ineffassign
     - misspell
     - nolintlint
     - revive
     - rowserrcheck
-    - staticcheck
+    # - staticcheck
     - structcheck
-#    - stylecheck
+    # - stylecheck
     - typecheck
     - unconvert
     - unparam
-#    - unused
+    # - unused
     - varcheck
     - whitespace
 
@@ -54,6 +54,8 @@ issues:
     - path: _test\.go
       linters:
         - gomnd
+        - funlen
+        - goconst
 
     # https://github.com/go-critic/go-critic/issues/926
     - linters:
@@ -95,23 +97,46 @@ linters-settings:
     capital: false
   revive:
     ignore-generated-header: true
-    severity: warning
+    severity: error
     rules:
       - name: atomic
       - name: line-length-limit
         severity: error
-        arguments: [ 160 ]
+        arguments: [ 180 ]
       - name: unhandled-error
         arguments: [ "fmt.Printf", "myFunction" ]
+      - name: var-naming
+        severity: warning
+        disabled: false
+        arguments:
+          - [ "ID","URL","IP","HTTP","JSON","API","UID" ] # AllowList
+          - [ "VM" ] # DenyList
+      - name: string-format
+        severity: warning
+        disabled: false
+        arguments:
+          - - 'core.WriteError[1].Message'
+            - '/^([^A-Z]|$)/'
+            - must not start with a capital letter
+          - - 'fmt.Errorf[0]'
+            - '/(^|[^\.!?])$/'
+            - must not end in punctuation
+          - - panic
+            - '/^[^\n]*$/'
+            - must not contain line breaks
+      - name: function-result-limit
+        severity: warning
+        disabled: false
+        arguments: [4]
   funlen:
     # Checks the number of lines in a function.
     # If lower than 0, disable the check.
     # Default: 60
-    lines: 120
+    lines: 160
     # Checks the number of statements in a function.
     # If lower than 0, disable the check.
     # Default: 40
-    statements: 60
+    statements: 160
   goconst:
     # Ignore test files.
     # Default: false

@@ -1,13 +1,21 @@
 package icp
 
-// QueryRequest 查询请求
+const (
+	authorizePath = "auth"
+	queryPath     = "icpAbbreviateInfo/queryByCondition"
+
+	authorizeContentType = "application/x-www-form-urlencoded;charset=UTF-8"
+	queryContentType     = "application/json;charset=UTF-8"
+)
+
+// QueryRequest query request
 type QueryRequest struct {
 	PageNum  string `json:"pageNum"`
 	PageSize string `json:"pageSize"`
 	UnitName string `json:"unitName"`
 }
 
-// QueryResponse 查询响应
+// QueryResponse query response
 type QueryResponse struct {
 	Code    int          `json:"code"`
 	Msg     string       `json:"msg"`
@@ -15,14 +23,14 @@ type QueryResponse struct {
 	Params  *QueryParams `json:"params"`
 }
 
-// AuthParams 认证参数
+// AuthParams auth params
 type AuthParams struct {
 	Bussiness string `json:"bussiness"`
 	Expire    int64  `json:"expire"`
 	Refresh   string `json:"refresh"`
 }
 
-// QueryParams 查询参数
+// QueryParams query params
 type QueryParams struct {
 	EndRow           int           `json:"endRow"`
 	FirstPage        int           `json:"firstPage"`
@@ -44,7 +52,7 @@ type QueryParams struct {
 	Total            int           `json:"total"`
 }
 
-// DomainInfo 域名信息
+// DomainInfo domain info
 type DomainInfo struct {
 	ContentTypeName  string `json:"contentTypeName"`
 	Domain           string `json:"domain"`
@@ -62,16 +70,24 @@ type DomainInfo struct {
 	UpdateRecordTime string `json:"updateRecordTime"`
 }
 
-// AuthorizeRequest .授权请求
+// AuthorizeRequest authorize request
 type AuthorizeRequest struct {
 	AuthKey   string `json:"authKey"`
 	TimeStamp string `json:"timeStamp"`
 }
 
-// AuthorizeResponse .授权响应
+// AuthorizeResponse authorize response
 type AuthorizeResponse struct {
 	Code    int         `json:"code"`
 	Msg     string      `json:"msg"`
 	Success bool        `json:"success"`
 	Params  *AuthParams `json:"params"`
+}
+
+// QueryResp is a struct for icp data
+type QueryResp struct {
+	IcpNumber string `json:"icp_number"`
+	IcpName   string `json:"icp_name"`
+	Attr      string `json:"attr"`
+	Date      string `json:"date"`
 }

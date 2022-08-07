@@ -159,12 +159,15 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}
 
 	defer func() {
+		if err != nil {
+			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", err)
+		}
 		if err := conn.Close(ctx); err != nil {
 			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", err)
 		}
 	}()
 	if result, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx)); err != nil {
-		g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Do RPOP failed:", err)
+		err = gerror.Wrap(err, "QueryShortAndGrabAudit conn.Do RPOP failed")
 		return
 	}
 	if result == nil || result.IsNil() || result.IsEmpty() {
@@ -173,7 +176,6 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}
 	g.Log(logger).Info(ctx, "QueryShortAndGrabAudit shortNo:", result.String())
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&shortURL, "short_no = ?", result.Uint64()); err != nil {
-		g.Log(logger).Error(ctx, "QueryShortAndGrabAudit ShortUrls.Scan failed:", err)
 		err = gerror.Wrap(err, "QueryShortAndGrabAudit ShortUrls.Scan failed")
 		return
 	}
@@ -189,7 +191,6 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}
 
 	if err = s.GrabImageAudit(ctx, shortURL); err != nil {
-		g.Log(logger).Error(ctx, "QueryShortAndGrabAudit GrabImageAudit failed:", err)
 		err = gerror.Wrap(err, "QueryShortAndGrabAudit GrabImageAudit failed")
 		return
 	}
@@ -207,7 +208,6 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	)
 	g.Log(logger).Info(ctx, "GrabImageAudit shortURL: ", shortURL)
 	if err != nil {
-		g.Log(logger).Error(ctx, "GrabImageAudit env.New failed:", err)
 		err = gerror.Wrap(err, "GrabImageAudit env.New failed")
 		return err
 	}

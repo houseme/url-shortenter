@@ -27,5 +27,5 @@ func main() {
 	if err != nil {
 		g.Log().Fatal(ctx, err)
 	}
-	cmd.Main.Run(gctx.New())
+	cmd.Main.Run(ctx)
 }

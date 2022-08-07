@@ -13,12 +13,11 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
-	"github.com/gogf/gf/v2/util/gconv"
-	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 
 	"github.com/houseme/url-shortenter/app/console/internal/consts"
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
 )
@@ -65,7 +64,7 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 	defer span.End()
 
 	// 设置公共参数
-	s.setAttributes(r, span)
+	tracing.SetAttributes(r, span)
 
 	var (
 		msg  string
@@ -74,7 +73,7 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 		code = gerror.Code(err)
 	)
 	if err != nil {
-		span.RecordError(err, utility.Helper().CommonEventOption(r.GetCtx(), "console-service-middleware-HandlerResponse"))
+		span.RecordError(err, tracing.CommonEventOption(r.GetCtx(), "console-service-middleware-HandlerResponse"))
 		if code == gcode.CodeNil {
 			code = gcode.CodeInternalError
 		}
@@ -270,6 +269,7 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 			err = gerror.Wrap(err, "validateToken redis set failed")
 			return nil, err
 		}
+		g.Log(logger).Debug(ctx, "validateToken auth token set redis value:", val)
 		return authToken, nil
 	}
 	if now.Unix()-consts.APIKeyExpireTime > authTime {
@@ -284,16 +284,6 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 func (s *sMiddleware) middlewareResponse(r *ghttp.Request, span *gtrace.Span, resp *model.DefaultHandlerResponse) {
 	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "middlewareResponse body resp:", resp)
 	// 设置公共参数
-	s.setAttributes(r, span)
+	tracing.SetAttributes(r, span)
 	r.Response.WriteJson(resp)
-}
-
-// setAttributes .set tracing attributes
-func (s *sMiddleware) setAttributes(r *ghttp.Request, span *gtrace.Span) {
-	span.SetAttributes(semconv.HTTPURLKey.String(r.URL.Path))
-	span.SetAttributes(semconv.HTTPMethodKey.String(r.Method))
-	span.SetAttributes(semconv.HTTPHostKey.String(r.GetHost()))
-	span.SetAttributes(semconv.HTTPSchemeKey.String(r.Proto))
-	span.SetAttributes(semconv.HTTPStatusCodeKey.String(gconv.String(r.Response.Status)))
-	span.SetAttributes(semconv.HTTPUserAgentKey.String(r.UserAgent()))
 }

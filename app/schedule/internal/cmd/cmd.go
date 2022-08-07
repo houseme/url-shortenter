@@ -15,6 +15,7 @@ import (
 )
 
 var (
+	// Main is the main function of the program.
 	Main = gcmd.Command{
 		Name:  "main",
 		Usage: "main",

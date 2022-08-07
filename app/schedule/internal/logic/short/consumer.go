@@ -30,37 +30,37 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
 	if err != nil {
-		g.Log(logger).Error(ctx, "access log create redis connection error", err)
-		err = gerror.New("access log create redis connection error")
+		err = gerror.Wrap(err, "access log create redis connection error")
 		return err
 	}
 
-	defer conn.Close(ctx)
+	defer func() {
+		_ = conn.Close(ctx)
+		if err != nil {
+			g.Log(logger).Error(ctx, "access log error is ", err)
+		}
+	}()
 
 	var val *gvar.Var
-
 	if val, err = conn.Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
-		g.Log(logger).Error(ctx, "access log get queue length error", err)
 		err = gerror.Wrap(err, "access log get queue length error")
 		return err
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		g.Log(logger).Info(ctx, "access log queue is empty")
 		err = gerror.New("access log queue is empty")
 		return err
 	}
-	llen := val.Int()
-	g.Log(logger).Info(ctx, "access log queue length is ", llen)
-	if llen <= 0 {
-		g.Log(logger).Info(ctx, "access log queue is empty length is zero")
+	allen := val.Int()
+	g.Log(logger).Info(ctx, "access log queue length is ", allen)
+	if allen <= 0 {
 		err = gerror.New("access log queue is empty length is zero")
 		return err
 	}
-	for i := 0; i < llen; i++ {
+	for i := 0; i < allen; i++ {
 		if err = s.dealAccessLog(ctx); err != nil {
-			g.Log(logger).Error(ctx, "access log deal error", err)
 			err = gerror.Wrap(err, "access log deal error")
+			return err
 		}
 	}
 	g.Log(logger).Info(ctx, "access log queue end")
@@ -128,7 +128,7 @@ func (s *sShort) dealAccessLog(ctx context.Context) error {
 }
 
 // ShortAccessLogSummary is the struct of short access log summary
-func (s sShort) ShortAccessLogSummary(ctx context.Context) error {
+func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-ShortAccessLogSummary")
 	defer span.End()
 
@@ -202,7 +202,9 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 
 	defer func() {
 		if err != nil {
-			conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID)
+			if _, errs := conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID); errs != nil {
+				g.Log(logger).Error(ctx, "access log summary left push error", errs)
+			}
 		}
 	}()
 
