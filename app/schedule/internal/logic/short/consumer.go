@@ -30,8 +30,7 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
 	if err != nil {
-		g.Log(logger).Error(ctx, "access log create redis connection error", err)
-		err = gerror.New("access log create redis connection error")
+		err = gerror.Wrap(err, "access log create redis connection error")
 		return err
 	}
 
@@ -40,28 +39,23 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 	}()
 
 	var val *gvar.Var
-
 	if val, err = conn.Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
-		g.Log(logger).Error(ctx, "access log get queue length error", err)
 		err = gerror.Wrap(err, "access log get queue length error")
 		return err
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		g.Log(logger).Info(ctx, "access log queue is empty")
 		err = gerror.New("access log queue is empty")
 		return err
 	}
 	llen := val.Int()
 	g.Log(logger).Info(ctx, "access log queue length is ", llen)
 	if llen <= 0 {
-		g.Log(logger).Info(ctx, "access log queue is empty length is zero")
 		err = gerror.New("access log queue is empty length is zero")
 		return err
 	}
 	for i := 0; i < llen; i++ {
 		if err = s.dealAccessLog(ctx); err != nil {
-			g.Log(logger).Error(ctx, "access log deal error", err)
 			err = gerror.Wrap(err, "access log deal error")
 		}
 	}

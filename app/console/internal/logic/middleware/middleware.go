@@ -269,6 +269,7 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 			err = gerror.Wrap(err, "validateToken redis set failed")
 			return nil, err
 		}
+		g.Log(logger).Debug(ctx, "validateToken auth token set redis value:", val)
 		return authToken, nil
 	}
 	if now.Unix()-consts.APIKeyExpireTime > authTime {

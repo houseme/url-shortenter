@@ -15,10 +15,10 @@ warningCode = 0
 [rule.if-return]
 [rule.increment-decrement]
 [rule.line-length-limit]
-    severity = "error"
-    arguments= [180]
+severity = "error"
+arguments = [180]
 [rule.var-naming]
-    arguments = [["IP"], ["VM"],["HTTP"],["URL"]]
+arguments = [["ID", "URL", "IP", "HTTP", "JSON", "API", "UID"], ["VM"]]
 [rule.var-declaration]
 [rule.package-comments]
 [rule.range]

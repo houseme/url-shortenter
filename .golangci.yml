@@ -54,6 +54,8 @@ issues:
     - path: _test\.go
       linters:
         - gomnd
+        - funlen
+        - goconst
 
     # https://github.com/go-critic/go-critic/issues/926
     - linters:
@@ -95,7 +97,7 @@ linters-settings:
     capital: false
   revive:
     ignore-generated-header: true
-    severity: warning
+    severity: error
     rules:
       - name: atomic
       - name: line-length-limit
@@ -104,7 +106,11 @@ linters-settings:
       - name: unhandled-error
         arguments: [ "fmt.Printf", "myFunction" ]
       - name: var-naming
-        arguments: [ "lowercase", "strict", "IP","URL" ]
+        severity: warning
+        disabled: false
+        arguments:
+          - [ "ID","URL","IP","HTTP","JSON","API","UID" ] # AllowList
+          - [ "VM" ] # DenyList
   funlen:
     # Checks the number of lines in a function.
     # If lower than 0, disable the check.

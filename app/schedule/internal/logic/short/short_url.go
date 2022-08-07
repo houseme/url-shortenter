@@ -2,8 +2,8 @@ package short
 
 import (
 	"context"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/chromedp/chromedp"
@@ -130,7 +130,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		err = gerror.Wrap(err, "GrabImage ShortContentRecord.InsertAndGetId failed")
 		return err
 	}
-
+	g.Log(logger).Info(ctx, "GrabImage ShortContentRecord.InsertAndGetId lastID: ", lastID)
 	if _, err = dao.ShortUrls.Ctx(ctx).TX(tx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).OmitEmpty().Unscoped().Update(g.Map{
 		dao.ShortUrls.Columns().CollectState: consts.ShortCollectStateSuccess,
 		dao.ShortUrls.Columns().CollectTime:  gdb.Raw("current_timestamp(6)"),
@@ -260,7 +260,7 @@ func (s *sShort) RequestContent(ctx context.Context, url, fileName string) ([]by
 	}
 	defer r.Body.Close()
 	content := r.ReadAll()
-	if err = ioutil.WriteFile(fileName, content, 0o644); err != nil {
+	if err = os.WriteFile(fileName, content, 0o644); err != nil {
 		err = gerror.Wrap(err, "RequestContent write file failed")
 		return nil, err
 	}
@@ -316,7 +316,7 @@ func (s *sShort) DownloadFullScreenshot(ctx context.Context, url, fileName strin
 		err = gerror.Wrap(err, "fullScreenshot failed")
 		return
 	}
-	if err = ioutil.WriteFile(fileName, buf, 0o644); err != nil {
+	if err = os.WriteFile(fileName, buf, 0o644); err != nil {
 		err = gerror.Wrap(err, "fullScreenshot write file failed")
 		return
 	}
