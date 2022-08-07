@@ -107,11 +107,11 @@ linters-settings:
     # Checks the number of lines in a function.
     # If lower than 0, disable the check.
     # Default: 60
-    lines: 120
+    lines: 160
     # Checks the number of statements in a function.
     # If lower than 0, disable the check.
     # Default: 40
-    statements: 80
+    statements: 160
   goconst:
     # Ignore test files.
     # Default: false
