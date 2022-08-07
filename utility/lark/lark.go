@@ -81,5 +81,7 @@ func (l *Env) CustomBotSecret(ctx context.Context) string {
 // String returns the string representation of the environment.
 func (l *Env) String(ctx context.Context) string {
 	l.ctx = ctx
-	return `{"appID":"` + l.appID + `","appSecret":"` + l.appSecret + `","encryptKey":"` + l.encryptKey + `","verificationToken":"` + l.verificationToken + `","customBotWebHookURL":"` + l.customBotWebHookURL + `","customBotSecret":"` + l.customBotSecret + `"}`
+	return `{"appID":"` + l.appID + `","appSecret":"` + l.appSecret + `","encryptKey":"` + l.encryptKey +
+		`","verificationToken":"` + l.verificationToken + `","customBotWebHookURL":"` + l.customBotWebHookURL +
+		`","customBotSecret":"` + l.customBotSecret + `"}`
 }

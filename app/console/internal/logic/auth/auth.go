@@ -43,7 +43,10 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		accessSecret = (*entity.UsersAccessSecret)(nil)
 	)
 	g.Log(logger).Debug(ctx, "auth-CreateAccessToken AppID:", in.AppID)
-	if err = dao.UsersAccessSecret.Ctx(ctx).Scan(&account, do.UsersAccessSecret{SecretId: in.AppID, GrantType: gstr.ToLower(in.GrantType)}); err != nil {
+	if err = dao.UsersAccessSecret.Ctx(ctx).Scan(&account, do.UsersAccessSecret{
+		SecretId:  in.AppID,
+		GrantType: gstr.ToLower(in.GrantType),
+	}); err != nil {
 		err = gerror.Wrap(err, "query UsersAccessSecret failed  err:")
 	}
 	if accessSecret == nil {
@@ -66,10 +69,12 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		err = gerror.New("SecretKey is invalid")
 		return
 	}
-	// salt 16位  saltkey 16位 需要加密的内容位 salt+secret aes加密之后于数据库对比
-	// 检验完成 处理accessToken 相关的处理
+	// salt 16位 saltkey 16位 需要加密的内容位 salt+secret aes加密之后于数据库对比  检验完成 处理accessToken 相关的处理
 	// 创建accessToken
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: accessSecret.AccountNo, GroupLevel: consts.AccountLevelBusiness}); err != nil {
+	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{
+		AccountNo:  accessSecret.AccountNo,
+		GroupLevel: consts.AccountLevelBusiness,
+	}); err != nil {
 		err = gerror.Wrap(err, "query Users failed  err:")
 		return
 	}
@@ -99,10 +104,15 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		return
 	}
 	authToken.AuthToken = token
-	if v, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Do(ctx, "SETEX", cache.RedisCache().ShortAccessTokenKey(ctx, token), consts.APIKeyExpireTime+grand.N(10, 50), authToken); err != nil {
-		err = gerror.Wrap(err, "Redis SETEX failed")
-		return
+	if v, err = s.setRedisToken(ctx,
+		&model.TokenCache{
+			Token:     token,
+			ExpiresIn: consts.APIKeyExpireTime + grand.N(10, 50),
+			AuthToken: authToken,
+		}); err != nil {
+		err = gerror.Wrap(err, "setRedisToken failed")
 	}
+
 	g.Log(logger).Debug(ctx, "auth-CreateAccessToken v:", v)
 	out = &model.CreateAccessTokenOutput{
 		AccessToken: token,
@@ -161,7 +171,13 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		return
 	}
 	authToken.AuthToken = token
-	if v, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Do(ctx, "SETEX", cache.RedisCache().ShortAuthorizationKey(ctx, token), consts.TokenExpireTime+grand.N(10, 50), authToken); err != nil {
+
+	if v, err = s.setRedisToken(ctx,
+		&model.TokenCache{
+			Token:     token,
+			ExpiresIn: consts.AccessTokenExpireTime + grand.N(10, 50),
+			AuthToken: authToken,
+		}); err != nil {
 		err = gerror.Wrap(err, "Redis SETEX failed")
 		return
 	}
@@ -170,6 +186,24 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,
 		RefreshIn:   consts.RefreshTokenExpireTime,
+	}
+	return
+}
+
+// SetRedisToken set redis token.
+func (s *sAuth) setRedisToken(ctx context.Context, in *model.TokenCache) (val *gvar.Var, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-auth-setRedisToken")
+	defer span.End()
+
+	var (
+		logger    = utility.Helper().Logger(ctx)
+		redisName = cache.RedisCache().ShortAccessTokenConn(ctx)
+		redisKey  = cache.RedisCache().ShortAuthorizationKey(ctx, in.Token)
+	)
+	g.Log(logger).Debug(ctx, "auth-setRedisToken params account:", in)
+	if val, err = g.Redis(redisName).Do(ctx, "SETEX", redisKey, in.ExpiresIn, in.AuthToken); err != nil {
+		err = gerror.Wrap(err, "Redis SETEX failed")
+		return
 	}
 	return
 }

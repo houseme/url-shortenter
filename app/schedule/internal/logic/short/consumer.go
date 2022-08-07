@@ -130,7 +130,7 @@ func (s *sShort) dealAccessLog(ctx context.Context) error {
 }
 
 // ShortAccessLogSummary is the struct of short access log summary
-func (s sShort) ShortAccessLogSummary(ctx context.Context) error {
+func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-ShortAccessLogSummary")
 	defer span.End()
 
@@ -204,7 +204,9 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 
 	defer func() {
 		if err != nil {
-			conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID)
+			if _, errs := conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID); errs != nil {
+				g.Log(logger).Error(ctx, "access log summary left push error", errs)
+			}
 		}
 	}()
 

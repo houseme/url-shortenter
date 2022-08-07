@@ -19,7 +19,6 @@ import (
 	"github.com/gogf/gf/v2/util/grand"
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/consts"
-	"github.com/houseme/url-shortenter/app/schedule/internal/service"
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
@@ -27,18 +26,6 @@ import (
 	"github.com/houseme/url-shortenter/utility/cache"
 	"github.com/houseme/url-shortenter/utility/env"
 )
-
-type sShort struct {
-}
-
-func init() {
-	service.RegisterShort(initShort())
-}
-
-// initShort create a initShort sShort.
-func initShort() *sShort {
-	return &sShort{}
-}
 
 // GrabImage grab image from url.
 func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) error {

@@ -17,16 +17,16 @@ linters:
     - deadcode
     - depguard
     - dogsled
-    - dupl
+    # - dupl
     - errcheck
     - funlen
     - goconst
-    #    - gocritic
+    # - gocritic
     - gocyclo
     - gofmt
     - goimports
     - goprintffuncname
-    #    - gosimple
+    # - gosimple
     - govet
     - ineffassign
     - misspell
@@ -35,11 +35,11 @@ linters:
     - rowserrcheck
     - staticcheck
     - structcheck
-#    - stylecheck
+    # - stylecheck
     - typecheck
     - unconvert
     - unparam
-#    - unused
+    # - unused
     - varcheck
     - whitespace
 
@@ -103,6 +103,8 @@ linters-settings:
         arguments: [ 180 ]
       - name: unhandled-error
         arguments: [ "fmt.Printf", "myFunction" ]
+      - name: var-naming
+        arguments: [ "lowercase", "strict", "IP","URL" ]
   funlen:
     # Checks the number of lines in a function.
     # If lower than 0, disable the check.

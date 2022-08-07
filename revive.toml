@@ -18,6 +18,7 @@ warningCode = 0
     severity = "error"
     arguments= [180]
 [rule.var-naming]
+    arguments = [["IP"], ["VM"],["HTTP"],["URL"]]
 [rule.var-declaration]
 [rule.package-comments]
 [rule.range]

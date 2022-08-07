@@ -22,6 +22,13 @@ type AuthorizationToken struct {
 	AuthType         string `json:"authType"`
 }
 
+// TokenCache is the golang structure for TokenCache.
+type TokenCache struct {
+	Token     string              `json:"token"`
+	ExpiresIn int                 `json:"expiresIn"`
+	AuthToken *AuthorizationToken `json:"authToken"`
+}
+
 // AuthInput is the input for Auth
 type AuthInput struct {
 	Account  string `json:"account" dc:"账号" v:"required|passport#账号唯一标识|账号包含字母、数字和下划线，长度在6~18之间"`

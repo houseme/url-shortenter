@@ -11,12 +11,12 @@ import (
 )
 
 type IDomain interface {
-	CreateDomainAuthorization(ctx context.Context, in *model.DomainAuthorizationInput) (out *model.DomainAuthorizationOutput, err error)
-	QueryDomainAuthorization(ctx context.Context, in *model.QueryDomainAuthorizationInput) (out *model.QueryDomainAuthorizationOutput, err error)
-	UpdateDomainAuthorization(ctx context.Context, in *model.DomainAuthorizationUpdateInput) (out *model.DomainAuthorizationUpdateOutput, err error)
-	DeleteDomainAuthorization(ctx context.Context, in *model.DomainAuthorizationDeleteInput) (out *model.DomainAuthorizationDeleteOutput, err error)
-	DomainAuthorizationDetail(ctx context.Context, in *model.DomainAuthorizationDetailInput) (out *model.DomainAuthorizationDetailOutput, err error)
-	DomainAuthorizationList(ctx context.Context, in *model.DomainAuthorizationListInput) (out *model.DomainAuthorizationListOutput, err error)
+	CreateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeInput) (out *model.DomainAuthorizeOutput, err error)
+	QueryDomainAuthorize(ctx context.Context, in *model.QueryDomainAuthorizeInput) (out *model.QueryDomainAuthorizeOutput, err error)
+	UpdateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeUpdateInput) (out *model.DomainAuthorizeUpdateOutput, err error)
+	DeleteDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeDeleteInput) (out *model.DomainAuthorizeDeleteOutput, err error)
+	DomainAuthorizeDetail(ctx context.Context, in *model.DomainAuthorizeDetailInput) (out *model.DomainAuthorizeDetailOutput, err error)
+	DomainAuthorizeList(ctx context.Context, in *model.DomainAuthorizeListInput) (out *model.DomainAuthorizeListOutput, err error)
 }
 
 var localDomain IDomain
