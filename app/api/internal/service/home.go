@@ -8,10 +8,13 @@ import (
 	"context"
 
 	"github.com/houseme/url-shortenter/app/api/internal/model"
+	"github.com/houseme/url-shortenter/internal/database/model/entity"
 )
 
 type IHome interface {
 	ShortDetail(ctx context.Context, in *model.HomeInput) (out string, err error)
+	NewAccessLog(ctx context.Context, in *model.HomeInput)
+	ShortAll(ctx context.Context, in *model.HomeInput) (out []entity.ShortUrls, err error)
 }
 
 var localHome IHome

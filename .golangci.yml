@@ -79,7 +79,7 @@ linters-settings:
     ignore-words:
       - cancelled
   goimports:
-    local-prefixes: github.com/houseme/go-push-api
+    local-prefixes: github.com/houseme/url-shortenter
   godot:
     # Comments to be checked: `declarations`, `toplevel`, or `all`.
     # Default: declarations
