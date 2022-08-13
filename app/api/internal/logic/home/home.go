@@ -145,13 +145,19 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			VisitState: in.VisitState,
 			ServerIp:   serverIP,
 		}
-		val *gvar.Var
+		val    *gvar.Var
+		logger = utility.Helper().Logger(ctx)
 	)
+	if err != nil {
+		g.Log(logger).Error(ctx, "home-new-access-log get intranet ip failed err:", err)
+		l.ServerIp = utility.Helper().GetOutBoundIP(ctx)
+	}
+
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
 		cache.RedisCache().ShortAccessLogQueue(ctx), l); err != nil {
-		g.Log().Error(ctx, "NewAccessLog err:", err)
+		g.Log(logger).Error(ctx, "NewAccessLog err:", err)
 	}
-	g.Log().Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
+	g.Log(logger).Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
 }
 
 // ShortAll 短链列表
