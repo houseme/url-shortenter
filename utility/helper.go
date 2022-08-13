@@ -165,7 +165,8 @@ func (u *utilHelper) LcFirst(str string) string {
 func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
 	conn, err := net.Dial("udp", "119.29.29.29:80")
 	if err != nil {
-		g.Log(u.Logger(ctx)).Fatal(ctx, err)
+		g.Log(u.Logger(ctx)).Error(ctx, " GetOutBoundIP udp get Ip failed err: ", err)
+		return ""
 	}
 	defer func() {
 		_ = conn.Close()
@@ -173,6 +174,34 @@ func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
 
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
 	return localAddr.IP.String()
+}
+
+// GetLocalIpV4 获取 IPV4 IP，没有则返回空
+func (u *utilHelper) GetLocalIpV4(ctx context.Context) string {
+	inters, err := net.Interfaces()
+	if err != nil {
+		panic(err)
+	}
+	for _, inter := range inters {
+		// 判断网卡是否开启，过滤本地环回接口
+		if inter.Flags&net.FlagUp != 0 && !strings.HasPrefix(inter.Name, "lo") {
+			// 获取网卡下所有的地址
+			addrs, err := inter.Addrs()
+			if err != nil {
+				g.Log(u.Logger(ctx)).Error(ctx, " GetLocalIpV4 udp get Ip failed err: ", err)
+				continue
+			}
+			for _, addr := range addrs {
+				if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+					// 判断是否存在IPV4 IP 如果没有过滤
+					if ipnet.IP.To4() != nil {
+						return ipnet.IP.String()
+					}
+				}
+			}
+		}
+	}
+	return ""
 }
 
 // Logger .获取上下文中的logger

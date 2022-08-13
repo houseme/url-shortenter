@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1722
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1723
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.4+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.2
 	github.com/chromedp/chromedp v0.8.3
@@ -17,8 +17,8 @@ require (
 	github.com/houseme/gocrypto v1.0.0
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.472
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.472
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.473
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.473
 	go.opentelemetry.io/otel v1.9.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.9.0
 	go.opentelemetry.io/otel/sdk v1.9.0
@@ -40,7 +40,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
-	github.com/chromedp/cdproto v0.0.0-20220804213442-94946ca6fcf8 // indirect
+	github.com/chromedp/cdproto v0.0.0-20220812200530-d0d83820bffc // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.6 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -78,17 +78,17 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
-	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/rivo/uniseg v0.3.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/image v0.0.0-20220722155232-062f8c9fd539 // indirect
-	golang.org/x/net v0.0.0-20220805013720-a33c5aa5df48 // indirect
-	golang.org/x/sys v0.0.0-20220804214406-8e32c043e418 // indirect
+	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
+	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
 	golang.org/x/text v0.3.8-0.20211105212822-18b340fc7af2 // indirect
 	golang.org/x/time v0.0.0-20220722155302-e5dcc9cfc0b9 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	gopkg.in/ini.v1 v1.66.6 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 

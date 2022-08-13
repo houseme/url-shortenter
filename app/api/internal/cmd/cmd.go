@@ -8,6 +8,7 @@ import (
 	"github.com/gogf/gf/v2/os/gcmd"
 
 	"github.com/houseme/url-shortenter/app/api/internal/controller"
+	"github.com/houseme/url-shortenter/app/api/internal/service"
 )
 
 var (
@@ -18,6 +19,13 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
+			s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
+			s.Group("/", func(group *ghttp.RouterGroup) {
+				group.Middleware(service.Middleware().MiddlewareHandlerResponse)
+				group.Bind(
+					controller.Home,
+				)
+			})
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
