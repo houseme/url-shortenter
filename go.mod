@@ -7,7 +7,7 @@ require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1723
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.4+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.2
-	github.com/chromedp/chromedp v0.8.3
+	github.com/chromedp/chromedp v0.8.4
 	github.com/chyroc/go-ptr v1.6.0
 	github.com/chyroc/lark v0.0.97
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
