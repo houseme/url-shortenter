@@ -4,10 +4,10 @@ go 1.17
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1723
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1727
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.4+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.2
-	github.com/chromedp/chromedp v0.8.3
+	github.com/chromedp/chromedp v0.8.4
 	github.com/chyroc/go-ptr v1.6.0
 	github.com/chyroc/lark v0.0.97
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
@@ -17,8 +17,8 @@ require (
 	github.com/houseme/gocrypto v1.0.0
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.473
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.473
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.475
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.475
 	go.opentelemetry.io/otel v1.9.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.9.0
 	go.opentelemetry.io/otel/sdk v1.9.0
