@@ -15,10 +15,6 @@ func New(ctx context.Context) (*AppEnv, error) {
 	defer span.End()
 
 	var v, err = g.Cfg().Get(ctx, "app")
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
 		err = gerror.Wrap(err, "config app get failed")
 		return nil, err
@@ -28,7 +24,6 @@ func New(ctx context.Context) (*AppEnv, error) {
 		return nil, err
 	}
 	var config = v.MapStrStr()
-
 	hostIP, _ := gipv4.GetIntranetIp()
 	config["hostIP"] = hostIP
 	return &AppEnv{
