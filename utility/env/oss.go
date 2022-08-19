@@ -2,7 +2,6 @@ package env
 
 import (
 	"context"
-	"errors"
 
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -31,18 +30,13 @@ func NewOssEnv(ctx context.Context, key string) (*ossEnv, error) {
 		logger = gconv.String(ctx.Value("logger"))
 	)
 
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
-		g.Log(logger).Error(ctx, " config oss fail err:", err)
 		err = gerror.Wrap(err, "config oss get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
 		g.Log(logger).Info(ctx, " config oss is empty")
-		err = gerror.Wrap(errors.New("config oss is empty"), "config oss is empty")
+		err = gerror.New("config oss is empty")
 		return nil, err
 	}
 	var config = v.MapStrStr()

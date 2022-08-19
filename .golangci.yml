@@ -109,7 +109,7 @@ linters-settings:
         severity: warning
         disabled: false
         arguments:
-          - [ "ID","URL","IP","HTTP","JSON","API","UID" ] # AllowList
+          - [ "ID","URL","IP","HTTP","JSON","API","UID","Id","Api","Uid","Http","Json","Ip","Url" ] # AllowList
           - [ "VM" ] # DenyList
       - name: string-format
         severity: warning

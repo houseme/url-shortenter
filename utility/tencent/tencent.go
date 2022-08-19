@@ -3,6 +3,7 @@ package tencent
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -24,7 +25,6 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	var (
 		cpf             = profile.NewClientProfile()
 		logger          = utility.Helper().Logger(ctx)
-		credential      *common.Credential
 		tencentEnv, err = env.NewTencentEnv(ctx)
 	)
 	if err != nil {
@@ -33,14 +33,14 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	}
 	g.Log(logger).Debug(ctx, "tencentEnv: ", tencentEnv.String(ctx))
 
-	credential = common.NewCredential(tencentEnv.SecretID(ctx), tencentEnv.SecretKey(ctx))
+	credential := common.NewCredential(tencentEnv.SecretID(ctx), tencentEnv.SecretKey(ctx))
 	cpf.HttpProfile.Endpoint = tencentEnv.Endpoint(ctx)
 	var (
 		client   *ims.Client
 		response *ims.ImageModerationResponse
 	)
 	if client, err = ims.NewClient(credential, tencentEnv.Region(ctx), cpf); err != nil {
-		g.Log(logger).Error(ctx, "ims.NewClient error: ", err)
+		err = gerror.Wrap(err, "ims.NewClient error")
 		return "", err
 	}
 
@@ -49,10 +49,11 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	request.FileUrl = common.StringPtr(fileName)
 	response, err = client.ImageModeration(request)
 	if _, ok := err.(*errors.TencentCloudSDKError); ok {
-		g.Log(logger).Error(ctx, "An API error has returned: ", err)
+		g.Log(logger).Error(ctx, "ims.ImageModeration error: ", err)
 	}
 	if err != nil {
-		g.Log(logger).Error(ctx, "client.ImageModeration error", err)
+		err = gerror.Wrap(err, "ims.ImageModeration error")
+		return "", err
 	}
 	g.Log(logger).Info(ctx, "response: ", response.ToJsonString())
 	return response.ToJsonString(), nil

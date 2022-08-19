@@ -66,12 +66,7 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 		logger = gconv.String(ctx.Value("logger"))
 	)
 
-	defer func() {
-		span.RecordError(err)
-	}()
-
 	if err != nil {
-		g.Log(logger).Error(ctx, " config alibaba fail err:", err)
 		err = gerror.Wrap(err, "config alibaba get failed")
 		return nil, err
 	}
