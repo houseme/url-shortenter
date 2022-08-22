@@ -1,19 +1,19 @@
 module github.com/houseme/url-shortenter
 
-go 1.17
+go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1732
-	github.com/aliyun/aliyun-oss-go-sdk v2.2.4+incompatible
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1734
+	github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.2
 	github.com/chromedp/chromedp v0.8.4
 	github.com/chyroc/go-ptr v1.6.0
 	github.com/chyroc/lark v0.0.97
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.2
-	github.com/gogf/gf/v2 v2.1.2
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.3
+	github.com/gogf/gf/v2 v2.1.3
 	github.com/houseme/gocrypto v1.0.0
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
@@ -36,11 +36,10 @@ require (
 	github.com/antchfx/htmlquery v1.2.5 // indirect
 	github.com/antchfx/xmlquery v1.3.12 // indirect
 	github.com/antchfx/xpath v1.2.1 // indirect
-	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
-	github.com/chromedp/cdproto v0.0.0-20220816211547-b8b15824df23 // indirect
+	github.com/chromedp/cdproto v0.0.0-20220822010834-25fb11339333 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.6 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -80,7 +79,6 @@ require (
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/rivo/uniseg v0.3.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
-	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/image v0.0.0-20220722155232-062f8c9fd539 // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
@@ -91,5 +89,3 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/rivo/uniseg v0.3.4 => github.com/rivo/uniseg v0.2.0
