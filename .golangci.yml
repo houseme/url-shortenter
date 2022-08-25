@@ -14,7 +14,7 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    - deadcode
+    # - deadcode
     - depguard
     - dogsled
     # - dupl
@@ -32,15 +32,15 @@ linters:
     - misspell
     - nolintlint
     - revive
-    - rowserrcheck
+    # - rowserrcheck
     # - staticcheck
-    - structcheck
+    # - structcheck
     # - stylecheck
     - typecheck
     - unconvert
     - unparam
     # - unused
-    - varcheck
+    # - varcheck
     - whitespace
 
 issues:
@@ -127,7 +127,7 @@ linters-settings:
       - name: function-result-limit
         severity: warning
         disabled: false
-        arguments: [4]
+        arguments: [ 4 ]
   funlen:
     # Checks the number of lines in a function.
     # If lower than 0, disable the check.
