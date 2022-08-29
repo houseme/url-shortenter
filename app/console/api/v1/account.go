@@ -19,11 +19,22 @@ type CreateAccountRes struct {
 
 // ModifyAccountReq is the request struct for the ModifyAccount endpoint.
 type ModifyAccountReq struct {
-	g.Meta `path:"/account/:account/update" tags:"Account Service" method:"Post" summary:"You say, I modify an account"`
+	g.Meta `path:"/account/:account/update" tags:"Account Service" method:"Post" summary:"modify an account"`
 	*model.ModifyAccountInput
 }
 
 // ModifyAccountRes is the response struct for the ModifyAccount endpoint.
 type ModifyAccountRes struct {
 	*model.ModifyAccountOutput
+}
+
+// ModifyPasswordReq is the request struct for the ModifyPassword endpoint.
+type ModifyPasswordReq struct {
+	g.Meta `path:"/account/:account/password" tags:"Account Service" method:"Post" summary:"modify password"`
+	*model.ModifyPasswordInput
+}
+
+// ModifyPasswordRes is the response struct for the ModifyPassword endpoint.
+type ModifyPasswordRes struct {
+	*model.ModifyPasswordOutput
 }

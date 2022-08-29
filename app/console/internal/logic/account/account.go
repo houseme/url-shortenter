@@ -38,9 +38,10 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		account = (*entity.Users)(nil)
 		output  = false
 	)
-	out = (*model.CreateAccountOutput)(&output)
 
 	g.Log(logger).Debug(ctx, "account-CreateAccount in:", in)
+
+	out = (*model.CreateAccountOutput)(&output)
 	if in.AuthAccountLevel > consts.AccountLevelBusiness {
 		err = gerror.New("Do not have permission to create a new account")
 		return
@@ -62,6 +63,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		err = gerror.New("account exist")
 		return
 	}
+	// 创建hash密码
 	var hashPwd string
 	if hashPwd, err = utility.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "hash password failed")

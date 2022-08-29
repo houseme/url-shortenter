@@ -41,7 +41,7 @@ func (c *cAccount) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) 
 	}()
 	res = &v1.CreateAccountRes{}
 	if res.CreateAccountOutput, err = service.Account().CreateAccount(ctx, req.CreateAccountInput); err != nil {
-		err = gerror.Wrap(err, "account-CreateAccount err:")
+		err = gerror.Wrap(err, "controller create account failed")
 	}
 	return
 }
@@ -61,7 +61,27 @@ func (c *cAccount) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) 
 	}()
 	res = &v1.ModifyAccountRes{}
 	if res.ModifyAccountOutput, err = service.Account().ModifyAccount(ctx, req.ModifyAccountInput); err != nil {
-		err = gerror.Wrap(err, "account-ModifyAccount err:")
+		err = gerror.Wrap(err, "controller modify account failed:")
+	}
+	return
+}
+
+// ModifyPassword is the handler for ModifyPassword
+func (c *cAccount) ModifyPassword(ctx context.Context, req *v1.ModifyPasswordReq) (res *v1.ModifyPasswordRes, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-ModifyPassword")
+	defer span.End()
+
+	var logger = utility.Helper().Logger(ctx)
+
+	defer func() {
+		if err != nil {
+			g.Log(logger).Error(ctx, "account-ModifyPassword err:", err)
+			span.RecordError(err, trace.WithAttributes(attribute.String("account-ModifyPassword-err", err.Error())))
+		}
+	}()
+	res = &v1.ModifyPasswordRes{}
+	if res.ModifyPasswordOutput, err = service.Account().ModifyPassword(ctx, req.ModifyPasswordInput); err != nil {
+		err = gerror.Wrap(err, "controller modify password failed:")
 	}
 	return
 }
