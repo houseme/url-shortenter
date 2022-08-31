@@ -42,7 +42,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		account      = (*entity.Users)(nil)
 		accessSecret = (*entity.UsersAccessSecret)(nil)
 	)
-	g.Log(logger).Debug(ctx, "auth-CreateAccessToken AppID:", in.AppID)
+	g.Log(logger).Debug(ctx, "auth create access token AppID:", in.AppID)
 	if err = dao.UsersAccessSecret.Ctx(ctx).Scan(&account, do.UsersAccessSecret{
 		SecretId:  in.AppID,
 		GrantType: gstr.ToLower(in.GrantType),

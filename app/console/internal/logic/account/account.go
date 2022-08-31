@@ -103,8 +103,9 @@ func (s *sAccount) ModifyAccount(ctx context.Context, in *model.ModifyAccountInp
 	defer span.End()
 
 	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "account-ModifyAccount in:", in)
+	g.Log(logger).Debug(ctx, "account modify account in:", in)
 
+	g.Log(logger).Debug(ctx, "account modify account end out:", out)
 	return
 }
 
@@ -120,7 +121,7 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 	)
 	out = (*model.ModifyPasswordOutput)(&output)
 
-	g.Log(logger).Debug(ctx, "account-ModifyPassword in:", in)
+	g.Log(logger).Debug(ctx, "account modify password in:", in)
 	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "query users failed  err:")
 		return
@@ -136,7 +137,7 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 		err = gerror.Wrap(err, "hash password failed")
 		return
 	}
-	g.Log(logger).Debug(ctx, "account-ModifyPassword hash password:", hashPwd)
+	g.Log(logger).Debug(ctx, "account modify password hash password:", hashPwd)
 	if _, err = dao.Users.Ctx(ctx).Where("id = ?", account.Id).Update(g.Map{
 		dao.Users.Columns().Password:   hashPwd,
 		dao.Users.Columns().ModifyTime: gdb.Raw("current_timestamp(6)"),
@@ -146,6 +147,6 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 	}
 	output = true
 	out = (*model.ModifyPasswordOutput)(&output)
-	g.Log(logger).Debug(ctx, "account-ModifyPassword end out:", out)
+	g.Log(logger).Debug(ctx, "account modify password end out:", out)
 	return
 }
