@@ -152,11 +152,6 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 
 	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
 	if err != nil {
-		resp.Message = "Internal error"
-		s.middlewareResponse(r, span, resp)
-		return false
-	}
-	if err != nil {
 		g.Log(logger).Error(r.GetCtx(), "authorization failed: ", err)
 		resp.Message = "authorization failed reason: " + err.Error()
 		s.middlewareResponse(r, span, resp)
@@ -165,7 +160,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 
 	if res == nil {
 		g.Log(logger).Debug(r.GetCtx(), "authorization failed")
-		resp.Message = "authorization failed reason: " + err.Error()
+		resp.Message = "authorization failed"
 		s.middlewareResponse(r, span, resp)
 		return false
 	}
