@@ -15,7 +15,7 @@ spec:
         app: eros-template
     spec:
       containers:
-        - name : main
+        - name: main
           image: eros-template
           imagePullPolicy: Always
 

@@ -2,88 +2,100 @@
 {{template "header.html" . -}}
 {{template "sidebar.html" . -}}
 <div class="pusher">
-{{template "admin-left-menu.html" . -}}
-{{template "admin-top-menu.html" . -}}
-<div id="admin-right-content" class="ui basic segment">  
-  <div class="ui grid stackable padded">
-    <div class="column">
-      <table class="ui celled striped table">
-        <thead>
-          <tr>
-            <th colspan="4">
-              <form class="ui form" id="form-search-logs" action="/admin/access_logs" method="get">
-                <div class="ui four fields">
-                  <div class="field">
-                    <div class="ui labeled action input">
-                      <div class="ui label">{{.prefix}}</div>
-                      <input name="url" type="text" value="{{.url}}" placeholder="短链接">
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui calendar" id="logs-search-start-date">
-                      <div class="ui labeled action input">
-                       <div class="ui label">起始时间</div>
-                       <input name="start" type="text" value="{{.start_date}}" placeholder="YYYY-MM-DD"/>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui calendar" id="logs-search-end-date">
-                      <div class="ui labeled action input">
-                        <div class="ui label">结束时间</div>
-                        <input name="end" type="text" value="{{.end_date}}" placeholder="YYYY-MM-DD"/>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field">
-                    <button class="ui teal right labeled icon button" type="submit"><i class="search icon"></i>查询</button>
-                    <a class="ui teal right labeled icon button" href="/admin/access_logs"><i class="undo alternate icon"></i>重置</a>
-                    <a class="ui teal right labeled icon button" href="javascript:export_accesslog()"><i class="download icon"></i>导出</a>
-                  </div>
-                </div>
-            </form>
-            <form id="form-export-logs" action="/admin/access_logs_export" method="post">
-              <input name="url" type="hidden" value="{{.url}}">              
-            </form>
-            </th>
-          </tr>
-          <tr>
-            <th colspan="4">
-              <h4>点击量：<span style="color: red">{{.total_count}} </span>  独立IP数：<span style="color: red">{{.unique_ip_count}}</span> </h4>
-            </th>
-          </tr>
-          <tr>
-            <th>短链接</th>
-            <th class="center aligned">访问时间</th>
-            <th class="center aligned">访问IP</th>
-            <th>UserAgent</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{range .logs}}          
-          <tr>            
-            <td class="collapsing"><a href="{{$.prefix}}{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a></td>            
-            <td class="center aligned collapsing">{{.AccessTime | date "2006-01-02 15:04:05"}}</td>
-            <td class="center aligned collapsing">{{.Ip.String}}</td>
-            <td>{{.UserAgent.String}}</td>                                  
-          </tr>
-          {{end}}
-        </tbody>
-        <tfoot>
-          <tr>            
-            <th colspan="4" class="center aligned">              
-              {{if not .first_page}}
-              <a class="ui small labeled icon button" href="/admin/access_logs?url={{.url}}&page={{sub .page 1}}&start={{.start_date}}&end={{.end_date}}"><i class="arrow alternate circle left outline icon"></i> 上一页</a>
-              {{end}}
-              {{if not .last_page}}
-              <a class="ui small labeled icon button" href="/admin/access_logs?url={{.url}}&page={{add .page 1}}&start={{.start_date}}&end={{.end_date}}"><i class="arrow alternate circle right outline icon"></i> 下一页</a>
-              {{end}}              
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+    {{template "admin-left-menu.html" . -}}
+    {{template "admin-top-menu.html" . -}}
+    <div id="admin-right-content" class="ui basic segment">
+        <div class="ui grid stackable padded">
+            <div class="column">
+                <table class="ui celled striped table">
+                    <thead>
+                    <tr>
+                        <th colspan="4">
+                            <form class="ui form" id="form-search-logs" action="/admin/access_logs" method="get">
+                                <div class="ui four fields">
+                                    <div class="field">
+                                        <div class="ui labeled action input">
+                                            <div class="ui label">{{.prefix}}</div>
+                                            <input name="url" type="text" value="{{.url}}" placeholder="短链接">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui calendar" id="logs-search-start-date">
+                                            <div class="ui labeled action input">
+                                                <div class="ui label">起始时间</div>
+                                                <input name="start" type="text" value="{{.start_date}}"
+                                                       placeholder="YYYY-MM-DD"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui calendar" id="logs-search-end-date">
+                                            <div class="ui labeled action input">
+                                                <div class="ui label">结束时间</div>
+                                                <input name="end" type="text" value="{{.end_date}}"
+                                                       placeholder="YYYY-MM-DD"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <button class="ui teal right labeled icon button" type="submit"><i
+                                                class="search icon"></i>查询
+                                        </button>
+                                        <a class="ui teal right labeled icon button" href="/admin/access_logs"><i
+                                                class="undo alternate icon"></i>重置</a>
+                                        <a class="ui teal right labeled icon button"
+                                           href="javascript:export_accesslog()"><i class="download icon"></i>导出</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="form-export-logs" action="/admin/access_logs_export" method="post">
+                                <input name="url" type="hidden" value="{{.url}}">
+                            </form>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="4">
+                            <h4>点击量：<span style="color: red">{{.total_count}} </span> 独立IP数：<span
+                                    style="color: red">{{.unique_ip_count}}</span></h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>短链接</th>
+                        <th class="center aligned">访问时间</th>
+                        <th class="center aligned">访问IP</th>
+                        <th>UserAgent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .logs}}
+                    <tr>
+                        <td class="collapsing"><a href="{{$.prefix}}{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a>
+                        </td>
+                        <td class="center aligned collapsing">{{.AccessTime | date "2006-01-02 15:04:05"}}</td>
+                        <td class="center aligned collapsing">{{.Ip.String}}</td>
+                        <td>{{.UserAgent.String}}</td>
+                    </tr>
+                    {{end}}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="4" class="center aligned">
+                            {{if not .first_page}}
+                            <a class="ui small labeled icon button"
+                               href="/admin/access_logs?url={{.url}}&page={{sub .page 1}}&start={{.start_date}}&end={{.end_date}}"><i
+                                    class="arrow alternate circle left outline icon"></i> 上一页</a>
+                            {{end}}
+                            {{if not .last_page}}
+                            <a class="ui small labeled icon button"
+                               href="/admin/access_logs?url={{.url}}&page={{add .page 1}}&start={{.start_date}}&end={{.end_date}}"><i
+                                    class="arrow alternate circle right outline icon"></i> 下一页</a>
+                            {{end}}
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div><!--end fo grid-->
     </div>
-  </div><!--end fo grid-->
-</div> 
 </div><!--end of pusher-->
 {{end -}}
