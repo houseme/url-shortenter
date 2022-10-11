@@ -35,9 +35,7 @@ import (
 type sHome struct {
 }
 
-var (
-	sfg singleflight.Group
-)
+var sfg singleflight.Group
 
 func init() {
 	service.RegisterHome(initHome())
@@ -70,7 +68,9 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		return "", err
 	}
 	defer func() {
-		_ = conn.Close(ctx)
+		if errs := conn.Close(ctx); errs != nil {
+			g.Log(logger).Error(ctx, "failed to close redis connection err:", errs)
+		}
 	}()
 
 	var val *gvar.Var

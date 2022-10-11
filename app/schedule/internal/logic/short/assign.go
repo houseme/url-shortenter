@@ -39,8 +39,14 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 	)
 	g.Log(logger).Info(ctx, "AssignTask start")
 
+	defer func() {
+		if err != nil {
+			g.Log(logger).Error(ctx, "AssignTask failed:", err)
+		}
+		g.Log(logger).Info(ctx, "AssignTask end")
+	}()
+
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid, CollectState: consts.ShortCollectStateProcessing}).Scan(&list); err != nil {
-		g.Log(logger).Error(ctx, "AssignTask dao.ShortUrls.Ctx(ctx).Where failed:", err)
 		err = gerror.Wrap(err, "AssignTask dao.ShortUrls.Ctx(ctx).Where failed")
 		return err
 	}
@@ -57,8 +63,8 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 	)
 	g.Log(logger).Info(ctx, "AssignTask list len", llen)
 	defer func() {
-		if err := conn.Close(ctx); err != nil {
-			g.Log(logger).Error(ctx, "AssignTask conn.Close failed:", err)
+		if errs := conn.Close(ctx); errs != nil {
+			g.Log(logger).Error(ctx, "AssignTask conn.Close failed:", errs)
 		}
 		g.Log(logger).Info(ctx, "AssignTask conn.Close")
 	}()
@@ -84,10 +90,15 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 		err    error
 	)
 	g.Log(logger).Info(ctx, "AuditAssignTask start")
+	defer func() {
+		if err != nil {
+			g.Log(logger).Error(ctx, "AuditAssignTask failed:", err)
+		}
+		g.Log(logger).Info(ctx, "AuditAssignTask end")
+	}()
 
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid,
 		CollectState: consts.ShortCollectStateSuccess}).Scan(&list); err != nil {
-		g.Log(logger).Error(ctx, "AuditAssignTask dao.ShortUrls.Ctx(ctx).Where failed:", err)
 		err = gerror.Wrap(err, "AuditAssignTask dao.ShortUrls.Ctx(ctx).Where failed")
 		return err
 	}
@@ -104,8 +115,8 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 	)
 	g.Log(logger).Info(ctx, "AuditAssignTask list len", llen)
 	defer func() {
-		if err := conn.Close(ctx); err != nil {
-			g.Log(logger).Error(ctx, "AuditAssignTask conn.Close failed:", err)
+		if errs := conn.Close(ctx); errs != nil {
+			g.Log(logger).Error(ctx, "AuditAssignTask conn.Close failed:", errs)
 		}
 	}()
 	for i := 0; i < llen; i++ {
@@ -153,17 +164,21 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 		result    *gvar.Var
 	)
 
+	defer func() {
+		if errs := conn.Close(ctx); errs != nil {
+			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", errs)
+		}
+		g.Log(logger).Info(ctx, "QueryShortAndGrabAudit conn.Close")
+	}()
+
 	if err != nil {
 		g.Log(logger).Error(ctx, "QueryShortAndGrabAudit g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed:", err)
 		return
 	}
 
 	defer func() {
-		if err != nil {
-			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", err)
-		}
-		if err := conn.Close(ctx); err != nil {
-			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", err)
+		if errs := conn.Close(ctx); errs != nil {
+			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", errs)
 		}
 	}()
 	if result, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx)); err != nil {
