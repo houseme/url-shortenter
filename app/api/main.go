@@ -11,14 +11,11 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	_ "github.com/houseme/url-shortenter/app/api/internal/packed"
-
+	"github.com/houseme/url-shortenter/app/api/internal/cmd"
 	_ "github.com/houseme/url-shortenter/app/api/internal/logic"
-
+	_ "github.com/houseme/url-shortenter/app/api/internal/packed"
 	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility/env"
-
-	"github.com/houseme/url-shortenter/app/api/internal/cmd"
 )
 
 func main() {

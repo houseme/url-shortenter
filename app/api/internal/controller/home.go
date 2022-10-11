@@ -10,6 +10,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/gogf/gf/v2/errors/gcode"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/text/gstr"
@@ -29,21 +31,24 @@ var (
 type cHome struct{}
 
 // Index is the controller for the home page.
+// is the handler for the home page GET "/:short"
 func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 
+	var (
+		r      = g.RequestFromCtx(ctx)
+		logger = utility.Helper().Logger(ctx)
+		out    string
+	)
+
 	defer func() {
 		if err != nil {
-			g.Log(utility.Helper().Logger(ctx)).Error(ctx, "home-index err:", err)
+			g.Log(logger).Error(ctx, "home-index err:", err)
 			span.RecordError(err, trace.WithAttributes(attribute.String("home-index-err", err.Error())))
 		}
 	}()
-	var (
-		out    string
-		logger = utility.Helper().Logger(ctx)
-		r      = g.RequestFromCtx(ctx)
-	)
+
 	g.Log(logger).Debug(ctx, "home-index in:", req)
 	req.RawQuery = r.Request.URL.RawQuery
 	req.ShortAll = r.Request.URL.String()
@@ -54,7 +59,7 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 
 	g.Log(logger).Debug(ctx, "home-index modify req:", req)
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
-		g.Log(logger).Error(ctx, "home-index err:", err)
+		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
 		return
 	}
 

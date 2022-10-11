@@ -21,11 +21,11 @@ type sMiddleware struct {
 }
 
 func init() {
-	service.RegisterMiddleware(new())
+	service.RegisterMiddleware(initMiddleware())
 }
 
 // new 中间件
-func new() *sMiddleware {
+func initMiddleware() *sMiddleware {
 	return &sMiddleware{}
 }
 

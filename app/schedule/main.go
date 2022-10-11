@@ -5,14 +5,11 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	_ "github.com/houseme/url-shortenter/app/schedule/internal/packed"
-
+	"github.com/houseme/url-shortenter/app/schedule/internal/cmd"
 	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic"
-
+	_ "github.com/houseme/url-shortenter/app/schedule/internal/packed"
 	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility/env"
-
-	"github.com/houseme/url-shortenter/app/schedule/internal/cmd"
 )
 
 func main() {
