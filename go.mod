@@ -20,7 +20,7 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.513
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.513
 	go.opentelemetry.io/otel v1.11.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.10.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.11.0
 	go.opentelemetry.io/otel/sdk v1.11.0
 	go.opentelemetry.io/otel/trace v1.11.0
 	golang.org/x/crypto v0.0.0-20221010152910-d6f0a8c073c2
