@@ -4,12 +4,12 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1818
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1821
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3-0.20221010143458-e563459b72df
 	github.com/chromedp/chromedp v0.8.6
 	github.com/chyroc/go-ptr v1.6.0
-	github.com/chyroc/lark v0.0.97
+	github.com/chyroc/lark v0.0.98
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.1
