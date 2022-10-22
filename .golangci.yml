@@ -136,8 +136,40 @@ linters-settings:
     # Checks the number of statements in a function.
     # If lower than 0, disable the check.
     # Default: 40
-    statements: 160
+    statements: -1
   goconst:
+    # Minimal length of string constant.
+    # Default: 3
+    min-len: 2
+    # Minimum occurrences of constant string count to trigger issue.
+    # Default: 3
+    # For subsequent optimization, the value is reduced.
+    min-occurrences: 3
     # Ignore test files.
     # Default: false
     ignore-tests: true
+    # Look for existing constants matching the values.
+    # Default: true
+    match-constant: false
+    # Search also for duplicated numbers.
+    # Default: false
+    numbers: true
+    # Minimum value, only works with goconst.numbers
+    # Default: 3
+    min: 3
+    # Maximum value, only works with goconst.numbers
+    # Default: 3
+    max: 3
+    # Ignore when constant is not used as function argument.
+    # Default: true
+    ignore-calls: false
+  gocritic:
+    disabled-checks:
+      - ifElseChain
+      - assignOp
+      - appendAssign
+      - singleCaseSwitch
+  gocyclo:
+    # Minimal code complexity to report.
+    # Default: 30 (but we recommend 10-20)
+    min-complexity: 10
