@@ -132,8 +132,8 @@ github.com/chromedp/sysutil v1.0.0 h1:+ZxhTpfpZlmchB58ih/LBHX52ky7w2VhQVKQMucy3I
 github.com/chromedp/sysutil v1.0.0/go.mod h1:kgWmDdq8fTzXYcKIBqIYvRRTnYb9aNS9moAV0xufSww=
 github.com/chyroc/go-ptr v1.6.0 h1:4GwCNrNfk4806eQKbHO2A/N/YOLW6jHIrBPWKfMe6F0=
 github.com/chyroc/go-ptr v1.6.0/go.mod h1:FKNjNg3sCLx7VhQGwuml6sITX1mvhKS0Je9uN9tt65Q=
-github.com/chyroc/lark v0.0.98 h1:o3ClNGCakujDm4etEvueGLuqB84gnvRDZDJGStb8Aso=
-github.com/chyroc/lark v0.0.98/go.mod h1:ZMmVyuBFmzLkiVKuORy7nEoNK/WvDh77cMsc3laJ5H8=
+github.com/chyroc/lark v0.0.100 h1:3Hafkr70YVCr8nxNK9+9zOC69lf53dhQrruXYRqpNiQ=
+github.com/chyroc/lark v0.0.100/go.mod h1:ZMmVyuBFmzLkiVKuORy7nEoNK/WvDh77cMsc3laJ5H8=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
