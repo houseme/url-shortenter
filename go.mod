@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1842
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.3
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3-0.20221010143458-e563459b72df
 	github.com/chromedp/chromedp v0.8.6
@@ -12,8 +12,8 @@ require (
 	github.com/chyroc/lark v0.0.100
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.1
-	github.com/gogf/gf/v2 v2.2.1
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.2
+	github.com/gogf/gf/v2 v2.2.2
 	github.com/houseme/gocrypto v1.0.0
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
@@ -73,6 +73,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/nlnwa/whatwg-url v0.1.2 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
+	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.13.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
