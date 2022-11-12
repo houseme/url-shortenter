@@ -17,7 +17,7 @@ type DefaultHandlerResponse struct {
 
 // HomeIndexInput is the request struct for index.
 type HomeIndexInput struct {
-	Base
+	*Base `json:"-" dc:"基础模型"`
 }
 
 // HomeIndexOutput is the response struct for index.

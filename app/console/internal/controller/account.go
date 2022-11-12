@@ -12,8 +12,6 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 
 	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
@@ -32,15 +30,9 @@ func (c *cAccount) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) 
 	defer span.End()
 
 	var logger = utility.Helper().Logger(ctx)
-
-	defer func() {
-		if err != nil {
-			g.Log(logger).Error(ctx, "account-CreateAccount err:", err)
-			span.RecordError(err, trace.WithAttributes(attribute.String("account-CreateAccount-err", err.Error())))
-		}
-	}()
 	res = &v1.CreateAccountRes{}
 	if res.CreateAccountOutput, err = service.Account().CreateAccount(ctx, req.CreateAccountInput); err != nil {
+		g.Log(logger).Error(ctx, "account-CreateAccount err:", err)
 		err = gerror.Wrap(err, "controller create account failed")
 	}
 	return
@@ -52,15 +44,9 @@ func (c *cAccount) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) 
 	defer span.End()
 
 	var logger = utility.Helper().Logger(ctx)
-
-	defer func() {
-		if err != nil {
-			g.Log(logger).Error(ctx, "account-ModifyAccount err:", err)
-			span.RecordError(err, trace.WithAttributes(attribute.String("account-ModifyAccount-err", err.Error())))
-		}
-	}()
 	res = &v1.ModifyAccountRes{}
 	if res.ModifyAccountOutput, err = service.Account().ModifyAccount(ctx, req.ModifyAccountInput); err != nil {
+		g.Log(logger).Error(ctx, "account-ModifyAccount err:", err)
 		err = gerror.Wrap(err, "controller modify account failed:")
 	}
 	return
@@ -72,15 +58,9 @@ func (c *cAccount) ModifyPassword(ctx context.Context, req *v1.ModifyPasswordReq
 	defer span.End()
 
 	var logger = utility.Helper().Logger(ctx)
-
-	defer func() {
-		if err != nil {
-			g.Log(logger).Error(ctx, "account-ModifyPassword err:", err)
-			span.RecordError(err, trace.WithAttributes(attribute.String("account-ModifyPassword-err", err.Error())))
-		}
-	}()
 	res = &v1.ModifyPasswordRes{}
 	if res.ModifyPasswordOutput, err = service.Account().ModifyPassword(ctx, req.ModifyPasswordInput); err != nil {
+		g.Log(logger).Error(ctx, "account-ModifyPassword err:", err)
 		err = gerror.Wrap(err, "controller modify password failed:")
 	}
 	return
