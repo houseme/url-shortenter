@@ -230,8 +230,8 @@ github.com/gobwas/ws v1.1.0/go.mod h1:nzvNcVha5eUziGrbxFCo6qFIojQHjJV5cLYIbezhfL
 github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3 h1:oq5axr59yrdcmtu8aJ8yEBKqkOQNATPp2eDx6VONLUY=
 github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3/go.mod h1:5t2XPLMSJYOJSM5FGPSTYdlod0Vts2err70Z6gfvY24=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.2 h1:93FP18bid15qLeWmtAu184u1tp0dctQ06PBrJAyrdbc=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.2/go.mod h1:z+/0qiOwMroAnj5ESuobTv0l5P83rf+XR3r6Fj8WJyk=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.3 h1:tsncgEmqZgBAZQfZYgUxJGEoD/KcxaPzZEz5oeRzH6M=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.3/go.mod h1:z+/0qiOwMroAnj5ESuobTv0l5P83rf+XR3r6Fj8WJyk=
 github.com/gogf/gf/v2 v2.0.0/go.mod h1:apktt6TleWtCIwpz63vBqUnw8MX8gWKoZyxgDpXFtgM=
 github.com/gogf/gf/v2 v2.2.3 h1:jtVTYrSDr6RuBNDFzpsyR/L4UDjAHr3CfNvWlIQlgZo=
 github.com/gogf/gf/v2 v2.2.3/go.mod h1:thvkyb43RWUu/m05sRm4CbH9r7t7/FrW2M56L9Ystwk=
