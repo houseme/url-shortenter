@@ -130,8 +130,9 @@ github.com/chromedp/chromedp v0.8.6 h1:KobeeqR2dpfKSG1prS3Y6+FbffMmGC6xmAobRXA9Q
 github.com/chromedp/chromedp v0.8.6/go.mod h1:nBYHoD6YSNzrr82cIeuOzhw1Jo/s2o0QQ+ifTeoCZ+c=
 github.com/chromedp/sysutil v1.0.0 h1:+ZxhTpfpZlmchB58ih/LBHX52ky7w2VhQVKQMucy3Ic=
 github.com/chromedp/sysutil v1.0.0/go.mod h1:kgWmDdq8fTzXYcKIBqIYvRRTnYb9aNS9moAV0xufSww=
-github.com/chyroc/go-ptr v1.6.0 h1:4GwCNrNfk4806eQKbHO2A/N/YOLW6jHIrBPWKfMe6F0=
 github.com/chyroc/go-ptr v1.6.0/go.mod h1:FKNjNg3sCLx7VhQGwuml6sITX1mvhKS0Je9uN9tt65Q=
+github.com/chyroc/go-ptr v1.7.0 h1:wwm53+SeMvpQbBcsZviNPlz2djpxyELjVOZFHtUjHho=
+github.com/chyroc/go-ptr v1.7.0/go.mod h1:+AAlVrPed1XbNyqZ7r/J3o79V1awCvd5wrYkxu8tsow=
 github.com/chyroc/lark v0.0.100 h1:3Hafkr70YVCr8nxNK9+9zOC69lf53dhQrruXYRqpNiQ=
 github.com/chyroc/lark v0.0.100/go.mod h1:ZMmVyuBFmzLkiVKuORy7nEoNK/WvDh77cMsc3laJ5H8=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
