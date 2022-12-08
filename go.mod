@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.78
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.80
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3-0.20221010143458-e563459b72df
 	github.com/chromedp/chromedp v0.8.6
@@ -23,7 +23,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.2
 	go.opentelemetry.io/otel/sdk v1.11.2
 	go.opentelemetry.io/otel/trace v1.11.2
-	golang.org/x/crypto v0.3.0
+	golang.org/x/crypto v0.4.0
 	golang.org/x/sync v0.1.0
 	google.golang.org/protobuf v1.28.1
 
@@ -82,9 +82,9 @@ require (
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/image v0.1.0 // indirect
-	golang.org/x/net v0.2.0 // indirect
-	golang.org/x/sys v0.2.0 // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/net v0.3.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/time v0.2.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
