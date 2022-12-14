@@ -14,7 +14,7 @@ require (
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.5
 	github.com/gogf/gf/v2 v2.2.5
-	github.com/houseme/gocrypto v1.0.0
+	github.com/houseme/gocrypto v1.2.0
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.558
