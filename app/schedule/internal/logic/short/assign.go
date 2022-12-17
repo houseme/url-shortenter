@@ -20,10 +20,10 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/alibaba"
 	"github.com/houseme/url-shortenter/utility/cache"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 	"github.com/houseme/url-shortenter/utility/tencent"
 )
 
@@ -33,7 +33,7 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 		list   = ([]*entity.ShortUrls)(nil)
 		err    error
 	)
@@ -85,7 +85,7 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 		list   = ([]*entity.ShortUrls)(nil)
 		err    error
 	)
@@ -136,12 +136,12 @@ func (s *sShort) ExecuteAudit(ctx context.Context) {
 	defer span.End()
 	var (
 		pool   = grpool.New(10)
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 	)
 
 	g.Log(logger).Info(ctx, "Execute start")
 	gtimer.SetInterval(ctx, 5*time.Second, func(ctx context.Context) {
-		ctx = utility.Helper().SetLogger(ctx, "schedule")
+		ctx = helper.Helper().SetLogger(ctx, "schedule")
 		g.Log(logger).Info(ctx, "Execute loop")
 		for i := 0; i < 5; i++ {
 			if err := pool.Add(ctx, s.QueryShortAndGrabAudit); err != nil {
@@ -158,7 +158,7 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-QueryShortAndGrabAudit")
 	defer span.End()
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
 		shortURL  = (*entity.ShortUrls)(nil)
 		result    *gvar.Var
@@ -218,7 +218,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	defer span.End()
 
 	var (
-		logger      = utility.Helper().Logger(ctx)
+		logger      = helper.Helper().Logger(ctx)
 		appEnv, err = env.New(ctx)
 	)
 	g.Log(logger).Info(ctx, "GrabImageAudit shortURL: ", shortURL)
@@ -232,7 +232,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 		lastID             int64
 		content            []byte
 		now                = gtime.Now()
-		trxID              = utility.Helper().InitTrxID(ctx, shortURL.AccountNo)
+		trxID              = helper.Helper().InitTrxID(ctx, shortURL.AccountNo)
 		filePathHTML       = "html/" + gconv.String(shortURL.ShortNo) + "/" + now.Format("Ymd") + "/audit/" + gconv.String(trxID)
 		fileNameHTML       = filePathHTML + "/" + now.TimestampMicroStr() + "-" + grand.S(32) + ".html"
 		filePathScreenshot = "screenshot/" + gconv.String(shortURL.ShortNo) + "/" + now.Format("Ymd") + "/audit/" + gconv.String(trxID)
@@ -293,7 +293,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	}
 
 	// 1、抓起网页内容，
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
 		g.Log(logger).Error(ctx, "GrabImageAudit CheckFileExists html failed:", err)
 	}
 	if content, err = s.RequestContent(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameHTML); err != nil {
@@ -303,7 +303,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 
 	cr.Content = string(content)
 	shortAudit.ContentPath = fileNameHTML
-	shortAudit.HashContent = utility.Helper().Sha256Of(content)
+	shortAudit.HashContent = helper.Helper().Sha256Of(content)
 	shortAudit.HashState = 100
 	if shortAudit.HashContent != shortMirror.HashContent {
 		shortAudit.HashState = 200
@@ -311,7 +311,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	cr.HashContent = shortAudit.HashContent
 
 	// 2、网页图片
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
 		g.Log(logger).Error(ctx, "GrabImageAudit CheckFileExists Screenshot failed:", err)
 	}
 	if err = s.DownloadFullScreenshot(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameScreenshot); err == nil {
@@ -366,7 +366,7 @@ func (s *sShort) ReportHashChange(ctx context.Context, shortAudit *entity.ShortA
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 		err    error
 	)
 	g.Log(logger).Info(ctx, "ReportHashChange shortAudit: ", shortAudit)

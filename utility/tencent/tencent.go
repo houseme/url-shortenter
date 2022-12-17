@@ -12,8 +12,8 @@ import (
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	ims "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims/v20201229"
 
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // Main .
@@ -24,7 +24,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	// 请替换成您的AccessKey ID、AccessKey Secret。
 	var (
 		cpf             = profile.NewClientProfile()
-		logger          = utility.Helper().Logger(ctx)
+		logger          = helper.Helper().Logger(ctx)
 		tencentEnv, err = env.NewTencentEnv(ctx)
 	)
 	if err != nil {

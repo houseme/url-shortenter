@@ -6,14 +6,14 @@ import (
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/gogf/gf/v2/frame/g"
 
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // Upload file upload oss
 func Upload(ctx context.Context, fileName, basePath string) error {
 	var (
-		logger          = utility.Helper().Logger(ctx)
+		logger          = helper.Helper().Logger(ctx)
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
 	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))

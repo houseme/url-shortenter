@@ -28,8 +28,8 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/internal/protocol"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sHome struct {
@@ -51,7 +51,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn      *gredis.RedisConn
 		isSendLog bool
 	)
@@ -153,11 +153,11 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			ServerIp:   serverIP,
 		}
 		val    *gvar.Var
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 	)
 	if err != nil {
 		g.Log(logger).Error(ctx, "home-new-access-log get intranet ip failed err:", err)
-		l.ServerIp = utility.Helper().GetOutBoundIP(ctx)
+		l.ServerIp = helper.Helper().GetOutBoundIP(ctx)
 	}
 
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
@@ -173,7 +173,7 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		isSendLog bool
 		serverIP  string
 		t         = gtime.Now()

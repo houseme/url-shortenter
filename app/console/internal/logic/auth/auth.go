@@ -23,8 +23,8 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sAuth struct {
@@ -38,13 +38,13 @@ func initAuth() *sAuth {
 	return &sAuth{}
 }
 
-// CreateAccessToken creates a initAuth access token.
+// CreateAccessToken creates an initAuth access token.
 func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTokenInput) (out *model.CreateAccessTokenOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-auth-CreateAccessToken")
 	defer span.End()
 
 	var (
-		logger       = utility.Helper().Logger(ctx)
+		logger       = helper.Helper().Logger(ctx)
 		account      = (*entity.Users)(nil)
 		accessSecret = (*entity.UsersAccessSecret)(nil)
 	)
@@ -66,7 +66,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 	}
 
 	var aesHash string
-	if aesHash, err = utility.Helper().AESEncrypt(ctx, []byte(accessSecret.SaltKey), []byte(accessSecret.Salt+in.Secret)); err != nil {
+	if aesHash, err = helper.Helper().AESEncrypt(ctx, []byte(accessSecret.SaltKey), []byte(accessSecret.Salt+in.Secret)); err != nil {
 		err = gerror.Wrap(err, "AESEncrypt failed")
 		return
 	}
@@ -75,7 +75,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		err = gerror.New("SecretKey is invalid")
 		return
 	}
-	// salt 16位 saltkey 16位 需要加密的内容位 salt+secret aes加密之后于数据库对比  检验完成 处理accessToken 相关的处理
+	// salt 16位 salt key 16位 需要加密的内容位 salt+secret aes加密之后于数据库对比  检验完成 处理accessToken 相关的处理
 	// 创建accessToken
 	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{
 		AccountNo:  accessSecret.AccountNo,
@@ -105,7 +105,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		v     *gvar.Var
 		token string
 	)
-	if token, err = utility.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
+	if token, err = helper.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
 		err = gerror.Wrap(err, "CreateAccessToken failed")
 		return
 	}
@@ -133,7 +133,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 	defer span.End()
 
 	var (
-		logger  = utility.Helper().Logger(ctx)
+		logger  = helper.Helper().Logger(ctx)
 		account = (*entity.Users)(nil)
 	)
 	g.Log(logger).Debug(ctx, "auth-authorization params account:", in.Account)
@@ -152,7 +152,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 	}
 	// 比对密码
 	var shaHash string
-	if shaHash, err = utility.Helper().PasswordBase58Hash(in.Password); err != nil {
+	if shaHash, err = helper.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "PasswordBase58Hash failed")
 		return
 	}
@@ -172,7 +172,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		v     *gvar.Var
 		token string
 	)
-	if token, err = utility.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
+	if token, err = helper.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
 		err = gerror.Wrap(err, "CreateAccessToken failed")
 		return
 	}
@@ -202,7 +202,7 @@ func (s *sAuth) setRedisToken(ctx context.Context, in *model.TokenCache) (val *g
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		redisName = cache.RedisCache().ShortAccessTokenConn(ctx)
 		redisKey  = cache.RedisCache().ShortAuthorizationKey(ctx, in.Token)
 	)

@@ -23,7 +23,7 @@ func SetAttributes(r *ghttp.Request, span *gtrace.Span) {
 }
 
 // CommonEventOption .
-func CommonEventOption(ctx context.Context, namespace string) trace.SpanStartEventOption {
+func CommonEventOption(_ context.Context, namespace string) trace.SpanStartEventOption {
 	return trace.WithAttributes(
 		semconv.ServiceNamespaceKey.String(namespace),
 		semconv.TelemetrySDKNameKey.String(telemetrySDKName),

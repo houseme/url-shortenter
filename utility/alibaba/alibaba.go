@@ -12,8 +12,8 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/util/gconv"
 
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // Main .
@@ -23,7 +23,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 
 	// 请替换成您的AccessKey ID、AccessKey Secret。
 	var (
-		logger          = utility.Helper().Logger(ctx)
+		logger          = helper.Helper().Logger(ctx)
 		client          *green.Client
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)

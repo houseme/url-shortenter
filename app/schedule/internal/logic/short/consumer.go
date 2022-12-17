@@ -14,8 +14,8 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 var sfg singleflight.Group
@@ -26,7 +26,7 @@ func (s *sShort) AccessLog(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *sShort) dealAccessLog(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		val       *gvar.Var
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
@@ -133,7 +133,7 @@ func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
 	if err != nil {
@@ -174,7 +174,7 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		val       *gvar.Var
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
@@ -291,7 +291,7 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
 	)
 	if err != nil {

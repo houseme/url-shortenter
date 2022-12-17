@@ -14,7 +14,7 @@ import (
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sDomain struct {
@@ -33,7 +33,7 @@ func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAut
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "CreateDomainAuthorize params:", in)
 
 	return
@@ -44,7 +44,7 @@ func (s *sDomain) QueryDomainAuthorize(ctx context.Context, in *model.QueryDomai
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "QueryDomainAuthorize params:", in)
 
 	return
@@ -55,7 +55,7 @@ func (s *sDomain) UpdateDomainAuthorize(ctx context.Context, in *model.DomainAut
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "UpdateDomainAuthorize params:", in)
 
 	return
@@ -66,7 +66,7 @@ func (s *sDomain) DeleteDomainAuthorize(ctx context.Context, in *model.DomainAut
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "DeleteDomainAuthorize params:", in)
 
 	return
@@ -77,7 +77,7 @@ func (s *sDomain) DomainAuthorizeDetail(ctx context.Context, in *model.DomainAut
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeDetail")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "DomainAuthorizeDetail params:", in)
 
 	return
@@ -88,7 +88,7 @@ func (s *sDomain) DomainAuthorizeList(ctx context.Context, in *model.DomainAutho
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeList")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	g.Log(logger).Debug(ctx, "DomainAuthorizeList params:", in)
 
 	return

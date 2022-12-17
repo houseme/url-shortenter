@@ -20,7 +20,7 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/grand"
 
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // Query is a function for icp query
@@ -264,7 +264,7 @@ func (i *ICP) Request(ctx context.Context, contentType, path string, params inte
 			"CLIENT_IP":       i.ip,
 			"X-FORWARDED-FOR": i.ip,
 		}
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 	)
 	g.Log(logger).Debug(ctx, "icp-Request header", header, " params:", params)
 	client := g.Client().SetHeaderMap(header)
@@ -307,7 +307,7 @@ func (i *ICP) authorize(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		timestamp = gtime.Now().TimestampStr()
 		authKey   = i.Md5("testtest" + timestamp)
 		req       = &AuthorizeRequest{
@@ -341,7 +341,7 @@ func (i *ICP) QueryICP(ctx context.Context, domain string) (*QueryResponse, erro
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-icp-QueryICP")
 	defer span.End()
 	var (
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 		req    = &QueryRequest{
 			UnitName: domain,
 		}

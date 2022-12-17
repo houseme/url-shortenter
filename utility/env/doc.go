@@ -25,26 +25,26 @@ const (
 )
 
 // Dev .
-func (u *utilEnv) Dev(ctx context.Context) string {
+func (u *utilEnv) Dev(_ context.Context) string {
 	return dev
 }
 
 // Prod .
-func (u *utilEnv) Prod(ctx context.Context) string {
+func (u *utilEnv) Prod(_ context.Context) string {
 	return prod
 }
 
 // Test .
-func (u *utilEnv) Test(ctx context.Context) string {
+func (u *utilEnv) Test(_ context.Context) string {
 	return test
 }
 
 // Develop .
-func (u *utilEnv) Develop(ctx context.Context) string {
+func (u *utilEnv) Develop(_ context.Context) string {
 	return develop
 }
 
 // Production .
-func (u *utilEnv) Production(ctx context.Context) string {
+func (u *utilEnv) Production(_ context.Context) string {
 	return production
 }

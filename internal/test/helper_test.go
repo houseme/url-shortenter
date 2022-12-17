@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 func Test_utilHelper_AESEncrypt(t *testing.T) {
@@ -35,7 +35,7 @@ func Test_utilHelper_AESEncrypt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotDst, err := utility.Helper().AESEncrypt(tt.args.ctx, tt.args.key, tt.args.data)
+			gotDst, err := helper.Helper().AESEncrypt(tt.args.ctx, tt.args.key, tt.args.data)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AESEncrypt() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -52,7 +52,7 @@ func Benchmark_utilHelper_AESEncrypt(b *testing.B) {
 	ctx := context.Background()
 	key := []byte("kNsSjdNZDvXkXch2")
 	data := []byte("jNvDQnU8VLvXdRPytEBBTPmrekmZDZdaNKyX3SEPbEunWGYb")
-	u := utility.Helper()
+	u := helper.Helper()
 	for i := 0; i < b.N; i++ {
 		_, err := u.AESEncrypt(ctx, key, data)
 		if err != nil {
@@ -83,7 +83,7 @@ func Test_utilHelper_Sha256OfShort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			got, err := u.Sha256OfShort(tt.args.input)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Sha256OfShort() error = %v, wantErr %v", err, tt.wantErr)
@@ -119,7 +119,7 @@ func Test_utilHelper_PasswordBase58Hash(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			got, err := u.PasswordBase58Hash(tt.args.password)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("PasswordBase58Hash() error = %v, wantErr %v", err, tt.wantErr)
@@ -156,7 +156,7 @@ func Test_utilHelper_CreateAccessToken(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			gotToken, err := u.CreateAccessToken(tt.args.ctx, tt.args.accountNo)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("CreateAccessToken() error = %v, wantErr %v", err, tt.wantErr)
@@ -174,7 +174,7 @@ func Test_utilHelper_CreateAccessToken(t *testing.T) {
 func Benchmark_utilHelper_CreateAccessToken(b *testing.B) {
 	ctx := context.Background()
 	accountNo := uint64(1)
-	u := utility.Helper()
+	u := helper.Helper()
 	for i := 0; i < b.N; i++ {
 		_, err := u.CreateAccessToken(ctx, accountNo)
 		if err != nil {

@@ -12,7 +12,7 @@ func init() {
 	service.RegisterShort(initShort())
 }
 
-// initShort create a initShort sShort.
+// initShort create an initShort sShort.
 func initShort() *sShort {
 	return &sShort{}
 }

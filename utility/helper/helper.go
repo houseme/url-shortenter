@@ -1,4 +1,4 @@
-package utility
+package helper
 
 import (
 	"bytes"
@@ -44,25 +44,18 @@ const (
 	helperUtilSnowflake = "helper.util.snowflake"
 
 	// userAgent .
-	httpHeaderUserAgent = `Mozilla/5.0 (lanren; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36`
+	httpHeaderUserAgent = `Mozilla/5.0 (url-shorten; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36`
 )
-
-var uHelper = utilHelper{
-	ctx: context.Background(),
-}
 
 // Helper .
 func Helper() *utilHelper {
-	return &uHelper
+	return &utilHelper{}
 }
 
-type utilHelper struct {
-	ctx context.Context
-}
+type utilHelper struct{}
 
 // UserAgent is a default http userAgent
-func (u *utilHelper) UserAgent(ctx context.Context) string {
-	u.ctx = ctx
+func (u *utilHelper) UserAgent(_ context.Context) string {
 	return httpHeaderUserAgent
 }
 
@@ -71,17 +64,13 @@ func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-InitTrxID")
 	defer span.End()
 
-	var (
-		appEnv, err = env.NewSnowflakeEnv(ctx)
-		workerID    int64
-	)
-
+	var appEnv, err = env.NewSnowflakeEnv(ctx)
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, "config get fail err:", err)
 		return u.InitTrxID(ctx, ano)
 	}
 	g.Log(u.Logger(ctx)).Debug(ctx, "appEnv DatacenterID:", appEnv.Datacenter(ctx), " WorkerID:", appEnv.Worker(ctx))
-	workerID = appEnv.Worker(ctx)
+	workerID := appEnv.Worker(ctx)
 	if ano > 0 {
 		workerID = int64(ano % 32)
 	}
@@ -269,7 +258,6 @@ func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 
 // RequestTime .request time
 func (u *utilHelper) RequestTime(ctx context.Context, ts string) *gtime.Time {
-	u.ctx = ctx
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
@@ -287,7 +275,6 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 	)
 
 	g.Log(logger).Info(ctx, "helper ConcatenateSignSource tt", tt, " v", v)
-
 	for i := 0; i < count; i++ {
 		if v.Field(i).CanInterface() { // 判断是否为可导出字段
 			g.Log(logger).Printf(ctx, "%s %s = %v -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(),
@@ -404,45 +391,38 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 
 // AESEncrypt encrypts the input byte array with the given key
 func (u *utilHelper) AESEncrypt(ctx context.Context, key, data []byte) (dst string, err error) {
-	var (
-		logger = u.Logger(ctx)
-	)
-	g.Log(logger).Debug(ctx, "utilHelper AESEncrypt key:", string(key), " data:", string(data))
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESEncrypt key:", string(key), " data:", string(data))
 	if dst, err = aes.NewAESCrypt(key).EncryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
 		err = gerror.Wrap(err, "utilHelper AESEncrypt EncryptToString error")
 		return
 	}
-	g.Log(logger).Debug(ctx, "utilHelper AESEncrypt dst:", dst)
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESEncrypt dst:", dst)
 	return
 }
 
 // AESDecrypt decrypts the input byte array with the given key
 func (u *utilHelper) AESDecrypt(ctx context.Context, key, data []byte) (dst string, err error) {
-	var (
-		logger = u.Logger(ctx)
-	)
-	g.Log(logger).Debug(ctx, "utilHelper AESDecrypt key:", string(key), " data:", string(data))
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESDecrypt key:", string(key), " data:", string(data))
 	if dst, err = aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
 		err = gerror.Wrap(err, "utilHelper AESDecrypt DecryptToString error")
 		return
 	}
-	g.Log(logger).Debug(ctx, "utilHelper AESDecrypt dst:", dst)
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESDecrypt dst:", dst)
 	return
 }
 
 // CreateAccessToken create access token
 func (u *utilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (token string, err error) {
 	var (
-		logger    = u.Logger(ctx)
 		hash      []byte
 		initTrxID = u.InitTrxID(ctx, accountNo)
 	)
-	g.Log(logger).Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
 	if hash, err = u.Sha256OfShort(gconv.String(initTrxID)); err != nil {
 		err = gerror.Wrap(err, "utilHelper CreateAccessToken Sha256OfShort error")
 		return
 	}
 	token = hex.EncodeToString(hash)
-	g.Log(logger).Debug(ctx, "utilHelper CreateAccessToken token:", token)
+	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper CreateAccessToken token:", token)
 	return
 }

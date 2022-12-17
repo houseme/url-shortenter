@@ -3,14 +3,13 @@ package lark
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
-	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // Env lark environment.
 type Env struct {
-	ctx                 context.Context
 	appID               string
 	appSecret           string
 	encryptKey          string
@@ -20,68 +19,65 @@ type Env struct {
 }
 
 // New .create a new lark environment
-func New(ctx context.Context) *Env {
+func New(ctx context.Context) (*Env, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-lark-New")
 	defer span.End()
 
-	var (
-		e      *Env
-		logger = gconv.String(ctx.Value("logger"))
-	)
-	if err := g.Cfg().MustGet(ctx, "lark").Scan(&e); err != nil {
-		g.Log(logger).Error(ctx, " config lark fail err:", err)
-		span.RecordError(err)
-		return nil
+	var v, err = g.Cfg().Get(ctx, "lark")
+	if err != nil {
+		err = gerror.Wrap(err, "config lark get failed")
+		return nil, err
 	}
-	if e == nil {
-		g.Log(logger).Error(ctx, " config lark is empty")
-		return nil
-	}
-	e.ctx = ctx
 
-	return e
+	if v == nil || v.IsNil() || v.IsEmpty() {
+		err = gerror.New("config lark is empty")
+		return nil, err
+	}
+
+	var config = v.MapStrStr()
+	return &Env{
+		appID:               config["appID"],
+		appSecret:           config["appSecret"],
+		encryptKey:          config["encryptKey"],
+		verificationToken:   config["verificationToken"],
+		customBotWebHookURL: config["customBotWebHookURL"],
+		customBotSecret:     config["customBotSecret"],
+	}, nil
 }
 
 // APPID .
-func (l *Env) APPID(ctx context.Context) string {
-	l.ctx = ctx
-	return l.appID
+func (e *Env) APPID(_ context.Context) string {
+	return e.appID
 }
 
 // APPSecret .
-func (l *Env) APPSecret(ctx context.Context) string {
-	l.ctx = ctx
-	return l.appSecret
+func (e *Env) APPSecret(_ context.Context) string {
+	return e.appSecret
 }
 
 // EncryptKey .
-func (l *Env) EncryptKey(ctx context.Context) string {
-	l.ctx = ctx
-	return l.encryptKey
+func (e *Env) EncryptKey(_ context.Context) string {
+	return e.encryptKey
 }
 
 // VerificationToken .
-func (l *Env) VerificationToken(ctx context.Context) string {
-	l.ctx = ctx
-	return l.verificationToken
+func (e *Env) VerificationToken(_ context.Context) string {
+	return e.verificationToken
 }
 
 // CustomBotWebHookURL .
-func (l *Env) CustomBotWebHookURL(ctx context.Context) string {
-	l.ctx = ctx
-	return l.customBotWebHookURL
+func (e *Env) CustomBotWebHookURL(_ context.Context) string {
+	return e.customBotWebHookURL
 }
 
 // CustomBotSecret .
-func (l *Env) CustomBotSecret(ctx context.Context) string {
-	l.ctx = ctx
-	return l.customBotSecret
+func (e *Env) CustomBotSecret(_ context.Context) string {
+	return e.customBotSecret
 }
 
 // String returns the string representation of the environment.
-func (l *Env) String(ctx context.Context) string {
-	l.ctx = ctx
-	return `{"appID":"` + l.appID + `","appSecret":"` + l.appSecret + `","encryptKey":"` + l.encryptKey +
-		`","verificationToken":"` + l.verificationToken + `","customBotWebHookURL":"` + l.customBotWebHookURL +
-		`","customBotSecret":"` + l.customBotSecret + `"}`
+func (e *Env) String(_ context.Context) string {
+	return `{"appID":"` + e.appID + `","appSecret":"` + e.appSecret + `","encryptKey":"` + e.encryptKey +
+		`","verificationToken":"` + e.verificationToken + `","customBotWebHookURL":"` + e.customBotWebHookURL +
+		`","customBotSecret":"` + e.customBotSecret + `"}`
 }

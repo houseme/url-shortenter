@@ -15,7 +15,7 @@ import (
 
 	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type cAuth struct {
@@ -29,7 +29,7 @@ func (c *cAuth) CreateAccessToken(ctx context.Context, req *v1.CreateAccessToken
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-auth-CreateAccessToken")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	res = &v1.CreateAccessTokenRes{}
 	if res.CreateAccessTokenOutput, err = service.Auth().CreateAccessToken(ctx, req.CreateAccessTokenInput); err != nil {
 		g.Log(logger).Error(ctx, "auth-CreateAccessToken err:", err)
@@ -43,7 +43,7 @@ func (c *cAuth) Authorization(ctx context.Context, req *v1.AuthReq) (res *v1.Aut
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-auth-authorization")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
+	var logger = helper.Helper().Logger(ctx)
 	res = &v1.AuthRes{}
 	if res.AuthOutput, err = service.Auth().Authorization(ctx, req.AuthInput); err != nil {
 		g.Log(logger).Error(ctx, "auth-authorization err:", err)

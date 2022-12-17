@@ -24,8 +24,8 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 	"github.com/houseme/url-shortenter/internal/tracing"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sMiddleware struct {
@@ -258,7 +258,7 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 		authToken.AuthTime = now.Unix()
 		if now.Unix()-consts.PasswordExpireTime > authTime {
 			g.Log(logger).Debug(ctx, "validateToken auth token password expired 2 hours")
-			if token, err = utility.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
+			if token, err = helper.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
 				err = gerror.Wrap(err, "validateToken CreateAccessToken failed")
 				return nil, err
 			}

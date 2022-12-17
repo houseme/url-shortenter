@@ -20,7 +20,7 @@ import (
 
 	v1 "github.com/houseme/url-shortenter/app/api/api/v1"
 	"github.com/houseme/url-shortenter/app/api/internal/service"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 var (
@@ -38,7 +38,7 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 
 	var (
 		r      = g.RequestFromCtx(ctx)
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 		out    string
 	)
 

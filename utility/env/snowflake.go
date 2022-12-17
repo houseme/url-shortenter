@@ -15,24 +15,20 @@ type SnowflakeEnv struct {
 	datacenter int64
 	worker     int64
 	config     map[string]*gvar.Var
-	ctx        context.Context
 }
 
 // Datacenter .
-func (s *SnowflakeEnv) Datacenter(ctx context.Context) int64 {
-	s.ctx = ctx
+func (s *SnowflakeEnv) Datacenter(_ context.Context) int64 {
 	return s.datacenter
 }
 
 // Worker .
-func (s *SnowflakeEnv) Worker(ctx context.Context) int64 {
-	s.ctx = ctx
+func (s *SnowflakeEnv) Worker(_ context.Context) int64 {
 	return s.worker
 }
 
 // String .
-func (s *SnowflakeEnv) String(ctx context.Context) string {
-	s.ctx = ctx
+func (s *SnowflakeEnv) String(_ context.Context) string {
 	return `{"datacenter":"` + gconv.String(s.datacenter) + `","worker":"` + gconv.String(s.worker) + `"}`
 }
 
@@ -41,11 +37,7 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewSnowflakeEnv")
 	defer span.End()
 
-	var (
-		v, err = g.Cfg().Get(ctx, "snowflake")
-		logger = gconv.String(ctx.Value("logger"))
-	)
-
+	var v, err = g.Cfg().Get(ctx, "snowflake")
 	if err != nil {
 		err = gerror.Wrap(err, "config snowflake get failed")
 		return nil, err
@@ -55,15 +47,10 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 		return nil, err
 	}
 
-	var (
-		config = v.MapStrVar()
-		env    = &SnowflakeEnv{
-			worker:     config["worker"].Int64(),
-			datacenter: config["datacenter"].Int64(),
-			ctx:        ctx,
-			config:     config,
-		}
-	)
-	g.Log(logger).Debug(ctx, " config snowflake:", env.String(ctx))
-	return env, nil
+	var config = v.MapStrVar()
+	return &SnowflakeEnv{
+		worker:     config["worker"].Int64(),
+		datacenter: config["datacenter"].Int64(),
+		config:     config,
+	}, nil
 }

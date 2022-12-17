@@ -22,9 +22,9 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // GrabImage grab image from url.
@@ -33,7 +33,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	defer span.End()
 
 	var (
-		logger      = utility.Helper().Logger(ctx)
+		logger      = helper.Helper().Logger(ctx)
 		appEnv, err = env.New(ctx)
 	)
 	g.Log(logger).Info(ctx, "GrabImage shortURL: ", shortURL)
@@ -71,7 +71,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	}()
 
 	// 1、抓起网页内容，
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
 		g.Log(logger).Error(ctx, "GrabImage CheckFileExists html failed:", err)
 	}
 	if statusCode, err = s.RequestStatusCode(ctx, shortURL.DestUrl); err != nil {
@@ -95,11 +95,11 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		Content:     string(content),
 	}
 	shortMirror.ContentPath = fileNameHTML
-	shortMirror.HashContent = utility.Helper().Sha256Of(content)
+	shortMirror.HashContent = helper.Helper().Sha256Of(content)
 	sct.HashContent = shortMirror.HashContent
 
 	// 2、网页图片
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
 		g.Log(logger).Error(ctx, "GrabImage CheckFileExists screenshot failed:", err)
 	}
 	if err = s.DownloadFullScreenshot(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameScreenshot); err == nil {
@@ -148,12 +148,12 @@ func (s *sShort) Execute(ctx context.Context) {
 	defer span.End()
 	var (
 		pool   = grpool.New(10)
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 	)
 
 	g.Log(logger).Info(ctx, "Execute start")
 	gtimer.SetInterval(ctx, time.Second, func(ctx context.Context) {
-		ctx = utility.Helper().SetLogger(ctx, "schedule")
+		ctx = helper.Helper().SetLogger(ctx, "schedule")
 		g.Log(logger).Info(ctx, "Execute loop")
 		for i := 0; i < 3; i++ {
 			if err := pool.Add(ctx, s.queryShortAndGrab); err != nil {
@@ -170,7 +170,7 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-queryShortAndGrab")
 	defer span.End()
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		logger    = helper.Helper().Logger(ctx)
 		conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
 		redisKey  = cache.RedisCache().ShortMirrorQueue(ctx) // 待抓取的镜像队列
 	)
@@ -250,8 +250,8 @@ func (s *sShort) RequestContent(ctx context.Context, url, fileName string) ([]by
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
-		r, err = g.Client().SetAgent(utility.Helper().UserAgent(ctx)).Get(ctx, url)
+		logger = helper.Helper().Logger(ctx)
+		r, err = g.Client().SetAgent(helper.Helper().UserAgent(ctx)).Get(ctx, url)
 	)
 	g.Log(logger).Info(ctx, "RequestContent start , url:", url, " fileName:", fileName)
 	if err != nil {
@@ -273,8 +273,8 @@ func (s *sShort) RequestStatusCode(ctx context.Context, url string) (int, error)
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
-		client = g.Client().SetAgent(utility.Helper().UserAgent(ctx))
+		logger = helper.Helper().Logger(ctx)
+		client = g.Client().SetAgent(helper.Helper().UserAgent(ctx))
 	)
 	g.Log(logger).Info(ctx, "RequestStatusCode start url:", url)
 
@@ -302,7 +302,7 @@ func (s *sShort) DownloadFullScreenshot(ctx context.Context, url, fileName strin
 
 	var (
 		buf    []byte
-		logger = utility.Helper().Logger(ctx)
+		logger = helper.Helper().Logger(ctx)
 	)
 
 	chtCtx, cancel := chromedp.NewContext(

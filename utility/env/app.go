@@ -9,7 +9,7 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 )
 
-// New  创建APP环境
+// New create app environment
 func New(ctx context.Context) (*AppEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-New")
 	defer span.End()
@@ -23,8 +23,11 @@ func New(ctx context.Context) (*AppEnv, error) {
 		err = gerror.New("config app is empty")
 		return nil, err
 	}
-	var config = v.MapStrStr()
-	hostIP, _ := gipv4.GetIntranetIp()
+	var (
+		config    = v.MapStrStr()
+		hostIP, _ = gipv4.GetIntranetIp()
+	)
+
 	config["hostIP"] = hostIP
 	return &AppEnv{
 		config:         config,
