@@ -573,8 +573,8 @@ github.com/temoto/robotstxt v1.1.1/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr
 github.com/temoto/robotstxt v1.1.2 h1:W2pOjSJ6SWvldyEuiFXNxz3xZ8aiWX5LbfDiOFd7Fxg=
 github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.567/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.568 h1:wqzyEmqSOnLBDZ6NkTDGHzD1Q7wZ+XlN9f5TTgqWl2A=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.568/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.569 h1:ucwAQxGji/1kHSsnFf/w/BJ35rU7lFaUAq+uUKzwufE=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.569/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.567 h1:BBxExoxEn7B7JpJv024xPQ+yfvn2/2jKjZsg7i4hwoc=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.567/go.mod h1:hqVhRNptJTju89M4dU0rfZRhdinowi+KccX5Q3pb/VE=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
