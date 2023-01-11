@@ -7,7 +7,7 @@ require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.62.126
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
-	github.com/chromedp/chromedp v0.8.6
+	github.com/chromedp/chromedp v0.8.7
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.104
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
@@ -17,7 +17,7 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.576
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.577
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.576
 	go.opentelemetry.io/otel v1.11.2
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.2
@@ -39,7 +39,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20221126224343-3a0787b8dd28 // indirect
+	github.com/chromedp/cdproto v0.0.0-20230109101555-6b041c6303cc // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
