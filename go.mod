@@ -13,7 +13,7 @@ require (
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.2.6
-	github.com/gogf/gf/v2 v2.2.6
+	github.com/gogf/gf/v2 v2.3.0
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
@@ -42,13 +42,11 @@ require (
 	github.com/chromedp/cdproto v0.0.0-20230109101555-6b041c6303cc // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
-	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
