@@ -12,7 +12,7 @@ require (
 	github.com/chyroc/lark v0.0.106
 	github.com/geziyor/geziyor v0.0.0-20220429000531-738852f9321d
 	github.com/gocolly/colly/v2 v2.1.1-0.20220706081359-947eeead97b3
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.0
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.1
 	github.com/gogf/gf/v2 v2.3.1
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
