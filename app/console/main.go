@@ -2,17 +2,15 @@ package main
 
 import (
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
+	_ "github.com/gogf/gf/contrib/nosql/redis/v2"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	_ "github.com/houseme/url-shortenter/app/console/internal/packed"
-
+	"github.com/houseme/url-shortenter/app/console/internal/cmd"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic"
-
+	_ "github.com/houseme/url-shortenter/app/console/internal/packed"
 	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility/env"
-
-	"github.com/houseme/url-shortenter/app/console/internal/cmd"
 )
 
 func main() {
