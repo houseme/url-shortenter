@@ -52,7 +52,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 
 	var (
 		logger    = helper.Helper().Logger(ctx)
-		conn      *gredis.RedisConn
+		conn      gredis.Conn
 		isSendLog bool
 	)
 	g.Log(logger).Debug(ctx, "home-short-detail in:", in)
