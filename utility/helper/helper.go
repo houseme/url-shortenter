@@ -18,11 +18,11 @@ import (
 	"unsafe"
 
 	"github.com/btcsuite/btcd/btcutil/base58"
+	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/frame/gins"
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/gtime"
@@ -51,6 +51,8 @@ const (
 func Helper() *utilHelper {
 	return &utilHelper{}
 }
+
+var localInstances = gmap.NewStrAnyMap(true)
 
 type utilHelper struct{}
 
@@ -98,7 +100,7 @@ func (u *utilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int
 func (u *utilHelper) SnowflakeInstance(ctx context.Context, datacenterID, workerID int64) *snowflake.Snowflake {
 	instanceKey := fmt.Sprintf("%s.%02d.%02d", helperUtilSnowflake, datacenterID, workerID)
 	g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID SnowflakeInstance ", instanceKey, workerID, datacenterID)
-	return gins.GetOrSetFuncLock(instanceKey, func() interface{} {
+	return localInstances.GetOrSetFuncLock(instanceKey, func() interface{} {
 		s, err := snowflake.NewSnowflake(datacenterID, workerID)
 		if err != nil {
 			panic(err)
