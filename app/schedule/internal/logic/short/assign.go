@@ -168,6 +168,9 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 		if errs := conn.Close(ctx); errs != nil {
 			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", errs)
 		}
+		if err != nil {
+			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit failed err:", err)
+		}
 		g.Log(logger).Info(ctx, "QueryShortAndGrabAudit conn.Close")
 	}()
 
@@ -176,11 +179,6 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 		return
 	}
 
-	defer func() {
-		if errs := conn.Close(ctx); errs != nil {
-			g.Log(logger).Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", errs)
-		}
-	}()
 	if result, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx)); err != nil {
 		err = gerror.Wrap(err, "QueryShortAndGrabAudit conn.Do RPOP failed")
 		return
