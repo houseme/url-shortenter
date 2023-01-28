@@ -241,7 +241,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 			ShortNo: shortURL.ShortNo,
 			TrxId:   trxID,
 		}
-		tx          *gdb.TX
+		tx          gdb.TX
 		shortMirror = (*entity.ShortMirror)(nil)
 		cr          = &entity.ShortContentRecord{
 			ShortNo:     shortURL.ShortNo,
