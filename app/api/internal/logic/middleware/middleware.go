@@ -53,7 +53,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		g.Log().Error(ctx, "MiddlewareHandlerResponse err:", err)
 		r.Response.Status = http.StatusInternalServerError
 		if internalErr := r.Response.WriteTpl("error.html", g.Map{
-			"title":   "内部错误 - 懒人科技短链平台",
+			"title":   "内部错误 - 短链平台",
 			"code":    http.StatusInternalServerError,
 			"message": err.Error(),
 			"label":   "Error",
@@ -63,7 +63,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	}
 	if r.Response.Status > 0 && r.Response.Status != http.StatusOK && r.Response.Status != http.StatusFound {
 		if internalErr := r.Response.WriteTpl("error.html", g.Map{
-			"title":   "404 - 懒人科技短链平台",
+			"title":   "404 - 短链平台",
 			"code":    r.Response.Status,
 			"message": "您访问的页面已失效",
 			"label":   http.StatusText(r.Response.Status),
