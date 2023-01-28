@@ -45,9 +45,8 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		err = r.GetError()
 		res = r.GetHandlerResponse()
 	)
-	g.Log().Info(ctx, "MiddlewareHandlerResponse response:", res)
+	g.Log().Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
 	if g.IsNil(res) || g.IsEmpty(res) {
-		g.Log().Debug(ctx, "MiddlewareHandlerResponse statusCode:", r.Response.Status)
 		r.Response.Status = http.StatusNotFound
 	}
 	if err != nil {
@@ -63,7 +62,6 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		}
 	}
 	if r.Response.Status > 0 && r.Response.Status != http.StatusOK && r.Response.Status != http.StatusFound {
-		g.Log().Info(ctx, "response:", res, "statusCode:", r.Response.Status)
 		if internalErr := r.Response.WriteTpl("error.html", g.Map{
 			"title":   "404 - 懒人科技短链平台",
 			"code":    r.Response.Status,
