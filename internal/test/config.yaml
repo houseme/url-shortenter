@@ -9,8 +9,8 @@ app:
   roleModel: ""
 
 logger:
-  path:    "/tmp/logs/default"
-  level : "erro"
+  path: "/tmp/logs/default"
+  level: "erro"
   stdout: false
 
 snowflake:

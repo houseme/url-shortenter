@@ -18,6 +18,42 @@ type OSSEnv struct {
 	config          map[string]string
 }
 
+// AccessKeyID get access key id
+func (e *OSSEnv) AccessKeyID(_ context.Context) string {
+	return e.accessKeyID
+}
+
+// AccessKeySecret get access key secret
+func (e *OSSEnv) AccessKeySecret(_ context.Context) string {
+	return e.accessKeySecret
+}
+
+// Endpoint get endpoint
+func (e *OSSEnv) Endpoint(_ context.Context) string {
+	return e.endpoint
+}
+
+// Bucket get bucket
+func (e *OSSEnv) Bucket(_ context.Context) string {
+	return e.bucket
+}
+
+// Domain get domain
+func (e *OSSEnv) Domain(_ context.Context) string {
+	return e.domain
+}
+
+// Config get config
+func (e *OSSEnv) Config(_ context.Context) map[string]string {
+	return e.config
+}
+
+// String get string
+func (e *OSSEnv) String(_ context.Context) string {
+	return `{"accessKeyID":` + e.accessKeyID + `,"accessKeySecret":` + e.accessKeySecret + `,"endpoint":` + e.endpoint +
+		`,"bucket":` + e.bucket + `,"domain":` + e.domain + `}`
+}
+
 // NewOssEnv create a new oss env
 func NewOssEnv(ctx context.Context, key string) (*OSSEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewOssEnv")
@@ -41,40 +77,4 @@ func NewOssEnv(ctx context.Context, key string) (*OSSEnv, error) {
 		bucket:          config["bucket"],
 		config:          config,
 	}, nil
-}
-
-// AccessKeyID get access key id
-func (o *OSSEnv) AccessKeyID(_ context.Context) string {
-	return o.accessKeyID
-}
-
-// AccessKeySecret get access key secret
-func (o *OSSEnv) AccessKeySecret(_ context.Context) string {
-	return o.accessKeySecret
-}
-
-// Endpoint get endpoint
-func (o *OSSEnv) Endpoint(_ context.Context) string {
-	return o.endpoint
-}
-
-// Bucket get bucket
-func (o *OSSEnv) Bucket(_ context.Context) string {
-	return o.bucket
-}
-
-// Domain get domain
-func (o *OSSEnv) Domain(_ context.Context) string {
-	return o.domain
-}
-
-// Config get config
-func (o *OSSEnv) Config(_ context.Context) map[string]string {
-	return o.config
-}
-
-// String get string
-func (o *OSSEnv) String(_ context.Context) string {
-	return `{"accessKeyID":` + o.accessKeyID + `,"accessKeySecret":` + o.accessKeySecret + `,"endpoint":` + o.endpoint +
-		`,"bucket":` + o.bucket + `,"domain":` + o.domain + `}`
 }

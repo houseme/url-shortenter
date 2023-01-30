@@ -16,6 +16,7 @@ type LarkEnv struct {
 	verificationToken   string
 	customBotWebHookURL string
 	customBotSecret     string
+	config              map[string]string
 }
 
 // NewLark .create a new lark environment
@@ -42,6 +43,7 @@ func NewLark(ctx context.Context) (*LarkEnv, error) {
 		verificationToken:   config["verificationToken"],
 		customBotWebHookURL: config["customBotWebHookURL"],
 		customBotSecret:     config["customBotSecret"],
+		config:              config,
 	}, nil
 }
 
@@ -73,6 +75,11 @@ func (e *LarkEnv) CustomBotWebHookURL(_ context.Context) string {
 // CustomBotSecret .
 func (e *LarkEnv) CustomBotSecret(_ context.Context) string {
 	return e.customBotSecret
+}
+
+// Config .
+func (e *LarkEnv) Config(_ context.Context) map[string]string {
+	return e.config
 }
 
 // String returns the string representation of the environment.

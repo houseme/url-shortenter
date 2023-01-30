@@ -14,32 +14,38 @@ type TencentEnv struct {
 	secretKey string
 	region    string
 	endpoint  string
+	config    map[string]string
 }
 
 // SecretID .
-func (t *TencentEnv) SecretID(_ context.Context) string {
-	return t.secretID
+func (e *TencentEnv) SecretID(_ context.Context) string {
+	return e.secretID
 }
 
 // SecretKey .
-func (t *TencentEnv) SecretKey(_ context.Context) string {
-	return t.secretKey
+func (e *TencentEnv) SecretKey(_ context.Context) string {
+	return e.secretKey
 }
 
 // Region .
-func (t *TencentEnv) Region(_ context.Context) string {
-	return t.region
+func (e *TencentEnv) Region(_ context.Context) string {
+	return e.region
 }
 
 // Endpoint .
-func (t *TencentEnv) Endpoint(_ context.Context) string {
-	return t.endpoint
+func (e *TencentEnv) Endpoint(_ context.Context) string {
+	return e.endpoint
+}
+
+// Config .
+func (e *TencentEnv) Config(_ context.Context) map[string]string {
+	return e.config
 }
 
 // String .
-func (t *TencentEnv) String(_ context.Context) string {
-	return `{"secretId":"` + t.secretID + `","secretKey":"` + t.secretKey +
-		`","region":"` + t.region + `","endpoint":"` + t.endpoint + `"}`
+func (e *TencentEnv) String(_ context.Context) string {
+	return `{"secretId":"` + e.secretID + `","secretKey":"` + e.secretKey +
+		`","region":"` + e.region + `","endpoint":"` + e.endpoint + `"}`
 }
 
 // NewTencentEnv .
@@ -58,11 +64,11 @@ func NewTencentEnv(ctx context.Context) (*TencentEnv, error) {
 	}
 
 	var config = v.MapStrStr()
-
 	return &TencentEnv{
 		secretID:  config["secretID"],
 		secretKey: config["secretKey"],
 		region:    config["region"],
 		endpoint:  config["endpoint"],
+		config:    config,
 	}, nil
 }

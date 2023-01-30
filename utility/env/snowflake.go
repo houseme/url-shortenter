@@ -18,18 +18,23 @@ type SnowflakeEnv struct {
 }
 
 // Datacenter .
-func (s *SnowflakeEnv) Datacenter(_ context.Context) int64 {
-	return s.datacenter
+func (e *SnowflakeEnv) Datacenter(_ context.Context) int64 {
+	return e.datacenter
 }
 
 // Worker .
-func (s *SnowflakeEnv) Worker(_ context.Context) int64 {
-	return s.worker
+func (e *SnowflakeEnv) Worker(_ context.Context) int64 {
+	return e.worker
+}
+
+// Config .
+func (e *SnowflakeEnv) Config(_ context.Context) map[string]*gvar.Var {
+	return e.config
 }
 
 // String .
-func (s *SnowflakeEnv) String(_ context.Context) string {
-	return `{"datacenter":"` + gconv.String(s.datacenter) + `","worker":"` + gconv.String(s.worker) + `"}`
+func (e *SnowflakeEnv) String(_ context.Context) string {
+	return `{"datacenter":"` + gconv.String(e.datacenter) + `","worker":"` + gconv.String(e.worker) + `"}`
 }
 
 // NewSnowflakeEnv .
