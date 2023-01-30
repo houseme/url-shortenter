@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package tracing
 
 import (
@@ -8,7 +14,7 @@ import (
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
 const (
