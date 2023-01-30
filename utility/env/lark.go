@@ -1,4 +1,4 @@
-package lark
+package env
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 )
 
-// Env lark environment.
-type Env struct {
+// LarkEnv lark environment.
+type LarkEnv struct {
 	appID               string
 	appSecret           string
 	encryptKey          string
@@ -18,9 +18,9 @@ type Env struct {
 	customBotSecret     string
 }
 
-// New .create a new lark environment
-func New(ctx context.Context) (*Env, error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-lark-New")
+// NewLark .create a new lark environment
+func NewLark(ctx context.Context) (*LarkEnv, error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-lark-NewLark")
 	defer span.End()
 
 	var v, err = g.Cfg().Get(ctx, "lark")
@@ -35,7 +35,7 @@ func New(ctx context.Context) (*Env, error) {
 	}
 
 	var config = v.MapStrStr()
-	return &Env{
+	return &LarkEnv{
 		appID:               config["appID"],
 		appSecret:           config["appSecret"],
 		encryptKey:          config["encryptKey"],
@@ -46,37 +46,37 @@ func New(ctx context.Context) (*Env, error) {
 }
 
 // APPID .
-func (e *Env) APPID(_ context.Context) string {
+func (e *LarkEnv) APPID(_ context.Context) string {
 	return e.appID
 }
 
 // APPSecret .
-func (e *Env) APPSecret(_ context.Context) string {
+func (e *LarkEnv) APPSecret(_ context.Context) string {
 	return e.appSecret
 }
 
 // EncryptKey .
-func (e *Env) EncryptKey(_ context.Context) string {
+func (e *LarkEnv) EncryptKey(_ context.Context) string {
 	return e.encryptKey
 }
 
 // VerificationToken .
-func (e *Env) VerificationToken(_ context.Context) string {
+func (e *LarkEnv) VerificationToken(_ context.Context) string {
 	return e.verificationToken
 }
 
 // CustomBotWebHookURL .
-func (e *Env) CustomBotWebHookURL(_ context.Context) string {
+func (e *LarkEnv) CustomBotWebHookURL(_ context.Context) string {
 	return e.customBotWebHookURL
 }
 
 // CustomBotSecret .
-func (e *Env) CustomBotSecret(_ context.Context) string {
+func (e *LarkEnv) CustomBotSecret(_ context.Context) string {
 	return e.customBotSecret
 }
 
 // String returns the string representation of the environment.
-func (e *Env) String(_ context.Context) string {
+func (e *LarkEnv) String(_ context.Context) string {
 	return `{"appID":"` + e.appID + `","appSecret":"` + e.appSecret + `","encryptKey":"` + e.encryptKey +
 		`","verificationToken":"` + e.verificationToken + `","customBotWebHookURL":"` + e.customBotWebHookURL +
 		`","customBotSecret":"` + e.customBotSecret + `"}`

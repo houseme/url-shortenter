@@ -38,7 +38,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	)
 	g.Log(logger).Info(ctx, "GrabImage shortURL: ", shortURL)
 	if err != nil {
-		err = gerror.Wrap(err, "GrabImage env.New failed")
+		err = gerror.Wrap(err, "GrabImage env.NewLark failed")
 		return err
 	}
 

@@ -9,9 +9,9 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 )
 
-// New create app environment
+// NewLark create app environment
 func New(ctx context.Context) (*AppEnv, error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-New")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewLark")
 	defer span.End()
 
 	var v, err = g.Cfg().Get(ctx, "app")

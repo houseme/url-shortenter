@@ -6,7 +6,7 @@ import (
 
 var uEnv = utilEnv{}
 
-// Env .
+// LarkEnv .
 func Env() *utilEnv {
 	return &uEnv
 }

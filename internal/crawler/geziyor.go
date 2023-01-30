@@ -1,4 +1,4 @@
-package utility
+package crawler
 
 import (
 	"github.com/PuerkitoBio/goquery"

@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/houseme/url-shortenter/utility/icp"
+	"github.com/houseme/url-shortenter/internal/icp"
 )
 
 func TestWebQuery(t *testing.T) {

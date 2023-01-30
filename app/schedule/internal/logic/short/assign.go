@@ -17,14 +17,14 @@ import (
 	"github.com/gogf/gf/v2/util/grand"
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/consts"
+	"github.com/houseme/url-shortenter/internal/alibaba"
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility/alibaba"
+	"github.com/houseme/url-shortenter/internal/tencent"
 	"github.com/houseme/url-shortenter/utility/cache"
 	"github.com/houseme/url-shortenter/utility/env"
 	"github.com/houseme/url-shortenter/utility/helper"
-	"github.com/houseme/url-shortenter/utility/tencent"
 )
 
 // AssignTask is the assign task 镜像抓起分发队列
@@ -221,7 +221,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	)
 	g.Log(logger).Info(ctx, "GrabImageAudit shortURL: ", shortURL)
 	if err != nil {
-		err = gerror.Wrap(err, "GrabImageAudit env.New failed")
+		err = gerror.Wrap(err, "GrabImageAudit env.NewLark failed")
 		return err
 	}
 
