@@ -31,9 +31,9 @@ type QueryResponse struct {
 
 // AuthParams auth params
 type AuthParams struct {
-	Bussiness string `json:"bussiness"`
-	Expire    int64  `json:"expire"`
-	Refresh   string `json:"refresh"`
+	Business string `json:"bussiness"`
+	Expire   int64  `json:"expire"`
+	Refresh  string `json:"refresh"`
 }
 
 // QueryParams query params

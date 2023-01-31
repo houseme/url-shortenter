@@ -8,7 +8,6 @@ package captcha
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"testing"
@@ -62,12 +61,11 @@ func generateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 		body = map[string]interface{}{"code": 0, "msg": err.Error()}
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(body)
+	_ = json.NewEncoder(w).Encode(body)
 }
 
 // base64Captcha verify http handler
 func captchaVerifyHandle(w http.ResponseWriter, r *http.Request) {
-
 	// parse request json body
 	decoder := json.NewDecoder(r.Body)
 	var param configJsonBody
@@ -85,7 +83,7 @@ func captchaVerifyHandle(w http.ResponseWriter, r *http.Request) {
 	// set json response
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	json.NewEncoder(w).Encode(body)
+	_ = json.NewEncoder(w).Encode(body)
 }
 
 // TestCaptcha start a net/http server
@@ -100,7 +98,6 @@ func TestCaptcha(t *testing.T) {
 	// api for verify captcha
 	http.HandleFunc("/api/verifyCaptcha", captchaVerifyHandle)
 
-	fmt.Println("Server is at :8777")
 	if err := http.ListenAndServe(":8777", nil); err != nil {
 		log.Fatal(err)
 		t.Fatal(err)

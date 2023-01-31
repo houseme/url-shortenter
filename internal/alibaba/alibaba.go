@@ -9,7 +9,6 @@ package alibaba
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"strconv"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/green"
@@ -55,11 +54,10 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	request.SetContent(content)
 	response, err := client.ImageSyncScan(request)
 	if err != nil {
-		fmt.Println(err.Error())
+		err = gerror.Wrap(err, "client.ImageSyncScan failed")
 		return "", err
 	}
 	if response.GetHttpStatus() != 200 {
-		g.Log(logger).Info(ctx, "response not success. status:"+strconv.Itoa(response.GetHttpStatus()))
 		return "", gerror.New("response not success. status:" + strconv.Itoa(response.GetHttpStatus()))
 	}
 	return response.GetHttpContentString(), nil

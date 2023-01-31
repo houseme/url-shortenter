@@ -230,7 +230,7 @@ type ICP struct {
 // 	}
 //
 // 	authParams := result.Params
-// 	i.token = authParams.Bussiness
+// 	i.token = authParams.Business
 //
 // 	return nil
 // }
@@ -337,7 +337,7 @@ func (i *ICP) authorize(ctx context.Context) error {
 		err = gerror.New(authResp.Msg)
 		return err
 	}
-	i.token = authResp.Params.Bussiness
+	i.token = authResp.Params.Business
 	g.Log(logger).Debug(ctx, "icp-authorize end ICP:", i.String())
 	return nil
 }
