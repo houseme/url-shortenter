@@ -61,6 +61,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.62.140 h1:LI+DrSLgu7t6uOIEKqeGP4lzNepU
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.140/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.141 h1:V+Sok7SeYpfVspn1KW8ReQi4KvbbHltBjUuKaJM5a/Y=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.141/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.142 h1:GGbPgVo1jeI7fjNpicOz7OfMD8Tq+qb+4tUGbq8pwrE=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.142/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible h1:KXeJoM1wo9I/6xPTyt6qCxoSZnmASiAjlrr0dyTUKt8=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
 github.com/andybalholm/cascadia v1.1.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
@@ -128,6 +130,8 @@ github.com/chromedp/cdproto v0.0.0-20220321060548-7bc2623472b3/go.mod h1:5Y4sD/e
 github.com/chromedp/cdproto v0.0.0-20220428002153-285dfb42699c/go.mod h1:5Y4sD/eXpwrChIuxhSr/G20n9CdbCmoerOHnuAf0Zr0=
 github.com/chromedp/cdproto v0.0.0-20230126215531-b7d95b322d50 h1:0MtxzyLiKEQS3zEzmr+/qhjTWNLjAvxKmQxTWo99pV8=
 github.com/chromedp/cdproto v0.0.0-20230126215531-b7d95b322d50/go.mod h1:GKljq0VrfU4D5yc+2qA6OVr8pmO/MBbPEWqWQ/oqGEs=
+github.com/chromedp/cdproto v0.0.0-20230130203205-31e3d8a04b57 h1:QzBfUHmMYbMTatylLQ9DXa2XT1PCAtssO54wNav22as=
+github.com/chromedp/cdproto v0.0.0-20230130203205-31e3d8a04b57/go.mod h1:GKljq0VrfU4D5yc+2qA6OVr8pmO/MBbPEWqWQ/oqGEs=
 github.com/chromedp/chromedp v0.8.0/go.mod h1:odCVV9o9i7HUKwHMFz9Y7T6s4Kbcz4GOyPlwKWopI9Q=
 github.com/chromedp/chromedp v0.8.7 h1:dYOYc5ynTBzwSLOi+1IfgHwPr8r2BqV48l/RC+3OuJ0=
 github.com/chromedp/chromedp v0.8.7/go.mod h1:iL+ywnwk3eG3EVXV1ackXBMNzdEh3Ye/KHvQkq1KRKU=
