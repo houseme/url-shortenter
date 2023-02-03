@@ -46,7 +46,6 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	)
 
 	g.Log(logger).Debug(ctx, "account-CreateAccount in:", in)
-
 	out = (*model.CreateAccountOutput)(&output)
 	if in.AuthAccountLevel > consts.AccountLevelBusiness {
 		err = gerror.New("Do not have permission to create a new account")

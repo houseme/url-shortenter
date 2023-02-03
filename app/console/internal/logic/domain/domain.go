@@ -28,7 +28,7 @@ func initDomain() *sDomain {
 	return &sDomain{}
 }
 
-// CreateDomainAuthorize creates a initDomain domain.
+// CreateDomainAuthorize creates an initDomain domain.
 func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeInput) (out *model.DomainAuthorizeOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
 	defer span.End()

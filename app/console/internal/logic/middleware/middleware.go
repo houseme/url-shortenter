@@ -99,7 +99,7 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 			code = gcode.CodeUnknown
 		}
 	} else {
-		code = gcode.New(200, "success", nil)
+		code = gcode.New(http.StatusOK, "success", nil)
 		msg = code.Message()
 	}
 	r.Response.WriteJson(&model.DefaultHandlerResponse{
