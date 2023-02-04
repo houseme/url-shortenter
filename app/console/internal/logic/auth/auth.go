@@ -117,6 +117,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 			AuthToken: authToken,
 		}); err != nil {
 		err = gerror.Wrap(err, "setRedisToken failed")
+		return
 	}
 
 	g.Log(logger).Debug(ctx, "auth-CreateAccessToken v:", v)
