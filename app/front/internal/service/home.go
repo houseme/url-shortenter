@@ -7,7 +7,7 @@ package service
 import (
 	"context"
 
-	"github.com/houseme/url-shortenter/app/api/internal/model"
+	"github.com/houseme/url-shortenter/app/front/internal/model"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
 )
 

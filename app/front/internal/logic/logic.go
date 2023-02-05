@@ -5,6 +5,6 @@
 package logic
 
 import (
-	_ "github.com/houseme/url-shortenter/app/api/internal/logic/home"
-	_ "github.com/houseme/url-shortenter/app/api/internal/logic/middleware"
+	_ "github.com/houseme/url-shortenter/app/front/internal/logic/home"
+	_ "github.com/houseme/url-shortenter/app/front/internal/logic/middleware"
 )

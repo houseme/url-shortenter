@@ -22,9 +22,9 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	"github.com/houseme/url-shortenter/app/api/internal/consts"
-	"github.com/houseme/url-shortenter/app/api/internal/model"
-	"github.com/houseme/url-shortenter/app/api/internal/service"
+	"github.com/houseme/url-shortenter/app/front/internal/consts"
+	"github.com/houseme/url-shortenter/app/front/internal/model"
+	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/internal/protocol"

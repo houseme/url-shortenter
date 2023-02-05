@@ -13,9 +13,9 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	"github.com/houseme/url-shortenter/app/api/internal/cmd"
-	_ "github.com/houseme/url-shortenter/app/api/internal/logic"
-	_ "github.com/houseme/url-shortenter/app/api/internal/packed"
+	"github.com/houseme/url-shortenter/app/front/internal/cmd"
+	_ "github.com/houseme/url-shortenter/app/front/internal/logic"
+	_ "github.com/houseme/url-shortenter/app/front/internal/packed"
 	"github.com/houseme/url-shortenter/internal/tracing"
 	"github.com/houseme/url-shortenter/utility/env"
 )
@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		g.Log().Fatal(ctx, err)
 	}
-	_, err = tracing.InitJaeger("tracing-shortenter-api", appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx), appEnv.HostIP(ctx))
+	_, err = tracing.InitJaeger("tracing-shortenter-front", appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx), appEnv.HostIP(ctx))
 	if err != nil {
 		g.Log().Fatal(ctx, err)
 	}

@@ -18,8 +18,8 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
-	v1 "github.com/houseme/url-shortenter/app/api/api/v1"
-	"github.com/houseme/url-shortenter/app/api/internal/service"
+	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
+	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
@@ -41,7 +41,7 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 		logger = helper.Helper().Logger(ctx)
 		out    string
 	)
-
+	g.Log(logger).Debug(ctx, "home-index in:", req)
 	defer func() {
 		if err != nil {
 			g.Log(logger).Error(ctx, "home-index err:", err)
@@ -49,7 +49,6 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 		}
 	}()
 
-	g.Log(logger).Debug(ctx, "home-index in:", req)
 	req.RawQuery = r.Request.URL.RawQuery
 	req.ShortAll = r.Request.URL.String()
 	req.ClientIP = r.GetClientIp()

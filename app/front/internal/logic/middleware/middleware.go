@@ -14,8 +14,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/api/api/v1"
-	"github.com/houseme/url-shortenter/app/api/internal/service"
+	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
+	"github.com/houseme/url-shortenter/app/front/internal/service"
 )
 
 type sMiddleware struct {
@@ -79,4 +79,14 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		g.Log().Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
 		r.Response.RedirectTo(string(*str), http.StatusFound)
 	}
+}
+
+// MiddlewareHandlerRequest 请求处理
+func (s *sMiddleware) MiddlewareHandlerRequest(r *ghttp.Request) {
+	ctx, span := gtrace.NewSpan(r.GetCtx(), "tracing-service-new-MiddlewareHandlerRequest")
+	r.SetCtx(ctx)
+	defer span.End()
+	g.Log().Debug(ctx, "MiddlewareHandlerRequest start")
+
+	r.Middleware.Next()
 }

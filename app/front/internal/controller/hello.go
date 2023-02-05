@@ -11,7 +11,7 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 
-	v1 "github.com/houseme/url-shortenter/app/api/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
 )
 
 var (

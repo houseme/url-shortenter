@@ -3,7 +3,7 @@
 gfcli:
   # 工具编译配置
   build:
-    name: "url-shortenter-api"
+    name: "url-shortenter-front"
     arch: "amd64"
     system: "linux"
     mod: ""

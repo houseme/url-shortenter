@@ -1,4 +1,4 @@
-# GoFrame Project Template For API Service
+# GoFrame Project Template For Front Service
 
 Project Makefile Commands:
 
