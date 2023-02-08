@@ -20,10 +20,10 @@ require (
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.589
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.589
-	go.opentelemetry.io/otel v1.12.0
+	go.opentelemetry.io/otel v1.13.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.12.0
-	go.opentelemetry.io/otel/sdk v1.12.0
-	go.opentelemetry.io/otel/trace v1.12.0
+	go.opentelemetry.io/otel/sdk v1.13.0
+	go.opentelemetry.io/otel/trace v1.13.0
 	golang.org/x/crypto v0.5.0
 	golang.org/x/sync v0.1.0
 	google.golang.org/protobuf v1.28.1
