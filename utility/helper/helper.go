@@ -12,7 +12,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"math/big"
 	"math/rand"
 	"net"
 	"net/http"
@@ -356,7 +355,6 @@ func (u *utilHelper) UserAgentIPHash(useragent string, ip string) string {
 // Sha256OfShort returns the sha256 of the input string
 func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
-
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
 		err = gerror.Wrap(err, "Sha256OfShort write error")
 		return nil, err
@@ -391,9 +389,10 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 		err = gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
 		return "", err
 	}
-	number := new(big.Int).SetBytes(urlHash).Uint64()
-	str := u.Base58Encode(gconv.Bytes(number))
-	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str, " number:", number)
+	// number := new(big.Int).SetBytes(urlHash).Uint64()
+	// str := u.Base58Encode(gconv.Bytes(number))
+	str := u.Base58Encode(urlHash)
+	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str)
 	return str[:8], nil
 }
 
