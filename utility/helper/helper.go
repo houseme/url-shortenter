@@ -397,25 +397,13 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 }
 
 // AESEncrypt encrypts the input byte array with the given key
-func (u *utilHelper) AESEncrypt(ctx context.Context, key, data []byte) (dst string, err error) {
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESEncrypt key:", string(key), " data:", string(data))
-	if dst, err = aes.NewAESCrypt(key).EncryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
-		err = gerror.Wrap(err, "utilHelper AESEncrypt EncryptToString error")
-		return
-	}
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESEncrypt dst:", dst)
-	return
+func (u *utilHelper) AESEncrypt(_ context.Context, key, data []byte) (string, error) {
+	return aes.NewAESCrypt(key).EncryptToString(gocrypto.Base64, data, gocrypto.ECB)
 }
 
 // AESDecrypt decrypts the input byte array with the given key
-func (u *utilHelper) AESDecrypt(ctx context.Context, key, data []byte) (dst string, err error) {
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESDecrypt key:", string(key), " data:", string(data))
-	if dst, err = aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB); err != nil {
-		err = gerror.Wrap(err, "utilHelper AESDecrypt DecryptToString error")
-		return
-	}
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper AESDecrypt dst:", dst)
-	return
+func (u *utilHelper) AESDecrypt(_ context.Context, key, data []byte) (string, error) {
+	return aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB)
 }
 
 // CreateAccessToken create access token

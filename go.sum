@@ -61,6 +61,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.62.165 h1:4ukTYZ0pnI6C+1Xf9XXfJ29OO4aO
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.165/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.169 h1:VOBhn/74JH8yqTmK8kd1W8Cc2nZfznS2BrMbu3rt4K0=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.169/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.170 h1:WRKLw1Cpq8hrN3UTEWokfBe4JIeKIL4rImXIq1iS8/c=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.170/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible h1:KXeJoM1wo9I/6xPTyt6qCxoSZnmASiAjlrr0dyTUKt8=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
 github.com/andybalholm/cascadia v1.1.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
@@ -586,10 +588,14 @@ github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.595 h1:eX1R
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.595/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.596 h1:vlsmIJVMmSmFEVwKyvvu3oYWOzAHWFb92eSSacjI5gs=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.596/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.597 h1:C0GHdLTfikLVoEzfhgPfrZ7LwlG0xiCmk6iwNKE+xs0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.597/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.595 h1:6WI0l9YyL9FH2YpjGZMZyNBtm+HMAeOyiEGHhkmRS/Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.595/go.mod h1:vZvdelJd76fiZ/BBtUCgBX/L2YZk69E39/OxeGL7FR4=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.596 h1:XoZhOIkaBxkOFN2BaOwvvIA5nG9hE8hRGRA51IypCzY=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.596/go.mod h1:M12EgJGpsO070oJrW9p6ab5ocZ2nrqPLv37rhYJMXI8=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.597 h1:iekuiLAnRHoxggNkbjb0tHvlxn+0NYCK/9QAGHY42PY=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.597/go.mod h1:Y++VUY39PjOtGsThab8ep8BfvDNXZ4xCbhK+GXZzJh4=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/uber/jaeger-client-go v2.30.0+incompatible h1:D6wyKGCecFaSRUpo8lCVbaOOb6ThwMmTEbhRwtKR97o=
 github.com/uber/jaeger-client-go v2.30.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
