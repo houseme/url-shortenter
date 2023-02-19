@@ -3,8 +3,8 @@ module github.com/houseme/url-shortenter
 go 1.18
 
 require (
-	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.172
+	github.com/PuerkitoBio/goquery v1.8.1
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.174
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.8.7

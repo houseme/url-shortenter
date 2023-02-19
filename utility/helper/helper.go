@@ -346,8 +346,14 @@ func (u *utilHelper) CheckFileExists(ctx context.Context, filePath string) (err 
 
 // UserAgentIPHash user agent ip hash
 func (u *utilHelper) UserAgentIPHash(useragent string, ip string) string {
-	input := fmt.Sprintf("%s-%s-%s-%d", useragent, ip, time.Now().String(), rand.Int())
-	data, _ := u.Sha256OfShort(input)
+	var (
+		input     = fmt.Sprintf("%s-%s-%s-%d", useragent, ip, time.Now().String(), rand.Int())
+		data, err = u.Sha256OfShort(input)
+	)
+	if err != nil {
+		return ""
+	}
+
 	str := u.Base58Encode(data)
 	return str[:10]
 }
