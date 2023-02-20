@@ -107,8 +107,20 @@ func (s *sAccount) ModifyAccount(ctx context.Context, in *model.ModifyAccountInp
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-account-ModifyAccount")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
+	var (
+		logger  = helper.Helper().Logger(ctx)
+		account = (*entity.Users)(nil)
+	)
 	g.Log(logger).Debug(ctx, "account modify account in:", in)
+	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
+		err = gerror.Wrap(err, "account modify query failed")
+		return
+	}
+
+	if account == nil {
+		err = gerror.New("account is not exists")
+		return
+	}
 
 	g.Log(logger).Debug(ctx, "account modify account end out:", out)
 	return

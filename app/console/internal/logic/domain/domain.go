@@ -30,7 +30,7 @@ func initDomain() *sDomain {
 
 // CreateDomainAuthorize creates an initDomain domain.
 func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeInput) (out *model.DomainAuthorizeOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-CreateDomainAuthorize")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)
@@ -41,7 +41,7 @@ func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAut
 
 // QueryDomainAuthorize queries the domain.
 func (s *sDomain) QueryDomainAuthorize(ctx context.Context, in *model.QueryDomainAuthorizeInput) (out *model.QueryDomainAuthorizeOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-QueryDomainAuthorize")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)
@@ -52,7 +52,7 @@ func (s *sDomain) QueryDomainAuthorize(ctx context.Context, in *model.QueryDomai
 
 // UpdateDomainAuthorize updates the domain.
 func (s *sDomain) UpdateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeUpdateInput) (out *model.DomainAuthorizeUpdateOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-UpdateDomainAuthorize")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)
@@ -63,7 +63,7 @@ func (s *sDomain) UpdateDomainAuthorize(ctx context.Context, in *model.DomainAut
 
 // DeleteDomainAuthorize deletes the domain.
 func (s *sDomain) DeleteDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeDeleteInput) (out *model.DomainAuthorizeDeleteOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DeleteDomainAuthorize")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)
@@ -74,7 +74,7 @@ func (s *sDomain) DeleteDomainAuthorize(ctx context.Context, in *model.DomainAut
 
 // DomainAuthorizeDetail queries the domain.
 func (s *sDomain) DomainAuthorizeDetail(ctx context.Context, in *model.DomainAuthorizeDetailInput) (out *model.DomainAuthorizeDetailOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeDetail")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DomainAuthorizeDetail")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)
@@ -85,7 +85,7 @@ func (s *sDomain) DomainAuthorizeDetail(ctx context.Context, in *model.DomainAut
 
 // DomainAuthorizeList queries the domain.
 func (s *sDomain) DomainAuthorizeList(ctx context.Context, in *model.DomainAuthorizeListInput) (out *model.DomainAuthorizeListOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeList")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DomainAuthorizeList")
 	defer span.End()
 
 	var logger = helper.Helper().Logger(ctx)

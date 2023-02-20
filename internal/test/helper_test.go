@@ -176,7 +176,8 @@ func Test_utilHelper_CreateAccessToken(t *testing.T) {
 	}
 }
 
-// Benchmark_utilHelper_CreateAccessToken-4   	 1000000	      904 ns/op	     832 B/op	       1 allocs/op
+// Benchmark_utilHelper_CreateAccessToken-4
+// 1000000	      904 ns/op	     832 B/op	       1 allocs/op
 func Benchmark_utilHelper_CreateAccessToken(b *testing.B) {
 	ctx := context.Background()
 	accountNo := uint64(1)

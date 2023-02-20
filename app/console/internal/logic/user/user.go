@@ -9,6 +9,8 @@ package user
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/net/gtrace"
+
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
@@ -27,5 +29,8 @@ func initUser() *sUser {
 
 // CreateMerchant creates a new merchant.
 func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInput) (out *model.CreateMerchantOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-CreateMerchant")
+	defer span.End()
+
 	return
 }
