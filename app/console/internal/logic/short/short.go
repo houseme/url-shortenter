@@ -9,10 +9,12 @@ package short
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sShort struct {
@@ -32,6 +34,9 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-CreateShort")
 	defer span.End()
 
+	var logger = helper.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "short-CreateShort in:", in)
+
 	return
 }
 
@@ -39,6 +44,9 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 func (s *sShort) ModifyShort(ctx context.Context, in *model.ModifyShortInput) (out *model.ModifyShortOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-ModifyShort")
 	defer span.End()
+
+	var logger = helper.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "short-ModifyShort in:", in)
 
 	return
 }
@@ -48,6 +56,9 @@ func (s *sShort) QueryShort(ctx context.Context, in *model.QueryShortInput) (out
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryShort")
 	defer span.End()
 
+	var logger = helper.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "short-QueryShort in:", in)
+
 	return
 }
 
@@ -55,6 +66,9 @@ func (s *sShort) QueryShort(ctx context.Context, in *model.QueryShortInput) (out
 func (s *sShort) QueryStat(ctx context.Context, in *model.QueryStatInput) (out *model.QueryStatOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryStat")
 	defer span.End()
+
+	var logger = helper.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "short-QueryStat in:", in)
 
 	return
 }

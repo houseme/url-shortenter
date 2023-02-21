@@ -4,13 +4,13 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.174
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.175
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.8.7
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.106
-	github.com/geziyor/geziyor v0.0.0-20221223163247-7349b81754b8
+	github.com/geziyor/geziyor v0.0.0-20230220181402-555cdee59755
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.2
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.2
@@ -40,7 +40,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230213000208-1903a0cd6c4c // indirect
+	github.com/chromedp/cdproto v0.0.0-20230220211738-2b1ec77315c9 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -77,7 +77,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.14.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
-	github.com/prometheus/common v0.39.0 // indirect
+	github.com/prometheus/common v0.40.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect

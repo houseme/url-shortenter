@@ -86,7 +86,13 @@ func (s *sMiddleware) MiddlewareHandlerRequest(r *ghttp.Request) {
 	ctx, span := gtrace.NewSpan(r.GetCtx(), "tracing-service-new-MiddlewareHandlerRequest")
 	r.SetCtx(ctx)
 	defer span.End()
-	g.Log().Debug(ctx, "MiddlewareHandlerRequest start")
 
+	g.Log().Debug(ctx, "MiddlewareHandlerRequest start")
+	r.SetParam("rawQuery", r.Request.URL.RawQuery)
+	r.SetParam("shortAll", r.Request.URL.String())
+	r.SetParam("clientIp", r.GetClientIp())
+	r.SetParam("userAgent", r.UserAgent())
+	r.SetParam("referer", r.Referer())
+	r.SetParam("host", r.Request.Host)
 	r.Middleware.Next()
 }

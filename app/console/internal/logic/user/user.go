@@ -9,10 +9,12 @@ package user
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sUser struct {
@@ -31,6 +33,9 @@ func initUser() *sUser {
 func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInput) (out *model.CreateMerchantOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-CreateMerchant")
 	defer span.End()
+
+	var logger = helper.Helper().Logger(ctx)
+	g.Log(logger).Debug(ctx, "user-CreateMerchant in:", in)
 
 	return
 }

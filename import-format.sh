@@ -12,7 +12,7 @@
 
 
 # 格式化 go.mod
-go mod tidy -compat=1.17
+go mod tidy -compat=1.18
 
 
 # 处理 go imports 的格式化

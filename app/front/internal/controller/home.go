@@ -37,7 +37,6 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 	defer span.End()
 
 	var (
-		r      = g.RequestFromCtx(ctx)
 		logger = helper.Helper().Logger(ctx)
 		out    string
 	)
@@ -49,13 +48,6 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 		}
 	}()
 
-	req.RawQuery = r.Request.URL.RawQuery
-	req.ShortAll = r.Request.URL.String()
-	req.ClientIP = r.GetClientIp()
-	req.UserAgent = r.UserAgent()
-	req.Referer = r.Referer()
-	req.Host = r.Request.Host
-
 	g.Log(logger).Debug(ctx, "home-index modify req:", req)
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
 		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
@@ -63,7 +55,7 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 	}
 
 	if err == nil && gstr.Trim(out) == "" {
-		r.Response.Status = http.StatusNotFound
+		g.RequestFromCtx(ctx).Response.Status = http.StatusNotFound
 		return
 	}
 	res = (*v1.HomeRes)(&out)
