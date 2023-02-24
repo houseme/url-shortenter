@@ -60,6 +60,8 @@ github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4/go.mod h1:ybxpYRF
 github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d/go.mod h1:rBZYJk541a8SKzHPHnH3zbiI+7dagKZ0cgpgrD7Fyho=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.182 h1:oYz9wuigOkB/4IE9FTjd5IqNlkpvcq/zRb+7s9ecmyo=
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.182/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.184 h1:ozovZNKVg5aBt8quo1I+aJq02DZpvtsDiIyrubApW70=
+github.com/aliyun/alibaba-cloud-sdk-go v1.62.184/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible h1:KXeJoM1wo9I/6xPTyt6qCxoSZnmASiAjlrr0dyTUKt8=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
 github.com/andybalholm/cascadia v1.1.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
@@ -581,6 +583,8 @@ github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.601/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.602 h1:hmyPXsPO1Vr25CoNo3ttmhbdbOaiHMtVXNz1UxEYrsA=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.602/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.601 h1:SjAV25ZmACbE4EZu5zS0n9TBPOvUh4Zn1cQ97n+0xoU=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.601/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.601 h1:6Bt7h4R/bnBfZI/sgkfGPppEFfeBmsY5LyR0CQwP+ZU=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.601/go.mod h1:E9X1CGX1lNpYX9YQyqz2+o29dmusdE3jtRgTVKJrTp4=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
