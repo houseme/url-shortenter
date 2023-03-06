@@ -4,10 +4,10 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.202
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.216
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
-	github.com/chromedp/chromedp v0.8.7
+	github.com/chromedp/chromedp v0.8.8
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.106
 	github.com/geziyor/geziyor v0.0.0-20230220181402-555cdee59755
@@ -84,7 +84,7 @@ require (
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/image v0.5.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
