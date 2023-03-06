@@ -15,8 +15,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/text/gstr"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 
 	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
@@ -44,11 +42,9 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 	defer func() {
 		if err != nil {
 			g.Log(logger).Error(ctx, "home-index err:", err)
-			span.RecordError(err, trace.WithAttributes(attribute.String("home-index-err", err.Error())))
 		}
 	}()
 
-	g.Log(logger).Debug(ctx, "home-index modify req:", req)
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
 		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
 		return
