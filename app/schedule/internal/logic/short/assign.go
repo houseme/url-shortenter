@@ -13,6 +13,7 @@ import (
 
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
@@ -40,7 +41,6 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 
 	var (
 		logger = helper.Helper().Logger(ctx)
-		list   = ([]*entity.ShortUrls)(nil)
 		err    error
 	)
 	g.Log(logger).Info(ctx, "AssignTask start")
@@ -52,6 +52,7 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 		g.Log(logger).Info(ctx, "AssignTask end")
 	}()
 
+	var list = ([]*entity.ShortUrls)(nil)
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid, CollectState: consts.ShortCollectStateProcessing}).Scan(&list); err != nil {
 		err = gerror.Wrap(err, "AssignTask dao.ShortUrls.Ctx(ctx).Where failed")
 		return err
@@ -62,19 +63,20 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 		return nil
 	}
 
-	var (
-		conn, _ = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
-		llen    = len(list)
-		result  *gvar.Var
-	)
-	g.Log(logger).Info(ctx, "AssignTask list len", llen)
+	var conn gredis.Conn
+	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
+		g.Log(logger).Error(ctx, "AssignTask g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed:", err)
+		return err
+	}
+	g.Log(logger).Info(ctx, "AssignTask list len", len(list))
 	defer func() {
 		if errs := conn.Close(ctx); errs != nil {
 			g.Log(logger).Error(ctx, "AssignTask conn.Close failed:", errs)
 		}
 		g.Log(logger).Info(ctx, "AssignTask conn.Close")
 	}()
-	for i := 0; i < llen; i++ {
+	var result *gvar.Var
+	for i := 0; i < len(list); i++ {
 		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortMirrorQueue(ctx), list[i].ShortNo); err != nil {
 			g.Log(logger).Error(ctx, "AssignTask conn.Do LPUSH failed:", err)
 		}

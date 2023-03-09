@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.226
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.228
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.8.8
@@ -12,21 +12,21 @@ require (
 	github.com/chyroc/lark v0.0.106
 	github.com/geziyor/geziyor v0.0.0-20230220181402-555cdee59755
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.2
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.2
-	github.com/gogf/gf/v2 v2.3.2
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.3
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.3
+	github.com/gogf/gf/v2 v2.3.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.611
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.611
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.612
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.612
 	go.opentelemetry.io/otel v1.14.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.14.0
 	go.opentelemetry.io/otel/sdk v1.14.0
 	go.opentelemetry.io/otel/trace v1.14.0
 	golang.org/x/crypto v0.7.0
 	golang.org/x/sync v0.1.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.29.0
 
 )
 
@@ -57,7 +57,7 @@ require (
 	github.com/gobwas/ws v1.1.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -77,7 +77,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.14.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
-	github.com/prometheus/common v0.41.0 // indirect
+	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
