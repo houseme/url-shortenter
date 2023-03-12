@@ -7,14 +7,18 @@
 package tracing
 
 import (
+	"context"
 	"strings"
 
+	"github.com/gogf/gf/v2/frame/g"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+
+	"github.com/houseme/url-shortenter/utility/env"
 )
 
 const (
@@ -54,4 +58,16 @@ func InitJaeger(serviceName, endpoint, version, environment, hostIP string) (*tr
 	)
 	otel.SetTracerProvider(tp)
 	return tp, nil
+}
+
+// InitTracer initializes and registers jaeger to global TracerProvider.
+func InitTracer(ctx context.Context, serviceName string) {
+	if appEnv, err := env.New(ctx); err != nil {
+		g.Log().Fatal(ctx, err)
+	} else {
+		_, err = InitJaeger(serviceName, appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx), appEnv.HostIP(ctx))
+		if err != nil {
+			g.Log().Fatal(ctx, err)
+		}
+	}
 }

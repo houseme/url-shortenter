@@ -4,10 +4,10 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.232
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.235
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
-	github.com/chromedp/chromedp v0.8.8
+	github.com/chromedp/chromedp v0.9.1
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.106
 	github.com/geziyor/geziyor v0.0.0-20230220181402-555cdee59755
@@ -40,7 +40,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230220211738-2b1ec77315c9 // indirect
+	github.com/chromedp/cdproto v0.0.0-20230310204135-a6d692f2c96d // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
