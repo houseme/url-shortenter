@@ -9,7 +9,7 @@ package controller
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
@@ -29,7 +29,7 @@ func (c *cDomain) CreateDomainAuthorization(ctx context.Context, req *v1.DomainA
 
 	res = &v1.DomainAuthorizationRes{}
 	if res.DomainAuthorizeOutput, err = service.Domain().CreateDomainAuthorize(ctx, req.DomainAuthorizeInput); err != nil {
-		g.Log().Error(ctx, "CreateDomainAuthorize failed err:", err)
+		err = gerror.Wrap(err, "CreateDomainAuthorize failed")
 	}
 	return
 }
@@ -41,7 +41,7 @@ func (c *cDomain) QueryDomainAuthorization(ctx context.Context, req *v1.QueryDom
 
 	res = &v1.QueryDomainAuthorizationRes{}
 	if res.QueryDomainAuthorizeOutput, err = service.Domain().QueryDomainAuthorize(ctx, req.QueryDomainAuthorizeInput); err != nil {
-		g.Log().Error(ctx, "QueryDomainAuthorize failed err:", err)
+		err = gerror.Wrap(err, "QueryDomainAuthorize failed")
 	}
 	return
 }
@@ -53,7 +53,7 @@ func (c *cDomain) UpdateDomainAuthorization(ctx context.Context, req *v1.DomainA
 
 	res = &v1.DomainAuthorizationUpdateRes{}
 	if res.DomainAuthorizeUpdateOutput, err = service.Domain().UpdateDomainAuthorize(ctx, req.DomainAuthorizeUpdateInput); err != nil {
-		g.Log().Error(ctx, "UpdateDomainAuthorize failed err:", err)
+		err = gerror.Wrap(err, "UpdateDomainAuthorize failed")
 	}
 	return
 }
@@ -65,7 +65,7 @@ func (c *cDomain) DeleteDomainAuthorization(ctx context.Context, req *v1.DomainA
 
 	res = &v1.DomainAuthorizationDeleteRes{}
 	if res.DomainAuthorizeDeleteOutput, err = service.Domain().DeleteDomainAuthorize(ctx, req.DomainAuthorizeDeleteInput); err != nil {
-		g.Log().Error(ctx, "DeleteDomainAuthorize failed err:", err)
+		err = gerror.Wrap(err, "DeleteDomainAuthorize failed")
 	}
 	return
 }
@@ -77,7 +77,7 @@ func (c *cDomain) DomainAuthorizationList(ctx context.Context, req *v1.DomainAut
 
 	res = &v1.DomainAuthorizationListRes{}
 	if res.DomainAuthorizeListOutput, err = service.Domain().DomainAuthorizeList(ctx, req.DomainAuthorizeListInput); err != nil {
-		g.Log().Error(ctx, "ListDomainAuthorization failed err:", err)
+		err = gerror.Wrap(err, "ListDomainAuthorization failed")
 	}
 	return
 }
@@ -89,7 +89,7 @@ func (c *cDomain) DomainAuthorizationDetail(ctx context.Context, req *v1.DomainA
 
 	res = &v1.DomainAuthorizationDetailRes{}
 	if res.DomainAuthorizeDetailOutput, err = service.Domain().DomainAuthorizeDetail(ctx, req.DomainAuthorizeDetailInput); err != nil {
-		g.Log().Error(ctx, "DomainAuthorizeDetail failed err:", err)
+		err = gerror.Wrap(err, "DomainAuthorizeDetail failed ")
 	}
 	return
 }

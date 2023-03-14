@@ -34,8 +34,8 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-CreateShort")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "short-CreateShort in:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "short-CreateShort in:", in)
 
 	return
 }
@@ -45,8 +45,8 @@ func (s *sShort) ModifyShort(ctx context.Context, in *model.ModifyShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-ModifyShort")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "short-ModifyShort in:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "short-ModifyShort in:", in)
 
 	return
 }
@@ -56,8 +56,8 @@ func (s *sShort) QueryShort(ctx context.Context, in *model.QueryShortInput) (out
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryShort")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "short-QueryShort in:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "short-QueryShort in:", in)
 
 	return
 }
@@ -67,8 +67,8 @@ func (s *sShort) QueryStat(ctx context.Context, in *model.QueryStatInput) (out *
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryStat")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "short-QueryStat in:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "short-QueryStat in:", in)
 
 	return
 }

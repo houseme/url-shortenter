@@ -34,8 +34,8 @@ func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInpu
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-CreateMerchant")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "user-CreateMerchant in:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "user-CreateMerchant in:", in)
 
 	return
 }

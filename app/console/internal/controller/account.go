@@ -10,12 +10,10 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
-	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type cAccount struct {
@@ -29,10 +27,8 @@ func (c *cAccount) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) 
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-CreateAccount")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
 	res = &v1.CreateAccountRes{}
 	if res.CreateAccountOutput, err = service.Account().CreateAccount(ctx, req.CreateAccountInput); err != nil {
-		g.Log(logger).Error(ctx, "account-CreateAccount err:", err)
 		err = gerror.Wrap(err, "controller create account failed")
 	}
 	return
@@ -43,11 +39,9 @@ func (c *cAccount) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) 
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-ModifyAccount")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
 	res = &v1.ModifyAccountRes{}
 	if res.ModifyAccountOutput, err = service.Account().ModifyAccount(ctx, req.ModifyAccountInput); err != nil {
-		g.Log(logger).Error(ctx, "account-ModifyAccount err:", err)
-		err = gerror.Wrap(err, "controller modify account failed:")
+		err = gerror.Wrap(err, "controller modify account failed")
 	}
 	return
 }
@@ -57,11 +51,9 @@ func (c *cAccount) ModifyPassword(ctx context.Context, req *v1.ModifyPasswordReq
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-ModifyPassword")
 	defer span.End()
 
-	var logger = helper.Helper().Logger(ctx)
 	res = &v1.ModifyPasswordRes{}
 	if res.ModifyPasswordOutput, err = service.Account().ModifyPassword(ctx, req.ModifyPasswordInput); err != nil {
-		g.Log(logger).Error(ctx, "account-ModifyPassword err:", err)
-		err = gerror.Wrap(err, "controller modify password failed:")
+		err = gerror.Wrap(err, "controller modify password failed")
 	}
 	return
 }

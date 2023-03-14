@@ -34,9 +34,9 @@ func (s *sHome) Index(ctx context.Context, in *model.HomeIndexInput) (out *model
 	defer span.End()
 
 	var (
-		logger = helper.Helper().Logger(ctx)
+		log = g.Log(helper.Helper().Logger(ctx))
 	)
-	g.Log(logger).Debug(ctx, "home-Index in:", in)
+	log.Debug(ctx, "home-Index in:", in)
 
 	return
 }

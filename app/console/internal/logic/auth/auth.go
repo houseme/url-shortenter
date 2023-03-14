@@ -44,11 +44,11 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 	defer span.End()
 
 	var (
-		logger       = helper.Helper().Logger(ctx)
+		log          = g.Log(helper.Helper().Logger(ctx))
 		account      = (*entity.Users)(nil)
 		accessSecret = (*entity.UsersAccessSecret)(nil)
 	)
-	g.Log(logger).Debug(ctx, "auth create access token AppID:", in.AppID)
+	log.Debug(ctx, "auth create access token AppID:", in.AppID)
 	if err = dao.UsersAccessSecret.Ctx(ctx).Scan(&account, do.UsersAccessSecret{
 		SecretId:  in.AppID,
 		GrantType: gstr.ToLower(in.GrantType),
@@ -120,7 +120,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		return
 	}
 
-	g.Log(logger).Debug(ctx, "auth-CreateAccessToken v:", v)
+	log.Debug(ctx, "auth-CreateAccessToken v:", v)
 	out = &model.CreateAccessTokenOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,
@@ -134,10 +134,10 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 	defer span.End()
 
 	var (
-		logger  = helper.Helper().Logger(ctx)
+		log     = g.Log(helper.Helper().Logger(ctx))
 		account = (*entity.Users)(nil)
 	)
-	g.Log(logger).Debug(ctx, "auth-authorization params account:", in.Account)
+	log.Debug(ctx, "auth-authorization params account:", in.Account)
 	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.Account}); err != nil {
 		err = gerror.Wrap(err, "query Users failed  err:")
 		return
@@ -188,7 +188,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		err = gerror.Wrap(err, "Redis SETEX failed")
 		return
 	}
-	g.Log(logger).Debug(ctx, "auth-authorization v:", v)
+	log.Debug(ctx, "auth-authorization v:", v)
 	out = &model.AuthOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,
@@ -203,11 +203,11 @@ func (s *sAuth) setRedisToken(ctx context.Context, in *model.TokenCache) (val *g
 	defer span.End()
 
 	var (
-		logger    = helper.Helper().Logger(ctx)
+		log       = g.Log(helper.Helper().Logger(ctx))
 		redisName = cache.RedisCache().ShortAccessTokenConn(ctx)
 		redisKey  = cache.RedisCache().ShortAuthorizationKey(ctx, in.Token)
 	)
-	g.Log(logger).Debug(ctx, "auth-setRedisToken params account:", in)
+	log.Debug(ctx, "auth-setRedisToken params account:", in)
 	if val, err = g.Redis(redisName).Do(ctx, "SETEX", redisKey, in.ExpiresIn, in.AuthToken); err != nil {
 		err = gerror.Wrap(err, "Redis SETEX failed")
 		return
