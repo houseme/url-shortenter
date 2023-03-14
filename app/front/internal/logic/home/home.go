@@ -51,11 +51,11 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	defer span.End()
 
 	var (
-		logger    = helper.Helper().Logger(ctx)
+		log       = g.Log(helper.Helper().Logger(ctx))
 		conn      gredis.Conn
 		isSendLog bool
 	)
-	g.Log(logger).Debug(ctx, "home-short-detail in:", in)
+	log.Debug(ctx, "home-short-detail in:", in)
 	in.VisitState = consts.VisitState
 	defer func() {
 		if isSendLog {
@@ -69,17 +69,17 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	}
 	defer func() {
 		if errs := conn.Close(ctx); errs != nil {
-			g.Log(logger).Error(ctx, "failed to close redis connection err:", errs)
+			log.Error(ctx, "failed to close redis connection err:", errs)
 		}
 	}()
 
 	var val *gvar.Var
 	if val, err = conn.Do(ctx, "GET", in.Short); err != nil {
-		g.Log(logger).Error(ctx, "home-short-detail get redis value failed err:", err)
+		log.Error(ctx, "home-short-detail get redis value failed err:", err)
 	}
 	if !val.IsNil() && !val.IsEmpty() && val.String() != "" {
 		out = val.String()
-		g.Log(logger).Debug(ctx, "home-short-detail from redis out:", out)
+		log.Debug(ctx, "home-short-detail from redis out:", out)
 		isSendLog = true
 		in.VisitState = consts.VisitStateNormal
 		return
@@ -94,12 +94,12 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		}
 
 		if ent == nil {
-			g.Log(logger).Debug(ctx, "home-short-detail short url not found")
+			log.Debug(ctx, "home-short-detail short url not found")
 			return nil, nil
 		}
-		g.Log(logger).Debug(ctx, "home-short-detail select from db:", ent)
+		log.Debug(ctx, "home-short-detail select from db:", ent)
 		if ent.IsValid != consts.ShortValid {
-			g.Log(logger).Debug(ctx, "home-short-detail short url ent.IsValid != consts.ShortValid")
+			log.Debug(ctx, "home-short-detail short url ent.IsValid != consts.ShortValid")
 			in.VisitState = consts.VisitStateInvalid
 			isSendLog = true
 			return nil, nil
@@ -107,15 +107,15 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 
 		// set cache
 		if val, err = conn.Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
-			g.Log(logger).Error(ctx, "home-short-detail storage.Redis Set failed err:", err)
+			log.Error(ctx, "home-short-detail storage.Redis Set failed err:", err)
 		}
 
-		g.Log(logger).Info(ctx, "home-short-detail set redis cache end shortUrl:", in.Short, "destUrl:", ent.DestUrl)
+		log.Info(ctx, "home-short-detail set redis cache end shortUrl:", in.Short, "destUrl:", ent.DestUrl)
 		return ent.DestUrl, nil
 	})
 
 	if err != nil {
-		g.Log(logger).Error(ctx, "home-short-detail query db failed err:", err)
+		log.Error(ctx, "home-short-detail query db failed err:", err)
 		err = gerror.Wrap(err, "failed to query db")
 		return "", err
 	}
@@ -125,7 +125,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	}
 	isSendLog = true
 	in.VisitState = consts.VisitStateNormal
-	g.Log(logger).Debug(ctx, "home-short-detail from db out:", v)
+	log.Debug(ctx, "home-short-detail from db out:", v)
 	out = v.(string)
 	return
 }
@@ -152,19 +152,19 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			VisitState: in.VisitState,
 			ServerIp:   serverIP,
 		}
-		val    *gvar.Var
-		logger = helper.Helper().Logger(ctx)
+		val *gvar.Var
+		log = g.Log(helper.Helper().Logger(ctx))
 	)
 	if err != nil {
-		g.Log(logger).Error(ctx, "home-new-access-log get intranet ip failed err:", err)
+		log.Error(ctx, "home-new-access-log get intranet ip failed err:", err)
 		l.ServerIp = helper.Helper().GetOutBoundIP(ctx)
 	}
 
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
 		cache.RedisCache().ShortAccessLogQueue(ctx), l); err != nil {
-		g.Log(logger).Error(ctx, "NewAccessLog err:", err)
+		log.Error(ctx, "NewAccessLog err:", err)
 	}
-	g.Log(logger).Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
+	log.Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
 }
 
 // ShortAll 短链列表
@@ -173,16 +173,16 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 	defer span.End()
 
 	var (
-		logger    = helper.Helper().Logger(ctx)
+		log       = g.Log(helper.Helper().Logger(ctx))
 		isSendLog bool
 		serverIP  string
 		t         = gtime.Now()
 	)
 
-	g.Log(logger).Debug(ctx, "home-short-all in:", in)
+	log.Debug(ctx, "home-short-all in:", in)
 	in.VisitState = consts.VisitState
 	if serverIP, err = gipv4.GetIntranetIp(); err != nil {
-		g.Log(logger).Error(ctx, "home-short-all get server ip failed err:", err)
+		log.Error(ctx, "home-short-all get server ip failed err:", err)
 		return
 	}
 	defer func() {
@@ -205,6 +205,6 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 		MonthTime:  &wrapperspb.UInt64Value{Value: uint64(t.Month())},
 		DayTime:    &wrapperspb.UInt64Value{Value: uint64(t.Day())},
 	}
-	g.Log().Debug(ctx, "home-short-all acl:", acl)
+	log.Debug(ctx, "home-short-all acl:", acl)
 	return
 }

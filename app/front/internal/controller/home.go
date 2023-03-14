@@ -35,13 +35,13 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 	defer span.End()
 
 	var (
-		logger = helper.Helper().Logger(ctx)
-		out    string
+		log = g.Log(helper.Helper().Logger(ctx))
+		out string
 	)
-	g.Log(logger).Debug(ctx, "home-index in:", req)
+	log.Debug(ctx, "home-index in:", req)
 	defer func() {
 		if err != nil {
-			g.Log(logger).Error(ctx, "home-index err:", err)
+			log.Error(ctx, "home-index err:", err)
 		}
 	}()
 
@@ -55,6 +55,6 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 		return
 	}
 	res = (*v1.HomeRes)(&out)
-	g.Log(logger).Debug(ctx, "home-index res:", res, "url:", out)
+	log.Debug(ctx, "home-index res:", res, "url:", out)
 	return
 }
