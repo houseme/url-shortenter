@@ -57,7 +57,10 @@ func Helper() *utilHelper {
 	return &utilHelper{}
 }
 
-var localInstances = gmap.NewStrAnyMap(true)
+var (
+	localInstances = gmap.NewStrAnyMap(true)
+	src            = rand.NewSource(time.Now().UnixNano())
+)
 
 type utilHelper struct{}
 
@@ -119,11 +122,8 @@ func (u *utilHelper) AuthToken(ctx context.Context, accountNo uint64) string {
 	return gconv.String(u.InitTrxID(ctx, accountNo%32)) + u.InitRandStr(64) + gtime.TimestampNanoStr()
 }
 
-var src = rand.NewSource(time.Now().UnixNano())
-
 // InitRandStr RandStringBytesMaskImprSrcUnsafe
 func (u *utilHelper) InitRandStr(n int) string {
-	rand.Seed(time.Now().UnixNano())
 	b := make([]byte, n)
 	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
 	for i, cache, remain := n-1, src.Int63(), letterIdxMax; i >= 0; {
@@ -227,7 +227,7 @@ func (u *utilHelper) EncryptSignData(ctx context.Context, data interface{}, key 
 }
 
 // Header .
-func (u *utilHelper) Header(ctx context.Context) map[string]string {
+func (u *utilHelper) Header(_ context.Context) map[string]string {
 	return g.MapStrStr{
 		"Accept-Encoding": "gzip, deflate, br",
 		"Accept-Language": "zh-CN,zh;q=0.9",
@@ -264,12 +264,12 @@ func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 }
 
 // RequestTime .request time
-func (u *utilHelper) RequestTime(ctx context.Context, ts string) *gtime.Time {
+func (u *utilHelper) RequestTime(_ context.Context, ts string) *gtime.Time {
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
 // ConcatenateSignSource get sign url 排序并拼接签名的内容信息
-func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}, logger string) string {
+func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}) string {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-enterprise-utility-ConcatenateSignSource")
 	defer span.End()
 
@@ -279,13 +279,13 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		count  = v.NumField()
 		keys   = make([]string, 0, count)
 		params = make(map[string]string)
+		log    = g.Log(u.Logger(ctx))
 	)
 
-	g.Log(logger).Info(ctx, "helper ConcatenateSignSource tt", tt, " v", v)
+	log.Debug(ctx, "helper ConcatenateSignSource tt", tt, " v", v)
 	for i := 0; i < count; i++ {
 		if v.Field(i).CanInterface() { // 判断是否为可导出字段
-			g.Log(logger).Printf(ctx, "%s %s = %v -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(),
-				tt.Field(i).Tag)
+			log.Printf(ctx, "%s %s = %v -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(), tt.Field(i).Tag)
 			keys = append(keys, u.LcFirst(tt.Field(i).Name))
 			params[u.LcFirst(tt.Field(i).Name)] = gconv.String(v.Field(i).Interface())
 		}
@@ -304,7 +304,7 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		buf.WriteString("&")
 	}
 	buf.Truncate(buf.Len() - 1)
-	g.Log(logger).Info(ctx, "helper ConcatenateSignSource string start:", buf.String())
+	log.Debug(ctx, "helper ConcatenateSignSource string start:", buf.String())
 	return buf.String()
 }
 
@@ -314,14 +314,13 @@ func (u *utilHelper) DecryptSignDataInfo(src []byte, key []byte) (dst []byte, er
 }
 
 // HexDecodeString .
-func (u *utilHelper) HexDecodeString(ctx context.Context, data, logger string, key []byte) ([]byte, error) {
-	g.Log(logger).Info(ctx, "helper HexDecodeString hex.DecodeString responseNotify :", data)
-	signData, err := hex.DecodeString(data)
-	if err != nil {
-		g.Log(logger).Error(ctx, "helper HexDecodeString hex.DecodeString error :", err)
+func (u *utilHelper) HexDecodeString(ctx context.Context, data string, key []byte) ([]byte, error) {
+	if signData, err := hex.DecodeString(data); err != nil {
+		err = gerror.Wrap(err, "helper HexDecodeString hex.DecodeString failed")
 		return nil, err
+	} else {
+		return u.DecryptSignDataInfo(signData, key)
 	}
-	return u.DecryptSignDataInfo(signData, key)
 }
 
 // Sha256Of returns the sha256 of the input string
@@ -345,17 +344,18 @@ func (u *utilHelper) CheckFileExists(ctx context.Context, filePath string) (err 
 }
 
 // UserAgentIPHash user agent ip hash
-func (u *utilHelper) UserAgentIPHash(useragent string, ip string) string {
+func (u *utilHelper) UserAgentIPHash(useragent string, ip string) (string, error) {
 	var (
 		input     = fmt.Sprintf("%s-%s-%s-%d", useragent, ip, time.Now().String(), rand.Int())
 		data, err = u.Sha256OfShort(input)
 	)
 	if err != nil {
-		return ""
+		err = gerror.Wrap(err, "UserAgentIPHash Sha256OfShort failed")
+		return "", err
 	}
 
 	str := u.Base58Encode(data)
-	return str[:10]
+	return str[:10], nil
 }
 
 // Sha256OfShort returns the sha256 of the input string
@@ -388,9 +388,9 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 	var (
 		err     error
 		urlHash []byte
-		logger  = u.Logger(ctx)
+		log     = g.Log(u.Logger(ctx))
 	)
-	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink url:", url)
+	log.Debug(ctx, "utilHelper GenerateShortLink url:", url)
 	if urlHash, err = u.Sha256OfShort(url); err != nil {
 		err = gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
 		return "", err
@@ -398,7 +398,7 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 	// number := new(big.Int).SetBytes(urlHash).Uint64()
 	// str := u.Base58Encode(gconv.Bytes(number))
 	str := u.Base58Encode(urlHash)
-	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str)
+	log.Debug(ctx, "utilHelper GenerateShortLink str:", str)
 	return str[:8], nil
 }
 
@@ -417,13 +417,14 @@ func (u *utilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (t
 	var (
 		hash      []byte
 		initTrxID = u.InitTrxID(ctx, accountNo)
+		log       = g.Log(u.Logger(ctx))
 	)
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
+	log.Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
 	if hash, err = u.Sha256OfShort(gconv.String(initTrxID)); err != nil {
 		err = gerror.Wrap(err, "utilHelper CreateAccessToken Sha256OfShort error")
 		return
 	}
 	token = hex.EncodeToString(hash)
-	g.Log(u.Logger(ctx)).Debug(ctx, "utilHelper CreateAccessToken token:", token)
+	log.Debug(ctx, "utilHelper CreateAccessToken token:", token)
 	return
 }
