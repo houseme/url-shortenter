@@ -64,6 +64,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.62.252 h1:LR4U3dPodvHrezhDYwcDCHOsFs3G
 github.com/aliyun/alibaba-cloud-sdk-go v1.62.252/go.mod h1:Api2AkmMgGaSUAhmk76oaFObkoeCPc/bKAqcyplPODs=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible h1:KXeJoM1wo9I/6xPTyt6qCxoSZnmASiAjlrr0dyTUKt8=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
+github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible h1:KpbJFXwhVeuxNtBJ74MCGbIoaBok2uZvkD7QXp2+Wis=
+github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
 github.com/andybalholm/cascadia v1.1.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
 github.com/andybalholm/cascadia v1.3.1 h1:nhxRkql1kdYCc8Snf7D5/D3spOX+dBgjA6u8x004T2c=
 github.com/andybalholm/cascadia v1.3.1/go.mod h1:R4bJ1UQfqADjvDa4P6HZHLh/3OxWWEqc0Sk8XGwHqvA=
@@ -590,8 +592,12 @@ github.com/temoto/robotstxt v1.1.2 h1:W2pOjSJ6SWvldyEuiFXNxz3xZ8aiWX5LbfDiOFd7Fx
 github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.623 h1:VzqOTuqkkQm4jBq04YpK4S0MOZ/U7aMkA4GwKEU7UjY=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.623/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.624 h1:rq8VZsUxg8rDsfSE+yJHQ1tV3ITwGQEarHRDv8YcfPw=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.624/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.623 h1:72KSvQGisXNuLq/No9cv2MA+xHpExJeYphXPCITH5us=
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.623/go.mod h1:4O6AsnVH5j2YZeiMC2vJY0LIUdqBaElX3O6eJgw68VY=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.624 h1:9uNAIaINZm1J7R4gWJkgeFeQcBkJo3UnMhvoHVa+gTs=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.624/go.mod h1:9Lolo+MhJs+lhqRB1+A9ZFE5dnd5aJp7xXmQHRCuuqw=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/uber/jaeger-client-go v2.30.0+incompatible h1:D6wyKGCecFaSRUpo8lCVbaOOb6ThwMmTEbhRwtKR97o=
 github.com/uber/jaeger-client-go v2.30.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=

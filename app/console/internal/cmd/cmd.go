@@ -45,7 +45,7 @@ var (
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Middleware(service.Middleware().AuthorizationForConsole)
 					group.Bind(
-						// controller.Echo,
+						controller.Home,
 						// controller.Account,
 						// controller.Short,
 						controller.Domain,
