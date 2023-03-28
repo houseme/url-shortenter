@@ -152,14 +152,13 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			VisitState: in.VisitState,
 			ServerIp:   serverIP,
 		}
-		val *gvar.Var
 		log = g.Log(helper.Helper().Logger(ctx))
 	)
 	if err != nil {
 		log.Error(ctx, "home-new-access-log get intranet ip failed err:", err)
 		l.ServerIp = helper.Helper().GetOutBoundIP(ctx)
 	}
-
+	var val *gvar.Var
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
 		cache.RedisCache().ShortAccessLogQueue(ctx), l); err != nil {
 		log.Error(ctx, "NewAccessLog err:", err)
@@ -174,9 +173,9 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 
 	var (
 		log       = g.Log(helper.Helper().Logger(ctx))
-		isSendLog bool
-		serverIP  string
 		t         = gtime.Now()
+		serverIP  string
+		isSendLog bool
 	)
 
 	log.Debug(ctx, "home-short-all in:", in)

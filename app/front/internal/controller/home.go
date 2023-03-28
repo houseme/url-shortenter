@@ -34,17 +34,14 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 
-	var (
-		log = g.Log(helper.Helper().Logger(ctx))
-		out string
-	)
+	log := g.Log(helper.Helper().Logger(ctx))
 	log.Debug(ctx, "home-index in:", req)
 	defer func() {
 		if err != nil {
 			log.Error(ctx, "home-index err:", err)
 		}
 	}()
-
+	var out string
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
 		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
 		return

@@ -45,13 +45,14 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	var (
 		err = r.GetError()
 		res = r.GetHandlerResponse()
+		log = g.Log()
 	)
-	g.Log().Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
+	log.Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
 	if g.IsNil(res) || g.IsEmpty(res) {
 		r.Response.Status = http.StatusNotFound
 	}
 	if err != nil {
-		g.Log().Error(ctx, "MiddlewareHandlerResponse err:", err)
+		log.Error(ctx, "MiddlewareHandlerResponse err:", err)
 		r.Response.Status = http.StatusInternalServerError
 		if internalErr := r.Response.WriteTpl("error.html", g.Map{
 			"title":   "内部错误 - 短链平台",
@@ -59,7 +60,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": err.Error(),
 			"label":   "Error",
 		}); internalErr != nil {
-			g.Log().Errorf(ctx, `r.Response.WriteTpl internalErr %+v`, internalErr)
+			log.Errorf(ctx, `r.Response.WriteTpl internalErr %+v`, internalErr)
 		}
 	}
 	if r.Response.Status > 0 && r.Response.Status != http.StatusOK && r.Response.Status != http.StatusFound {
@@ -69,14 +70,14 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": "您访问的页面已失效",
 			"label":   http.StatusText(r.Response.Status),
 		}); internalErr != nil {
-			g.Log().Errorf(ctx, `r.Response.WriteTpl 404 err: %+v`, internalErr)
+			log.Errorf(ctx, `r.Response.WriteTpl 404 err: %+v`, internalErr)
 		}
 	}
 
 	str := res.(*v1.HomeRes)
-	g.Log().Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
+	log.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
 	if !g.IsNil(res) && !g.IsEmpty(res) {
-		g.Log().Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
+		log.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
 		r.Response.RedirectTo(string(*str), http.StatusFound)
 	}
 }
