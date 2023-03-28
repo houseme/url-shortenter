@@ -6,6 +6,10 @@
 
 package icp
 
+import (
+	"github.com/gogf/gf/v2/util/gconv"
+)
+
 const (
 	authorizePath = "auth"
 	queryPath     = "icpAbbreviateInfo/queryByCondition"
@@ -27,6 +31,11 @@ type QueryResponse struct {
 	Msg     string       `json:"msg"`
 	Success bool         `json:"success"`
 	Params  *QueryParams `json:"params"`
+}
+
+// String string
+func (r *QueryResponse) String() string {
+	return `{"code": ` + gconv.String(r.Code) + `, "msg": "` + r.Msg + `", "success": ` + gconv.String(r.Success) + `, "params": ` + r.Params.String() + `}`
 }
 
 // AuthParams auth params
@@ -58,6 +67,11 @@ type QueryParams struct {
 	Total            int           `json:"total"`
 }
 
+// String string
+func (r *QueryParams) String() string {
+	return `{"endRow": ` + gconv.String(r.EndRow) + `, "firstPage": ` + gconv.String(r.FirstPage) + `, "hasNextPage": ` + gconv.String(r.HasNextPage) + `, "hasPreviousPage": ` + gconv.String(r.HasPreviousPage) + `, "isFirstPage": ` + gconv.String(r.IsFirstPage) + `, "isLastPage": ` + gconv.String(r.IsLastPage) + `, "lastPage": ` + gconv.String(r.LastPage) + `, "list": ` + gconv.String(r.List) + `, "navigatePages": ` + gconv.String(r.NavigatePages) + `, "navigatepageNums": ` + gconv.String(r.NavigatepageNums) + `, "nextPage": ` + gconv.String(r.NextPage) + `, "pageNum": ` + gconv.String(r.PageNum) + `, "pageSize": ` + gconv.String(r.PageSize) + `, "pages": ` + gconv.String(r.Pages) + `, "prePage": ` + gconv.String(r.PrePage) + `, "size": ` + gconv.String(r.Size) + `, "startRow": ` + gconv.String(r.StartRow) + `, "total": ` + gconv.String(r.Total) + `}`
+}
+
 // DomainInfo domain info
 type DomainInfo struct {
 	ContentTypeName  string `json:"contentTypeName"`
@@ -74,6 +88,11 @@ type DomainInfo struct {
 	ServiceName      string `json:"serviceName"`
 	UnitName         string `json:"unitName"`
 	UpdateRecordTime string `json:"updateRecordTime"`
+}
+
+// String string
+func (r *DomainInfo) String() string {
+	return `{"contentTypeName": "` + r.ContentTypeName + `", "domain": "` + r.Domain + `", "domainId": ` + gconv.String(r.DomainID) + `, "homeUrl": "` + r.HomeURL + `", "leaderName": "` + r.LeaderName + `", "limitAccess": "` + r.LimitAccess + `", "mainId": ` + gconv.String(r.MainID) + `, "mainLicence": "` + r.MainLicence + `", "natureName": "` + r.NatureName + `", "serviceId": ` + gconv.String(r.ServiceID) + `, "serviceLicence": "` + r.ServiceLicence + `", "serviceName": "` + r.ServiceName + `", "unitName": "` + r.UnitName + `", "updateRecordTime": "` + r.UpdateRecordTime + `}`
 }
 
 // AuthorizeRequest authorize request

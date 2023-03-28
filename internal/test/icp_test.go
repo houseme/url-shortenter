@@ -39,10 +39,10 @@ func TestIcp_Query(t *testing.T) {
 }
 
 func TestQueryDomainICP(t *testing.T) {
-	// resp, err := icp.QueryDomainICP(gctx.New(), "wasair.com")
+	// resp, err := icp.QueryDomainICP(gctx.New(), "yuerso.com")
 	// if err != nil {
 	// 	t.Fatal("QueryDomainICP err:", err)
 	// }
-	//
+	// fmt.Println("response:", resp)
 	// t.Log("QueryDomainICP response:", resp)
 }
