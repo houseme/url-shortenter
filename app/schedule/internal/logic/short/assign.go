@@ -93,9 +93,8 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 	defer span.End()
 
 	var (
-		log  = g.Log(helper.Helper().Logger(ctx))
-		list = ([]*entity.ShortUrls)(nil)
-		err  error
+		log = g.Log(helper.Helper().Logger(ctx))
+		err error
 	)
 	log.Info(ctx, "AuditAssignTask start")
 	defer func() {
@@ -104,7 +103,7 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 		}
 		log.Info(ctx, "AuditAssignTask end")
 	}()
-
+	var list = ([]*entity.ShortUrls)(nil)
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid,
 		CollectState: consts.ShortCollectStateSuccess}).Scan(&list); err != nil {
 		err = gerror.Wrap(err, "AuditAssignTask dao.ShortUrls.Ctx(ctx).Where failed")
@@ -116,18 +115,18 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 		return nil
 	}
 
-	var (
-		conn, _ = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
-		llen    = len(list)
-		result  *gvar.Var
-	)
-	log.Info(ctx, "AuditAssignTask list len", llen)
+	var conn gredis.Conn
+	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
+		return gerror.Wrap(err, "AuditAssignTask g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed")
+	}
 	defer func() {
 		if errs := conn.Close(ctx); errs != nil {
 			log.Error(ctx, "AuditAssignTask conn.Close failed:", errs)
 		}
 	}()
-	for i := 0; i < llen; i++ {
+	var result *gvar.Var
+	log.Info(ctx, "AuditAssignTask list len", len(list))
+	for i := 0; i < len(list); i++ {
 		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAuditQueue(ctx), list[i].ShortNo); err != nil {
 			log.Error(ctx, "AuditAssignTask conn.Do LPUSH failed:", err)
 		}

@@ -4,12 +4,12 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.260
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.262
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.1
 	github.com/chyroc/go-ptr v1.7.0
-	github.com/chyroc/lark v0.0.106
+	github.com/chyroc/lark v0.0.108
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.3
@@ -18,8 +18,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.627
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.627
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.628
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.628
 	go.opentelemetry.io/otel v1.14.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.14.0
 	go.opentelemetry.io/otel/sdk v1.14.0
@@ -40,14 +40,14 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230319112347-6603f2c23d36 // indirect
+	github.com/chromedp/cdproto v0.0.0-20230329100754-6125fc8d7142 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-kit/kit v0.12.0 // indirect
-	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
