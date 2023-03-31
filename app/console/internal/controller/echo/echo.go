@@ -11,7 +11,7 @@ package echo
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/console/api/echo/v1"
 )
 
 // New is the constructor of cEcho.
