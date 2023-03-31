@@ -60,7 +60,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": err.Error(),
 			"label":   "Error",
 		}); internalErr != nil {
-			log.Errorf(ctx, `r.Response.WriteTpl internalErr %+v`, internalErr)
+			log.Errorf(ctx, `r.Response.WriteTpl internalErr %+v1`, internalErr)
 		}
 	}
 	if r.Response.Status > 0 && r.Response.Status != http.StatusOK && r.Response.Status != http.StatusFound {
@@ -70,7 +70,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": "您访问的页面已失效",
 			"label":   http.StatusText(r.Response.Status),
 		}); internalErr != nil {
-			log.Errorf(ctx, `r.Response.WriteTpl 404 err: %+v`, internalErr)
+			log.Errorf(ctx, `r.Response.WriteTpl 404 err: %+v1`, internalErr)
 		}
 	}
 

@@ -13,7 +13,12 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
-	"github.com/houseme/url-shortenter/app/console/internal/controller"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/account"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/auth"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/domain"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/echo"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/home"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/short"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
@@ -30,25 +35,25 @@ var (
 				group.Middleware(service.Middleware().ConsoleLogger, service.Middleware().Logger, service.Middleware().HandlerResponse)
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Bind(
-						controller.Auth,
+						auth.New(),
 					)
 				})
 
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Middleware(service.Middleware().AuthorizationForAPI)
 					group.Bind(
-						controller.Echo,
-						controller.Account,
-						controller.Short,
+						echo.New(),
+						account.New(),
+						short.New(),
 					)
 				})
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Middleware(service.Middleware().AuthorizationForConsole)
 					group.Bind(
-						controller.Home,
+						home.New(),
 						// controller.Account,
 						// controller.Short,
-						controller.Domain,
+						domain.New(),
 					)
 				})
 			})

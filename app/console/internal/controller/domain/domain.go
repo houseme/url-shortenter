@@ -1,10 +1,12 @@
-// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
-//
-// This Source Code Form is subject to the terms of the MIT License.
-// If a copy of the MIT was not distributed with this file,
-// You can obtain one at https://github.com/houseme/url-shortenter.
+/*
+ *  Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+ *
+ *  This Source Code Form is subject to the terms of the MIT License.
+ *  If a copy of the MIT was not distributed with this file,
+ *  You can obtain one at https://github.com/houseme/url-shortenter.
+ */
 
-package controller
+package domain
 
 import (
 	"context"
@@ -12,15 +14,17 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/console/api/domain/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
 type cDomain struct {
 }
 
-// Domain authorization
-var Domain = &cDomain{}
+// New is the constructor of cDomain.
+func New() *cDomain {
+	return &cDomain{}
+}
 
 // CreateDomainAuthorization creates a new domain.
 func (c *cDomain) CreateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationReq) (res *v1.DomainAuthorizationRes, err error) {

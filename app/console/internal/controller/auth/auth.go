@@ -1,10 +1,12 @@
-// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
-//
-// This Source Code Form is subject to the terms of the MIT License.
-// If a copy of the MIT was not distributed with this file,
-// You can obtain one at https://github.com/houseme/url-shortenter.
+/*
+ *  Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+ *
+ *  This Source Code Form is subject to the terms of the MIT License.
+ *  If a copy of the MIT was not distributed with this file,
+ *  You can obtain one at https://github.com/houseme/url-shortenter.
+ */
 
-package controller
+package auth
 
 import (
 	"context"
@@ -12,15 +14,17 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/console/api/auth/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
 type cAuth struct {
 }
 
-// Auth is the handler for Auth
-var Auth = cAuth{}
+// New is the constructor of cAuth.
+func New() *cAuth {
+	return &cAuth{}
+}
 
 // CreateAccessToken is the handler for CreateAccessToken
 func (c *cAuth) CreateAccessToken(ctx context.Context, req *v1.CreateAccessTokenReq) (res *v1.CreateAccessTokenRes, err error) {

@@ -120,7 +120,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		return
 	}
 
-	log.Debug(ctx, "auth-CreateAccessToken v:", v)
+	log.Debug(ctx, "auth-CreateAccessToken v1:", v)
 	out = &model.CreateAccessTokenOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,
@@ -188,7 +188,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		err = gerror.Wrap(err, "Redis SETEX failed")
 		return
 	}
-	log.Debug(ctx, "auth-authorization v:", v)
+	log.Debug(ctx, "auth-authorization v1:", v)
 	out = &model.AuthOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,

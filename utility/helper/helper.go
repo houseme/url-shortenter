@@ -282,10 +282,10 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		log    = g.Log(u.Logger(ctx))
 	)
 
-	log.Debug(ctx, "helper ConcatenateSignSource tt", tt, " v", v)
+	log.Debug(ctx, "helper ConcatenateSignSource tt", tt, " v1", v)
 	for i := 0; i < count; i++ {
 		if v.Field(i).CanInterface() { // 判断是否为可导出字段
-			log.Printf(ctx, "%s %s = %v -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(), tt.Field(i).Tag)
+			log.Printf(ctx, "%s %s = %v1 -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(), tt.Field(i).Tag)
 			keys = append(keys, u.LcFirst(tt.Field(i).Name))
 			params[u.LcFirst(tt.Field(i).Name)] = gconv.String(v.Field(i).Interface())
 		}

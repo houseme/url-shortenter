@@ -61,7 +61,7 @@ func (s *sMiddleware) Logger(r *ghttp.Request) {
 func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 	r.Middleware.Next()
 
-	// There's custom buffer content, it then exits current handler.
+	// There's custom buffer content, it then exits the current handler.
 	if r.Response.BufferLength() > 0 {
 		return
 	}

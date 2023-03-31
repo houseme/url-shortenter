@@ -6,7 +6,7 @@
  *  You can obtain one at https://github.com/houseme/url-shortenter.
  */
 
-package controller
+package home
 
 import (
 	"context"
@@ -14,16 +14,17 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/console/api/home/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
 type cHome struct {
 }
 
-var (
-	Home = cHome{}
-)
+// New is the constructor of cHome.
+func New() *cHome {
+	return &cHome{}
+}
 
 // Index is the index page.
 func (c *cHome) Index(ctx context.Context, req *v1.HomeIndexReq) (res *v1.HomeIndexRes, err error) {

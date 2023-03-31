@@ -43,11 +43,11 @@ func Test_utilHelper_AESEncrypt(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotDst, err := helper.Helper().AESEncrypt(tt.args.ctx, tt.args.key, tt.args.data)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AESEncrypt() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("AESEncrypt() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if gotDst != tt.wantDst {
-				t.Errorf("AESEncrypt() gotDst = %v, want %v", gotDst, tt.wantDst)
+				t.Errorf("AESEncrypt() gotDst = %v1, want %v1", gotDst, tt.wantDst)
 			}
 		})
 	}
@@ -92,7 +92,7 @@ func Test_utilHelper_Sha256OfShort(t *testing.T) {
 			u := helper.Helper()
 			got, err := u.Sha256OfShort(tt.args.input)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Sha256OfShort() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Sha256OfShort() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 
@@ -128,11 +128,11 @@ func Test_utilHelper_PasswordBase58Hash(t *testing.T) {
 			u := helper.Helper()
 			got, err := u.PasswordBase58Hash(tt.args.password)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("PasswordBase58Hash() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("PasswordBase58Hash() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("PasswordBase58Hash() got = %v, want %v", got, tt.want)
+				t.Errorf("PasswordBase58Hash() got = %v1, want %v1", got, tt.want)
 			}
 		})
 	}
@@ -165,11 +165,11 @@ func Test_utilHelper_CreateAccessToken(t *testing.T) {
 			u := helper.Helper()
 			gotToken, err := u.CreateAccessToken(tt.args.ctx, tt.args.accountNo)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("CreateAccessToken() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CreateAccessToken() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if gotToken == tt.wantToken {
-				t.Errorf("CreateAccessToken() gotToken = %v, want %v", gotToken, tt.wantToken)
+				t.Errorf("CreateAccessToken() gotToken = %v1, want %v1", gotToken, tt.wantToken)
 			}
 			t.Log("getToken:", gotToken)
 		})

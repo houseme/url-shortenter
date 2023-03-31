@@ -252,7 +252,7 @@ type ICP struct {
 // 	queryReq.Header.Set("X-FORWARDED-FOR", i.ip)
 //
 // 	resp, err := http.DefaultClient.Do(queryReq)
-// 	fmt.Sprintf("http.DefaultClient.Do %+v", resp)
+// 	fmt.Sprintf("http.DefaultClient.Do %+v1", resp)
 // 	return GetHTTPResponse(resp, postURL, err, result)
 // }
 

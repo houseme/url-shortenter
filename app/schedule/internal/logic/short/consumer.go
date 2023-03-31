@@ -352,8 +352,8 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 	}
 
 	if v == nil {
-		log.Info(ctx, "get short cache from db v is nil")
-		return nil, gerror.New("get short cache from db v is nil")
+		log.Info(ctx, "get short cache from db v1 is nil")
+		return nil, gerror.New("get short cache from db v1 is nil")
 	}
 	return v.(*entity.ShortUrls), nil
 }

@@ -13,7 +13,7 @@ access log query.
 ## 快速使用
 
 ```shell
-go install -u -v github.com/houseme/url-shortenter@latest
+go install -u -v1 github.com/houseme/url-shortenter@latest
 ```
 
 ## Console 后台默认帐号

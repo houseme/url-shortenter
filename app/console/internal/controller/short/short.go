@@ -1,10 +1,12 @@
-// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
-//
-// This Source Code Form is subject to the terms of the MIT License.
-// If a copy of the MIT was not distributed with this file,
-// You can obtain one at https://github.com/houseme/url-shortenter.
+/*
+ *  Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+ *
+ *  This Source Code Form is subject to the terms of the MIT License.
+ *  If a copy of the MIT was not distributed with this file,
+ *  You can obtain one at https://github.com/houseme/url-shortenter.
+ */
 
-package controller
+package short
 
 import (
 	"context"
@@ -12,15 +14,17 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/console/api/short/v1"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
 type cShort struct {
 }
 
-// Short is the controller for the short page.
-var Short = cShort{}
+// New is the constructor of cShort.
+func New() *cShort {
+	return &cShort{}
+}
 
 // CreateShort is the handler for CreateShort
 func (c *cShort) CreateShort(ctx context.Context, req *v1.CreateShortReq) (res *v1.CreateShortRes, err error) {
