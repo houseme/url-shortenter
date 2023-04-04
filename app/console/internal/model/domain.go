@@ -17,7 +17,7 @@ type DomainAuthorizeInput struct {
 // DomainAuthorizeOutput is the output for DomainAuthorization
 type DomainAuthorizeOutput struct {
 	State      uint   `json:"state" dc:"状态 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
-	DomainID   uint64 `json:"domainId" dc:"域名ID"`
+	DomainNo   uint64 `json:"domainNo" dc:"域名ID"`
 	StateDesc  string `json:"stateDesc" dc:"状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
 	CreateTime string `json:"createTime" dc:"创建时间"`
 }
@@ -25,13 +25,13 @@ type DomainAuthorizeOutput struct {
 // QueryDomainAuthorizeInput is the input for QueryDomainAuthorize
 type QueryDomainAuthorizeInput struct {
 	*Base    `json:"-"`
-	DomainID uint64 `json:"domainId" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNo uint64 `json:"domainNo" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
 }
 
 // QueryDomainAuthorizeOutput is the output for QueryDomainAuthorize
 type QueryDomainAuthorizeOutput struct {
 	State      uint   `json:"state" dc:"状态 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
-	DomainID   uint64 `json:"domainId" dc:"域名ID"`
+	DomainNo   uint64 `json:"domainNo" dc:"域名ID"`
 	StateDesc  string `json:"stateDesc" dc:"状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
 	CreateTime string `json:"createTime" dc:"创建时间"`
 	AuditTime  string `json:"auditTime,omitempty" dc:"审核时间"`
@@ -57,7 +57,7 @@ type DomainAuthorizeListOutput struct {
 // DomainAuthorizeDetailInput is the input for QueryDomainAuthorizationDetail
 type DomainAuthorizeDetailInput struct {
 	*Base    `json:"-"`
-	DomainID uint64 `json:"domainId" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNo uint64 `json:"domainNo" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
 }
 
 // DomainAuthorizeDetailOutput is the output for DomainAuthorizationDetail
@@ -68,7 +68,7 @@ type DomainAuthorizeDetailOutput struct {
 // DomainAuthorizationDetail query domain authorization detail
 type DomainAuthorizationDetail struct {
 	State      uint   `json:"state" dc:"状态"`
-	DomainID   uint64 `json:"domainId" dc:"域名ID"`
+	DomainNo   uint64 `json:"domainNo" dc:"域名ID"`
 	Domain     string `json:"domain" dc:"域名"`
 	Memo       string `json:"memo" dc:"备注"`
 	ICPNumber  string `json:"icpNumber" dc:"ICP备案号"`
@@ -80,13 +80,13 @@ type DomainAuthorizationDetail struct {
 // DomainAuthorizeDeleteInput is the input for DomainAuthorizationDelete
 type DomainAuthorizeDeleteInput struct {
 	*Base     `json:"-"`
-	DomainIDs []uint64 `json:"domainId" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNos []uint64 `json:"domainNos" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
 }
 
 // DomainAuthorizeDeleteOutput is the output for DomainAuthorizationDelete
 type DomainAuthorizeDeleteOutput struct {
 	State      uint     `json:"state" dc:"状态"`
-	DomainIDs  []uint64 `json:"domainId" dc:"域名ID"`
+	DomainNos  []uint64 `json:"domainNos" dc:"域名ID"`
 	Domain     string   `json:"domain" dc:"域名"`
 	DeleteTime string   `json:"deleteTime" dc:"删除时间"`
 	StateDesc  string   `json:"stateDesc" dc:"状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
@@ -96,7 +96,7 @@ type DomainAuthorizeDeleteOutput struct {
 type DomainAuthorizeUpdateInput struct {
 	*Base     `json:"-"`
 	State     uint     `json:"state" dc:"状态 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
-	DomainIDs []uint64 `json:"domainId" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNos []uint64 `json:"domainNos" dc:"域名ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
 }
 
 // DomainAuthorizeUpdateOutput is the output for DomainAuthorizationUpdate

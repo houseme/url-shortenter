@@ -38,7 +38,7 @@ type TotalCountTop25Columns struct {
 	Memo            string // 备注
 }
 
-//  totalCountTop25Columns holds the columns for table total_count_top25.
+// totalCountTop25Columns holds the columns for table total_count_top25.
 var totalCountTop25Columns = TotalCountTop25Columns{
 	ShortUrl:        "short_url",
 	TodayCount:      "today_count",

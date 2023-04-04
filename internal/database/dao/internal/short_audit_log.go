@@ -36,7 +36,7 @@ type ShortAuditLogColumns struct {
 	CreateTime         string // 创建时间
 }
 
-//  shortAuditLogColumns holds the columns for table short_audit_log.
+// shortAuditLogColumns holds the columns for table short_audit_log.
 var shortAuditLogColumns = ShortAuditLogColumns{
 	Id:                 "id",
 	ShortNo:            "short_no",

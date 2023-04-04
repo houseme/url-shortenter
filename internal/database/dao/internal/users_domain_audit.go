@@ -32,7 +32,7 @@ type UsersDomainAuditColumns struct {
 	ModifyTime     string // 修改时间
 }
 
-//  usersDomainAuditColumns holds the columns for table users_domain_audit.
+// usersDomainAuditColumns holds the columns for table users_domain_audit.
 var usersDomainAuditColumns = UsersDomainAuditColumns{
 	Id:             "id",
 	AccountNo:      "account_no",

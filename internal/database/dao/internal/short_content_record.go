@@ -30,7 +30,7 @@ type ShortContentRecordColumns struct {
 	ModifyTime  string // 修改时间
 }
 
-//  shortContentRecordColumns holds the columns for table short_content_record.
+// shortContentRecordColumns holds the columns for table short_content_record.
 var shortContentRecordColumns = ShortContentRecordColumns{
 	Id:          "id",
 	ShortNo:     "short_no",

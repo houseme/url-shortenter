@@ -31,7 +31,7 @@ type ShortMirrorColumns struct {
 	ModifyTime     string // 修改时间
 }
 
-//  shortMirrorColumns holds the columns for table short_mirror.
+// shortMirrorColumns holds the columns for table short_mirror.
 var shortMirrorColumns = ShortMirrorColumns{
 	Id:             "id",
 	ShortNo:        "short_no",

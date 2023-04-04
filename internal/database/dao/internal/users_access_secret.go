@@ -32,7 +32,7 @@ type UsersAccessSecretColumns struct {
 	ModifyTime string // 修改时间
 }
 
-//  usersAccessSecretColumns holds the columns for table users_access_secret.
+// usersAccessSecretColumns holds the columns for table users_access_secret.
 var usersAccessSecretColumns = UsersAccessSecretColumns{
 	Id:         "id",
 	AccountNo:  "account_no",

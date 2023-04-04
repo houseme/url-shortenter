@@ -25,8 +25,8 @@ type UsersDomainColumns struct {
 	DomainNo    string // 域名标识
 	Domain      string // 域名 不需要http等协议信息
 	Memo        string // 备注信息
-	Icp         string // icp备案号
-	SubIpc      string // icp备案号 带序号
+	License     string // icp备案号
+	SubLicense  string // icp备案号 带序号
 	State       string // 状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用
 	CreateTime  string // 创建时间
 	AuditTime   string // 审核时间
@@ -34,15 +34,15 @@ type UsersDomainColumns struct {
 	ModifyTime  string // 修改时间
 }
 
-//  usersDomainColumns holds the columns for table users_domain.
+// usersDomainColumns holds the columns for table users_domain.
 var usersDomainColumns = UsersDomainColumns{
 	Id:          "id",
 	AccountNo:   "account_no",
 	DomainNo:    "domain_no",
 	Domain:      "domain",
 	Memo:        "memo",
-	Icp:         "icp",
-	SubIpc:      "sub_ipc",
+	License:     "license",
+	SubLicense:  "sub_license",
 	State:       "state",
 	CreateTime:  "create_time",
 	AuditTime:   "audit_time",

@@ -31,7 +31,7 @@ type UsersColumns struct {
 	ModifyTime string // 更新时间
 }
 
-//  usersColumns holds the columns for table users.
+// usersColumns holds the columns for table users.
 var usersColumns = UsersColumns{
 	Id:         "id",
 	UserNo:     "user_no",

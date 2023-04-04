@@ -31,7 +31,7 @@ type ShortRawColumns struct {
 	ModifyTime string // 更新时间
 }
 
-//  shortRawColumns holds the columns for table short_raw.
+// shortRawColumns holds the columns for table short_raw.
 var shortRawColumns = ShortRawColumns{
 	Id:         "id",
 	ShortNo:    "short_no",

@@ -57,7 +57,7 @@ type UsersMerchantColumns struct {
 	ModifyTime          string // 更新时间
 }
 
-//  usersMerchantColumns holds the columns for table users_merchant.
+// usersMerchantColumns holds the columns for table users_merchant.
 var usersMerchantColumns = UsersMerchantColumns{
 	Id:                  "id",
 	AccountNo:           "account_no",

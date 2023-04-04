@@ -38,7 +38,7 @@ type AccessLogsSummaryColumns struct {
 	ModifyTime string // 修改时间
 }
 
-//  accessLogsSummaryColumns holds the columns for table access_logs_summary.
+// accessLogsSummaryColumns holds the columns for table access_logs_summary.
 var accessLogsSummaryColumns = AccessLogsSummaryColumns{
 	Id:         "id",
 	AccountNo:  "account_no",

@@ -34,7 +34,7 @@ type UrlIpCountStatsColumns struct {
 	DTotalCount     string //
 }
 
-//  urlIpCountStatsColumns holds the columns for table url_ip_count_stats.
+// urlIpCountStatsColumns holds the columns for table url_ip_count_stats.
 var urlIpCountStatsColumns = UrlIpCountStatsColumns{
 	ShortUrl:        "short_url",
 	ShortNo:         "short_no",

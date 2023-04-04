@@ -29,7 +29,7 @@ type ShortDomainColumns struct {
 	ModifyTime string // 更新时间
 }
 
-//  shortDomainColumns holds the columns for table short_domain.
+// shortDomainColumns holds the columns for table short_domain.
 var shortDomainColumns = ShortDomainColumns{
 	Id:         "id",
 	DomainNo:   "domain_no",

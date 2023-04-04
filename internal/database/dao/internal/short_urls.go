@@ -41,7 +41,7 @@ type ShortUrlsColumns struct {
 	ModifyTime    string // 修改时间
 }
 
-//  shortUrlsColumns holds the columns for table short_urls.
+// shortUrlsColumns holds the columns for table short_urls.
 var shortUrlsColumns = ShortUrlsColumns{
 	Id:            "id",
 	AccountNo:     "account_no",

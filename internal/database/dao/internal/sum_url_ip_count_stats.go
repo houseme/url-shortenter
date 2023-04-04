@@ -24,7 +24,7 @@ type SumUrlIpCountStatsColumns struct {
 	DTodayCount string //
 }
 
-//  sumUrlIpCountStatsColumns holds the columns for table sum_url_ip_count_stats.
+// sumUrlIpCountStatsColumns holds the columns for table sum_url_ip_count_stats.
 var sumUrlIpCountStatsColumns = SumUrlIpCountStatsColumns{
 	TodayCount:  "today_count",
 	DTodayCount: "d_today_count",

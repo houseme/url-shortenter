@@ -39,7 +39,7 @@ type AccessLogsColumns struct {
 	ModifyTime string // 修改时间
 }
 
-//  accessLogsColumns holds the columns for table access_logs.
+// accessLogsColumns holds the columns for table access_logs.
 var accessLogsColumns = AccessLogsColumns{
 	Id:         "id",
 	AccountNo:  "account_no",

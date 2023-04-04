@@ -17,8 +17,8 @@ type UsersDomain struct {
 	DomainNo    interface{} // 域名标识
 	Domain      interface{} // 域名 不需要http等协议信息
 	Memo        interface{} // 备注信息
-	Icp         interface{} // icp备案号
-	SubIpc      interface{} // icp备案号 带序号
+	License     interface{} // icp备案号
+	SubLicense  interface{} // icp备案号 带序号
 	State       interface{} // 状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用
 	CreateTime  *gtime.Time // 创建时间
 	AuditTime   *gtime.Time // 审核时间
