@@ -38,7 +38,7 @@ type TotalCountTop25Columns struct {
 	Memo            string // 备注
 }
 
-//  totalCountTop25Columns holds the columns for table total_count_top25.
+// totalCountTop25Columns holds the columns for table total_count_top25.
 var totalCountTop25Columns = TotalCountTop25Columns{
 	ShortUrl:        "short_url",
 	TodayCount:      "today_count",
@@ -98,6 +98,6 @@ func (dao *TotalCountTop25Dao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *TotalCountTop25Dao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *TotalCountTop25Dao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

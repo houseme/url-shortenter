@@ -1,8 +1,8 @@
 server:
-  address:     ":8199"
+  address: ":8199"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
 
 logger:
-  level : "all"
+  level: "all"
   stdout: true

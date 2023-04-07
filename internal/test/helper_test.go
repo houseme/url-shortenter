@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package test
 
 import (
@@ -6,7 +12,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 func Test_utilHelper_AESEncrypt(t *testing.T) {
@@ -35,13 +41,13 @@ func Test_utilHelper_AESEncrypt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotDst, err := utility.Helper().AESEncrypt(tt.args.ctx, tt.args.key, tt.args.data)
+			gotDst, err := helper.Helper().AESEncrypt(tt.args.ctx, tt.args.key, tt.args.data)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("AESEncrypt() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("AESEncrypt() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if gotDst != tt.wantDst {
-				t.Errorf("AESEncrypt() gotDst = %v, want %v", gotDst, tt.wantDst)
+				t.Errorf("AESEncrypt() gotDst = %v1, want %v1", gotDst, tt.wantDst)
 			}
 		})
 	}
@@ -52,7 +58,7 @@ func Benchmark_utilHelper_AESEncrypt(b *testing.B) {
 	ctx := context.Background()
 	key := []byte("kNsSjdNZDvXkXch2")
 	data := []byte("jNvDQnU8VLvXdRPytEBBTPmrekmZDZdaNKyX3SEPbEunWGYb")
-	u := utility.Helper()
+	u := helper.Helper()
 	for i := 0; i < b.N; i++ {
 		_, err := u.AESEncrypt(ctx, key, data)
 		if err != nil {
@@ -83,10 +89,10 @@ func Test_utilHelper_Sha256OfShort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			got, err := u.Sha256OfShort(tt.args.input)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Sha256OfShort() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Sha256OfShort() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 
@@ -119,14 +125,14 @@ func Test_utilHelper_PasswordBase58Hash(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			got, err := u.PasswordBase58Hash(tt.args.password)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("PasswordBase58Hash() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("PasswordBase58Hash() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("PasswordBase58Hash() got = %v, want %v", got, tt.want)
+				t.Errorf("PasswordBase58Hash() got = %v1, want %v1", got, tt.want)
 			}
 		})
 	}
@@ -156,25 +162,26 @@ func Test_utilHelper_CreateAccessToken(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			u := utility.Helper()
+			u := helper.Helper()
 			gotToken, err := u.CreateAccessToken(tt.args.ctx, tt.args.accountNo)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("CreateAccessToken() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CreateAccessToken() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			if gotToken == tt.wantToken {
-				t.Errorf("CreateAccessToken() gotToken = %v, want %v", gotToken, tt.wantToken)
+				t.Errorf("CreateAccessToken() gotToken = %v1, want %v1", gotToken, tt.wantToken)
 			}
 			t.Log("getToken:", gotToken)
 		})
 	}
 }
 
-// Benchmark_utilHelper_CreateAccessToken-4   	 1000000	      904 ns/op	     832 B/op	       1 allocs/op
+// Benchmark_utilHelper_CreateAccessToken-4
+// 1000000	      904 ns/op	     832 B/op	       1 allocs/op
 func Benchmark_utilHelper_CreateAccessToken(b *testing.B) {
 	ctx := context.Background()
 	accountNo := uint64(1)
-	u := utility.Helper()
+	u := helper.Helper()
 	for i := 0; i < b.N; i++ {
 		_, err := u.CreateAccessToken(ctx, accountNo)
 		if err != nil {

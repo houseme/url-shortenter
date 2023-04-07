@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package tracing
 
 import (
@@ -23,7 +29,7 @@ func SetAttributes(r *ghttp.Request, span *gtrace.Span) {
 }
 
 // CommonEventOption .
-func CommonEventOption(ctx context.Context, namespace string) trace.SpanStartEventOption {
+func CommonEventOption(_ context.Context, namespace string) trace.SpanStartEventOption {
 	return trace.WithAttributes(
 		semconv.ServiceNamespaceKey.String(namespace),
 		semconv.TelemetrySDKNameKey.String(telemetrySDKName),

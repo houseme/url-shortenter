@@ -34,7 +34,7 @@ type UrlIpCountStatsColumns struct {
 	DTotalCount     string //
 }
 
-//  urlIpCountStatsColumns holds the columns for table url_ip_count_stats.
+// urlIpCountStatsColumns holds the columns for table url_ip_count_stats.
 var urlIpCountStatsColumns = UrlIpCountStatsColumns{
 	ShortUrl:        "short_url",
 	ShortNo:         "short_no",
@@ -90,6 +90,6 @@ func (dao *UrlIpCountStatsDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UrlIpCountStatsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *UrlIpCountStatsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

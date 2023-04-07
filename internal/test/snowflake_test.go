@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package test
 
 import (
@@ -31,11 +37,11 @@ func TestNewSnowflakeEnv(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := env.NewSnowflakeEnv(tt.args.ctx)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("NewSnowflakeEnv() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("NewSnowflakeEnv() error = %v1, wantErr %v1", err, tt.wantErr)
 				return
 			}
 			// if !reflect.DeepEqual(got, tt.want) {
-			// 	t.Errorf("NewSnowflakeEnv() got = %v, want %v", got, tt.want)
+			// 	t.Errorf("NewSnowflakeEnv() got = %v1, want %v1", got, tt.want)
 			// }
 			t.Log("got params:", got.String(tt.args.ctx))
 		})

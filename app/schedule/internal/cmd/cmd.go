@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package cmd
 
 import (
@@ -11,7 +17,7 @@ import (
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/consts"
 	"github.com/houseme/url-shortenter/app/schedule/internal/service"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 var (
@@ -32,7 +38,7 @@ var (
 			go service.Short().Execute(ctx)
 			go service.Short().ExecuteAudit(ctx)
 			if _, err = gcron.AddSingleton(ctx, "*/10 * * * * *", func(ctx context.Context) {
-				ctx = utility.Helper().SetLogger(context.Background(), consts.Logger)
+				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
 				// 执行任务分配 处理镜像记录的任务
 				if err := service.Short().AssignTask(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "assign task error", err)
@@ -44,7 +50,7 @@ var (
 			}
 
 			if _, err = gcron.AddSingleton(ctx, "0 */5 * * * *", func(ctx context.Context) {
-				ctx = utility.Helper().SetLogger(context.Background(), consts.Logger)
+				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
 				// 执行任务分配 处理网页内容信息跟踪的任务
 				if err := service.Short().AuditAssignTask(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "Audit assign task error", err)
@@ -56,7 +62,7 @@ var (
 			}
 
 			if _, err = gcron.AddSingleton(ctx, "*/30 * * * * *", func(ctx context.Context) {
-				ctx = utility.Helper().SetLogger(context.Background(), consts.Logger)
+				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
 				// 针对访问记录入库的汇总处理
 				if err := service.Short().ShortAccessLogSummary(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "Short Access Log Summary task error", err)
@@ -68,7 +74,7 @@ var (
 			}
 
 			if _, err = gcron.AddSingleton(ctx, "*/15 * * * * *", func(ctx context.Context) {
-				ctx = utility.Helper().SetLogger(context.Background(), consts.Logger)
+				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
 				// 访问log信息入库汇总处理
 				if err := service.Short().AccessLog(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "AccessLog task error", err)

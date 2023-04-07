@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package env
 
 import (
@@ -6,7 +12,6 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
-	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // AlibabaEnv .
@@ -16,44 +21,43 @@ type AlibabaEnv struct {
 	bucketName      string
 	endpoint        string
 	region          string
-	ctx             context.Context
+	config          map[string]string
 }
 
 // AccessKeyID .
-func (a *AlibabaEnv) AccessKeyID(ctx context.Context) string {
-	a.ctx = ctx
-	return a.accessKeyID
+func (e *AlibabaEnv) AccessKeyID(_ context.Context) string {
+	return e.accessKeyID
 }
 
 // AccessKeySecret .
-func (a *AlibabaEnv) AccessKeySecret(ctx context.Context) string {
-	a.ctx = ctx
-	return a.accessKeySecret
+func (e *AlibabaEnv) AccessKeySecret(_ context.Context) string {
+	return e.accessKeySecret
 }
 
 // BucketName .
-func (a *AlibabaEnv) BucketName(ctx context.Context) string {
-	a.ctx = ctx
-	return a.bucketName
+func (e *AlibabaEnv) BucketName(_ context.Context) string {
+	return e.bucketName
 }
 
 // Endpoint .
-func (a *AlibabaEnv) Endpoint(ctx context.Context) string {
-	a.ctx = ctx
-	return a.endpoint
+func (e *AlibabaEnv) Endpoint(_ context.Context) string {
+	return e.endpoint
 }
 
 // Region .
-func (a *AlibabaEnv) Region(ctx context.Context) string {
-	a.ctx = ctx
-	return a.region
+func (e *AlibabaEnv) Region(_ context.Context) string {
+	return e.region
+}
+
+// Config .
+func (e *AlibabaEnv) Config(_ context.Context) map[string]string {
+	return e.config
 }
 
 // String .
-func (a *AlibabaEnv) String(ctx context.Context) string {
-	a.ctx = ctx
-	return `{"accessKeyId":"` + a.accessKeyID + `","accessKeySecret":"` + a.accessKeySecret +
-		`","bucketName":"` + a.bucketName + `","endpoint":"` + a.endpoint + `","region":"` + a.region + `"}`
+func (e *AlibabaEnv) String(_ context.Context) string {
+	return `{"accessKeyId":"` + e.accessKeyID + `","accessKeySecret":"` + e.accessKeySecret +
+		`","bucketName":"` + e.bucketName + `","endpoint":"` + e.endpoint + `","region":"` + e.region + `"}`
 }
 
 // NewAlibabaEnv .
@@ -61,32 +65,22 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewAlibabaEnv")
 	defer span.End()
 
-	var (
-		v, err = g.Cfg().Get(ctx, "alibaba")
-		logger = gconv.String(ctx.Value("logger"))
-	)
-
+	var v, err = g.Cfg().Get(ctx, "alibaba")
 	if err != nil {
 		err = gerror.Wrap(err, "config alibaba get failed")
 		return nil, err
 	}
 	if v.IsNil() || v.IsEmpty() {
-		g.Log(logger).Info(ctx, " config alibaba is empty")
 		err = gerror.New("config alibaba is empty")
 		return nil, err
 	}
-	g.Log(logger).Debug(ctx, " config alibaba:", v)
-	var (
-		config = v.MapStrStr()
-		env    = &AlibabaEnv{
-			accessKeyID:     config["accessKeyID"],
-			accessKeySecret: config["accessKeySecret"],
-			region:          config["region"],
-			endpoint:        config["endpoint"],
-			bucketName:      config["bucketName"],
-			ctx:             ctx,
-		}
-	)
-	g.Log(logger).Debug(ctx, " config alibaba:", env.String(ctx))
-	return env, nil
+	var config = v.MapStrStr()
+	return &AlibabaEnv{
+		accessKeyID:     config["accessKeyID"],
+		accessKeySecret: config["accessKeySecret"],
+		region:          config["region"],
+		endpoint:        config["endpoint"],
+		bucketName:      config["bucketName"],
+		config:          config,
+	}, nil
 }

@@ -1,8 +1,14 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
+// Package lark is a utility package for Lark.
 package lark
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/chyroc/go-ptr"
 	"github.com/chyroc/lark"
@@ -49,16 +55,28 @@ func (s *iLark) SendRawMessage(ctx context.Context) {
 		Content:       `{"text":"测试"}`,
 		MsgType:       lark.MsgTypeText,
 	})
-	fmt.Println(resp, res, err)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return
+	}
+	g.Log().Info(ctx, resp, res)
 }
 
 // SendCustomMessage  sends Custom message
 func (s *iLark) SendCustomMessage(ctx context.Context) {
 	resp, res, err := s.lark.Message.Send().SendText(ctx, `测试自定义 网页异常 https://www.baidu.com`)
-	fmt.Println(resp, res, err)
-	fmt.Println(ptr.String("success"))
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return
+	}
+	g.Log().Info(ctx, resp, res)
+	g.Log().Info(ctx, ptr.String("success"))
 	resp, res, err = s.lark.Message.Send().SendText(ctx, `测试自定义 网页异常 https://www.wasair.com`)
-	fmt.Println(resp, res, err)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return
+	}
+	g.Log().Info(ctx, resp, res)
 }
 
 // Lark

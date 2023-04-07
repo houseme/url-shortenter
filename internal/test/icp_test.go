@@ -1,9 +1,15 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package test
 
 import (
 	"testing"
 
-	"github.com/houseme/url-shortenter/utility/icp"
+	"github.com/houseme/url-shortenter/internal/icp"
 )
 
 func TestWebQuery(t *testing.T) {
@@ -33,10 +39,10 @@ func TestIcp_Query(t *testing.T) {
 }
 
 func TestQueryDomainICP(t *testing.T) {
-	// resp, err := icp.QueryDomainICP(gctx.New(), "wasair.com")
+	// resp, err := icp.QueryDomainICP(gctx.New(), "yuerso.com")
 	// if err != nil {
 	// 	t.Fatal("QueryDomainICP err:", err)
 	// }
-	//
+	// fmt.Println("response:", resp)
 	// t.Log("QueryDomainICP response:", resp)
 }

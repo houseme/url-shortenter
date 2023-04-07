@@ -5,6 +5,7 @@
 package logic
 
 import (
+	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic/account"
 	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic/lark"
 	_ "github.com/houseme/url-shortenter/app/schedule/internal/logic/short"
 )
