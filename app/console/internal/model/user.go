@@ -51,3 +51,40 @@ type CreateKeySecretOutput struct {
 	AppKey    string `json:"appKey" description:"渠道合作标识"`
 	AppSecret string `json:"appSecret" description:"渠道合作密钥"`
 }
+
+// QueryMerchantInput is the input of QueryMerchant.
+type QueryMerchantInput struct {
+	*Base `json:"-"`
+}
+
+// QueryMerchantOutput is the output of QueryMerchant.
+type QueryMerchantOutput struct {
+	MerNo               uint64 `json:"merNo" description:"商户编号"`
+	MerName             string `json:"merName" description:"商户名称"`
+	MerAvatar           string `json:"merAvatar" description:"商户头像"`
+	MerMobile           string `json:"merMobile" description:"商户手机号"`
+	MerType             uint   `json:"merType" description:"用户类型  1企业、 2个人(自然人)、3个体工商户"`
+	CreateDate          string `json:"createDate" description:"创建时间"`
+	CorpName            string `json:"corpName" description:"企业名称"`
+	SocialCreditCode    string `json:"socialCreditCode" description:"统一社会信用代码"`
+	LicenseStartDate    string `json:"licenseStartDate" description:"营业执照有效期开始时间"`
+	LicenseEndDate      string `json:"licenseEndDate" description:"营业执照有效期结束时间"`
+	LicenseImg          string `json:"licenseImg" description:"营业执照图片"`
+	CorpBusinessAddress string `json:"corpBusinessAddress" description:"企业经营地址"`
+	CorpRegAddress      string `json:"corpRegAddress" description:"企业注册地址"`
+	CorpFixedTelephone  string `json:"corpFixedTelephone" description:"企业固定电话"`
+	BusinessScope       string `json:"businessScope" description:"经营范围"`
+	LegalName           string `json:"legalName" description:"法人姓名"`
+	LegalCertType       uint   `json:"legalCertType" description:"法人证件类型 1身份证、2护照、3军官证、4港澳通行证、5台湾通行证"`
+	LegalCertID         string `json:"legalCertID" description:"法人证件号码"`
+	LegalCertStartDate  string `json:"legalCertStartDate" description:"法人证件有效期开始时间"`
+	LegalCertEndDate    string `json:"legalCertEndDate" description:"法人证件有效期结束时间"`
+	LegalCertFront      string `json:"legalCertFront" description:"法人证件正面照"`
+	LegalCertBack       string `json:"legalCertBack" description:"法人证件反面照"`
+	LegalMobile         string `json:"legalMobile" description:"法人手机号"`
+	ContactName         string `json:"contactName" description:"联系人姓名"`
+	ContactMobile       string `json:"contactMobile" description:"联系人手机号"`
+	ContactEmail        string `json:"contactEmail" description:"联系人邮箱"`
+	AgentNo             uint64 `json:"agentNo" description:"代理商编号"`
+	CreateTime          string `json:"createTime" description:"创建时间"`
+}
