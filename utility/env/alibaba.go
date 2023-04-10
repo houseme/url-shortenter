@@ -66,7 +66,6 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 	defer span.End()
 
 	var v, err = g.Cfg().Get(ctx, "alibaba")
-
 	if err != nil {
 		err = gerror.Wrap(err, "config alibaba get failed")
 		return nil, err
