@@ -10,7 +10,6 @@ package filing
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/gogf/gf/v2/errors/gerror"
@@ -30,7 +29,6 @@ func QueryICP(ctx context.Context, domain string) (resp *filing.QueryResponse, e
 		err = gerror.Wrap(err, "filing query DomainTLD failed")
 		return
 	}
-	fmt.Println("tldResp:", tldResp)
 	domain = tldResp.Domain
 	if resp, err = f.DomainFilling(ctx, &filing.QueryRequest{
 		UnitName: domain,
@@ -39,6 +37,5 @@ func QueryICP(ctx context.Context, domain string) (resp *filing.QueryResponse, e
 		return
 	}
 
-	fmt.Println("resp:", resp)
 	return
 }
