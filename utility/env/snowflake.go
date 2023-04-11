@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package env
 
 import (
@@ -15,25 +21,26 @@ type SnowflakeEnv struct {
 	datacenter int64
 	worker     int64
 	config     map[string]*gvar.Var
-	ctx        context.Context
 }
 
 // Datacenter .
-func (s *SnowflakeEnv) Datacenter(ctx context.Context) int64 {
-	s.ctx = ctx
-	return s.datacenter
+func (e *SnowflakeEnv) Datacenter(_ context.Context) int64 {
+	return e.datacenter
 }
 
 // Worker .
-func (s *SnowflakeEnv) Worker(ctx context.Context) int64 {
-	s.ctx = ctx
-	return s.worker
+func (e *SnowflakeEnv) Worker(_ context.Context) int64 {
+	return e.worker
+}
+
+// Config .
+func (e *SnowflakeEnv) Config(_ context.Context) map[string]*gvar.Var {
+	return e.config
 }
 
 // String .
-func (s *SnowflakeEnv) String(ctx context.Context) string {
-	s.ctx = ctx
-	return `{"datacenter":"` + gconv.String(s.datacenter) + `","worker":"` + gconv.String(s.worker) + `"}`
+func (e *SnowflakeEnv) String(_ context.Context) string {
+	return `{"datacenter":"` + gconv.String(e.datacenter) + `","worker":"` + gconv.String(e.worker) + `"}`
 }
 
 // NewSnowflakeEnv .
@@ -41,11 +48,7 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewSnowflakeEnv")
 	defer span.End()
 
-	var (
-		v, err = g.Cfg().Get(ctx, "snowflake")
-		logger = gconv.String(ctx.Value("logger"))
-	)
-
+	var v, err = g.Cfg().Get(ctx, "snowflake")
 	if err != nil {
 		err = gerror.Wrap(err, "config snowflake get failed")
 		return nil, err
@@ -55,15 +58,10 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 		return nil, err
 	}
 
-	var (
-		config = v.MapStrVar()
-		env    = &SnowflakeEnv{
-			worker:     config["worker"].Int64(),
-			datacenter: config["datacenter"].Int64(),
-			ctx:        ctx,
-			config:     config,
-		}
-	)
-	g.Log(logger).Debug(ctx, " config snowflake:", env.String(ctx))
-	return env, nil
+	var config = v.MapStrVar()
+	return &SnowflakeEnv{
+		worker:     config["worker"].Int64(),
+		datacenter: config["datacenter"].Int64(),
+		config:     config,
+	}, nil
 }

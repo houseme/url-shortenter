@@ -57,7 +57,7 @@ type UsersMerchantColumns struct {
 	ModifyTime          string // 更新时间
 }
 
-//  usersMerchantColumns holds the columns for table users_merchant.
+// usersMerchantColumns holds the columns for table users_merchant.
 var usersMerchantColumns = UsersMerchantColumns{
 	Id:                  "id",
 	AccountNo:           "account_no",
@@ -136,6 +136,6 @@ func (dao *UsersMerchantDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersMerchantDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *UsersMerchantDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

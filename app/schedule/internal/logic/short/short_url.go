@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package short
 
 import (
@@ -22,9 +28,9 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
 	"github.com/houseme/url-shortenter/utility/env"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // GrabImage grab image from url.
@@ -33,12 +39,12 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	defer span.End()
 
 	var (
-		logger      = utility.Helper().Logger(ctx)
+		log         = g.Log(helper.Helper().Logger(ctx))
 		appEnv, err = env.New(ctx)
 	)
-	g.Log(logger).Info(ctx, "GrabImage shortURL: ", shortURL)
+	log.Info(ctx, "GrabImage shortURL: ", shortURL)
 	if err != nil {
-		err = gerror.Wrap(err, "GrabImage env.New failed")
+		err = gerror.Wrap(err, "GrabImage env.NewLark failed")
 		return err
 	}
 
@@ -59,20 +65,20 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 
 	defer func() {
 		if statusCode == http.StatusFound || statusCode == http.StatusMovedPermanently {
-			g.Log(logger).Info(ctx, "site redirect to:", shortURL.DestUrl, " statusCode:", statusCode)
+			log.Info(ctx, "site redirect to:", shortURL.DestUrl, " statusCode:", statusCode)
 			if _, errs := dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).Update(g.Map{
 				dao.ShortUrls.Columns().IsValid:     consts.ShortInvalid,
 				dao.ShortUrls.Columns().DisableTime: gdb.Raw("current_timestamp(6)"),
 				dao.ShortUrls.Columns().ModifyTime:  gdb.Raw("current_timestamp(6)"),
 			}); errs != nil {
-				g.Log(logger).Error(ctx, "GrabImage shortURL.ShortNo:", shortURL.ShortNo, " update failed:", errs)
+				log.Error(ctx, "GrabImage shortURL.ShortNo:", shortURL.ShortNo, " update failed:", errs)
 			}
 		}
 	}()
 
 	// 1、抓起网页内容，
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
-		g.Log(logger).Error(ctx, "GrabImage CheckFileExists html failed:", err)
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
+		log.Error(ctx, "GrabImage CheckFileExists html failed:", err)
 	}
 	if statusCode, err = s.RequestStatusCode(ctx, shortURL.DestUrl); err != nil {
 		err = gerror.Wrap(err, "GrabImage RequestStatusCode failed")
@@ -84,7 +90,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		return err
 	}
 	if statusCode != 200 {
-		g.Log(logger).Error(ctx, "GrabImage RequestContent statusCode:", statusCode)
+		log.Error(ctx, "GrabImage RequestContent statusCode:", statusCode)
 		err = gerror.Wrap(err, "GrabImage RequestContent statusCode: "+gconv.String(statusCode))
 		return err
 	}
@@ -95,17 +101,17 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		Content:     string(content),
 	}
 	shortMirror.ContentPath = fileNameHTML
-	shortMirror.HashContent = utility.Helper().Sha256Of(content)
+	shortMirror.HashContent = helper.Helper().Sha256Of(content)
 	sct.HashContent = shortMirror.HashContent
 
 	// 2、网页图片
-	if err = utility.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
-		g.Log(logger).Error(ctx, "GrabImage CheckFileExists screenshot failed:", err)
+	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
+		log.Error(ctx, "GrabImage CheckFileExists screenshot failed:", err)
 	}
 	if err = s.DownloadFullScreenshot(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameScreenshot); err == nil {
 		shortMirror.FullScreenshot = fileNameScreenshot
 	} else {
-		g.Log(logger).Error(ctx, "GrabImage DownloadFullScreenshot failed:", err)
+		log.Error(ctx, "GrabImage DownloadFullScreenshot failed:", err)
 	}
 	tx, err := g.DB().Begin(ctx)
 	if err != nil {
@@ -124,13 +130,13 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		err = gerror.Wrap(err, "GrabImage ShortMirror.InsertAndGetId failed")
 		return err
 	}
-	g.Log(logger).Info(ctx, "GrabImage ShortMirror.InsertAndGetId lastID: ", lastID)
+	log.Info(ctx, "GrabImage ShortMirror.InsertAndGetId lastID: ", lastID)
 
 	if lastID, err = dao.ShortContentRecord.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(sct); err != nil {
 		err = gerror.Wrap(err, "GrabImage ShortContentRecord.InsertAndGetId failed")
 		return err
 	}
-	g.Log(logger).Info(ctx, "GrabImage ShortContentRecord.InsertAndGetId lastID: ", lastID)
+	log.Info(ctx, "GrabImage ShortContentRecord.InsertAndGetId lastID: ", lastID)
 	if _, err = dao.ShortUrls.Ctx(ctx).TX(tx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).OmitEmpty().Unscoped().Update(g.Map{
 		dao.ShortUrls.Columns().CollectState: consts.ShortCollectStateSuccess,
 		dao.ShortUrls.Columns().CollectTime:  gdb.Raw("current_timestamp(6)"),
@@ -147,20 +153,20 @@ func (s *sShort) Execute(ctx context.Context) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-Execute")
 	defer span.End()
 	var (
-		pool   = grpool.New(10)
-		logger = utility.Helper().Logger(ctx)
+		pool = grpool.New(10)
+		log  = g.Log(helper.Helper().Logger(ctx))
 	)
 
-	g.Log(logger).Info(ctx, "Execute start")
+	log.Info(ctx, "Execute start")
 	gtimer.SetInterval(ctx, time.Second, func(ctx context.Context) {
-		ctx = utility.Helper().SetLogger(ctx, "schedule")
-		g.Log(logger).Info(ctx, "Execute loop")
+		ctx = helper.Helper().SetLogger(ctx, "schedule")
+		log.Info(ctx, "Execute loop")
 		for i := 0; i < 3; i++ {
 			if err := pool.Add(ctx, s.queryShortAndGrab); err != nil {
-				g.Log(logger).Error(ctx, "Execute pool.Add failed:", err)
+				log.Error(ctx, "Execute pool.Add failed:", err)
 			}
 		}
-		g.Log(logger).Info(ctx, "Execute loop end")
+		log.Info(ctx, "Execute loop end")
 	})
 	select {}
 }
@@ -170,27 +176,27 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-queryShortAndGrab")
 	defer span.End()
 	var (
-		logger    = utility.Helper().Logger(ctx)
+		log       = g.Log(helper.Helper().Logger(ctx))
 		conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
 		redisKey  = cache.RedisCache().ShortMirrorQueue(ctx) // 待抓取的镜像队列
 	)
 
 	if err != nil {
-		g.Log(logger).Error(ctx, "queryShortAndGrab Redis failed:", err)
+		log.Error(ctx, "queryShortAndGrab Redis failed:", err)
 		return
 	}
 
 	defer func() {
 		if err != nil {
-			g.Log(logger).Error(ctx, "queryShortAndGrab defer error failed:", err)
+			log.Error(ctx, "queryShortAndGrab defer error failed:", err)
 		}
 		// 关闭redis连接
 		if err = conn.Close(ctx); err != nil {
-			g.Log(logger).Error(ctx, "queryShortAndGrab Redis Close failed:", err)
+			log.Error(ctx, "queryShortAndGrab Redis Close failed:", err)
 		}
 	}()
 
-	g.Log(logger).Info(ctx, "queryShortAndGrab start")
+	log.Info(ctx, "queryShortAndGrab start")
 	// 取出队列中的镜像
 	var val *gvar.Var
 	if val, err = conn.Do(ctx, "RPOP", redisKey); err != nil {
@@ -199,10 +205,10 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		g.Log(logger).Info(ctx, "queryShortAndGrab right pop is empty")
+		log.Info(ctx, "queryShortAndGrab right pop is empty")
 		return
 	}
-	g.Log(logger).Info(ctx, "queryShortAndGrab right pop success shortNo:", val.String())
+	log.Info(ctx, "queryShortAndGrab right pop success shortNo:", val.String())
 	var (
 		shortNo  = val.Uint64()
 		shortKey = cache.RedisCache().ShortMirrorKey(ctx, val.String())
@@ -212,13 +218,13 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 		return
 	}
 	if !val.IsNil() && !val.IsEmpty() && val.Int() < 1 {
-		g.Log(logger).Info(ctx, "queryShortAndGrab setnx success shortNo:", val.String())
+		log.Info(ctx, "queryShortAndGrab setnx success shortNo:", val.String())
 		return
 	}
 	defer func() {
 		// 删除锁
 		if _, err = conn.Do(ctx, "DEL", shortKey); err != nil {
-			g.Log(logger).Error(ctx, "queryShortAndGrab del failed:", err)
+			log.Error(ctx, "queryShortAndGrab del failed:", err)
 		}
 	}()
 	var shortURL = (*entity.ShortUrls)(nil)
@@ -228,12 +234,12 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 	}
 
 	if shortURL == nil {
-		g.Log(logger).Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
+		log.Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
 		return
 	}
 
 	if shortURL.CollectState != consts.ShortCollectStateProcessing {
-		g.Log(logger).Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
+		log.Info(ctx, "queryShortAndGrab ShortUrls.Scan no data")
 		return
 	}
 
@@ -241,7 +247,7 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 		err = gerror.Wrap(err, "queryShortAndGrab GrabImage failed")
 		return
 	}
-	g.Log(logger).Info(ctx, "queryShortAndGrab end")
+	log.Info(ctx, "queryShortAndGrab end")
 }
 
 // RequestContent request content from url.
@@ -250,10 +256,10 @@ func (s *sShort) RequestContent(ctx context.Context, url, fileName string) ([]by
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
-		r, err = g.Client().SetAgent(utility.Helper().UserAgent(ctx)).Get(ctx, url)
+		log    = g.Log(helper.Helper().Logger(ctx))
+		r, err = g.Client().SetAgent(helper.Helper().UserAgent(ctx)).Get(ctx, url)
 	)
-	g.Log(logger).Info(ctx, "RequestContent start , url:", url, " fileName:", fileName)
+	log.Info(ctx, "RequestContent start , url:", url, " fileName:", fileName)
 	if err != nil {
 		err = gerror.Wrap(err, "RequestContent failed")
 		return nil, err
@@ -273,10 +279,10 @@ func (s *sShort) RequestStatusCode(ctx context.Context, url string) (int, error)
 	defer span.End()
 
 	var (
-		logger = utility.Helper().Logger(ctx)
-		client = g.Client().SetAgent(utility.Helper().UserAgent(ctx))
+		log    = g.Log(helper.Helper().Logger(ctx))
+		client = g.Client().SetAgent(helper.Helper().UserAgent(ctx))
 	)
-	g.Log(logger).Info(ctx, "RequestStatusCode start url:", url)
+	log.Info(ctx, "RequestStatusCode start url:", url)
 
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		return http.ErrUseLastResponse
@@ -290,7 +296,7 @@ func (s *sShort) RequestStatusCode(ctx context.Context, url string) (int, error)
 		return 0, err
 	}
 	r.Body.Close()
-	g.Log(logger).Info(ctx, "RequestStatusCode end statusCode:", r.StatusCode)
+	log.Info(ctx, "RequestStatusCode end statusCode:", r.StatusCode)
 
 	return r.StatusCode, nil
 }
@@ -301,8 +307,8 @@ func (s *sShort) DownloadFullScreenshot(ctx context.Context, url, fileName strin
 	defer span.End()
 
 	var (
-		buf    []byte
-		logger = utility.Helper().Logger(ctx)
+		buf []byte
+		log = g.Log(helper.Helper().Logger(ctx))
 	)
 
 	chtCtx, cancel := chromedp.NewContext(
@@ -310,7 +316,7 @@ func (s *sShort) DownloadFullScreenshot(ctx context.Context, url, fileName strin
 		// chromedp.WithDebugf(log.Printf),
 	)
 	defer cancel()
-	g.Log(logger).Debug(ctx, "DownloadFullScreenshot start url:", url, " fileName:", fileName)
+	log.Debug(ctx, "DownloadFullScreenshot start url:", url, " fileName:", fileName)
 	// capture entire browser viewport, returning png with quality=90 // https://brank.as/
 	if err = chromedp.Run(chtCtx, s.fullScreenshot(url, 90, &buf)); err != nil {
 		err = gerror.Wrap(err, "fullScreenshot failed")
@@ -320,7 +326,7 @@ func (s *sShort) DownloadFullScreenshot(ctx context.Context, url, fileName strin
 		err = gerror.Wrap(err, "fullScreenshot write file failed")
 		return
 	}
-	g.Log(logger).Info(ctx, "wrote fullScreenshot successfully to: ", fileName)
+	log.Info(ctx, "wrote fullScreenshot successfully to: ", fileName)
 
 	return nil
 }

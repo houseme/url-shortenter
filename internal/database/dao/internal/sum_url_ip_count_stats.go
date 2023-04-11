@@ -24,7 +24,7 @@ type SumUrlIpCountStatsColumns struct {
 	DTodayCount string //
 }
 
-//  sumUrlIpCountStatsColumns holds the columns for table sum_url_ip_count_stats.
+// sumUrlIpCountStatsColumns holds the columns for table sum_url_ip_count_stats.
 var sumUrlIpCountStatsColumns = SumUrlIpCountStatsColumns{
 	TodayCount:  "today_count",
 	DTodayCount: "d_today_count",
@@ -70,6 +70,6 @@ func (dao *SumUrlIpCountStatsDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *SumUrlIpCountStatsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *SumUrlIpCountStatsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

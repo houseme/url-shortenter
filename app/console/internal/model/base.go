@@ -1,3 +1,9 @@
+// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+//
+// This Source Code Form is subject to the terms of the MIT License.
+// If a copy of the MIT was not distributed with this file,
+// You can obtain one at https://github.com/houseme/url-shortenter.
+
 package model
 
 // Base is the base model
@@ -13,13 +19,4 @@ type DefaultHandlerResponse struct {
 	Data    interface{} `json:"data,omitempty"`
 	Time    int64       `json:"time"`    // 返回当前响应时间
 	TraceID string      `json:"traceID"` // 请求唯一标识
-}
-
-// HomeIndexInput is the request struct for index.
-type HomeIndexInput struct {
-	Base
-}
-
-// HomeIndexOutput is the response struct for index.
-type HomeIndexOutput struct {
 }

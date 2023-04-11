@@ -9,8 +9,12 @@ package home
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/net/gtrace"
+
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sHome struct {
@@ -26,5 +30,13 @@ func initHome() *sHome {
 
 // Index home page.
 func (s *sHome) Index(ctx context.Context, in *model.HomeIndexInput) (out *model.HomeIndexOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-home-Index")
+	defer span.End()
+
+	var (
+		log = g.Log(helper.Helper().Logger(ctx))
+	)
+	log.Debug(ctx, "home-Index in:", in)
+
 	return
 }

@@ -20,7 +20,7 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sAccount struct {
@@ -40,13 +40,12 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	defer span.End()
 
 	var (
-		logger  = utility.Helper().Logger(ctx)
+		log     = g.Log(helper.Helper().Logger(ctx))
 		account = (*entity.Users)(nil)
 		output  = false
 	)
 
-	g.Log(logger).Debug(ctx, "account-CreateAccount in:", in)
-
+	log.Debug(ctx, "account-CreateAccount in:", in)
 	out = (*model.CreateAccountOutput)(&output)
 	if in.AuthAccountLevel > consts.AccountLevelBusiness {
 		err = gerror.New("Do not have permission to create a new account")
@@ -71,7 +70,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	}
 	// 创建hash密码
 	var hashPwd string
-	if hashPwd, err = utility.Helper().PasswordBase58Hash(in.Password); err != nil {
+	if hashPwd, err = helper.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "hash password failed")
 		return
 	}
@@ -82,14 +81,14 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		Password:   hashPwd,
 		GroupLevel: in.AuthAccountLevel,
 		State:      consts.UserStateNormal,
-		UserNo:     utility.Helper().InitTrxID(ctx, in.AuthAccountNo),
+		UserNo:     helper.Helper().InitTrxID(ctx, in.AuthAccountNo),
 	}
 
 	if in.AuthAccountLevel == consts.AccountLevelBusiness {
 		account.AccountNo = in.AuthAccountNo
 	}
 	if in.AuthAccountLevel == consts.AccountLevelPlatform {
-		account.AccountNo = utility.Helper().InitTrxID(ctx, in.AuthAccountNo)
+		account.AccountNo = helper.Helper().InitTrxID(ctx, in.AuthAccountNo)
 	}
 
 	if _, err = dao.Users.Ctx(ctx).OmitEmpty().Unscoped().Insert(account); err != nil {
@@ -99,7 +98,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 
 	output = true
 	out = (*model.CreateAccountOutput)(&output)
-	g.Log(logger).Debug(ctx, "account-CreateAccount end out:", out)
+	log.Debug(ctx, "account-CreateAccount end out:", out)
 	return
 }
 
@@ -108,10 +107,22 @@ func (s *sAccount) ModifyAccount(ctx context.Context, in *model.ModifyAccountInp
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-account-ModifyAccount")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "account modify account in:", in)
+	var (
+		log     = g.Log(helper.Helper().Logger(ctx))
+		account = (*entity.Users)(nil)
+	)
+	log.Debug(ctx, "account modify account in:", in)
+	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
+		err = gerror.Wrap(err, "account modify query failed")
+		return
+	}
 
-	g.Log(logger).Debug(ctx, "account modify account end out:", out)
+	if account == nil {
+		err = gerror.New("account is not exists")
+		return
+	}
+
+	log.Debug(ctx, "account modify account end out:", out)
 	return
 }
 
@@ -121,13 +132,13 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 	defer span.End()
 
 	var (
-		logger  = utility.Helper().Logger(ctx)
+		log     = g.Log(helper.Helper().Logger(ctx))
 		account = (*entity.Users)(nil)
 		output  = false
 	)
 	out = (*model.ModifyPasswordOutput)(&output)
 
-	g.Log(logger).Debug(ctx, "account modify password in:", in)
+	log.Debug(ctx, "account modify password in:", in)
 	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "query users failed  err:")
 		return
@@ -139,11 +150,11 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 	}
 
 	var hashPwd string
-	if hashPwd, err = utility.Helper().PasswordBase58Hash(in.Password); err != nil {
+	if hashPwd, err = helper.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "hash password failed")
 		return
 	}
-	g.Log(logger).Debug(ctx, "account modify password hash password:", hashPwd)
+	log.Debug(ctx, "account modify password hash password:", hashPwd)
 	if _, err = dao.Users.Ctx(ctx).Where("id = ?", account.Id).Update(g.Map{
 		dao.Users.Columns().Password:   hashPwd,
 		dao.Users.Columns().ModifyTime: gdb.Raw("current_timestamp(6)"),
@@ -153,6 +164,6 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 	}
 	output = true
 	out = (*model.ModifyPasswordOutput)(&output)
-	g.Log(logger).Debug(ctx, "account modify password end out:", out)
+	log.Debug(ctx, "account modify password end out:", out)
 	return
 }

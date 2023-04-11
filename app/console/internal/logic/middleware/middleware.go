@@ -17,6 +17,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/os/glog"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
 
@@ -24,8 +25,8 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 	"github.com/houseme/url-shortenter/internal/tracing"
-	"github.com/houseme/url-shortenter/utility"
 	"github.com/houseme/url-shortenter/utility/cache"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sMiddleware struct {
@@ -53,14 +54,14 @@ func (s *sMiddleware) Logger(r *ghttp.Request) {
 		g.Log(r.GetCtxVar("logger").String()).Error(r.GetCtx(), "Server logger Error:", err)
 		errStr = err.Error()
 	}
-	g.Log(r.GetCtxVar("logger").String()).Info(r.GetCtx(), "status: ", r.Response.Status, "path: ", r.URL.Path, "msg: ", errStr)
+	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "status: ", r.Response.Status, "path: ", r.URL.Path, "msg: ", errStr)
 }
 
 // HandlerResponse is a middleware handler for ghttp.Request.
 func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 	r.Middleware.Next()
 
-	// There's custom buffer content, it then exits current handler.
+	// There's custom buffer content, it then exits the current handler.
 	if r.Response.BufferLength() > 0 {
 		return
 	}
@@ -99,7 +100,7 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 			code = gcode.CodeUnknown
 		}
 	} else {
-		code = gcode.New(200, "success", nil)
+		code = gcode.New(http.StatusOK, "success", nil)
 		msg = code.Message()
 	}
 	r.Response.WriteJson(&model.DefaultHandlerResponse{
@@ -133,7 +134,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 
 	var (
 		authHeader = gstr.Trim(r.GetHeader(consts.AuthorizationHeaderKey))
-		logger     = r.GetCtxVar("logger").String()
+		log        = g.Log(r.GetCtxVar("logger").String())
 		resp       = &model.DefaultHandlerResponse{
 			Code:    http.StatusMovedPermanently,
 			Message: http.StatusText(http.StatusMovedPermanently),
@@ -142,7 +143,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 			TraceID: span.SpanContext().TraceID().String(),
 		}
 	)
-	g.Log(logger).Debug(r.GetCtx(), "authorization authHeader: ", authHeader)
+	log.Debug(r.GetCtx(), "authorization authHeader: ", authHeader)
 	fields := strings.Fields(authHeader)
 	if len(fields) < 2 {
 		resp.Message = "Invalid authorization Header"
@@ -156,23 +157,23 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 		return false
 	}
 
-	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
+	var res, err = validateToken(r.GetCtx(), fields[1], authType, log)
 	if err != nil {
-		g.Log(logger).Error(r.GetCtx(), "authorization failed: ", err)
+		log.Error(r.GetCtx(), "authorization failed: ", err)
 		resp.Message = "authorization failed reason: " + err.Error()
 		s.middlewareResponse(r, span, resp)
 		return false
 	}
 
 	if res == nil {
-		g.Log(logger).Debug(r.GetCtx(), "authorization failed")
+		log.Debug(r.GetCtx(), "authorization failed")
 		resp.Message = "authorization failed"
 		s.middlewareResponse(r, span, resp)
 		return false
 	}
 
 	if res.AuthToken != fields[1] {
-		g.Log(logger).Debug(r.GetCtx(), "authorization token is Refresh new token:", res.AuthToken)
+		log.Debug(r.GetCtx(), "authorization token is Refresh new token:", res.AuthToken)
 		resp.Code = http.StatusFound
 		resp.Message = "token is Refresh"
 		resp.Data = g.Map{
@@ -191,7 +192,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 }
 
 // validateToken is a middleware handler for ghttp.Request.
-func validateToken(ctx context.Context, token, authType, logger string) (*model.AuthorizationToken, error) {
+func validateToken(ctx context.Context, token, authType string, log glog.ILogger) (*model.AuthorizationToken, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-console-service-middleware-validateToken")
 	defer span.End()
 
@@ -203,7 +204,7 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 
 	defer func() {
 		if err != nil {
-			g.Log(logger).Error(ctx, "validateToken failed error:", err)
+			log.Error(ctx, "validateToken failed error:", err)
 		}
 	}()
 
@@ -257,20 +258,20 @@ func validateToken(ctx context.Context, token, authType, logger string) (*model.
 
 		authToken.AuthTime = now.Unix()
 		if now.Unix()-consts.PasswordExpireTime > authTime {
-			g.Log(logger).Debug(ctx, "validateToken auth token password expired 2 hours")
-			if token, err = utility.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
+			log.Debug(ctx, "validateToken auth token password expired 2 hours")
+			if token, err = helper.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
 				err = gerror.Wrap(err, "validateToken CreateAccessToken failed")
 				return nil, err
 			}
 			authToken.AuthToken = token
 			redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
 		}
-		g.Log(logger).Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
+		log.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
 		if val, err = conn.Do(ctx, "SETEX", redisKey, consts.TokenExpireTime, authToken); err != nil {
 			err = gerror.Wrap(err, "validateToken redis set failed")
 			return nil, err
 		}
-		g.Log(logger).Debug(ctx, "validateToken auth token set redis value:", val)
+		log.Debug(ctx, "validateToken auth token set redis value:", val)
 		return authToken, nil
 	}
 	if now.Unix()-consts.APIKeyExpireTime > authTime {

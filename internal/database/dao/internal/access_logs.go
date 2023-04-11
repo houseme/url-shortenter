@@ -39,7 +39,7 @@ type AccessLogsColumns struct {
 	ModifyTime string // 修改时间
 }
 
-//  accessLogsColumns holds the columns for table access_logs.
+// accessLogsColumns holds the columns for table access_logs.
 var accessLogsColumns = AccessLogsColumns{
 	Id:         "id",
 	AccountNo:  "account_no",
@@ -100,6 +100,6 @@ func (dao *AccessLogsDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *AccessLogsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *AccessLogsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

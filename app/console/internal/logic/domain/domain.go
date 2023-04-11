@@ -14,7 +14,7 @@ import (
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
-	"github.com/houseme/url-shortenter/utility"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sDomain struct {
@@ -28,68 +28,68 @@ func initDomain() *sDomain {
 	return &sDomain{}
 }
 
-// CreateDomainAuthorize creates a initDomain domain.
+// CreateDomainAuthorize creates an initDomain domain.
 func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeInput) (out *model.DomainAuthorizeOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-CreateDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "CreateDomainAuthorize params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "CreateDomainAuthorize params:", in)
 
 	return
 }
 
 // QueryDomainAuthorize queries the domain.
 func (s *sDomain) QueryDomainAuthorize(ctx context.Context, in *model.QueryDomainAuthorizeInput) (out *model.QueryDomainAuthorizeOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-QueryDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "QueryDomainAuthorize params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "QueryDomainAuthorize params:", in)
 
 	return
 }
 
 // UpdateDomainAuthorize updates the domain.
 func (s *sDomain) UpdateDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeUpdateInput) (out *model.DomainAuthorizeUpdateOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-UpdateDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "UpdateDomainAuthorize params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "UpdateDomainAuthorize params:", in)
 
 	return
 }
 
 // DeleteDomainAuthorize deletes the domain.
 func (s *sDomain) DeleteDomainAuthorize(ctx context.Context, in *model.DomainAuthorizeDeleteInput) (out *model.DomainAuthorizeDeleteOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorize")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DeleteDomainAuthorize")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "DeleteDomainAuthorize params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "DeleteDomainAuthorize params:", in)
 
 	return
 }
 
 // DomainAuthorizeDetail queries the domain.
 func (s *sDomain) DomainAuthorizeDetail(ctx context.Context, in *model.DomainAuthorizeDetailInput) (out *model.DomainAuthorizeDetailOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeDetail")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DomainAuthorizeDetail")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "DomainAuthorizeDetail params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "DomainAuthorizeDetail params:", in)
 
 	return
 }
 
 // DomainAuthorizeList queries the domain.
 func (s *sDomain) DomainAuthorizeList(ctx context.Context, in *model.DomainAuthorizeListInput) (out *model.DomainAuthorizeListOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeList")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-domain-DomainAuthorizeList")
 	defer span.End()
 
-	var logger = utility.Helper().Logger(ctx)
-	g.Log(logger).Debug(ctx, "DomainAuthorizeList params:", in)
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "DomainAuthorizeList params:", in)
 
 	return
 }

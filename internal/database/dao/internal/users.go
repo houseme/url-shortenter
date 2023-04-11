@@ -31,7 +31,7 @@ type UsersColumns struct {
 	ModifyTime string // 更新时间
 }
 
-//  usersColumns holds the columns for table users.
+// usersColumns holds the columns for table users.
 var usersColumns = UsersColumns{
 	Id:         "id",
 	UserNo:     "user_no",
@@ -84,6 +84,6 @@ func (dao *UsersDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *UsersDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }
