@@ -15,6 +15,7 @@ type (
 	IUser interface {
 		CreateMerchant(ctx context.Context, in *model.CreateMerchantInput) (out *model.CreateMerchantOutput, err error)
 		QueryMerchant(ctx context.Context, in *model.QueryMerchantInput) (out *model.QueryMerchantOutput, err error)
+		Detail(ctx context.Context, in *model.UserDetailInput) (out *model.UserDetailOutput, err error)
 	}
 )
 
