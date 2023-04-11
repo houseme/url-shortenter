@@ -88,3 +88,14 @@ type QueryMerchantOutput struct {
 	AgentNo             uint64 `json:"agentNo" description:"代理商编号"`
 	CreateTime          string `json:"createTime" description:"创建时间"`
 }
+
+// UserDetailInput is the input of UserDetail.
+type UserDetailInput struct {
+	*Base `json:"-"`
+}
+
+// UserDetailOutput is the output of UserDetail.
+type UserDetailOutput struct {
+	Username string `json:"username" description:"用户名"`
+	Avatar   string `json:"avatar" description:"头像"`
+}

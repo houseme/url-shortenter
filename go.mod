@@ -49,7 +49,7 @@ require (
 	github.com/chromedp/cdproto v0.0.0-20230408222125-26b95782d8e2 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
-	github.com/cloudwego/hertz v0.6.1 // indirect
+	github.com/cloudwego/hertz v0.6.2 // indirect
 	github.com/cloudwego/netpoll v0.3.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect

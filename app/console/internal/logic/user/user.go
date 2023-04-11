@@ -65,3 +65,16 @@ func (s *sUser) QueryMerchant(ctx context.Context, in *model.QueryMerchantInput)
 
 	return
 }
+
+// Detail is the handler for Detail
+func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *model.UserDetailOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-Detail")
+	defer span.End()
+
+	var (
+		log = g.Log(helper.Helper().Logger(ctx))
+	)
+	log.Debug(ctx, "user-Detail in:", in)
+
+	return
+}
