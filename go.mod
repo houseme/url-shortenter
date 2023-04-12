@@ -16,7 +16,7 @@ require (
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.3
 	github.com/gogf/gf/v2 v2.3.3
 	github.com/houseme/gocrypto v1.2.1
-	github.com/houseme/icp-filing v1.3.0
+	github.com/houseme/icp-filing v1.3.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.636
@@ -68,7 +68,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
-	github.com/hertz-contrib/logger/zap v0.0.0-20230320032231-b153fe729ee7 // indirect
+	github.com/hertz-contrib/logger/zap v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
