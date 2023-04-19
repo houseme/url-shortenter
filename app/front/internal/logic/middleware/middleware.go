@@ -14,7 +14,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/front/api/v1/home"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 )
 
@@ -22,12 +22,7 @@ type sMiddleware struct {
 }
 
 func init() {
-	service.RegisterMiddleware(initMiddleware())
-}
-
-// new 中间件
-func initMiddleware() *sMiddleware {
-	return &sMiddleware{}
+	service.RegisterMiddleware(&sMiddleware{})
 }
 
 // MiddlewareHandlerResponse 响应处理
@@ -74,7 +69,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		}
 	}
 
-	str := res.(*v1.HomeRes)
+	str := res.(*v1.Res)
 	log.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
 	if !g.IsNil(res) && !g.IsEmpty(res) {
 		log.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)

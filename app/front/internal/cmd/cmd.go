@@ -13,7 +13,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
-	"github.com/houseme/url-shortenter/app/front/internal/controller"
+	"github.com/houseme/url-shortenter/app/front/internal/controller/hello"
+	"github.com/houseme/url-shortenter/app/front/internal/controller/home"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 )
 
@@ -29,13 +30,13 @@ var (
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(service.Middleware().MiddlewareHandlerResponse, service.Middleware().MiddlewareHandlerRequest)
 				group.Bind(
-					controller.Home,
+					home.New(),
 				)
 			})
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
-					controller.Hello,
+					hello.New(),
 				)
 			})
 			s.Run()
