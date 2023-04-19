@@ -1,10 +1,12 @@
-// Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
-//
-// This Source Code Form is subject to the terms of the MIT License.
-// If a copy of the MIT was not distributed with this file,
-// You can obtain one at https://github.com/houseme/url-shortenter.
+/*
+ *  Copyright Url-Shortenter Author(https://houseme.github.io/url-shortenter/). All Rights Reserved.
+ *
+ *  This Source Code Form is subject to the terms of the MIT License.
+ *  If a copy of the MIT was not distributed with this file,
+ *  You can obtain one at https://github.com/houseme/url-shortenter.
+ */
 
-package controller
+package home
 
 import (
 	"context"
@@ -16,21 +18,21 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/text/gstr"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/v1"
+	v1 "github.com/houseme/url-shortenter/app/front/api/v1/home"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-var (
-	// Home is the controller for the home page.
-	Home = cHome{}
-)
+// New is the constructor for the home page controller.
+func New() *cHome {
+	return &cHome{}
+}
 
 type cHome struct{}
 
 // Index is the controller for the home page.
 // is the handler for the home page GET "/:short"
-func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, err error) {
+func (c *cHome) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 
@@ -51,7 +53,7 @@ func (c *cHome) Index(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, er
 		g.RequestFromCtx(ctx).Response.Status = http.StatusNotFound
 		return
 	}
-	res = (*v1.HomeRes)(&out)
+	res = (*v1.Res)(&out)
 	log.Debug(ctx, "home-index res:", res, "url:", out)
 	return
 }

@@ -38,11 +38,7 @@ type sHome struct {
 var sfg singleflight.Group
 
 func init() {
-	service.RegisterHome(initHome())
-}
-
-func initHome() *sHome {
-	return &sHome{}
+	service.RegisterHome(&sHome{})
 }
 
 // ShortDetail short url detail

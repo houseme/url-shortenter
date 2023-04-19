@@ -19,8 +19,8 @@ require (
 	github.com/houseme/icp-filing v1.3.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.640
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.640
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.641
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.641
 	go.opentelemetry.io/otel v1.14.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.14.0
 	go.opentelemetry.io/otel/sdk v1.14.0
@@ -35,14 +35,14 @@ require (
 	github.com/VividCortex/gohistogram v1.0.0 // indirect
 	github.com/andeya/ameda v1.5.3 // indirect
 	github.com/andeya/goutil v1.0.1 // indirect
-	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/antchfx/htmlquery v1.3.0 // indirect
 	github.com/antchfx/xmlquery v1.3.15 // indirect
 	github.com/antchfx/xpath v1.2.4 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bits-and-blooms/bitset v1.5.0 // indirect
+	github.com/bits-and-blooms/bitset v1.6.0 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.7 // indirect
-	github.com/bytedance/gopkg v0.0.0-20230324090325-a00d8057bef9 // indirect
+	github.com/bytedance/gopkg v0.0.0-20230418090422-343ae5fedd5f // indirect
 	github.com/bytedance/sonic v1.8.7 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
