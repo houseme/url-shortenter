@@ -18,21 +18,21 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 	"github.com/gogf/gf/v2/text/gstr"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/v1/home"
+	v1 "github.com/houseme/url-shortenter/app/front/api/home/v1"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 // New is the constructor for the home page controller.
-func New() *cHome {
-	return &cHome{}
+func New() *Controller {
+	return &Controller{}
 }
 
-type cHome struct{}
+type Controller struct{}
 
 // Index is the controller for the home page.
 // is the handler for the home page GET "/:short"
-func (c *cHome) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err error) {
+func (c *Controller) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 

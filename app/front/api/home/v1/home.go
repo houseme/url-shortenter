@@ -6,18 +6,19 @@
  *  You can obtain one at https://github.com/houseme/url-shortenter.
  */
 
-package hello
+package v1
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
+
+	"github.com/houseme/url-shortenter/app/front/internal/model"
 )
 
-// Req is a hello request.
+// Req is the request struct for :short.
 type Req struct {
-	g.Meta `path:"/hello" tags:"Hello" method:"get" summary:"You first hello api"`
+	g.Meta `path:"/:short" tags:"home" method:"get" summary:"You first home api"`
+	*model.HomeInput
 }
 
-// Res is a hello response.
-type Res struct {
-	g.Meta `mime:"text/html" example:"string"`
-}
+// Res is the response struct.
+type Res string

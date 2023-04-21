@@ -13,9 +13,10 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/v1/hello"
+	v1 "github.com/houseme/url-shortenter/app/front/api/hello/v1"
 )
 
+// New is a hello world.
 func New() *cHello {
 	return &cHello{}
 }

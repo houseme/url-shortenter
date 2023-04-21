@@ -14,7 +14,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/net/gtrace"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/v1/home"
+	v1 "github.com/houseme/url-shortenter/app/front/api/home/v1"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 )
 
