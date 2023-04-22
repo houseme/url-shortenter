@@ -25,12 +25,7 @@ type sUser struct {
 }
 
 func init() {
-	service.RegisterUser(initUser())
-}
-
-// initUser
-func initUser() *sUser {
-	return &sUser{}
+	service.RegisterUser(&sUser{})
 }
 
 // CreateMerchant creates a new merchant.

@@ -21,11 +21,7 @@ type sDomain struct {
 }
 
 func init() {
-	service.RegisterDomain(initDomain())
-}
-
-func initDomain() *sDomain {
-	return &sDomain{}
+	service.RegisterDomain(&sDomain{})
 }
 
 // CreateDomainAuthorize creates an initDomain domain.

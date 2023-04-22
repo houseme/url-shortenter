@@ -18,16 +18,16 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type cAuth struct {
+type Controller struct {
 }
 
-// New is the constructor of cAuth.
-func New() *cAuth {
-	return &cAuth{}
+// New is the constructor of Controller.
+func New() *Controller {
+	return &Controller{}
 }
 
 // CreateAccessToken is the handler for CreateAccessToken
-func (c *cAuth) CreateAccessToken(ctx context.Context, req *v1.CreateAccessTokenReq) (res *v1.CreateAccessTokenRes, err error) {
+func (c *Controller) CreateAccessToken(ctx context.Context, req *v1.CreateAccessTokenReq) (res *v1.CreateAccessTokenRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-auth-CreateAccessToken")
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (c *cAuth) CreateAccessToken(ctx context.Context, req *v1.CreateAccessToken
 }
 
 // Authorization is the handler for Authorization
-func (c *cAuth) Authorization(ctx context.Context, req *v1.AuthReq) (res *v1.AuthRes, err error) {
+func (c *Controller) Authorization(ctx context.Context, req *v1.AuthReq) (res *v1.AuthRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-auth-authorization")
 	defer span.End()
 

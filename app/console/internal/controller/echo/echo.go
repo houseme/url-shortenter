@@ -14,14 +14,14 @@ import (
 	v1 "github.com/houseme/url-shortenter/app/console/api/echo/v1"
 )
 
-// New is the constructor of cEcho.
-func New() *cEcho {
-	return &cEcho{}
+// New is the constructor of Controller.
+func New() *Controller {
+	return &Controller{}
 }
 
-type cEcho struct{}
+type Controller struct{}
 
 // Say is the handler for Say
-func (c *cEcho) Say(ctx context.Context, req *v1.EchoSayReq) (res *v1.EchoSayRes, err error) {
+func (c *Controller) Say(ctx context.Context, req *v1.EchoSayReq) (res *v1.EchoSayRes, err error) {
 	return &v1.EchoSayRes{Content: req.Content}, nil
 }

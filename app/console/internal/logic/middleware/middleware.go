@@ -32,12 +32,8 @@ import (
 type sMiddleware struct {
 }
 
-func initMiddleware() *sMiddleware {
-	return &sMiddleware{}
-}
-
 func init() {
-	service.RegisterMiddleware(initMiddleware())
+	service.RegisterMiddleware(&sMiddleware{})
 }
 
 // ConsoleLogger is a middleware handler for ghttp.Request.

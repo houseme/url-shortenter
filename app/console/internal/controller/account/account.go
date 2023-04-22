@@ -18,16 +18,16 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type cAccount struct {
+type Controller struct {
 }
 
-// New is the constructor for cAccount
-func New() *cAccount {
-	return &cAccount{}
+// New is the constructor for Controller
+func New() *Controller {
+	return &Controller{}
 }
 
 // CreateAccount is the handler for CreateAccount
-func (c *cAccount) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) (res *v1.CreateAccountRes, err error) {
+func (c *Controller) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) (res *v1.CreateAccountRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-CreateAccount")
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (c *cAccount) CreateAccount(ctx context.Context, req *v1.CreateAccountReq) 
 }
 
 // ModifyAccount is the handler for ModifyAccount
-func (c *cAccount) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) (res *v1.ModifyAccountRes, err error) {
+func (c *Controller) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) (res *v1.ModifyAccountRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-ModifyAccount")
 	defer span.End()
 
@@ -51,7 +51,7 @@ func (c *cAccount) ModifyAccount(ctx context.Context, req *v1.ModifyAccountReq) 
 }
 
 // ModifyPassword is the handler for ModifyPassword
-func (c *cAccount) ModifyPassword(ctx context.Context, req *v1.ModifyPasswordReq) (res *v1.ModifyPasswordRes, err error) {
+func (c *Controller) ModifyPassword(ctx context.Context, req *v1.ModifyPasswordReq) (res *v1.ModifyPasswordRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-account-ModifyPassword")
 	defer span.End()
 

@@ -18,16 +18,16 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type cHome struct {
+type Controller struct {
 }
 
-// New is the constructor of cHome.
-func New() *cHome {
-	return &cHome{}
+// New is the constructor of Controller.
+func New() *Controller {
+	return &Controller{}
 }
 
 // Index is the index page.
-func (c *cHome) Index(ctx context.Context, req *v1.HomeIndexReq) (res *v1.HomeIndexRes, err error) {
+func (c *Controller) Index(ctx context.Context, req *v1.HomeIndexReq) (res *v1.HomeIndexRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-home-index")
 	defer span.End()
 

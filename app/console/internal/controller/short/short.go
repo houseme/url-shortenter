@@ -18,16 +18,16 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type cShort struct {
+type Controller struct {
 }
 
-// New is the constructor of cShort.
-func New() *cShort {
-	return &cShort{}
+// New is the constructor of Controller.
+func New() *Controller {
+	return &Controller{}
 }
 
 // CreateShort is the handler for CreateShort
-func (c *cShort) CreateShort(ctx context.Context, req *v1.CreateShortReq) (res *v1.CreateShortRes, err error) {
+func (c *Controller) CreateShort(ctx context.Context, req *v1.CreateShortReq) (res *v1.CreateShortRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-short-CreateShort")
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (c *cShort) CreateShort(ctx context.Context, req *v1.CreateShortReq) (res *
 }
 
 // ModifyShort is the handler for ModifyShort
-func (c *cShort) ModifyShort(ctx context.Context, req *v1.ModifyShortReq) (res *v1.ModifyShortRes, err error) {
+func (c *Controller) ModifyShort(ctx context.Context, req *v1.ModifyShortReq) (res *v1.ModifyShortRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-short-ModifyShort")
 	defer span.End()
 
@@ -51,7 +51,7 @@ func (c *cShort) ModifyShort(ctx context.Context, req *v1.ModifyShortReq) (res *
 }
 
 // QueryShort is the handler for QueryShort
-func (c *cShort) QueryShort(ctx context.Context, req *v1.QueryShortReq) (res *v1.QueryShortRes, err error) {
+func (c *Controller) QueryShort(ctx context.Context, req *v1.QueryShortReq) (res *v1.QueryShortRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-short-QueryShort")
 	defer span.End()
 
@@ -63,7 +63,7 @@ func (c *cShort) QueryShort(ctx context.Context, req *v1.QueryShortReq) (res *v1
 }
 
 // QueryStat is the handler for QueryStat
-func (c *cShort) QueryStat(ctx context.Context, req *v1.QueryStatReq) (res *v1.QueryStatRes, err error) {
+func (c *Controller) QueryStat(ctx context.Context, req *v1.QueryStatReq) (res *v1.QueryStatRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-short-QueryStat")
 	defer span.End()
 

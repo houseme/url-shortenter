@@ -5,6 +5,7 @@
 package logic
 
 import (
+	_ "github.com/houseme/url-shortenter/app/console/internal/logic/access"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/account"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/auth"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/domain"

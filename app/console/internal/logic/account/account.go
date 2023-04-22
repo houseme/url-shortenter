@@ -27,11 +27,7 @@ type sAccount struct {
 }
 
 func init() {
-	service.RegisterAccount(initAccount())
-}
-
-func initAccount() *sAccount {
-	return &sAccount{}
+	service.RegisterAccount(&sAccount{})
 }
 
 // CreateAccount is the handler for CreateAccount

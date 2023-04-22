@@ -31,11 +31,7 @@ type sAuth struct {
 }
 
 func init() {
-	service.RegisterAuth(initAuth())
-}
-
-func initAuth() *sAuth {
-	return &sAuth{}
+	service.RegisterAuth(&sAuth{})
 }
 
 // CreateAccessToken creates an initAuth access token.

@@ -21,11 +21,7 @@ type sHome struct {
 }
 
 func init() {
-	service.RegisterHome(initHome())
-}
-
-func initHome() *sHome {
-	return &sHome{}
+	service.RegisterHome(&sHome{})
 }
 
 // Index home page.

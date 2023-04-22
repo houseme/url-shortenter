@@ -22,11 +22,7 @@ type sShort struct {
 
 // init
 func init() {
-	service.RegisterShort(initShort())
-}
-
-func initShort() *sShort {
-	return &sShort{}
+	service.RegisterShort(&sShort{})
 }
 
 // CreateShort is the handler for CreateShort

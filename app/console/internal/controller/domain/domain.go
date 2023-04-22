@@ -18,16 +18,16 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type cDomain struct {
+type Controller struct {
 }
 
-// New is the constructor of cDomain.
-func New() *cDomain {
-	return &cDomain{}
+// New is the constructor of Controller.
+func New() *Controller {
+	return &Controller{}
 }
 
 // CreateDomainAuthorization creates a new domain.
-func (c *cDomain) CreateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationReq) (res *v1.DomainAuthorizationRes, err error) {
+func (c *Controller) CreateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationReq) (res *v1.DomainAuthorizationRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-CreateDomainAuthorize")
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (c *cDomain) CreateDomainAuthorization(ctx context.Context, req *v1.DomainA
 }
 
 // QueryDomainAuthorization queries the domain.
-func (c *cDomain) QueryDomainAuthorization(ctx context.Context, req *v1.QueryDomainAuthorizationReq) (res *v1.QueryDomainAuthorizationRes, err error) {
+func (c *Controller) QueryDomainAuthorization(ctx context.Context, req *v1.QueryDomainAuthorizationReq) (res *v1.QueryDomainAuthorizationRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-QueryDomainAuthorize")
 	defer span.End()
 
@@ -51,7 +51,7 @@ func (c *cDomain) QueryDomainAuthorization(ctx context.Context, req *v1.QueryDom
 }
 
 // UpdateDomainAuthorization updates the domain.
-func (c *cDomain) UpdateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationUpdateReq) (res *v1.DomainAuthorizationUpdateRes, err error) {
+func (c *Controller) UpdateDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationUpdateReq) (res *v1.DomainAuthorizationUpdateRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-UpdateDomainAuthorize")
 	defer span.End()
 
@@ -63,7 +63,7 @@ func (c *cDomain) UpdateDomainAuthorization(ctx context.Context, req *v1.DomainA
 }
 
 // DeleteDomainAuthorization deletes the domain.
-func (c *cDomain) DeleteDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationDeleteReq) (res *v1.DomainAuthorizationDeleteRes, err error) {
+func (c *Controller) DeleteDomainAuthorization(ctx context.Context, req *v1.DomainAuthorizationDeleteReq) (res *v1.DomainAuthorizationDeleteRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DeleteDomainAuthorize")
 	defer span.End()
 
@@ -75,7 +75,7 @@ func (c *cDomain) DeleteDomainAuthorization(ctx context.Context, req *v1.DomainA
 }
 
 // DomainAuthorizationList lists the domain.
-func (c *cDomain) DomainAuthorizationList(ctx context.Context, req *v1.DomainAuthorizationListReq) (res *v1.DomainAuthorizationListRes, err error) {
+func (c *Controller) DomainAuthorizationList(ctx context.Context, req *v1.DomainAuthorizationListReq) (res *v1.DomainAuthorizationListRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizationList")
 	defer span.End()
 
@@ -87,7 +87,7 @@ func (c *cDomain) DomainAuthorizationList(ctx context.Context, req *v1.DomainAut
 }
 
 // DomainAuthorizationDetail gets the domain.
-func (c *cDomain) DomainAuthorizationDetail(ctx context.Context, req *v1.DomainAuthorizationDetailReq) (res *v1.DomainAuthorizationDetailRes, err error) {
+func (c *Controller) DomainAuthorizationDetail(ctx context.Context, req *v1.DomainAuthorizationDetailReq) (res *v1.DomainAuthorizationDetailRes, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-domain-DomainAuthorizeDetail")
 	defer span.End()
 
