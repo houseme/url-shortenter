@@ -40,7 +40,7 @@ require (
 	github.com/antchfx/xmlquery v1.3.15 // indirect
 	github.com/antchfx/xpath v1.2.4 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bits-and-blooms/bitset v1.6.0 // indirect
+	github.com/bits-and-blooms/bitset v1.7.0 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.7 // indirect
 	github.com/bytedance/gopkg v0.0.0-20230418090422-343ae5fedd5f // indirect
 	github.com/bytedance/sonic v1.8.7 // indirect
