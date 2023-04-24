@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.287
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.288
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.1
@@ -12,15 +12,15 @@ require (
 	github.com/chyroc/lark v0.0.110
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.3
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.3
-	github.com/gogf/gf/v2 v2.3.3
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.0
+	github.com/gogf/gf/v2 v2.4.0
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/icp-filing v1.3.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.644
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.644
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.645
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.645
 	go.opentelemetry.io/otel v1.14.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.14.0
 	go.opentelemetry.io/otel/sdk v1.14.0
