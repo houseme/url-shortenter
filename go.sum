@@ -268,8 +268,8 @@ github.com/goccy/go-json v0.9.4/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGF
 github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d h1:uCcOsTqwQCuN8Gd50sMYlMA+gNNAksZvNjPd7L7wf34=
 github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d/go.mod h1:OCh9jLFmyRBfxiHEuoRi4ltEilRKd9vpFBHUKb2j1HQ=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.3 h1:McqosVS9Bm7SzmsMTwfVT0YX6i/Is2aRn/XfqW/0iSI=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.3.3/go.mod h1:z+/0qiOwMroAnj5ESuobTv0l5P83rf+XR3r6Fj8WJyk=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0 h1:VNnOFQ44FGCrNdIE6zaizWilgr6G5n1YQ6JkMvtbJLA=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0/go.mod h1:hS3/ACE9qeQOe9fCIddOgE0PJoYJcYEv52/cvhxfxeU=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.3 h1:t1DA5NbyOk7FrDtFtJ5nS+RuGkmhJ9dUsQQKh5G3LOE=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.3.3/go.mod h1:V9o2BF9ovJnaZhHImHAanqUgjX4kI51lgU45u5rPqvw=
 github.com/gogf/gf/v2 v2.0.0/go.mod h1:apktt6TleWtCIwpz63vBqUnw8MX8gWKoZyxgDpXFtgM=
