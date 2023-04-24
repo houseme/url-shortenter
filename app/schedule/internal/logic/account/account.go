@@ -23,11 +23,7 @@ type sAccount struct {
 }
 
 func init() {
-	service.RegisterAccount(initAccount())
-}
-
-func initAccount() *sAccount {
-	return &sAccount{}
+	service.RegisterAccount(&sAccount{})
 }
 
 // Stat account stat.

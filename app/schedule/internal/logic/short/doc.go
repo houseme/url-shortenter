@@ -15,10 +15,5 @@ type sShort struct {
 }
 
 func init() {
-	service.RegisterShort(initShort())
-}
-
-// initShort create an initShort sShort.
-func initShort() *sShort {
-	return &sShort{}
+	service.RegisterShort(&sShort{})
 }

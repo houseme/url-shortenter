@@ -15,9 +15,5 @@ type sLark struct {
 }
 
 func init() {
-	service.RegisterLark(initLark())
-}
-
-func initLark() *sLark {
-	return &sLark{}
+	service.RegisterLark(&sLark{})
 }
