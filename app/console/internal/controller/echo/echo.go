@@ -19,6 +19,7 @@ func New() *Controller {
 	return &Controller{}
 }
 
+// Controller is the controller for Echo.
 type Controller struct{}
 
 // Say is the handler for Say

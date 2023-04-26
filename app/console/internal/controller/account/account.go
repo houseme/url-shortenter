@@ -18,6 +18,7 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
+// Controller is the controller for account.
 type Controller struct {
 }
 
