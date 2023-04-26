@@ -15,6 +15,8 @@ require (
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.0
 	github.com/gogf/gf/v2 v2.4.0
+	github.com/google/uuid v1.1.2
+	github.com/gorilla/websocket v1.5.0
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/icp-filing v1.3.1
 	github.com/houseme/snowflake v1.6.5
@@ -66,7 +68,6 @@ require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/hertz-contrib/logger/zap v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
