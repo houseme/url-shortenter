@@ -15,7 +15,7 @@ require (
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.0
 	github.com/gogf/gf/v2 v2.4.0
-	github.com/google/uuid v1.1.2
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/icp-filing v1.3.1
