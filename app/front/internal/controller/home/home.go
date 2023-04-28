@@ -28,6 +28,7 @@ func New() *Controller {
 	return &Controller{}
 }
 
+// Controller .
 type Controller struct{}
 
 // Index is the controller for the home page.

@@ -9,6 +9,7 @@ package home
 
 import (
 	"context"
+	"time"
 
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/database/gredis"
@@ -194,8 +195,8 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 		ServerIP:   &wrapperspb.StringValue{Value: serverIP},
 		TraceID:    &wrapperspb.StringValue{Value: span.SpanContext().TraceID().String()},
 		UserAgent:  &wrapperspb.StringValue{Value: in.UserAgent},
-		AccessTime: &timestamppb.Timestamp{Seconds: t.Unix(), Nanos: int32(t.Nanosecond())},
-		AccessDate: &timestamppb.Timestamp{Seconds: t.Unix(), Nanos: int32(t.Nanosecond())},
+		AccessTime: timestamppb.New(time.UnixMicro(t.UnixMicro())),
+		AccessDate: timestamppb.New(time.UnixMicro(t.UnixMicro())),
 		YearTime:   &wrapperspb.UInt64Value{Value: uint64(t.Year())},
 		MonthTime:  &wrapperspb.UInt64Value{Value: uint64(t.Month())},
 		DayTime:    &wrapperspb.UInt64Value{Value: uint64(t.Day())},

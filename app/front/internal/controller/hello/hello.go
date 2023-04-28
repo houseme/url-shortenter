@@ -17,14 +17,15 @@ import (
 )
 
 // New is a hello world.
-func New() *cHello {
-	return &cHello{}
+func New() *Controller {
+	return &Controller{}
 }
 
-type cHello struct{}
+// Controller .
+type Controller struct{}
 
 // Hello is a hello world.
-func (c *cHello) Hello(ctx context.Context, req *v1.Req) (res *v1.Res, err error) {
+func (c *Controller) Hello(ctx context.Context, req *v1.Req) (res *v1.Res, err error) {
 	g.Log().Debug(ctx, "hello request params:", req)
 	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
 	return
