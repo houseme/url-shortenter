@@ -57,3 +57,14 @@ type QueryStatReq struct {
 type QueryStatRes struct {
 	*model.QueryStatOutput
 }
+
+// ShortDomainReq is the request struct for the ShortDomain endpoint.
+type ShortDomainReq struct {
+	g.Meta `path:"/url/short_domain" tags:"Account Service" method:"Get" summary:"query short domain"`
+	*model.ShortDomainInput
+}
+
+// ShortDomainRes is the response struct for the ShortDomain endpoint.
+type ShortDomainRes struct {
+	*model.ShortDomainOutput
+}

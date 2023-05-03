@@ -74,3 +74,15 @@ func (c *Controller) QueryStat(ctx context.Context, req *v1.QueryStatReq) (res *
 	}
 	return
 }
+
+// ShortDomain is the handler for ShortDomain
+func (c *Controller) ShortDomain(ctx context.Context, req *v1.ShortDomainReq) (res *v1.ShortDomainRes, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-short-ShortDomain")
+	defer span.End()
+
+	res = &v1.ShortDomainRes{}
+	if res.ShortDomainOutput, err = service.Short().ShortDomain(ctx, req.ShortDomainInput); err != nil {
+		err = gerror.Wrap(err, "short ShortDomain failed")
+	}
+	return
+}

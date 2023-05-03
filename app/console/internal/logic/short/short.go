@@ -68,3 +68,14 @@ func (s *sShort) QueryStat(ctx context.Context, in *model.QueryStatInput) (out *
 
 	return
 }
+
+// ShortDomain is the handler for ShortDomain
+func (s *sShort) ShortDomain(ctx context.Context, in *model.ShortDomainInput) (out *model.ShortDomainOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-ShortDomain")
+	defer span.End()
+
+	var log = g.Log(helper.Helper().Logger(ctx))
+	log.Debug(ctx, "short-ShortDomain in:", in)
+
+	return
+}
