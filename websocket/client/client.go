@@ -34,8 +34,8 @@ func main() {
 		log.Println("Failed to send message to WebSocket server:", err)
 	}
 	// Wait for the user to press Enter.
-	fmt.Print("Press Enter to exit...")
-	fmt.Scanln()
+	log.Println("Press Enter to exit... Exiting.")
+	_, _ = fmt.Scanln()
 	log.Println("Exiting.")
 }
 func handleMessagesClient(conn *websocket.Conn) {
