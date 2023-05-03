@@ -76,3 +76,20 @@ type ModifyShortInput struct {
 
 // ModifyShortOutput is the output of ModifyShort
 type ModifyShortOutput bool
+
+// ShortDomainInput is the input for ShortDomain
+type ShortDomainInput struct {
+	*Base `json:"-"`
+}
+
+// ShortDomainOutput is the output of ShortDomain
+type ShortDomainOutput struct {
+	List []*ShortDomainItem `json:"list" dc:"短域名列表"`
+}
+
+// ShortDomainItem is the item of ShortDomain
+type ShortDomainItem struct {
+	Domain   string `json:"shortDomain" dc:"短域名"`
+	DomainNo uint64 `json:"domainNo,string" dc:"短域名编号"`
+	Memo     string `json:"memo" dc:"备注"`
+}
