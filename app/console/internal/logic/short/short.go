@@ -9,11 +9,15 @@ package short
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
+	"github.com/houseme/url-shortenter/app/console/internal/consts"
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/internal/database/dao"
+	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
@@ -76,6 +80,26 @@ func (s *sShort) ShortDomain(ctx context.Context, in *model.ShortDomainInput) (o
 
 	var log = g.Log(helper.Helper().Logger(ctx))
 	log.Debug(ctx, "short-ShortDomain in:", in)
+	out = &model.ShortDomainOutput{
+		List: []*model.ShortDomainItem{},
+	}
 
+	defer func() {
+		if err != nil {
+			log.Error(ctx, "short-ShortDomain error:", err)
+			return
+		}
+	}()
+
+	if err = dao.ShortDomain.Ctx(ctx).Scan(&out.List, do.ShortDomain{State: consts.ShortDomainStateNormal}); err != nil {
+		err = gerror.Wrap(err, "short-ShortDomain error")
+		return
+	}
+
+	if len(out.List) == 0 {
+		err = gerror.New("short-ShortDomain error")
+		return
+	}
+	log.Debug(ctx, "short-ShortDomain out:", out)
 	return
 }
