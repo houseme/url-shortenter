@@ -58,4 +58,11 @@ const (
 
 	// TokenExpireTime 有效期时间 单位秒
 	TokenExpireTime = 864000
+
+	// ShortDomainStateDefault 短链域名状态  0默认 100正常 200失效
+	ShortDomainStateDefault = 0
+	// ShortDomainStateNormal 正常
+	ShortDomainStateNormal = 100
+	// ShortDomainStateInvalid 失效
+	ShortDomainStateInvalid = 200
 )
