@@ -70,3 +70,11 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 	return str[:8], nil
 }
 ```
+
+## License
+
+`URL-Shortenter` is licensed under the [MIT License](LICENSE), 100% free and open-source, forever.
+
+## Thinks
+
+<a href="https://www.jetbrains.com/?from=URL-Shortenter"><img src="https://goframe.org/download/thumbnails/1114119/jetbrains.png" height="120" alt="JetBrains"/></a>
