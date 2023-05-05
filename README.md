@@ -18,7 +18,7 @@ go install -u -v github.com/houseme/url-shortenter@latest
 
 ## Console 后台默认帐号
 
-默认帐号: `urlShortener`  
+默认帐号: `shortenter`  
 默认密码: `B9Mazv5M2J6%1zU2@nxC`
 
 数据库中存储的是加密后的密码，在 `document\structure.sql` 中标有注释，如果需要自定义其他密码，可以修改这里
@@ -64,8 +64,9 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 		err = gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
 		return "", err
 	}
-	number := new(big.Int).SetBytes(urlHash).Uint64()
-	str := u.Base58Encode(gconv.Bytes(number))
+	// number := new(big.Int).SetBytes(urlHash).Uint64()
+	// str := u.Base58Encode(gconv.Bytes(number))
+    str := u.Base58Encode(urlHash)
 	g.Log(logger).Debug(ctx, "utilHelper GenerateShortLink str:", str, " number:", number)
 	return str[:8], nil
 }
