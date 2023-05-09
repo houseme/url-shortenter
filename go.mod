@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.307
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.308
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.1
@@ -27,7 +27,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.15.1
 	go.opentelemetry.io/otel/sdk v1.15.1
 	go.opentelemetry.io/otel/trace v1.15.1
-	golang.org/x/crypto v0.8.0
+	golang.org/x/crypto v0.9.0
 	golang.org/x/sync v0.2.0
 	google.golang.org/protobuf v1.30.0
 )
@@ -48,10 +48,10 @@ require (
 	github.com/bytedance/sonic v1.8.8 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230502002814-67c6147a4636 // indirect
+	github.com/chromedp/cdproto v0.0.0-20230506233603-4ea4c6dc2e5b // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
-	github.com/cloudwego/hertz v0.6.2 // indirect
+	github.com/cloudwego/hertz v0.6.3 // indirect
 	github.com/cloudwego/netpoll v0.3.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect
@@ -90,10 +90,9 @@ require (
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.15.1 // indirect
 	github.com/prometheus/client_model v0.4.0 // indirect
-	github.com/prometheus/common v0.42.0 // indirect
+	github.com/prometheus/common v0.43.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
@@ -104,7 +103,7 @@ require (
 	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/image v0.7.0 // indirect
-	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
