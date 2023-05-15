@@ -44,11 +44,11 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.7.0 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.8 // indirect
-	github.com/bytedance/gopkg v0.0.0-20230418090422-343ae5fedd5f // indirect
+	github.com/bytedance/gopkg v0.0.0-20230512060433-7f5f1dee0b1e // indirect
 	github.com/bytedance/sonic v1.8.8 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230506233603-4ea4c6dc2e5b // indirect
+	github.com/chromedp/cdproto v0.0.0-20230512205701-c5692af2b095 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
 	github.com/cloudwego/hertz v0.6.3 // indirect
@@ -85,7 +85,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/nlnwa/whatwg-url v0.1.3 // indirect
-	github.com/nyaruka/phonenumbers v1.1.6 // indirect
+	github.com/nyaruka/phonenumbers v1.1.7 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.15.1 // indirect

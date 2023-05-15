@@ -12,5 +12,6 @@ import (
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/home"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/middleware"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/short"
+	_ "github.com/houseme/url-shortenter/app/console/internal/logic/statistic"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic/user"
 )
