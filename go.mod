@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.354
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.355
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.7+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.1
@@ -12,8 +12,8 @@ require (
 	github.com/chyroc/lark v0.0.110
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.1
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.2
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.2
 	github.com/gogf/gf/v2 v2.4.2
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
@@ -21,7 +21,7 @@ require (
 	github.com/houseme/icp-filing v1.3.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.669
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.670
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.669
 	go.opentelemetry.io/otel v1.16.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
