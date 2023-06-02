@@ -12,8 +12,8 @@ require (
 	github.com/chyroc/lark v0.0.110
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.2
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.2
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.4.2
 	github.com/gogf/gf/v2 v2.4.2
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
@@ -33,7 +33,7 @@ require (
 )
 
 require (
-	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/BurntSushi/toml v1.3.0 // indirect
 	github.com/VividCortex/gohistogram v1.0.0 // indirect
 	github.com/andeya/ameda v1.5.3 // indirect
 	github.com/andeya/goutil v1.0.1 // indirect
@@ -44,14 +44,14 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.7.0 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.8 // indirect
-	github.com/bytedance/gopkg v0.0.0-20230512060433-7f5f1dee0b1e // indirect
-	github.com/bytedance/sonic v1.8.9 // indirect
+	github.com/bytedance/gopkg v0.0.0-20230531144706-a12972768317 // indirect
+	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230517232016-8abedd933e7a // indirect
+	github.com/chromedp/cdproto v0.0.0-20230601223857-b9862e644d94 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.5.7 // indirect
-	github.com/cloudwego/hertz v0.6.3 // indirect
+	github.com/cloudwego/hertz v0.6.4 // indirect
 	github.com/cloudwego/netpoll v0.3.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect
@@ -84,14 +84,14 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
-	github.com/nlnwa/whatwg-url v0.1.3 // indirect
+	github.com/nlnwa/whatwg-url v0.3.0 // indirect
 	github.com/nyaruka/phonenumbers v1.1.7 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.15.1 // indirect
 	github.com/prometheus/client_model v0.4.0 // indirect
 	github.com/prometheus/common v0.44.0 // indirect
-	github.com/prometheus/procfs v0.10.0 // indirect
+	github.com/prometheus/procfs v0.10.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
