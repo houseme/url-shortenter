@@ -18,7 +18,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/houseme/gocrypto v1.2.1
-	github.com/houseme/icp-filing v1.3.1
+	github.com/houseme/icp-filing v1.3.2
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.678
@@ -105,8 +105,8 @@ require (
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/image v0.7.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
