@@ -24,9 +24,9 @@ type ShortRawColumns struct {
 	ShortNo    string // 链接标识
 	RawNo      string // 唯一标识
 	ShortRaw   string // 额外参数标识
-	ShortValue string // 额外参数对应value
-	ShortKey   string // 链接参数key
-	State      string // 0默认 100正常 200失效
+	ShortValue string // 额外参数对应 value
+	ShortKey   string // 链接参数 key
+	State      string // 0 默认 100 正常 200 失效
 	CreateTime string // 创建时间
 	ModifyTime string // 更新时间
 }

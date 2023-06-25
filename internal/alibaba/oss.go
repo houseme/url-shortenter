@@ -29,7 +29,7 @@ func Upload(ctx context.Context, fileName, basePath string) error {
 	}
 
 	g.Log(logger).Info(ctx, "Upload file to oss fileName:"+fileName+" basePath:"+basePath)
-	// 创建OSSClient实例。
+	// 创建 OSSClient 实例。
 	client, err := oss.New(alibabaEnv.Endpoint(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx))
 	if err != nil {
 		return err

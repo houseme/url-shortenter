@@ -22,11 +22,11 @@ type ShortMirrorDao struct {
 type ShortMirrorColumns struct {
 	Id             string // ID
 	ShortNo        string // 短链标识
-	DestUrl        string // 原始URL
+	DestUrl        string // 原始 URL
 	FullScreenshot string // 整屏镜像
 	ContentPath    string // 内容文件地址
 	Content        string // 网页内容
-	HashContent    string // hash值 sha256
+	HashContent    string // hash 值 sha256
 	CreateTime     string // 创建时间
 	ModifyTime     string // 修改时间
 }

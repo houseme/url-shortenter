@@ -24,6 +24,6 @@ type TotalCountTop25 struct {
 	Id              uint64      `json:"id"              description:"ID"`
 	DestUrl         string      `json:"destUrl"         description:"原始链接"`
 	CreateTime      *gtime.Time `json:"createTime"      description:"创建时间"`
-	IsValid         uint        `json:"isValid"         description:"是否可用 0默认 100正常 200失效"`
+	IsValid         uint        `json:"isValid"         description:"是否可用 0 默认 100 正常 200 失效"`
 	Memo            string      `json:"memo"            description:"备注"`
 }

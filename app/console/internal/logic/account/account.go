@@ -64,7 +64,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		err = gerror.New("account exist")
 		return
 	}
-	// 创建hash密码
+	// 创建 hash 密码
 	var hashPwd string
 	if hashPwd, err = helper.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "hash password failed")

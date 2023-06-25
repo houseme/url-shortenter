@@ -14,7 +14,7 @@ type ShortDomain struct {
 	DomainNo   uint64      `json:"domainNo"   description:"域名编号"`
 	Domain     string      `json:"domain"     description:"短链域名"`
 	Memo       string      `json:"memo"       description:"备注"`
-	State      uint        `json:"state"      description:"状态  0默认 100正常 200失效"`
+	State      uint        `json:"state"      description:"状态  0 默认 100 正常 200 失效"`
 	CreateTime *gtime.Time `json:"createTime" description:"创建时间"`
 	ModifyTime *gtime.Time `json:"modifyTime" description:"更新时间"`
 }

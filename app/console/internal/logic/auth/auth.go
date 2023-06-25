@@ -71,8 +71,8 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		err = gerror.New("SecretKey is invalid")
 		return
 	}
-	// salt 16位 salt key 16位 需要加密的内容位 salt+secret aes加密之后于数据库对比  检验完成 处理accessToken 相关的处理
-	// 创建accessToken
+	// salt 16 位 salt key 16 位 需要加密的内容位 salt+secret aes 加密之后于数据库对比  检验完成 处理 accessToken 相关的处理
+	// 创建 accessToken
 	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{
 		AccountNo:  accessSecret.AccountNo,
 		GroupLevel: consts.AccountLevelBusiness,
@@ -157,8 +157,8 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		err = gerror.New("Password is invalid")
 		return
 	}
-	// 检验完成 处理accessToken 相关的处理
-	// 创建accessToken
+	// 检验完成 处理 accessToken 相关的处理
+	// 创建 accessToken
 	var (
 		authToken = &model.AuthorizationToken{
 			AuthAccountNo:    account.AccountNo,

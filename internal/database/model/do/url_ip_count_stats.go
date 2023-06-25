@@ -12,7 +12,7 @@ import (
 type UrlIpCountStats struct {
 	g.Meta          `orm:"table:url_ip_count_stats, do:true"`
 	ShortUrl        interface{} // 短链内容
-	ShortNo         interface{} // 短链的唯一ID
+	ShortNo         interface{} // 短链的唯一 ID
 	TodayCount      interface{} //
 	YesterdayCount  interface{} //
 	Last7DaysCount  interface{} //

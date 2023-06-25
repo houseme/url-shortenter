@@ -9,21 +9,21 @@ package consts
 const (
 	// Logger is the name of the logger.
 	Logger = "schedule"
-	// ShortValid 有效状态 0默认 100正常 200失效
+	// ShortValid 有效状态 0 默认 100 正常 200 失效
 	ShortValid = 100
 	// ShortInvalid 失效状态
 	ShortInvalid = 200
 
-	// ShortCollectStateSuccess 收集状态 0默认 100成功 200失败
+	// ShortCollectStateSuccess 收集状态 0 默认 100 成功 200 失败
 	ShortCollectStateSuccess = 100
 	// ShortCollectStateFailed 失败状态
 	ShortCollectStateFailed = 200
 	// ShortCollectStateProcessing 正在收集状态
 	ShortCollectStateProcessing = 0
 
-	// VisitState 访问状态 0默认 100正常 200失效
+	// VisitState 访问状态 0 默认 100 正常 200 失效
 	VisitState = 0
-	// VisitStateNormal 访问状态 0默认 100正常 200失效
+	// VisitStateNormal 访问状态 0 默认 100 正常 200 失效
 	VisitStateNormal = 100
 	// VisitStateInvalid 失效状态
 	VisitStateInvalid = 200
@@ -33,10 +33,10 @@ const (
 	// ShortShortNo 短网址
 	ShortShortNo = "short_url_short_no_"
 
-	// ContentTypeMirror 内容类型 0默认 100 镜像 ，200审核
+	// ContentTypeMirror 内容类型 0 默认 100 镜像，200 审核
 	ContentTypeMirror = 100
-	// ContentTypeAudit 内容类型 0默认 100 镜像 ，200审核
+	// ContentTypeAudit 内容类型 0 默认 100 镜像，200 审核
 	ContentTypeAudit = 200
-	// ContentTypeDefault 内容类型 0默认 100 镜像 ，200审核
+	// ContentTypeDefault 内容类型 0 默认 100 镜像，200 审核
 	ContentTypeDefault = 0
 )

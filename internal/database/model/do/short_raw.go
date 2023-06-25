@@ -16,9 +16,9 @@ type ShortRaw struct {
 	ShortNo    interface{} // 链接标识
 	RawNo      interface{} // 唯一标识
 	ShortRaw   interface{} // 额外参数标识
-	ShortValue interface{} // 额外参数对应value
-	ShortKey   interface{} // 链接参数key
-	State      interface{} // 0默认 100正常 200失效
+	ShortValue interface{} // 额外参数对应 value
+	ShortKey   interface{} // 链接参数 key
+	State      interface{} // 0 默认 100 正常 200 失效
 	CreateTime *gtime.Time // 创建时间
 	ModifyTime *gtime.Time // 更新时间
 }

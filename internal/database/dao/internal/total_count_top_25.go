@@ -34,7 +34,7 @@ type TotalCountTop25Columns struct {
 	Id              string // ID
 	DestUrl         string // 原始链接
 	CreateTime      string // 创建时间
-	IsValid         string // 是否可用 0默认 100正常 200失效
+	IsValid         string // 是否可用 0 默认 100 正常 200 失效
 	Memo            string // 备注
 }
 

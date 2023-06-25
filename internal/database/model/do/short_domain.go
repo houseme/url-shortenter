@@ -16,7 +16,7 @@ type ShortDomain struct {
 	DomainNo   interface{} // 域名编号
 	Domain     interface{} // 短链域名
 	Memo       interface{} // 备注
-	State      interface{} // 状态  0默认 100正常 200失效
+	State      interface{} // 状态  0 默认 100 正常 200 失效
 	CreateTime *gtime.Time // 创建时间
 	ModifyTime *gtime.Time // 更新时间
 }

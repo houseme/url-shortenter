@@ -21,13 +21,13 @@ type UsersAccessSecretDao struct {
 // UsersAccessSecretColumns defines and stores column names for table users_access_secret.
 type UsersAccessSecretColumns struct {
 	Id         string // ID
-	AccountNo  string // 企业管理员ID一致
-	SecretId   string // 授权应用ID
-	SecretKey  string // 授权应用key
+	AccountNo  string // 企业管理员 ID 一致
+	SecretId   string // 授权应用 ID
+	SecretKey  string // 授权应用 key
 	Salt       string // 盐值
-	SaltKey    string // 盐值key
-	GrantType  string // 授权类型： 默认空，API token授权:client_credentials
-	State      string // 状态 0默认 100正常 200禁用
+	SaltKey    string // 盐值 key
+	GrantType  string // 授权类型：默认空，API token 授权:client_credentials
+	State      string // 状态 0 默认 100 正常 200 禁用
 	CreateTime string // 创建时间
 	ModifyTime string // 修改时间
 }

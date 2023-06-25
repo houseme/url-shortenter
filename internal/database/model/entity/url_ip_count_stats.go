@@ -7,7 +7,7 @@ package entity
 // UrlIpCountStats is the golang structure for table url_ip_count_stats.
 type UrlIpCountStats struct {
 	ShortUrl        string `json:"shortUrl"        description:"短链内容"`
-	ShortNo         uint64 `json:"shortNo"         description:"短链的唯一ID"`
+	ShortNo         uint64 `json:"shortNo"         description:"短链的唯一 ID"`
 	TodayCount      int64  `json:"todayCount"      description:""`
 	YesterdayCount  int64  `json:"yesterdayCount"  description:""`
 	Last7DaysCount  int64  `json:"last7DaysCount"  description:""`

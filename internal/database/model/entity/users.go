@@ -14,9 +14,9 @@ type Users struct {
 	UserNo     uint64      `json:"userNo"     description:"账号唯一标识"`
 	Account    string      `json:"account"    description:"账号"`
 	Password   string      `json:"password"   description:"密码"`
-	State      uint        `json:"state"      description:"状态 0 默认 100正常 200失效"`
-	GroupLevel uint        `json:"groupLevel" description:"用户等级 0 默认超级 1000商户管理员，10000普通管理员"`
-	AccountNo  uint64      `json:"accountNo"  description:"用户关联企业ID 同企业管理员ID一致"`
+	State      uint        `json:"state"      description:"状态 0 默认 100 正常 200 失效"`
+	GroupLevel uint        `json:"groupLevel" description:"用户等级 0 默认超级 1000 商户管理员，10000 普通管理员"`
+	AccountNo  uint64      `json:"accountNo"  description:"用户关联企业 ID 同企业管理员 ID 一致"`
 	CreateTime *gtime.Time `json:"createTime" description:"创建时间"`
 	ModifyTime *gtime.Time `json:"modifyTime" description:"更新时间"`
 }

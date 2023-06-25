@@ -24,7 +24,7 @@ type ShortDomainColumns struct {
 	DomainNo   string // 域名编号
 	Domain     string // 短链域名
 	Memo       string // 备注
-	State      string // 状态  0默认 100正常 200失效
+	State      string // 状态  0 默认 100 正常 200 失效
 	CreateTime string // 创建时间
 	ModifyTime string // 更新时间
 }

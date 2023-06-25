@@ -8,14 +8,14 @@ package model
 
 // CreateAccessTokenInput is the input for CreateAccessToken
 type CreateAccessTokenInput struct {
-	AppID     string `json:"appId" dc:"应用ID" v1:"required|passport#应用ID唯一标识|应用ID包含字母、数字和下划线，长度在6~18之间"`
+	AppID     string `json:"appId" dc:"应用 ID" v1:"required|passport#应用ID唯一标识|应用ID包含字母、数字和下划线，长度在6~18之间"`
 	Secret    string `json:"secret" dc:"应用密钥" v1:"required|password2#请填写密钥|密钥需要6-18位,必须包含大小写字母和数字"`
 	GrantType string `json:"grantType" dc:"授权类型" v1:"required|in:client_credentials|授权类型"`
 }
 
 // CreateAccessTokenOutput is the output for CreateAccessToken
 type CreateAccessTokenOutput struct {
-	AccessToken string `json:"accessToken" dc:"授权码 API操作授权码"`
+	AccessToken string `json:"accessToken" dc:"授权码 API 操作授权码"`
 	ExpiresIn   int    `json:"expiresIn" dc:"过期时间"`
 }
 

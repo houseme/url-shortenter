@@ -24,17 +24,17 @@ type AccessLogsColumns struct {
 	AccountNo  string // 账号标识
 	ShortNo    string // 短链标识
 	ShortUrl   string // 短链内容
-	ShortAll   string // 带参数URL
+	ShortAll   string // 带参数 URL
 	YearTime   string // 年份
 	MonthTime  string // 月份
 	DayTime    string // 日期
 	AccessDate string // 访问日期
 	AccessTime string // 访问时间
-	UserAgent  string // 访问user_agent
-	Ip         string // 访问IP
+	UserAgent  string // 访问 user_agent
+	Ip         string // 访问 IP
 	TraceId    string // 链路追踪标识
-	VisitState string // 访问状态 0默认，100正常 200失效
-	ServerIp   string // 服务器IP
+	VisitState string // 访问状态 0 默认，100 正常 200 失效
+	ServerIp   string // 服务器 IP
 	CreateTime string // 创建时间
 	ModifyTime string // 修改时间
 }

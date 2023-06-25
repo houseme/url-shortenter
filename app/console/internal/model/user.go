@@ -12,7 +12,7 @@ type CreateMerchantInput struct {
 	MerName             string `json:"merName" desc:"商户名称" v:"required#商户名称不能为空"`
 	MerAvatar           string `json:"merAvatar" desc:"商户头像" v:"required#商户头像不能为空"`
 	MerMobile           string `json:"merMobile" desc:"商户手机号" v:"required#商户手机号不能为空"`
-	MerType             uint   `json:"merType" desc:"用户类型  1企业、 2个人(自然人)、3个体工商户" v:"required|in:1,2,3#用户类型不能为空|用户类型只能是1,2,3"`
+	MerType             uint   `json:"merType" desc:"用户类型  1 企业、2 个人 (自然人)、3 个体工商户" v:"required|in:1,2,3#用户类型不能为空|用户类型只能是1,2,3"`
 	CreateDate          string `json:"createDate" desc:"创建时间" v:"required#创建时间不能为空"`
 	CorpName            string `json:"corpName" desc:"企业名称" v:"required#企业名称不能为空"`
 	SocialCreditCode    string `json:"socialCreditCode" desc:"统一社会信用代码" v:"required#统一社会信用代码不能为空"`
@@ -24,7 +24,7 @@ type CreateMerchantInput struct {
 	CorpFixedTelephone  string `json:"corpFixedTelephone" desc:"企业固定电话" v:"required#企业固定电话不能为空"`
 	BusinessScope       string `json:"businessScope" desc:"经营范围" v:"required#经营范围不能为空"`
 	LegalName           string `json:"legalName" desc:"法人姓名" v:"required#法人姓名不能为空"`
-	LegalCertType       uint   `json:"legalCertType" desc:"法人证件类型 1身份证、2护照、3军官证、4港澳通行证、5台湾通行证" v:"required|in:1,2,3,4,5#法人证件类型不能为空|法人证件类型只能是1,2,3,4,5"`
+	LegalCertType       uint   `json:"legalCertType" desc:"法人证件类型 1 身份证、2 护照、3 军官证、4 港澳通行证、5 台湾通行证" v:"required|in:1,2,3,4,5#法人证件类型不能为空|法人证件类型只能是1,2,3,4,5"`
 	LegalCertID         string `json:"legalCertID" desc:"法人证件号码" v:"required#法人证件号码不能为空"`
 	LegalCertStartDate  string `json:"legalCertStartDate" desc:"法人证件有效期开始时间" v:"required#法人证件有效期开始时间不能为空"`
 	LegalCertEndDate    string `json:"legalCertEndDate" desc:"法人证件有效期结束时间" v:"required#法人证件有效期结束时间不能为空"`
@@ -63,7 +63,7 @@ type QueryMerchantOutput struct {
 	MerName             string `json:"merName" description:"商户名称"`
 	MerAvatar           string `json:"merAvatar" description:"商户头像"`
 	MerMobile           string `json:"merMobile" description:"商户手机号"`
-	MerType             uint   `json:"merType" description:"用户类型  1企业、 2个人(自然人)、3个体工商户"`
+	MerType             uint   `json:"merType" description:"用户类型  1 企业、2 个人 (自然人)、3 个体工商户"`
 	CreateDate          string `json:"createDate" description:"创建时间"`
 	CorpName            string `json:"corpName" description:"企业名称"`
 	SocialCreditCode    string `json:"socialCreditCode" description:"统一社会信用代码"`
@@ -75,7 +75,7 @@ type QueryMerchantOutput struct {
 	CorpFixedTelephone  string `json:"corpFixedTelephone" description:"企业固定电话"`
 	BusinessScope       string `json:"businessScope" description:"经营范围"`
 	LegalName           string `json:"legalName" description:"法人姓名"`
-	LegalCertType       uint   `json:"legalCertType" description:"法人证件类型 1身份证、2护照、3军官证、4港澳通行证、5台湾通行证"`
+	LegalCertType       uint   `json:"legalCertType" description:"法人证件类型 1 身份证、2 护照、3 军官证、4 港澳通行证、5 台湾通行证"`
 	LegalCertID         string `json:"legalCertID" description:"法人证件号码"`
 	LegalCertStartDate  string `json:"legalCertStartDate" description:"法人证件有效期开始时间"`
 	LegalCertEndDate    string `json:"legalCertEndDate" description:"法人证件有效期结束时间"`

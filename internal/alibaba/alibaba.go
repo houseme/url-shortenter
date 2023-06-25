@@ -26,7 +26,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-alibaba-Main")
 	defer span.End()
 
-	// 请替换成您的AccessKey ID、AccessKey Secret。
+	// 请替换成您的 AccessKey ID、AccessKey Secret。
 	var (
 		logger          = helper.Helper().Logger(ctx)
 		client          *green.Client

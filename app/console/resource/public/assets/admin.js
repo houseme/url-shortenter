@@ -11,7 +11,7 @@ $(document).ready(function () {
                         },
                         {
                             type: 'length[5]',
-                            prompt: '账户名长度不得少于5位'
+                            prompt: '账户名长度不得少于 5 位'
                         }
                     ]
                 },
@@ -24,7 +24,7 @@ $(document).ready(function () {
                         },
                         {
                             type: 'length[8]',
-                            prompt: '密码长度不得少于8位'
+                            prompt: '密码长度不得少于 8 位'
                         }
                     ]
                 },
@@ -37,7 +37,7 @@ $(document).ready(function () {
                         },
                         {
                             type: 'length[6]',
-                            prompt: '验证码长度不得少于6位'
+                            prompt: '验证码长度不得少于 6 位'
                         }
                     ]
                 }

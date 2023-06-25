@@ -16,7 +16,7 @@ type HomeInput struct {
 	Referer    string `json:"referer"`
 	ShortAll   string `json:"shortAll"`
 	TraceID    string `json:"traceId"`
-	VisitState uint   `json:"visitState" dc:"visitState 访问状态 0默认 100正常 200失效"`
+	VisitState uint   `json:"visitState" dc:"visitState 访问状态 0 默认 100 正常 200 失效"`
 	Host       string `json:"host" dc:"host 域名 包括端口"`
 }
 

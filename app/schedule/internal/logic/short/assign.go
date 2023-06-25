@@ -325,7 +325,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 		log.Error(ctx, "GrabImageAudit DownloadFullScreenshot failed:", err)
 	}
 
-	// 根据hash变化上报阿里云和腾讯云校验结果
+	// 根据 hash 变化上报阿里云和腾讯云校验结果
 	if shortAudit.HashState == 200 && shortAudit.FullScreenshot != "" {
 		if err = s.ReportHashChange(ctx, shortAudit, appEnv.UploadPath(ctx)); err != nil {
 			log.Error(ctx, "GrabImageAudit ReportHashChange failed:", err)

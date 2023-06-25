@@ -75,7 +75,7 @@ var (
 
 			if _, err = gcron.AddSingleton(ctx, "*/15 * * * * *", func(ctx context.Context) {
 				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
-				// 访问log信息入库汇总处理
+				// 访问 log 信息入库汇总处理
 				if err := service.Short().AccessLog(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "AccessLog task error", err)
 				}
