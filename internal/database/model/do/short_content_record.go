@@ -15,9 +15,9 @@ type ShortContentRecord struct {
 	Id          interface{} // ID
 	ShortNo     interface{} // 短链标识
 	TrxId       interface{} // 唯一标识
-	ContentType interface{} // 内容类型 0默认，100镜像内容 200审核内容
+	ContentType interface{} // 内容类型 0 默认，100 镜像内容 200 审核内容
 	Content     interface{} // 网页内容
-	HashContent interface{} // hash值 sha256
+	HashContent interface{} // hash 值 sha256
 	CreateTime  *gtime.Time // 创建时间
 	ModifyTime  *gtime.Time // 修改时间
 }

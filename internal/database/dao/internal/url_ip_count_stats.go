@@ -21,7 +21,7 @@ type UrlIpCountStatsDao struct {
 // UrlIpCountStatsColumns defines and stores column names for table url_ip_count_stats.
 type UrlIpCountStatsColumns struct {
 	ShortUrl        string // 短链内容
-	ShortNo         string // 短链的唯一ID
+	ShortNo         string // 短链的唯一 ID
 	TodayCount      string //
 	YesterdayCount  string //
 	Last7DaysCount  string //

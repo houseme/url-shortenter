@@ -23,10 +23,10 @@ type UsersDomainColumns struct {
 	Id          string // ID
 	AccountNo   string // 账号标识
 	DomainNo    string // 域名标识
-	Domain      string // 域名 不需要http等协议信息
+	Domain      string // 域名 不需要 http 等协议信息
 	Memo        string // 备注信息
-	License     string // icp备案号
-	SubLicense  string // icp备案号 带序号
+	License     string // icp 备案号
+	SubLicense  string // icp 备案号 带序号
 	State       string // 状态描述 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用
 	CreateTime  string // 创建时间
 	AuditTime   string // 审核时间

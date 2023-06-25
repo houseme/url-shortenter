@@ -22,20 +22,20 @@ type ShortUrlsDao struct {
 type ShortUrlsColumns struct {
 	Id            string // ID
 	AccountNo     string // 所属用户表示
-	ShortNo       string // 短链的唯一ID
+	ShortNo       string // 短链的唯一 ID
 	ShortUrl      string // 短链内容
 	ShortDomain   string // 短链域名
 	ShortDomainNo string // 短链域名标识
 	DestUrl       string // 原始链接
 	Domain        string // 主域名
-	IsValid       string // 是否可用 0默认 100正常 200失效
+	IsValid       string // 是否可用 0 默认 100 正常 200 失效
 	DisableTime   string // 失效时间
 	Memo          string // 备注
-	RawState      string // 原始状态 0默认 100附带额外参数
+	RawState      string // 原始状态 0 默认 100 附带额外参数
 	Sort          string // 排序字段
-	CollectState  string // 镜像采集状态 0 默认 100已采集 200采集失败
+	CollectState  string // 镜像采集状态 0 默认 100 已采集 200 采集失败
 	CollectTime   string // 采集时间
-	DelState      string // 是否删除 0 默认 200删除
+	DelState      string // 是否删除 0 默认 200 删除
 	DelTime       string // 删除时间
 	CreateTime    string // 创建时间
 	ModifyTime    string // 修改时间

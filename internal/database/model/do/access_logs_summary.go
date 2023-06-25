@@ -16,13 +16,13 @@ type AccessLogsSummary struct {
 	AccountNo  interface{} // 账号标识
 	ShortNo    interface{} // 短链标识
 	ShortUrl   interface{} // 短链内容
-	ShortAll   interface{} // 带参数URL
+	ShortAll   interface{} // 带参数 URL
 	YearTime   interface{} // 年份
 	MonthTime  interface{} // 月份
 	DayTime    interface{} // 日期
 	AccessDate *gtime.Time // 访问日期
-	UserAgent  interface{} // 访问user_agent
-	Ip         interface{} // 访问IP
+	UserAgent  interface{} // 访问 user_agent
+	Ip         interface{} // 访问 IP
 	Summary    interface{} // 访问汇总
 	SuccessSum interface{} // 成功
 	FailSum    interface{} // 失败

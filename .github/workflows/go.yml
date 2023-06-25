@@ -52,6 +52,21 @@ jobs:
           # Path to your Revive config within the repo (optional)
           config: revive.toml
 
+  AutoCorrect:
+    runs-on: ubuntu-latest
+    # strategy set
+    strategy:
+      matrix:
+        go: [ "1.19", "1.20" ]
+    steps:
+      - name: Check source code
+        uses: actions/checkout@v3
+
+      - name: AutoCorrect
+        uses: huacnlee/autocorrect-action@main
+#        with:
+#          args: --lint --no-diff-bg-color $(git diff --diff-filter=AM --name-only ${{ github.event.pull_request.base.sha }}}
+
   build:
     runs-on: ubuntu-latest
     # strategy set

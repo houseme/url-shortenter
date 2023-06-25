@@ -245,7 +245,7 @@ func validateToken(ctx context.Context, token, authType string, log glog.ILogger
 		authTime = authToken.AuthTime
 		now      = gtime.Now()
 	)
-	// 刷新token 过期时间
+	// 刷新 token 过期时间
 	if isAuthPassword {
 		if now.Unix()-consts.RefreshTokenExpireTime > authTime {
 			err = gerror.New("validateToken auth token expired")

@@ -11,13 +11,13 @@ import (
 // UsersMerchant is the golang structure for table users_merchant.
 type UsersMerchant struct {
 	Id                  uint64      `json:"id"                  description:"ID"`
-	AccountNo           uint64      `json:"accountNo"           description:"合作伙伴 用户ID"`
-	AppKey              uint64      `json:"appKey"              description:"渠道Key 合作来源ID"`
+	AccountNo           uint64      `json:"accountNo"           description:"合作伙伴 用户 ID"`
+	AppKey              uint64      `json:"appKey"              description:"渠道 Key 合作来源 ID"`
 	AppSecret           string      `json:"appSecret"           description:"渠道合作密钥"`
 	MerName             string      `json:"merName"             description:"昵称"`
 	MerAvatar           string      `json:"merAvatar"           description:"企业头像"`
 	MerMobile           string      `json:"merMobile"           description:"登陆账号"`
-	MerType             uint        `json:"merType"             description:"用户类型  1企业、 2个人(自然人)、3个体工商户"`
+	MerType             uint        `json:"merType"             description:"用户类型  1 企业、2 个人 (自然人)、3 个体工商户"`
 	CreateDate          string      `json:"createDate"          description:"开户日期格式:YYYYMMDD"`
 	CorpName            string      `json:"corpName"            description:"企业的公司全称"`
 	SocialCreditCode    string      `json:"socialCreditCode"    description:"企业的统一社会信用代码"`
@@ -40,9 +40,9 @@ type UsersMerchant struct {
 	ContactMobile       string      `json:"contactMobile"       description:"企业联系人手机号"`
 	ContractEmail       string      `json:"contractEmail"       description:"企业联系人邮箱地址"`
 	AgentNo             uint64      `json:"agentNo"             description:"代理商标识"`
-	StartUsing          uint        `json:"startUsing"          description:"是否开始使用 0默认，100开始，110暂停，120禁用"`
+	StartUsing          uint        `json:"startUsing"          description:"是否开始使用 0 默认，100 开始，110 暂停，120 禁用"`
 	StartUseTime        *gtime.Time `json:"startUseTime"        description:"开始使用时间"`
-	State               uint        `json:"state"               description:"用户状态 60待审核，80审核中，100正常 ，210禁用，110审核拒绝，120补充资料中"`
+	State               uint        `json:"state"               description:"用户状态 60 待审核，80 审核中，100 正常，210 禁用，110 审核拒绝，120 补充资料中"`
 	CreateTime          *gtime.Time `json:"createTime"          description:"创建时间"`
 	ModifyTime          *gtime.Time `json:"modifyTime"          description:"更新时间"`
 }

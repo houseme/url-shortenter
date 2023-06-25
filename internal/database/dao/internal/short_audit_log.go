@@ -22,16 +22,16 @@ type ShortAuditLogDao struct {
 type ShortAuditLogColumns struct {
 	Id                 string // ID
 	ShortNo            string // 短链标识
-	TrxId              string // 记录ID
+	TrxId              string // 记录 ID
 	FullScreenshot     string // 整屏镜像
 	Content            string // 网页内容
-	HashContent        string // hash值 sha256
+	HashContent        string // hash 值 sha256
 	ContentPath        string // 内容文件地址
 	SafetyAuditAlibaba string // 阿里内容安全审核
 	SafetyAuditTencent string // 腾讯内容审核
-	AuditState         string // 审核状态 0 默认 10000阿里异常，20000 腾讯异常，100000俩者都异常
-	HashState          string // hash状态 0 默认 100正常 200失效
-	RedirectState      string // 跳转状态 0 默认 100正常 200异常
+	AuditState         string // 审核状态 0 默认 10000 阿里异常，20000 腾讯异常，100000 俩者都异常
+	HashState          string // hash 状态 0 默认 100 正常 200 失效
+	RedirectState      string // 跳转状态 0 默认 100 正常 200 异常
 	ModifyTime         string // 修改时间
 	CreateTime         string // 创建时间
 }

@@ -24,13 +24,13 @@ type AccessLogsSummaryColumns struct {
 	AccountNo  string // 账号标识
 	ShortNo    string // 短链标识
 	ShortUrl   string // 短链内容
-	ShortAll   string // 带参数URL
+	ShortAll   string // 带参数 URL
 	YearTime   string // 年份
 	MonthTime  string // 月份
 	DayTime    string // 日期
 	AccessDate string // 访问日期
-	UserAgent  string // 访问user_agent
-	Ip         string // 访问IP
+	UserAgent  string // 访问 user_agent
+	Ip         string // 访问 IP
 	Summary    string // 访问汇总
 	SuccessSum string // 成功
 	FailSum    string // 失败

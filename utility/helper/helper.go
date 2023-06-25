@@ -157,7 +157,7 @@ func (u *utilHelper) LcFirst(str string) string {
 	return ""
 }
 
-// GetOutBoundIP 获取本机iP
+// GetOutBoundIP 获取本机 iP
 func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
 	conn, err := net.Dial("udp", "119.29.29.29:80")
 	if err != nil {
@@ -189,7 +189,7 @@ func (u *utilHelper) GetLocalIpV4(ctx context.Context) string {
 			}
 			for _, addr := range addrs {
 				if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-					// 判断是否存在IPV4 IP 如果没有过滤
+					// 判断是否存在 IPV4 IP 如果没有过滤
 					if ipnet.IP.To4() != nil {
 						return ipnet.IP.String()
 					}
@@ -200,12 +200,12 @@ func (u *utilHelper) GetLocalIpV4(ctx context.Context) string {
 	return ""
 }
 
-// Logger .获取上下文中的logger
+// Logger .获取上下文中的 logger
 func (u *utilHelper) Logger(ctx context.Context) string {
 	return gconv.String(ctx.Value("logger"))
 }
 
-// SetLogger .设置上下文中的logger
+// SetLogger .设置上下文中的 logger
 func (u *utilHelper) SetLogger(ctx context.Context, logger string) context.Context {
 	return context.WithValue(ctx, "logger", logger)
 }
@@ -255,7 +255,7 @@ func (u *utilHelper) EncryptPass(pass string) ([]byte, error) {
 	return bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
 }
 
-// CompareHashAndPassword 校验密码.
+// CompareHashAndPassword 校验密码。
 func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 	if err := bcrypt.CompareHashAndPassword([]byte(authPass), []byte(inputPass)); err != nil {
 		return false
@@ -308,7 +308,7 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 	return buf.String()
 }
 
-// DecryptSignDataInfo sign data 数据执行aes解密
+// DecryptSignDataInfo sign data 数据执行 aes 解密
 func (u *utilHelper) DecryptSignDataInfo(src []byte, key []byte) (dst []byte, err error) {
 	return aes.NewAESCrypt(key).Decrypt(src, gocrypto.ECB)
 }

@@ -1,6 +1,6 @@
 CREATE TABLE `user`
 (
-    `id`        int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `id`        int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户 ID',
     `passport`  varchar(45) NOT NULL COMMENT '用户账号',
     `password`  varchar(45) NOT NULL COMMENT '用户密码',
     `nickname`  varchar(45) NOT NULL COMMENT '用户昵称',

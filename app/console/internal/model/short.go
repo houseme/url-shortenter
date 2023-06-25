@@ -30,7 +30,7 @@ type QueryShortInput struct {
 
 // QueryShortOutput is the output of QueryShort
 type QueryShortOutput struct {
-	DestURL     string      `json:"destUrl" dc:"destUrl 原始url"`
+	DestURL     string      `json:"destUrl" dc:"destUrl 原始 url"`
 	Memo        string      `json:"memo,omitempty" dc:"备注"`
 	State       uint        `json:"state" dc:"状态"`
 	StateMsg    string      `json:"stateMsg" dc:"状态描述"`
@@ -47,7 +47,7 @@ type QueryStatInput struct {
 // QueryStatOutput is the output of QueryStat
 type QueryStatOutput struct {
 	ShortURL                string      `json:"shortUrl" dc:"短链"`
-	DestURL                 string      `json:"destUrl" dc:"原始url"`
+	DestURL                 string      `json:"destUrl" dc:"原始 url"`
 	Memo                    string      `json:"memo,omitempty" dc:"备注"`
 	State                   uint        `json:"state" dc:"状态"`
 	StateMsg                string      `json:"stateMsg" dc:"状态描述"`
@@ -55,16 +55,16 @@ type QueryStatOutput struct {
 	DisableTime             *gtime.Time `json:"disableTime,omitempty" dc:"禁用时间"`
 	TodayCount              uint64      `json:"todayCount" dc:"今日访问次数"`
 	YesterdayCount          uint64      `json:"yesterdayCount" dc:"昨日访问次数"`
-	LastSevenDaysCount      uint64      `json:"lastSevenDaysCount" dc:"近7日访问次数"`
+	LastSevenDaysCount      uint64      `json:"lastSevenDaysCount" dc:"近 7 日访问次数"`
 	MonthlyCount            uint64      `json:"monthlyCount" dc:"本月访问次数"`
 	LastMonthlyCount        uint64      `json:"lastMonthlyCount" dc:"上月访问次数"`
 	TotalCount              uint64      `json:"totalCount" dc:"总访问次数"`
-	ProtoTodayCount         uint64      `json:"protoTodayCount" dc:"今日独立IP访问次数"`
-	ProtoYesterdayCount     uint64      `json:"protoYesterdayCount" dc:"昨日独立IP访问次数"`
-	ProtoLastSevenDaysCount uint64      `json:"protoLastSevenDaysCount" dc:"近7日独立IP访问次数"`
-	ProtoMonthlyCount       uint64      `json:"protoMonthlyCount" dc:"本月独立IP访问次数"`
-	ProtoLastMonthlyCount   uint64      `json:"protoLastMonthlyCount" dc:"上月独立IP访问次数"`
-	ProtoTotalCount         uint64      `json:"protoTotalCount" dc:"总独立IP访问次数"`
+	ProtoTodayCount         uint64      `json:"protoTodayCount" dc:"今日独立 IP 访问次数"`
+	ProtoYesterdayCount     uint64      `json:"protoYesterdayCount" dc:"昨日独立 IP 访问次数"`
+	ProtoLastSevenDaysCount uint64      `json:"protoLastSevenDaysCount" dc:"近 7 日独立 IP 访问次数"`
+	ProtoMonthlyCount       uint64      `json:"protoMonthlyCount" dc:"本月独立 IP 访问次数"`
+	ProtoLastMonthlyCount   uint64      `json:"protoLastMonthlyCount" dc:"上月独立 IP 访问次数"`
+	ProtoTotalCount         uint64      `json:"protoTotalCount" dc:"总独立 IP 访问次数"`
 }
 
 // ModifyShortInput is the input for ModifyShort

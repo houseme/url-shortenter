@@ -12,7 +12,7 @@ gfcli:
     pack: "manifest/config,resource/public"
     output: ""
     version: "v1.0.0"
-  # dao生成
+  # dao 生成
   gen:
     dao:
       - link: "mysql:root:root@tcp(127.0.0.1:3306)/oh_url_shortener?charset=utf8mb4&parseTime=True&loc=Local"

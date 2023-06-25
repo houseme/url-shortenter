@@ -14,10 +14,10 @@ type UsersDomainAudit struct {
 	g.Meta         `orm:"table:users_domain_audit, do:true"`
 	Id             interface{} // ID
 	AccountNo      interface{} // 用户标识
-	DomainNo       interface{} // 用户认证域名ID
-	Icp            interface{} // icp备案号
+	DomainNo       interface{} // 用户认证域名 ID
+	Icp            interface{} // icp 备案号
 	QueryResult    interface{} // 查询结果
-	AuditAccountNo interface{} // 审核用户ID
+	AuditAccountNo interface{} // 审核用户 ID
 	AuditTime      *gtime.Time // 审核时间
 	AuditState     interface{} // 审核状态 0 默认 20:审核通过 30:审核失败
 	CreateTime     *gtime.Time // 创建时间

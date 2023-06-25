@@ -21,13 +21,13 @@ type UsersMerchantDao struct {
 // UsersMerchantColumns defines and stores column names for table users_merchant.
 type UsersMerchantColumns struct {
 	Id                  string // ID
-	AccountNo           string // 合作伙伴 用户ID
-	AppKey              string // 渠道Key 合作来源ID
+	AccountNo           string // 合作伙伴 用户 ID
+	AppKey              string // 渠道 Key 合作来源 ID
 	AppSecret           string // 渠道合作密钥
 	MerName             string // 昵称
 	MerAvatar           string // 企业头像
 	MerMobile           string // 登陆账号
-	MerType             string // 用户类型  1企业、 2个人(自然人)、3个体工商户
+	MerType             string // 用户类型  1 企业、2 个人 (自然人)、3 个体工商户
 	CreateDate          string // 开户日期格式:YYYYMMDD
 	CorpName            string // 企业的公司全称
 	SocialCreditCode    string // 企业的统一社会信用代码
@@ -50,9 +50,9 @@ type UsersMerchantColumns struct {
 	ContactMobile       string // 企业联系人手机号
 	ContractEmail       string // 企业联系人邮箱地址
 	AgentNo             string // 代理商标识
-	StartUsing          string // 是否开始使用 0默认，100开始，110暂停，120禁用
+	StartUsing          string // 是否开始使用 0 默认，100 开始，110 暂停，120 禁用
 	StartUseTime        string // 开始使用时间
-	State               string // 用户状态 60待审核，80审核中，100正常 ，210禁用，110审核拒绝，120补充资料中
+	State               string // 用户状态 60 待审核，80 审核中，100 正常，210 禁用，110 审核拒绝，120 补充资料中
 	CreateTime          string // 创建时间
 	ModifyTime          string // 更新时间
 }

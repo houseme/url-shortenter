@@ -23,9 +23,9 @@ type ShortContentRecordColumns struct {
 	Id          string // ID
 	ShortNo     string // 短链标识
 	TrxId       string // 唯一标识
-	ContentType string // 内容类型 0默认，100镜像内容 200审核内容
+	ContentType string // 内容类型 0 默认，100 镜像内容 200 审核内容
 	Content     string // 网页内容
-	HashContent string // hash值 sha256
+	HashContent string // hash 值 sha256
 	CreateTime  string // 创建时间
 	ModifyTime  string // 修改时间
 }

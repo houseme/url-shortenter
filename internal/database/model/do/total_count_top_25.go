@@ -26,6 +26,6 @@ type TotalCountTop25 struct {
 	Id              interface{} // ID
 	DestUrl         interface{} // 原始链接
 	CreateTime      *gtime.Time // 创建时间
-	IsValid         interface{} // 是否可用 0默认 100正常 200失效
+	IsValid         interface{} // 是否可用 0 默认 100 正常 200 失效
 	Memo            interface{} // 备注
 }

@@ -55,7 +55,7 @@ func (e *AppEnv) Config(_ context.Context) map[string]string {
 	return e.config
 }
 
-// HostIP . 获取本机IP
+// HostIP . 获取本机 IP
 func (e *AppEnv) HostIP(_ context.Context) string {
 	return e.hostIP
 }
@@ -65,7 +65,7 @@ func (e *AppEnv) UploadPath(_ context.Context) string {
 	return e.uploadPath
 }
 
-// VisitPath file server访问路径
+// VisitPath file server 访问路径
 func (e *AppEnv) VisitPath(_ context.Context) string {
 	return e.visitPath
 }

@@ -190,7 +190,7 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 		if err != nil {
 			log.Error(ctx, "queryShortAndGrab defer error failed:", err)
 		}
-		// 关闭redis连接
+		// 关闭 redis 连接
 		if err = conn.Close(ctx); err != nil {
 			log.Error(ctx, "queryShortAndGrab Redis Close failed:", err)
 		}
