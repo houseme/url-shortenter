@@ -1,4 +1,4 @@
-name: Go-Url-Shortenter CI
+name: Url-Shortenter CI
 
 on:
   push:
