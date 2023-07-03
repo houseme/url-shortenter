@@ -11,7 +11,6 @@ import (
 
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/net/gipv4"
 	"github.com/gogf/gf/v2/net/gtrace"
 )
 
@@ -22,7 +21,9 @@ type AppEnv struct {
 	environment    string
 	version        string
 	jaegerEndpoint string
-	hostIP         string
+	traceType      string
+	endpoint       string
+	traceToken     string
 	uploadPath     string
 	visitPath      string
 	site           string
@@ -50,14 +51,24 @@ func (e *AppEnv) JaegerEndpoint(_ context.Context) string {
 	return e.jaegerEndpoint
 }
 
+// TraceType .
+func (e *AppEnv) TraceType(_ context.Context) string {
+	return e.traceType
+}
+
+// Endpoint .
+func (e *AppEnv) Endpoint(_ context.Context) string {
+	return e.endpoint
+}
+
+// TraceToken .
+func (e *AppEnv) TraceToken(_ context.Context) string {
+	return e.traceToken
+}
+
 // Config .获取配置信息
 func (e *AppEnv) Config(_ context.Context) map[string]string {
 	return e.config
-}
-
-// HostIP . 获取本机 IP
-func (e *AppEnv) HostIP(_ context.Context) string {
-	return e.hostIP
 }
 
 // UploadPath .	上传路径
@@ -88,7 +99,7 @@ func (e *AppEnv) FrontSite(_ context.Context) string {
 // String
 func (e *AppEnv) String(_ context.Context) string {
 	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version +
-		`","jaegerEndpoint":"` + e.jaegerEndpoint + `","hostIP":"` + e.hostIP +
+		`","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType +
 		`","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath +
 		`","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
 }
@@ -107,19 +118,16 @@ func New(ctx context.Context) (*AppEnv, error) {
 		err = gerror.New("config app is empty")
 		return nil, err
 	}
-	var (
-		config    = v.MapStrStr()
-		hostIP, _ = gipv4.GetIntranetIp()
-	)
-
-	config["hostIP"] = hostIP
+	var config = v.MapStrStr()
 	return &AppEnv{
 		config:         config,
 		env:            config["env"],
 		environment:    config["environment"],
 		version:        config["version"],
 		jaegerEndpoint: config["jaegerEndpoint"],
-		hostIP:         hostIP,
+		traceType:      config["traceType"],
+		endpoint:       config["endpoint"],
+		traceToken:     config["traceToken"],
 		uploadPath:     config["uploadPath"],
 		visitPath:      config["visitPath"],
 		site:           config["site"],
