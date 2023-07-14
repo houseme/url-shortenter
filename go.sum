@@ -264,8 +264,8 @@ github.com/gobwas/ws v1.1.0/go.mod h1:nzvNcVha5eUziGrbxFCo6qFIojQHjJV5cLYIbezhfL
 github.com/gobwas/ws v1.2.1 h1:F2aeBZrm2NDsc7vbovKrWSogd4wvfAxg0FQ89/iqOTk=
 github.com/gobwas/ws v1.2.1/go.mod h1:hRKAFb8wOxFROYNsT1bqfWnhX+b5MFeJM9r2ZSwg/KY=
 github.com/goccy/go-json v0.9.4/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
-github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d h1:uCcOsTqwQCuN8Gd50sMYlMA+gNNAksZvNjPd7L7wf34=
-github.com/gocolly/colly/v2 v2.1.1-0.20230116162851-487ef118797d/go.mod h1:OCh9jLFmyRBfxiHEuoRi4ltEilRKd9vpFBHUKb2j1HQ=
+github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7 h1:P6YEJ9LErLTWth0DtY02MByUcyUQu2VjU8WYx7KUCbk=
+github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7/go.mod h1:+3ubospV5oXJSO/ihl2uGGL4cBR+tyrf2znNcYJGWwM=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
 github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.4 h1:gJCL60M9r7RWVQGjvOGkusRXz7uYDYDfCWnswwvvAj8=
 github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.4/go.mod h1:z9D1xkC9x8o9Q/y+rmK6WhiCfoYwcJ8WocTUI4X7Xpg=

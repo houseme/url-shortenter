@@ -156,12 +156,10 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (*trac
 	if err != nil {
 		return nil, err
 	}
-
-	bsp := trace.NewBatchSpanProcessor(traceExp)
 	tracerProvider := trace.NewTracerProvider(
 		trace.WithSampler(trace.AlwaysSample()),
 		trace.WithResource(res),
-		trace.WithSpanProcessor(bsp),
+		trace.WithSpanProcessor(trace.NewBatchSpanProcessor(traceExp)),
 	)
 
 	// Set the global propagator to traceContext (not set by default).
