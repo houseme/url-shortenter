@@ -88,15 +88,15 @@ func InitJaeger(serviceName, endpoint, version, environment string) (*trace.Trac
 }
 
 // InitTracer initializes and registers jaeger to global TracerProvider.
-func InitTracer(ctx context.Context, serviceName string) {
+func InitTracer(ctx context.Context) {
 	if appEnv, err := env.New(ctx); err != nil {
 		g.Log().Fatal(ctx, err)
 	} else {
 		if appEnv.TraceType(ctx) == traceJaeger {
-			_, err = InitJaeger(serviceName, appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
+			_, err = InitJaeger(appEnv.ApplicationService(), appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
 		}
 		if appEnv.TraceType(ctx) == traceOtlpGRPC {
-			_, err = Init(serviceName, appEnv.Endpoint(ctx), appEnv.TraceToken(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
+			_, err = Init(appEnv.ApplicationService(), appEnv.Endpoint(ctx), appEnv.TraceToken(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
 		}
 		if err != nil {
 			g.Log().Fatal(ctx, err)
