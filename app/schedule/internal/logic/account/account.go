@@ -6,6 +6,7 @@
  *  You can obtain one at https://github.com/houseme/url-shortenter.
  */
 
+// Package account is an account.
 package account
 
 import (

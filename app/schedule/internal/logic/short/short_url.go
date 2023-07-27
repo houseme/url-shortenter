@@ -44,8 +44,7 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 	)
 	log.Info(ctx, "GrabImage shortURL: ", shortURL)
 	if err != nil {
-		err = gerror.Wrap(err, "GrabImage env.NewLark failed")
-		return err
+		return gerror.Wrap(err, "GrabImage env new failed")
 	}
 
 	var (
@@ -78,21 +77,18 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 
 	// 1、抓起网页内容，
 	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathHTML); err != nil {
-		log.Error(ctx, "GrabImage CheckFileExists html failed:", err)
+		return gerror.Wrap(err, "GrabImage CheckFileExists html failed")
 	}
 	if statusCode, err = s.RequestStatusCode(ctx, shortURL.DestUrl); err != nil {
-		err = gerror.Wrap(err, "GrabImage RequestStatusCode failed")
-		return err
+		return gerror.Wrap(err, "GrabImage RequestStatusCode failed")
 	}
 
 	if content, err = s.RequestContent(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameHTML); err != nil {
-		err = gerror.Wrap(err, "GrabImage RequestContent failed")
-		return err
+		return gerror.Wrap(err, "GrabImage RequestContent failed")
 	}
 	if statusCode != 200 {
 		log.Error(ctx, "GrabImage RequestContent statusCode:", statusCode)
-		err = gerror.Wrap(err, "GrabImage RequestContent statusCode: "+gconv.String(statusCode))
-		return err
+		return gerror.New("GrabImage RequestContent statusCode: " + gconv.String(statusCode))
 	}
 	var sct = &entity.ShortContentRecord{
 		ShortNo:     shortURL.ShortNo,
@@ -106,44 +102,34 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 
 	// 2、网页图片
 	if err = helper.Helper().CheckFileExists(ctx, appEnv.UploadPath(ctx)+filePathScreenshot); err != nil {
-		log.Error(ctx, "GrabImage CheckFileExists screenshot failed:", err)
+		return gerror.Wrap(err, "GrabImage CheckFileExists screenshot failed")
 	}
 	if err = s.DownloadFullScreenshot(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameScreenshot); err == nil {
 		shortMirror.FullScreenshot = fileNameScreenshot
 	} else {
 		log.Error(ctx, "GrabImage DownloadFullScreenshot failed:", err)
 	}
-	tx, err := g.DB().Begin(ctx)
-	if err != nil {
-		err = gerror.Wrap(err, "GrabImage g.DB().Begin failed")
-		return err
-	}
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 
-	defer func() {
-		if err != nil {
-			_ = tx.Rollback()
-		} else {
-			_ = tx.Commit()
+		if lastID, err = dao.ShortMirror.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(shortMirror); err != nil {
+			return gerror.Wrap(err, "GrabImage ShortMirror.InsertAndGetId failed")
 		}
-	}()
-	if lastID, err = dao.ShortMirror.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(shortMirror); err != nil {
-		err = gerror.Wrap(err, "GrabImage ShortMirror.InsertAndGetId failed")
-		return err
-	}
-	log.Info(ctx, "GrabImage ShortMirror.InsertAndGetId lastID: ", lastID)
+		log.Info(ctx, "GrabImage ShortMirror.InsertAndGetId lastID: ", lastID)
 
-	if lastID, err = dao.ShortContentRecord.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(sct); err != nil {
-		err = gerror.Wrap(err, "GrabImage ShortContentRecord.InsertAndGetId failed")
-		return err
-	}
-	log.Info(ctx, "GrabImage ShortContentRecord.InsertAndGetId lastID: ", lastID)
-	if _, err = dao.ShortUrls.Ctx(ctx).TX(tx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).OmitEmpty().Unscoped().Update(g.Map{
-		dao.ShortUrls.Columns().CollectState: consts.ShortCollectStateSuccess,
-		dao.ShortUrls.Columns().CollectTime:  gdb.Raw("current_timestamp(6)"),
-		dao.ShortUrls.Columns().ModifyTime:   gdb.Raw("current_timestamp(6)"),
+		if lastID, err = dao.ShortContentRecord.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(sct); err != nil {
+			return gerror.Wrap(err, "GrabImage ShortContentRecord.InsertAndGetId failed")
+		}
+		log.Info(ctx, "GrabImage ShortContentRecord.InsertAndGetId lastID: ", lastID)
+		if _, err = dao.ShortUrls.Ctx(ctx).TX(tx).Where(do.ShortUrls{ShortNo: shortURL.ShortNo}).OmitEmpty().Unscoped().Update(g.Map{
+			dao.ShortUrls.Columns().CollectState: consts.ShortCollectStateSuccess,
+			dao.ShortUrls.Columns().CollectTime:  gdb.Raw("current_timestamp(6)"),
+			dao.ShortUrls.Columns().ModifyTime:   gdb.Raw("current_timestamp(6)"),
+		}); err != nil {
+			return gerror.Wrap(err, "GrabImage ShortUrls.Update failed")
+		}
+		return nil
 	}); err != nil {
-		err = gerror.Wrap(err, "GrabImage ShortUrls.Update failed")
-		return err
+		return gerror.Wrap(err, "GrabImage Transaction failed")
 	}
 	return nil
 }
@@ -160,7 +146,7 @@ func (s *sShort) Execute(ctx context.Context) {
 	log.Info(ctx, "Execute start")
 	gtimer.SetInterval(ctx, time.Second, func(ctx context.Context) {
 		ctx = helper.Helper().SetLogger(ctx, "schedule")
-		log.Info(ctx, "Execute loop")
+		log.Info(ctx, "Execute loop start")
 		for i := 0; i < 3; i++ {
 			if err := pool.Add(ctx, s.queryShortAndGrab); err != nil {
 				log.Error(ctx, "Execute pool.Add failed:", err)
@@ -181,19 +167,19 @@ func (s *sShort) queryShortAndGrab(ctx context.Context) {
 		redisKey  = cache.RedisCache().ShortMirrorQueue(ctx) // 待抓取的镜像队列
 	)
 
-	if err != nil {
-		log.Error(ctx, "queryShortAndGrab Redis failed:", err)
-		return
-	}
-
 	defer func() {
 		if err != nil {
 			log.Error(ctx, "queryShortAndGrab defer error failed:", err)
 		}
-		// 关闭 redis 连接
-		if err = conn.Close(ctx); err != nil {
-			log.Error(ctx, "queryShortAndGrab Redis Close failed:", err)
-		}
+	}()
+
+	if err != nil {
+		err = gerror.Wrap(err, "queryShortAndGrab Redis conn failed")
+		return
+	}
+
+	defer func() {
+		_ = conn.Close(ctx)
 	}()
 
 	log.Info(ctx, "queryShortAndGrab start")
@@ -261,14 +247,14 @@ func (s *sShort) RequestContent(ctx context.Context, url, fileName string) ([]by
 	)
 	log.Info(ctx, "RequestContent start , url:", url, " fileName:", fileName)
 	if err != nil {
-		err = gerror.Wrap(err, "RequestContent failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "RequestContent failed")
 	}
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
 	content := r.ReadAll()
 	if err = os.WriteFile(fileName, content, 0o644); err != nil {
-		err = gerror.Wrap(err, "RequestContent write file failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "RequestContent write file failed")
 	}
 	return content, nil
 }
@@ -295,7 +281,7 @@ func (s *sShort) RequestStatusCode(ctx context.Context, url string) (int, error)
 		err = gerror.Wrap(err, "RequestStatusCode failed")
 		return 0, err
 	}
-	r.Body.Close()
+	_ = r.Body.Close()
 	log.Info(ctx, "RequestStatusCode end statusCode:", r.StatusCode)
 
 	return r.StatusCode, nil

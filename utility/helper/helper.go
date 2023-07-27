@@ -350,8 +350,7 @@ func (u *utilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 		data, err = u.Sha256OfShort(input)
 	)
 	if err != nil {
-		err = gerror.Wrap(err, "UserAgentIPHash Sha256OfShort failed")
-		return "", err
+		return "", gerror.Wrap(err, "UserAgentIPHash Sha256OfShort failed")
 	}
 
 	str := u.Base58Encode(data)
@@ -362,8 +361,7 @@ func (u *utilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
-		err = gerror.Wrap(err, "Sha256OfShort write error")
-		return nil, err
+		return nil, gerror.Wrap(err, "Sha256OfShort write error")
 	}
 	return algorithm.Sum(nil), nil
 }
@@ -377,8 +375,7 @@ func (u *utilHelper) Base58Encode(data []byte) string {
 func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
 	data, err := u.Sha256OfShort(password)
 	if err != nil {
-		err = gerror.Wrap(err, "utilHelper PasswordBase58Hash Sha256OfShort error")
-		return "", err
+		return "", gerror.Wrap(err, "utilHelper PasswordBase58Hash Sha256OfShort error")
 	}
 	return u.Base58Encode(data), nil
 }
@@ -392,8 +389,7 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 	)
 	log.Debug(ctx, "utilHelper GenerateShortLink url:", url)
 	if urlHash, err = u.Sha256OfShort(url); err != nil {
-		err = gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
-		return "", err
+		return "", gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort err")
 	}
 	// number := new(big.Int).SetBytes(urlHash).Uint64()
 	// str := u.Base58Encode(gconv.Bytes(number))
