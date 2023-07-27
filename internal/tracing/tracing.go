@@ -8,13 +8,11 @@ package tracing
 
 import (
 	"context"
-	"strings"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gipv4"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
@@ -26,80 +24,15 @@ import (
 	"github.com/houseme/url-shortenter/utility/env"
 )
 
-const (
-	tracerHostnameTagKey = "hostname"
-	traceJaeger          = "jaeger"
-	traceOtlpGRPC        = "otlpgrpc"
-)
-
-// InitJaeger initializes and registers jaeger to global TracerProvider.
-//
-// The output parameter `flush` is used for waiting exported trace spans to be uploaded,
-// which is useful if your program is ending, and you do not want to lose recent spans.
-func InitJaeger(serviceName, endpoint, version, environment string) (*trace.TracerProvider, error) {
-	var (
-		intranetIPArray, err = gipv4.GetIntranetIpArray()
-		hostIP               = "NoHostIpFound"
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	if len(intranetIPArray) == 0 {
-		if intranetIPArray, err = gipv4.GetIpArray(); err != nil {
-			return nil, err
-		}
-	}
-	if len(intranetIPArray) > 0 {
-		hostIP = intranetIPArray[0]
-	}
-
-	var (
-		endpointOption jaeger.EndpointOption
-		exp            *jaeger.Exporter
-	)
-	if strings.HasPrefix(endpoint, "http") {
-		// HTTP.
-		endpointOption = jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint))
-	} else {
-		// UDP.
-		endpointOption = jaeger.WithAgentEndpoint(jaeger.WithAgentHost(endpoint))
-	}
-	if exp, err = jaeger.New(endpointOption); err != nil {
-		return nil, err
-	}
-
-	tp := trace.NewTracerProvider(
-		// Always be sure to batch in production.
-		trace.WithBatcher(exp),
-		// Record information about this application in a Resource.
-		trace.WithResource(resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceName(serviceName+"-"+environment),
-			semconv.ServiceVersion(version),
-			semconv.DeploymentEnvironment(environment),
-			semconv.HostName(hostIP),
-			attribute.String(tracerHostnameTagKey, hostIP),
-		)),
-	)
-	otel.SetTracerProvider(tp)
-	return tp, nil
-}
+const tracerHostnameTagKey = "hostname"
 
 // InitTracer initializes and registers jaeger to global TracerProvider.
 func InitTracer(ctx context.Context) {
 	if appEnv, err := env.New(ctx); err != nil {
-		g.Log().Fatal(ctx, err)
+		g.Log().Fatal(ctx, "InitTracer env new failed, error:", err)
 	} else {
-		if appEnv.TraceType(ctx) == traceJaeger {
-			_, err = InitJaeger(appEnv.ApplicationService(), appEnv.JaegerEndpoint(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
-		}
-		if appEnv.TraceType(ctx) == traceOtlpGRPC {
-			_, err = Init(appEnv.ApplicationService(), appEnv.Endpoint(ctx), appEnv.TraceToken(ctx), appEnv.Version(ctx), appEnv.Environment(ctx))
-		}
-		if err != nil {
-			g.Log().Fatal(ctx, err)
+		if _, err = Init(appEnv.ApplicationService(), appEnv.Endpoint(ctx), appEnv.TraceToken(ctx), appEnv.Version(ctx), appEnv.Environment(ctx)); err != nil {
+			g.Log().Fatal(ctx, "InitTracer init otlp grpc failed err:", err)
 		}
 	}
 }
