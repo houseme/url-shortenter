@@ -110,7 +110,6 @@ func (s *sShort) GrabImage(ctx context.Context, shortURL *entity.ShortUrls) erro
 		log.Error(ctx, "GrabImage DownloadFullScreenshot failed:", err)
 	}
 	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
-
 		if lastID, err = dao.ShortMirror.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(shortMirror); err != nil {
 			return gerror.Wrap(err, "GrabImage ShortMirror.InsertAndGetId failed")
 		}
