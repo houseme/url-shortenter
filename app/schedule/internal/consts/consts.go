@@ -9,9 +9,9 @@ package consts
 const (
 	// Logger is the name of the logger.
 	Logger = "schedule"
-	// ShortValid 有效状态 0 默认 100 正常 200 失效
+	// ShortValid valid status 0 default 100 ok 200 invalid
 	ShortValid = 100
-	// ShortInvalid 失效状态
+	// ShortInvalid failed state
 	ShortInvalid = 200
 
 	// ShortCollectStateSuccess 收集状态 0 默认 100 成功 200 失败

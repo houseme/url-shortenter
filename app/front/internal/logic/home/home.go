@@ -62,7 +62,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	var conn gredis.Conn
 	if conn, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Conn(ctx); err != nil {
 		err = gerror.Wrap(err, "failed to get redis connection")
-		return "", err
+		return
 	}
 	defer func() {
 		if errs := conn.Close(ctx); errs != nil {
@@ -112,9 +112,8 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	})
 
 	if err != nil {
-		logger.Error(ctx, "home-short-detail query db failed err:", err)
-		err = gerror.Wrap(err, "failed to query db")
-		return "", err
+		err = gerror.Wrap(err, "query from db failed")
+		return
 	}
 
 	if v == nil {
@@ -122,7 +121,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	}
 	isSendLog = true
 	in.VisitState = consts.VisitStateNormal
-	logger.Debug(ctx, "home-short-detail from db out:", v)
+	logger.Debug(ctx, "home-short-detail query from db result:", v)
 	out = v.(string)
 	return
 }

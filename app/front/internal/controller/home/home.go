@@ -47,7 +47,7 @@ func (c *Controller) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err e
 	}()
 	var out string
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
-		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
+		err = gerror.NewCode(gcode.CodeNotFound, "The short link does not exist")
 		return
 	}
 
