@@ -19,3 +19,4 @@ output/
 temp/
 hack/config.yaml
 *.yaml
+*.log
