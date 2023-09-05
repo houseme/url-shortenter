@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run Revive Action
         uses: morphy2k/revive-action@v2
         with:
@@ -60,7 +60,7 @@ jobs:
         go: [ "1.19", "1.20" ]
     steps:
       - name: Check source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: AutoCorrect
         uses: huacnlee/autocorrect-action@main
@@ -75,7 +75,7 @@ jobs:
         go: [ "1.19", "1.20" ]
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v4
         with:
