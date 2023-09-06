@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.539
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.541
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.9+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.2
@@ -21,16 +21,16 @@ require (
 	github.com/houseme/icp-filing v1.3.2
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.740
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.740
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.742
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.742
 	go.opentelemetry.io/otel v1.17.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.17.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.17.0
 	go.opentelemetry.io/otel/sdk v1.17.0
 	go.opentelemetry.io/otel/trace v1.17.0
-	golang.org/x/crypto v0.12.0
+	golang.org/x/crypto v0.13.0
 	golang.org/x/sync v0.3.0
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.58.0
 	google.golang.org/protobuf v1.31.0
 )
 
@@ -45,17 +45,17 @@ require (
 	github.com/antchfx/xpath v1.2.4 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.8.0 // indirect
-	github.com/bytedance/go-tagexpr/v2 v2.9.8 // indirect
+	github.com/bytedance/go-tagexpr/v2 v2.9.9 // indirect
 	github.com/bytedance/gopkg v0.0.0-20230728082804-614d0af6619b // indirect
 	github.com/bytedance/sonic v1.10.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20230828023241-f357fd93b5d6 // indirect
+	github.com/chromedp/cdproto v0.0.0-20230901104747-bfe71bcbd1c0 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
-	github.com/cloudwego/hertz v0.6.7 // indirect
+	github.com/cloudwego/hertz v0.6.8 // indirect
 	github.com/cloudwego/netpoll v0.4.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect
@@ -107,13 +107,13 @@ require (
 	go.opentelemetry.io/proto/otlp v1.0.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.25.0 // indirect
-	golang.org/x/arch v0.4.0 // indirect
-	golang.org/x/image v0.11.0 // indirect
-	golang.org/x/net v0.14.0 // indirect
-	golang.org/x/sys v0.11.0 // indirect
-	golang.org/x/text v0.12.0 // indirect
+	golang.org/x/arch v0.5.0 // indirect
+	golang.org/x/image v0.12.0 // indirect
+	golang.org/x/net v0.15.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
