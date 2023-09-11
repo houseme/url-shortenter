@@ -272,8 +272,8 @@ github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.2 h1:tFQP3/4Ivsx9ZkXXbHPIGn+TCi
 github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.2/go.mod h1:k9TrNZlYVBPNPYeqJ2uac0aqcJh75CHk7mWNYpRmrk4=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.2 h1:JzRIXB5J6vvnJGJmh7RfT8ntjXsn2jYXJf1+Q6oFe+A=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.2/go.mod h1:vLNtPgfInF5cXlcjLhVZxijIXD30+IiVjN6hP9sjjhY=
-github.com/gogf/gf/v2 v2.5.2 h1:fACJE7DJH6iTGHGhgiNY1uuZIZtr2IqQkJ52E+wBnt8=
-github.com/gogf/gf/v2 v2.5.2/go.mod h1:7yf5qp0BznfsYx7Sw49m3mQvBsHpwAjJk3Q9ZnKoUEc=
+github.com/gogf/gf/v2 v2.5.3 h1:okWmQ4GX4KYgycVmNOrH5ZO2zY8fTLvgab0qlobVsLo=
+github.com/gogf/gf/v2 v2.5.3/go.mod h1:7yf5qp0BznfsYx7Sw49m3mQvBsHpwAjJk3Q9ZnKoUEc=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.3.2/go.mod h1:P1XiOD3dCwIKUDQYPy72D8LYyHL2YPYrpS2s69NZV8Q=
 github.com/goji/httpauth v0.0.0-20160601135302-2da839ab0f4d/go.mod h1:nnjvkQ9ptGaCkuDUx6wNykzzlUixGxvkme+H/lnzb+A=
