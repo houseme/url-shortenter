@@ -270,8 +270,8 @@ github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7/go.mod h1:+3ubo
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
 github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.2 h1:tFQP3/4Ivsx9ZkXXbHPIGn+TCiEW+0pQ2elwsafACNM=
 github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.2/go.mod h1:k9TrNZlYVBPNPYeqJ2uac0aqcJh75CHk7mWNYpRmrk4=
-github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.2 h1:JzRIXB5J6vvnJGJmh7RfT8ntjXsn2jYXJf1+Q6oFe+A=
-github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.2/go.mod h1:vLNtPgfInF5cXlcjLhVZxijIXD30+IiVjN6hP9sjjhY=
+github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.3 h1:mN7sBw2MNGql47H5lbqh3VCm5pPklQQ4gN/i5AC86OA=
+github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.3/go.mod h1:cCaP2uhF6hvLFE/jtKLCCaXk099YL8OlTYKxsBg0A74=
 github.com/gogf/gf/v2 v2.5.3 h1:okWmQ4GX4KYgycVmNOrH5ZO2zY8fTLvgab0qlobVsLo=
 github.com/gogf/gf/v2 v2.5.3/go.mod h1:7yf5qp0BznfsYx7Sw49m3mQvBsHpwAjJk3Q9ZnKoUEc=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
