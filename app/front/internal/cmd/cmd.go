@@ -28,7 +28,7 @@ var (
 			s := g.Server()
 			s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(service.Middleware().MiddlewareHandlerResponse, service.Middleware().MiddlewareHandlerRequest)
+				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().MiddlewareHandlerResponse, service.Middleware().MiddlewareHandlerRequest)
 				group.Bind(
 					home.New(),
 				)
