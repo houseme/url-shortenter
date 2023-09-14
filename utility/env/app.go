@@ -115,10 +115,7 @@ func (a *AppEnv) ApplicationService() string {
 
 // String
 func (e *AppEnv) String(_ context.Context) string {
-	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version +
-		`","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType +
-		`","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application +
-		`","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
+	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application + `","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
 }
 
 // New create app environment
