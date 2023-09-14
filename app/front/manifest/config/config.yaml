@@ -1,11 +1,56 @@
 server:
-  address: ":8000"
-  openapiPath: "/api.json"
-  swaggerPath: "/swagger"
+  address: ":8521"
+  serverAgent: "Mozilla/5.0 (ShortLink; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36"
+  openapiPath: "/api.v1/front/api.json"
+  swaggerPath: "/api.v1/front/swagger"
+  dumpRouterMap: true
+  routeOverWrite: true
+  accessLogEnabled: true
+  accessLogPattern: "access-{Ymd}.log"
+  errorLogPattern: "error-{Ymd}.log"
+  logPath: "app/front/manifest/logs/server"
 
 logger:
+  path: "app/front/manifest/logs/default"
   level: "all"
-  stdout: true
+  stdout: false
+
+database:
+  logger:
+    path: "app/front/manifest/logs/sql"
+    level: "all"
+    stdout: false
+  default:
+    host: "127.0.0.1"
+    port: 3306
+    user: "root"
+    pass: "root"
+    name: "url-shortenter"
+    type: "mysql"
+    debug: true
+    charset: "utf8mb4"
+
+redis:
+  default:
+    address: "127.0.0.1:6379"
+    db: 7
+    pass: ""
 
 
+app:
+  env: "local"
+  environment: "develop"
+  application: "demo"
+  version: "1.0.0"
+  jaegerEndpoint: ""
+  endpoint: "tracing-analysis-dc-bj.aliyuncs.com:8090"
+  traceToken: ""
+  service: "front"
+  uploadPath: ""
+  visitPath: ""
+  site: ""
+  roleModel: ""
 
+snowflake:
+  datacenter: 1
+  worker: 1

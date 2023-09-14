@@ -35,14 +35,11 @@ import (
 )
 
 // AssignTask is the assign task 镜像抓起分发队列
-func (s *sShort) AssignTask(ctx context.Context) error {
+func (s *sShort) AssignTask(ctx context.Context) (err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-AssignTask")
 	defer span.End()
 
-	var (
-		log = g.Log(helper.Helper().Logger(ctx))
-		err error
-	)
+	var log = g.Log(helper.Helper().Logger(ctx))
 	log.Info(ctx, "AssignTask start")
 
 	defer func() {
@@ -54,19 +51,19 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 
 	var list = ([]*entity.ShortUrls)(nil)
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid, CollectState: consts.ShortCollectStateProcessing}).Scan(&list); err != nil {
-		err = gerror.Wrap(err, "AssignTask dao.ShortUrls.Ctx(ctx).Where failed")
-		return err
+		err = gerror.Wrap(err, "AssignTask dao.ShortUrls.Ctx(ctx).Where scan failed")
+		return
 	}
 
 	if list == nil || len(list) == 0 {
 		log.Info(ctx, "AssignTask list is nil or len(list) == 0")
-		return nil
+		return
 	}
 
 	var conn gredis.Conn
 	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
-		log.Error(ctx, "AssignTask g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed:", err)
-		return err
+		err = gerror.Wrap(err, "redis conn failed")
+		return
 	}
 	log.Info(ctx, "AssignTask list len", len(list))
 	defer func() {
@@ -78,9 +75,9 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 	var result *gvar.Var
 	for i := 0; i < len(list); i++ {
 		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortMirrorQueue(ctx), list[i].ShortNo); err != nil {
-			log.Error(ctx, "AssignTask conn.Do LPUSH failed:", err)
+			log.Error(ctx, "AssignTask redis list left push failed:", err)
 		}
-		log.Info(ctx, "AssignTask LPUSH result:", result)
+		log.Info(ctx, "AssignTask list left push result:", result)
 	}
 
 	log.Info(ctx, "AssignTask end")
@@ -88,14 +85,11 @@ func (s *sShort) AssignTask(ctx context.Context) error {
 }
 
 // AuditAssignTask is the assign task 审核跟踪队列
-func (s *sShort) AuditAssignTask(ctx context.Context) error {
+func (s *sShort) AuditAssignTask(ctx context.Context) (err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-AuditAssignTask")
 	defer span.End()
 
-	var (
-		log = g.Log(helper.Helper().Logger(ctx))
-		err error
-	)
+	var log = g.Log(helper.Helper().Logger(ctx))
 	log.Info(ctx, "AuditAssignTask start")
 	defer func() {
 		if err != nil {
@@ -106,18 +100,19 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 	var list = ([]*entity.ShortUrls)(nil)
 	if err = dao.ShortUrls.Ctx(ctx).Where(do.ShortUrls{IsValid: consts.ShortValid,
 		CollectState: consts.ShortCollectStateSuccess}).Scan(&list); err != nil {
-		err = gerror.Wrap(err, "AuditAssignTask dao.ShortUrls.Ctx(ctx).Where failed")
-		return err
+		err = gerror.Wrap(err, "query short urls failed")
+		return
 	}
 
 	if list == nil || len(list) == 0 {
 		log.Info(ctx, "AuditAssignTask list is nil or len(list) == 0")
-		return nil
+		return
 	}
 
 	var conn gredis.Conn
 	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
-		return gerror.Wrap(err, "AuditAssignTask g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed")
+		err = gerror.Wrap(err, "redis conn failed")
+		return
 	}
 	defer func() {
 		if errs := conn.Close(ctx); errs != nil {
@@ -128,9 +123,9 @@ func (s *sShort) AuditAssignTask(ctx context.Context) error {
 	log.Info(ctx, "AuditAssignTask list len", len(list))
 	for i := 0; i < len(list); i++ {
 		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAuditQueue(ctx), list[i].ShortNo); err != nil {
-			log.Error(ctx, "AuditAssignTask conn.Do LPUSH failed:", err)
+			log.Error(ctx, "AuditAssignTask redis list left push failed:", err)
 		}
-		log.Info(ctx, "AuditAssignTask LPUSH result:", result)
+		log.Info(ctx, "AuditAssignTask redis list left push success result:", result)
 	}
 
 	log.Info(ctx, "AuditAssignTask end")
@@ -148,8 +143,7 @@ func (s *sShort) ExecuteAudit(ctx context.Context) {
 
 	log.Info(ctx, "Execute start")
 	gtimer.SetInterval(ctx, 5*time.Second, func(ctx context.Context) {
-		ctx = helper.Helper().SetLogger(ctx, "schedule")
-		log.Info(ctx, "Execute loop")
+		log.Info(ctx, "Execute loop start")
 		for i := 0; i < 5; i++ {
 			if err := pool.Add(ctx, s.QueryShortAndGrabAudit); err != nil {
 				log.Error(ctx, "Execute pool.Add failed:", err)
@@ -172,9 +166,6 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	)
 
 	defer func() {
-		if errs := conn.Close(ctx); errs != nil {
-			log.Error(ctx, "QueryShortAndGrabAudit conn.Close failed:", errs)
-		}
 		if err != nil {
 			log.Error(ctx, "QueryShortAndGrabAudit failed err:", err)
 		}
@@ -182,12 +173,16 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}()
 
 	if err != nil {
-		log.Error(ctx, "QueryShortAndGrabAudit g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx) failed:", err)
+		err = gerror.Wrap(err, "redis conn failed")
 		return
 	}
 
+	defer func() {
+		_ = conn.Close(ctx)
+	}()
+
 	if result, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx)); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrabAudit conn.Do RPOP failed")
+		err = gerror.Wrap(err, "QueryShortAndGrabAudit redis list right pop failed")
 		return
 	}
 	if result == nil || result.IsNil() || result.IsEmpty() {
@@ -196,7 +191,7 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}
 	log.Info(ctx, "QueryShortAndGrabAudit shortNo:", result.String())
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&shortURL, "short_no = ?", result.Uint64()); err != nil {
-		err = gerror.Wrap(err, "QueryShortAndGrabAudit ShortUrls.Scan failed")
+		err = gerror.Wrap(err, "QueryShortAndGrabAudit query short urls scan failed")
 		return
 	}
 
@@ -278,8 +273,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	}()
 
 	if err = dao.ShortMirror.Ctx(ctx).Scan(&shortMirror, "short_no = ?", shortURL.ShortNo); err != nil {
-		err = gerror.Wrap(err, "GrabImageAudit ShortMirror.Scan failed")
-		return err
+		return gerror.Wrap(err, "GrabImageAudit ShortMirror.Scan failed")
 	}
 
 	if shortMirror == nil {
@@ -288,8 +282,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 	}
 	// 0、判断网页是否跳转
 	if statusCode, err = s.RequestStatusCode(ctx, shortURL.DestUrl); err != nil {
-		err = gerror.Wrap(err, "GrabImageAudit RequestStatusCode failed")
-		return err
+		return gerror.Wrap(err, "GrabImageAudit RequestStatusCode failed")
 	}
 	log.Info(ctx, "GrabImageAudit RequestStatusCode statusCode: ", statusCode)
 	shortAudit.RedirectState = 100
@@ -302,8 +295,7 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 		log.Error(ctx, "GrabImageAudit CheckFileExists html failed:", err)
 	}
 	if content, err = s.RequestContent(ctx, shortURL.DestUrl, appEnv.UploadPath(ctx)+fileNameHTML); err != nil {
-		err = gerror.Wrap(err, "GrabImageAudit RequestContent failed")
-		return err
+		return gerror.Wrap(err, "GrabImageAudit RequestContent failed")
 	}
 
 	cr.Content = string(content)

@@ -18,7 +18,7 @@ jobs:
   golangci:
     strategy:
       matrix:
-        go-version: [ "1.19","1.20" ]
+        go-version: [ "1.19","1.20","1.21" ]
     name: golangci-lint
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -37,7 +37,7 @@ jobs:
   Reviveci:
     strategy:
       matrix:
-        go-version: [ "1.19","1.20" ]
+        go-version: [ "1.19","1.20","1.21" ]
     name: Run Revive Action
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run Revive Action
         uses: morphy2k/revive-action@v2
         with:
@@ -57,25 +57,25 @@ jobs:
     # strategy set
     strategy:
       matrix:
-        go: [ "1.19", "1.20" ]
+        go: [ "1.19", "1.20","1.21" ]
     steps:
       - name: Check source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: AutoCorrect
         uses: huacnlee/autocorrect-action@main
-#        with:
-#          args: --lint --no-diff-bg-color $(git diff --diff-filter=AM --name-only ${{ github.event.pull_request.base.sha }}}
+  #        with:
+  #          args: --lint --no-diff-bg-color $(git diff --diff-filter=AM --name-only ${{ github.event.pull_request.base.sha }}}
 
   build:
     runs-on: ubuntu-latest
     # strategy set
     strategy:
       matrix:
-        go: [ "1.19", "1.20" ]
+        go: [ "1.19", "1.20","1.21" ]
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v4
         with:

@@ -12,14 +12,15 @@ import (
 	_ "github.com/gogf/gf/contrib/nosql/redis/v2"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	"github.com/houseme/url-shortenter/app/console/internal/cmd"
 	_ "github.com/houseme/url-shortenter/app/console/internal/logic"
 	_ "github.com/houseme/url-shortenter/app/console/internal/packed"
 	"github.com/houseme/url-shortenter/internal/tracing"
+
+	"github.com/houseme/url-shortenter/app/console/internal/cmd"
 )
 
 func main() {
 	ctx := gctx.New()
-	tracing.InitTracer(ctx, "tracing-shortenter-console")
+	tracing.InitTracer(ctx)
 	cmd.Main.Run(ctx)
 }

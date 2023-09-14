@@ -9,7 +9,7 @@ package model
 // DomainAuthorizeInput is the input for DomainAuthorization
 type DomainAuthorizeInput struct {
 	*Base     `json:"-"`
-	Domain    string `json:"domain" dc:"域名" v1:"required|domain#域名不能为空|域名格式不正确"`
+	Domain    string `json:"domain" dc:"域名" v:"required|domain#域名不能为空 | 域名格式不正确"`
 	Memo      string `json:"memo" dc:"备注"`
 	ICPNumber string `json:"icpNumber" dc:"ICP 备案号"`
 }
@@ -25,7 +25,7 @@ type DomainAuthorizeOutput struct {
 // QueryDomainAuthorizeInput is the input for QueryDomainAuthorize
 type QueryDomainAuthorizeInput struct {
 	*Base    `json:"-"`
-	DomainNo uint64 `json:"domainNo" dc:"域名 ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNo uint64 `json:"domainNo" dc:"域名 ID" v:"required|integer#域名 ID 不能为空 | 域名 ID 格式不正确"`
 }
 
 // QueryDomainAuthorizeOutput is the output for QueryDomainAuthorize
@@ -42,8 +42,8 @@ type QueryDomainAuthorizeOutput struct {
 type DomainAuthorizeListInput struct {
 	*Base `json:"-"`
 	State uint `json:"state" dc:"状态"`
-	Page  int  `json:"page" dc:"页码" v1:"required|numeric|min=1#页码必须大于0"`
-	Size  int  `json:"size" dc:"每页数量" v1:"required|numeric|min=1#每页数量必须大于0"`
+	Page  int  `json:"page" dc:"页码" v:"required|numeric|min=1#页码必须大于 0"`
+	Size  int  `json:"size" dc:"每页数量" v:"required|numeric|min=1#每页数量必须大于 0"`
 }
 
 // DomainAuthorizeListOutput is the output for QueryDomainAuthorizationList
@@ -57,7 +57,7 @@ type DomainAuthorizeListOutput struct {
 // DomainAuthorizeDetailInput is the input for QueryDomainAuthorizationDetail
 type DomainAuthorizeDetailInput struct {
 	*Base    `json:"-"`
-	DomainNo uint64 `json:"domainNo" dc:"域名 ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNo uint64 `json:"domainNo" dc:"域名 ID" v:"required|integer#域名 ID 不能为空 | 域名 ID 格式不正确"`
 }
 
 // DomainAuthorizeDetailOutput is the output for DomainAuthorizationDetail
@@ -80,7 +80,7 @@ type DomainAuthorizationDetail struct {
 // DomainAuthorizeDeleteInput is the input for DomainAuthorizationDelete
 type DomainAuthorizeDeleteInput struct {
 	*Base     `json:"-"`
-	DomainNos []uint64 `json:"domainNos" dc:"域名 ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNos []uint64 `json:"domainNos" dc:"域名 ID" v:"required|integer#域名 ID 不能为空 | 域名 ID 格式不正确"`
 }
 
 // DomainAuthorizeDeleteOutput is the output for DomainAuthorizationDelete
@@ -96,7 +96,7 @@ type DomainAuthorizeDeleteOutput struct {
 type DomainAuthorizeUpdateInput struct {
 	*Base     `json:"-"`
 	State     uint     `json:"state" dc:"状态 0:未提交 10:审核中 20:审核通过 30:审核失败 40:已禁用"`
-	DomainNos []uint64 `json:"domainNos" dc:"域名 ID" v1:"required|integer#域名ID不能为空|域名ID格式不正确"`
+	DomainNos []uint64 `json:"domainNos" dc:"域名 ID" v:"required|integer#域名 ID 不能为空 | 域名 ID 格式不正确"`
 }
 
 // DomainAuthorizeUpdateOutput is the output for DomainAuthorizationUpdate

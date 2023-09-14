@@ -32,7 +32,7 @@ var (
 			s := g.Server()
 			s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 			s.Group("/api.v1", func(group *ghttp.RouterGroup) {
-				group.Middleware(service.Middleware().ConsoleLogger, service.Middleware().Logger, service.Middleware().HandlerResponse)
+				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().ConsoleLogger, service.Middleware().Logger, service.Middleware().HandlerResponse)
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Bind(
 						auth.New(),

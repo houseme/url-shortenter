@@ -8,9 +8,9 @@ package model
 
 // CreateAccessTokenInput is the input for CreateAccessToken
 type CreateAccessTokenInput struct {
-	AppID     string `json:"appId" dc:"应用 ID" v1:"required|passport#应用ID唯一标识|应用ID包含字母、数字和下划线，长度在6~18之间"`
-	Secret    string `json:"secret" dc:"应用密钥" v1:"required|password2#请填写密钥|密钥需要6-18位,必须包含大小写字母和数字"`
-	GrantType string `json:"grantType" dc:"授权类型" v1:"required|in:client_credentials|授权类型"`
+	AppID     string `json:"appId" dc:"应用 ID" v:"required|passport#应用 ID 唯一标识 | 应用 ID 包含字母、数字和下划线，长度在 6~18 之间"`
+	Secret    string `json:"secret" dc:"应用密钥" v:"required|password2#请填写密钥 | 密钥需要 6-18 位，必须包含大小写字母和数字"`
+	GrantType string `json:"grantType" dc:"授权类型" v:"required|in:client_credentials|授权类型"`
 }
 
 // CreateAccessTokenOutput is the output for CreateAccessToken
@@ -37,8 +37,8 @@ type TokenCache struct {
 
 // AuthInput is the input for Auth
 type AuthInput struct {
-	Account  string `json:"account" dc:"账号" v1:"required|passport#账号唯一标识|账号包含字母、数字和下划线，长度在6~18之间"`
-	Password string `json:"password" dc:"密码" v1:"required|password2#请填写密码|密码需要6-18位,必须包含大小写字母和数字"`
+	Account  string `json:"account" dc:"账号" v:"required|passport#账号唯一标识 | 账号包含字母、数字和下划线，长度在 6~18 之间"`
+	Password string `json:"password" dc:"密码" v:"required|password2#请填写密码 | 密码需要 6-18 位，必须包含大小写字母和数字"`
 }
 
 // AuthOutput is the output for Auth

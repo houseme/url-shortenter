@@ -24,6 +24,8 @@ type AppEnv struct {
 	traceType      string
 	endpoint       string
 	traceToken     string
+	service        string
+	application    string
 	uploadPath     string
 	visitPath      string
 	site           string
@@ -66,6 +68,16 @@ func (e *AppEnv) TraceToken(_ context.Context) string {
 	return e.traceToken
 }
 
+// Service .
+func (e *AppEnv) Service(_ context.Context) string {
+	return e.service
+}
+
+// Application .
+func (e *AppEnv) Application(_ context.Context) string {
+	return e.application
+}
+
 // Config .获取配置信息
 func (e *AppEnv) Config(_ context.Context) map[string]string {
 	return e.config
@@ -96,12 +108,14 @@ func (e *AppEnv) FrontSite(_ context.Context) string {
 	return e.frontSite
 }
 
+// ApplicationService .
+func (a *AppEnv) ApplicationService() string {
+	return a.application + "-" + a.service
+}
+
 // String
 func (e *AppEnv) String(_ context.Context) string {
-	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version +
-		`","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType +
-		`","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath +
-		`","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
+	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application + `","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
 }
 
 // New create app environment
@@ -128,6 +142,8 @@ func New(ctx context.Context) (*AppEnv, error) {
 		traceType:      config["traceType"],
 		endpoint:       config["endpoint"],
 		traceToken:     config["traceToken"],
+		service:        config["service"],
+		application:    config["application"],
 		uploadPath:     config["uploadPath"],
 		visitPath:      config["visitPath"],
 		site:           config["site"],

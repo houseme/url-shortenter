@@ -6,6 +6,7 @@
  *  You can obtain one at https://github.com/houseme/url-shortenter.
  */
 
+// Package home is a home page.
 package home
 
 import (
@@ -37,16 +38,16 @@ func (c *Controller) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err e
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 
-	log := g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "home-index in:", req)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "home-index in:", req)
 	defer func() {
 		if err != nil {
-			log.Error(ctx, "home-index err:", err)
+			logger.Error(ctx, "home-index err:", err)
 		}
 	}()
 	var out string
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
-		err = gerror.NewCode(gcode.CodeNotFound, "短链接不存在")
+		err = gerror.NewCode(gcode.CodeNotFound, "The short link does not exist")
 		return
 	}
 
@@ -55,6 +56,6 @@ func (c *Controller) Index(ctx context.Context, req *v1.Req) (res *v1.Res, err e
 		return
 	}
 	res = (*v1.Res)(&out)
-	log.Debug(ctx, "home-index res:", res, "url:", out)
+	logger.Debug(ctx, "home-index res:", res, "url:", out)
 	return
 }

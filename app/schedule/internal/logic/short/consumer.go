@@ -147,7 +147,9 @@ func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
 		return err
 	}
 
-	defer conn.Close(ctx)
+	defer func() {
+		_ = conn.Close(ctx)
+	}()
 
 	var val *gvar.Var
 	if val, err = conn.Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogSummaryQueue(ctx)); err != nil {
@@ -159,14 +161,14 @@ func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
 		log.Info(ctx, "access log summary queue is empty")
 		return gerror.New("access log summary queue is empty")
 	}
-	llen := val.Int()
-	log.Info(ctx, "access log summary queue length is ", llen)
-	if llen <= 0 {
+	listLen := val.Int()
+	log.Info(ctx, "access log summary queue length is ", listLen)
+	if listLen <= 0 {
 		log.Error(ctx, "access log Summary queue is empty length is zero")
 		return gerror.New("access log Summary queue is empty length is zero")
 	}
 
-	for i := 0; i < llen; i++ {
+	for i := 0; i < listLen; i++ {
 		if err = s.dealLogSummary(ctx); err != nil {
 			log.Error(ctx, "access log summary deal error", err)
 		}
@@ -189,7 +191,9 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 		return err
 	}
 
-	defer conn.Close(ctx)
+	defer func() {
+		_ = conn.Close(ctx)
+	}()
 
 	if val, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAccessLogSummaryQueue(ctx)); err != nil {
 		err = gerror.Wrap(err, "access log summary get queue length error")
@@ -305,7 +309,9 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 		return nil, err
 	}
 
-	defer conn.Close(ctx)
+	defer func() {
+		_ = conn.Close(ctx)
+	}()
 	var (
 		val *gvar.Var
 		su  *entity.ShortUrls
@@ -327,7 +333,7 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 	} else {
 		log.Error(ctx, "get short cache get from redis error", err)
 	}
-	// 防止 缓存击穿
+	// prevent cache breakdown
 	v, err, _ := sfg.Do(short, func() (interface{}, error) {
 		// query DB
 		if err = dao.ShortUrls.Ctx(ctx).Scan(&su, "short_url=?", short); err != nil {

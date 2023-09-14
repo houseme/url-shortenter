@@ -39,7 +39,7 @@ var (
 			go service.Short().ExecuteAudit(ctx)
 			if _, err = gcron.AddSingleton(ctx, "*/10 * * * * *", func(ctx context.Context) {
 				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
-				// 执行任务分配 处理镜像记录的任务
+				// Perform task assignment Processes tasks recorded by mirroring
 				if err := service.Short().AssignTask(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "assign task error", err)
 				}
@@ -51,7 +51,7 @@ var (
 
 			if _, err = gcron.AddSingleton(ctx, "0 */5 * * * *", func(ctx context.Context) {
 				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
-				// 执行任务分配 处理网页内容信息跟踪的任务
+				// Perform task assignments Handles the task of tracking web content information
 				if err := service.Short().AuditAssignTask(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "Audit assign task error", err)
 				}
@@ -75,7 +75,7 @@ var (
 
 			if _, err = gcron.AddSingleton(ctx, "*/15 * * * * *", func(ctx context.Context) {
 				ctx = helper.Helper().SetLogger(context.Background(), consts.Logger)
-				// 访问 log 信息入库汇总处理
+				// Access log information for inbound summary processing
 				if err := service.Short().AccessLog(ctx); err != nil {
 					g.Log(consts.Logger).Info(ctx, "AccessLog task error", err)
 				}
@@ -89,7 +89,7 @@ var (
 			gproc.AddSigHandlerShutdown(func(sig os.Signal) {
 				g.Log().Info(ctx, `cron job shutdown`)
 			})
-			// Block listening the shutdown signal.
+			// Block listening to the shutdown signal.
 			g.Listen()
 			return
 		},
