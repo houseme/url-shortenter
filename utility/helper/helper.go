@@ -384,13 +384,12 @@ func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
 func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
 	log := g.Log(u.Logger(ctx))
 	log.Debug(ctx, "utilHelper GenerateShortLink url:", url)
-	urlHash, err := u.Sha256OfShort(url)
-	if err != nil {
-		return "", gerror.Wrap(err, "utilHelper GenerateShortLink Sha256OfShort failed")
+	algorithm := sha256.New()
+	if _, err := algorithm.Write([]byte(strings.TrimSpace(url))); err != nil {
+		return "", gerror.Wrap(err, "Sha256OfShort write error")
 	}
-	// number := new(big.Int).SetBytes(urlHash).Uint64()
-	// str := u.Base58Encode(gconv.Bytes(number))
-	str := u.Base58Encode(urlHash)
+	urlHash := algorithm.Sum(nil)
+	str := base58.Encode(urlHash)
 	log.Debug(ctx, "utilHelper GenerateShortLink str:", str)
 	return str[:8], nil
 }
