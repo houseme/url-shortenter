@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.581
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.584
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.9+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.3
@@ -52,11 +52,11 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20231011050154-1d073bb38998 // indirect
+	github.com/chromedp/cdproto v0.0.0-20231019002500-864b42864d36 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/cloudwego/hertz v0.7.1 // indirect
-	github.com/cloudwego/netpoll v0.5.0 // indirect
+	github.com/cloudwego/netpoll v0.5.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
@@ -82,9 +82,10 @@ require (
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
+	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
@@ -94,7 +95,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.17.0 // indirect
 	github.com/prometheus/client_model v0.5.0 // indirect
-	github.com/prometheus/common v0.44.0 // indirect
+	github.com/prometheus/common v0.45.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/redis/go-redis/v9 v9.2.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
