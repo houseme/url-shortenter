@@ -13,7 +13,7 @@ require (
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.5
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.4
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.5
 	github.com/gogf/gf/v2 v2.5.5
 	github.com/google/uuid v1.3.1
 	github.com/gorilla/websocket v1.5.0
