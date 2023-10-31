@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.588
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.593
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.9+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/chromedp/chromedp v0.9.3
