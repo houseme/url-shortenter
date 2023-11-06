@@ -50,12 +50,10 @@ func NewSnowflakeEnv(ctx context.Context) (*SnowflakeEnv, error) {
 
 	var v, err = g.Cfg().Get(ctx, "snowflake")
 	if err != nil {
-		err = gerror.Wrap(err, "config snowflake get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config snowflake get failed")
 	}
 	if v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config snowflake is empty")
-		return nil, err
+		return nil, gerror.New("config snowflake is empty")
 	}
 
 	var config = v.MapStrVar()

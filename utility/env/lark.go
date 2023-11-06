@@ -32,13 +32,11 @@ func NewLark(ctx context.Context) (*LarkEnv, error) {
 
 	var v, err = g.Cfg().Get(ctx, "lark")
 	if err != nil {
-		err = gerror.Wrap(err, "config lark get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config lark get failed")
 	}
 
 	if v == nil || v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config lark is empty")
-		return nil, err
+		return nil, gerror.New("config lark is empty")
 	}
 
 	var config = v.MapStrStr()

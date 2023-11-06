@@ -61,12 +61,10 @@ func NewTencentEnv(ctx context.Context) (*TencentEnv, error) {
 
 	var v, err = g.Cfg().Get(ctx, "tencent")
 	if err != nil {
-		err = gerror.Wrap(err, "config tencent get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config tencent get failed")
 	}
 	if v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config tencent is empty")
-		return nil, err
+		return nil, gerror.New("config tencent is empty")
 	}
 
 	var config = v.MapStrStr()

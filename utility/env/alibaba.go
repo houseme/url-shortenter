@@ -67,12 +67,10 @@ func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 
 	var v, err = g.Cfg().Get(ctx, "alibaba")
 	if err != nil {
-		err = gerror.Wrap(err, "config alibaba get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config alibaba get failed")
 	}
 	if v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config alibaba is empty")
-		return nil, err
+		return nil, gerror.New("config alibaba is empty")
 	}
 	var config = v.MapStrStr()
 	return &AlibabaEnv{

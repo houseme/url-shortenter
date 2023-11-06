@@ -53,8 +53,8 @@ const (
 )
 
 // Helper .
-func Helper() *utilHelper {
-	return &utilHelper{}
+func Helper() *UtilHelper {
+	return &UtilHelper{}
 }
 
 var (
@@ -62,15 +62,15 @@ var (
 	src            = rand.NewSource(time.Now().UnixNano())
 )
 
-type utilHelper struct{}
+type UtilHelper struct{}
 
 // UserAgent is a default http userAgent
-func (u *utilHelper) UserAgent(_ context.Context) string {
+func (u *UtilHelper) UserAgent(_ context.Context) string {
 	return httpHeaderUserAgent
 }
 
 // InitTrxID .根据上下文以及账户标识获取交易订单号
-func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
+func (u *UtilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-InitTrxID")
 	defer span.End()
 
@@ -88,7 +88,7 @@ func (u *utilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 }
 
 // InitOrderID init64 order id
-func (u *utilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int64) int64 {
+func (u *UtilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int64) int64 {
 	g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID DatacenterID:", datacenterID, " WorkerID:", workerID)
 	if datacenterID < 0 || datacenterID > snowflake.GetDatacenterIDMax() {
 		g.Log(u.Logger(ctx)).Info(ctx, "InitOrderID datacenter ID error datacenterID", datacenterID)
@@ -103,9 +103,9 @@ func (u *utilHelper) InitOrderID(ctx context.Context, datacenterID, workerID int
 }
 
 // SnowflakeInstance Get Client Instance
-// datacenterID Datacenter ID must be greater than or equal to 0
+// datacenterID Datacenter ID must be greater than or equal to zero
 // workerID Worker ID must be greater than or equal to 0
-func (u *utilHelper) SnowflakeInstance(ctx context.Context, datacenterID, workerID int64) *snowflake.Snowflake {
+func (u *UtilHelper) SnowflakeInstance(ctx context.Context, datacenterID, workerID int64) *snowflake.Snowflake {
 	instanceKey := fmt.Sprintf("%s.%02d.%02d", helperUtilSnowflake, datacenterID, workerID)
 	g.Log(u.Logger(ctx)).Debug(ctx, "InitOrderID SnowflakeInstance ", instanceKey, workerID, datacenterID)
 	return localInstances.GetOrSetFuncLock(instanceKey, func() interface{} {
@@ -118,12 +118,12 @@ func (u *utilHelper) SnowflakeInstance(ctx context.Context, datacenterID, worker
 }
 
 // AuthToken user auth token
-func (u *utilHelper) AuthToken(ctx context.Context, accountNo uint64) string {
+func (u *UtilHelper) AuthToken(ctx context.Context, accountNo uint64) string {
 	return gconv.String(u.InitTrxID(ctx, accountNo%32)) + u.InitRandStr(64) + gtime.TimestampNanoStr()
 }
 
 // InitRandStr RandStringBytesMaskImprSrcUnsafe
-func (u *utilHelper) InitRandStr(n int) string {
+func (u *UtilHelper) InitRandStr(n int) string {
 	b := make([]byte, n)
 	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
 	for i, cache, remain := n-1, src.Int63(), letterIdxMax; i >= 0; {
@@ -142,7 +142,7 @@ func (u *utilHelper) InitRandStr(n int) string {
 }
 
 // UcFirst 首字母大些
-func (u *utilHelper) UcFirst(str string) string {
+func (u *UtilHelper) UcFirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToUpper(v)) + str[i+1:]
 	}
@@ -150,7 +150,7 @@ func (u *utilHelper) UcFirst(str string) string {
 }
 
 // LcFirst 首字母小写
-func (u *utilHelper) LcFirst(str string) string {
+func (u *UtilHelper) LcFirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToLower(v)) + str[i+1:]
 	}
@@ -158,7 +158,7 @@ func (u *utilHelper) LcFirst(str string) string {
 }
 
 // GetOutBoundIP 获取本机 iP
-func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
+func (u *UtilHelper) GetOutBoundIP(ctx context.Context) string {
 	conn, err := net.Dial("udp", "119.29.29.29:80")
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, " GetOutBoundIP udp get Ip failed err: ", err)
@@ -173,7 +173,7 @@ func (u *utilHelper) GetOutBoundIP(ctx context.Context) string {
 }
 
 // GetLocalIpV4 获取 IPV4 IP，没有则返回空
-func (u *utilHelper) GetLocalIpV4(ctx context.Context) string {
+func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
 	inters, err := net.Interfaces()
 	if err != nil {
 		panic(err)
@@ -201,17 +201,17 @@ func (u *utilHelper) GetLocalIpV4(ctx context.Context) string {
 }
 
 // Logger .获取上下文中的 logger
-func (u *utilHelper) Logger(ctx context.Context) string {
+func (u *UtilHelper) Logger(ctx context.Context) string {
 	return gconv.String(ctx.Value("logger"))
 }
 
 // SetLogger .设置上下文中的 logger
-func (u *utilHelper) SetLogger(ctx context.Context, logger string) context.Context {
+func (u *UtilHelper) SetLogger(ctx context.Context, logger string) context.Context {
 	return context.WithValue(ctx, "logger", logger)
 }
 
 // EncryptSignData sign data
-func (u *utilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
+func (u *UtilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-EncryptSignData")
 	defer span.End()
 	var (
@@ -220,14 +220,14 @@ func (u *utilHelper) EncryptSignData(ctx context.Context, data interface{}, key 
 	)
 	g.Log(logger).Debug(ctx, "EncryptSignData data:", data)
 	if err != nil {
-		err = gerror.Wrap(err, "EncryptSignData gjson.Encode error")
+		err = gerror.Wrap(err, "EncryptSignData gf json.Encode error")
 		return byteInfo, err
 	}
 	return aes.NewAESCrypt(key).Encrypt(byteInfo, gocrypto.ECB)
 }
 
 // Header .
-func (u *utilHelper) Header(_ context.Context) map[string]string {
+func (u *UtilHelper) Header(_ context.Context) map[string]string {
 	return g.MapStrStr{
 		"Accept-Encoding": "gzip, deflate, br",
 		"Accept-Language": "zh-CN,zh;q=0.9",
@@ -238,7 +238,7 @@ func (u *utilHelper) Header(_ context.Context) map[string]string {
 }
 
 // HeaderToMap covert request headers to map.
-func (u *utilHelper) HeaderToMap(header http.Header) map[string]interface{} {
+func (u *UtilHelper) HeaderToMap(header http.Header) map[string]interface{} {
 	m := make(map[string]interface{})
 	for k, v := range header {
 		if len(v) > 1 {
@@ -251,12 +251,12 @@ func (u *utilHelper) HeaderToMap(header http.Header) map[string]interface{} {
 }
 
 // EncryptPass .加密处理
-func (u *utilHelper) EncryptPass(pass string) ([]byte, error) {
+func (u *UtilHelper) EncryptPass(pass string) ([]byte, error) {
 	return bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
 }
 
 // CompareHashAndPassword 校验密码。
-func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
+func (u *UtilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 	if err := bcrypt.CompareHashAndPassword([]byte(authPass), []byte(inputPass)); err != nil {
 		return false
 	}
@@ -264,12 +264,12 @@ func (u *utilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 }
 
 // RequestTime .request time
-func (u *utilHelper) RequestTime(_ context.Context, ts string) *gtime.Time {
+func (u *UtilHelper) RequestTime(_ context.Context, ts string) *gtime.Time {
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
 // ConcatenateSignSource get sign url 排序并拼接签名的内容信息
-func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}) string {
+func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}) string {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-enterprise-utility-ConcatenateSignSource")
 	defer span.End()
 
@@ -300,7 +300,7 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		}
 		buf.WriteString(k)
 		buf.WriteString("=")
-		buf.WriteString(string(params[k]))
+		buf.WriteString(params[k])
 		buf.WriteString("&")
 	}
 	buf.Truncate(buf.Len() - 1)
@@ -309,31 +309,30 @@ func (u *utilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 }
 
 // DecryptSignDataInfo sign data 数据执行 aes 解密
-func (u *utilHelper) DecryptSignDataInfo(src []byte, key []byte) (dst []byte, err error) {
+func (u *UtilHelper) DecryptSignDataInfo(src []byte, key []byte) (dst []byte, err error) {
 	return aes.NewAESCrypt(key).Decrypt(src, gocrypto.ECB)
 }
 
 // HexDecodeString .
-func (u *utilHelper) HexDecodeString(ctx context.Context, data string, key []byte) ([]byte, error) {
+func (u *UtilHelper) HexDecodeString(_ context.Context, data string, key []byte) ([]byte, error) {
 	if signData, err := hex.DecodeString(data); err != nil {
-		err = gerror.Wrap(err, "helper HexDecodeString hex.DecodeString failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "helper HexDecodeString hex.DecodeString failed")
 	} else {
 		return u.DecryptSignDataInfo(signData, key)
 	}
 }
 
 // Sha256Of returns the sha256 of the input string
-func (u *utilHelper) Sha256Of(input []byte) string {
+func (u *UtilHelper) Sha256Of(input []byte) string {
 	sum := sha256.Sum256(input)
 	return hex.EncodeToString(sum[:])
 }
 
 // CheckFileExists .
-func (u *utilHelper) CheckFileExists(ctx context.Context, filePath string) (err error) {
+func (u *UtilHelper) CheckFileExists(ctx context.Context, filePath string) (err error) {
 	if !gfile.Exists(filePath) {
 		if err = gfile.Mkdir(filePath); err != nil {
-			g.Log(u.Logger(ctx)).Error(ctx, "CheckFileExists gfile.Mkdir error:", err)
+			g.Log(u.Logger(ctx)).Error(ctx, "CheckFileExists gf file.Mkdir error:", err)
 			return err
 		}
 	} else if !gfile.IsDir(filePath) {
@@ -344,7 +343,7 @@ func (u *utilHelper) CheckFileExists(ctx context.Context, filePath string) (err 
 }
 
 // UserAgentIPHash user agent ip hash
-func (u *utilHelper) UserAgentIPHash(useragent string, ip string) (string, error) {
+func (u *UtilHelper) UserAgentIPHash(useragent string, ip string) (string, error) {
 	var (
 		input     = fmt.Sprintf("%s-%s-%s-%d", useragent, ip, time.Now().String(), rand.Int())
 		data, err = u.Sha256OfShort(input)
@@ -358,7 +357,7 @@ func (u *utilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 }
 
 // Sha256OfShort returns the sha256 of the input string
-func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
+func (u *UtilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
 		return nil, gerror.Wrap(err, "Sha256OfShort write error")
@@ -367,12 +366,12 @@ func (u *utilHelper) Sha256OfShort(input string) ([]byte, error) {
 }
 
 // Base58Encode encodes the input byte array to base58 string
-func (u *utilHelper) Base58Encode(data []byte) string {
+func (u *UtilHelper) Base58Encode(data []byte) string {
 	return base58.Encode(data)
 }
 
 // PasswordBase58Hash password base58 hash
-func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
+func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
 	data, err := u.Sha256OfShort(password)
 	if err != nil {
 		return "", gerror.Wrap(err, "utilHelper PasswordBase58Hash Sha256OfShort error")
@@ -381,7 +380,7 @@ func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
 }
 
 // GenerateShortLink generate short link
-func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
+func (u *UtilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
 	log := g.Log(u.Logger(ctx))
 	log.Debug(ctx, "utilHelper GenerateShortLink url:", url)
 	algorithm := sha256.New()
@@ -395,17 +394,17 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 }
 
 // AESEncrypt encrypts the input byte array with the given key
-func (u *utilHelper) AESEncrypt(_ context.Context, key, data []byte) (string, error) {
+func (u *UtilHelper) AESEncrypt(_ context.Context, key, data []byte) (string, error) {
 	return aes.NewAESCrypt(key).EncryptToString(gocrypto.Base64, data, gocrypto.ECB)
 }
 
 // AESDecrypt decrypts the input byte array with the given key
-func (u *utilHelper) AESDecrypt(_ context.Context, key, data []byte) (string, error) {
+func (u *UtilHelper) AESDecrypt(_ context.Context, key, data []byte) (string, error) {
 	return aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB)
 }
 
 // CreateAccessToken create access token
-func (u *utilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (token string, err error) {
+func (u *UtilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (token string, err error) {
 	var (
 		hash      []byte
 		initTrxID = u.InitTrxID(ctx, accountNo)

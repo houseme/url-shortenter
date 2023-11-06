@@ -67,12 +67,10 @@ func NewOssEnv(ctx context.Context, key string) (*OSSEnv, error) {
 
 	var v, err = g.Cfg().Get(ctx, key)
 	if err != nil {
-		err = gerror.Wrap(err, "config oss get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config oss get failed")
 	}
 	if v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config oss is empty")
-		return nil, err
+		return nil, gerror.New("config oss is empty")
 	}
 	var config = v.MapStrStr()
 	return &OSSEnv{

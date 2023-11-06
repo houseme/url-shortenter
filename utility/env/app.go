@@ -109,8 +109,8 @@ func (e *AppEnv) FrontSite(_ context.Context) string {
 }
 
 // ApplicationService .
-func (a *AppEnv) ApplicationService() string {
-	return a.application + "-" + a.service
+func (e *AppEnv) ApplicationService() string {
+	return e.application + "-" + e.service
 }
 
 // String
@@ -123,16 +123,14 @@ func New(ctx context.Context) (*AppEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-New")
 	defer span.End()
 
-	var v, err = g.Cfg().Get(ctx, "app")
+	value, err := g.Cfg().Get(ctx, "app")
 	if err != nil {
-		err = gerror.Wrap(err, "config app get failed")
-		return nil, err
+		return nil, gerror.Wrap(err, "config app get failed")
 	}
-	if v.IsNil() || v.IsEmpty() {
-		err = gerror.New("config app is empty")
-		return nil, err
+	if value.IsNil() || value.IsEmpty() {
+		return nil, gerror.New("config app is empty")
 	}
-	var config = v.MapStrStr()
+	var config = value.MapStrStr()
 	return &AppEnv{
 		config:         config,
 		env:            config["env"],

@@ -11,14 +11,12 @@ import (
 	"context"
 )
 
-var uEnv = utilEnv{}
-
 // Env .
-func Env() *utilEnv {
-	return &uEnv
+func Env() *UtilEnv {
+	return &UtilEnv{}
 }
 
-type utilEnv struct {
+type UtilEnv struct {
 }
 
 const (
@@ -32,26 +30,26 @@ const (
 )
 
 // Dev .
-func (e *utilEnv) Dev(_ context.Context) string {
+func (e *UtilEnv) Dev(_ context.Context) string {
 	return dev
 }
 
 // Prod .
-func (e *utilEnv) Prod(_ context.Context) string {
+func (e *UtilEnv) Prod(_ context.Context) string {
 	return prod
 }
 
 // Test .
-func (e *utilEnv) Test(_ context.Context) string {
+func (e *UtilEnv) Test(_ context.Context) string {
 	return test
 }
 
 // Develop .
-func (e *utilEnv) Develop(_ context.Context) string {
+func (e *UtilEnv) Develop(_ context.Context) string {
 	return develop
 }
 
 // Production .
-func (e *utilEnv) Production(_ context.Context) string {
+func (e *UtilEnv) Production(_ context.Context) string {
 	return production
 }
