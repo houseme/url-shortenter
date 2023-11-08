@@ -21,7 +21,7 @@ require (
 	github.com/houseme/icp-filing v1.3.2
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.5
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.782
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.784
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.782
 	go.opentelemetry.io/otel v1.19.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0
