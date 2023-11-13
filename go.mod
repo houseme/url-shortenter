@@ -23,12 +23,12 @@ require (
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.787
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.787
-	go.opentelemetry.io/otel v1.19.0
+	go.opentelemetry.io/otel v1.20.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.19.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.19.0
 	go.opentelemetry.io/otel/sdk v1.19.0
-	go.opentelemetry.io/otel/trace v1.19.0
+	go.opentelemetry.io/otel/trace v1.20.0
 	golang.org/x/crypto v0.15.0
 	golang.org/x/sync v0.5.0
 	google.golang.org/grpc v1.59.0
@@ -105,7 +105,7 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
-	go.opentelemetry.io/otel/metric v1.19.0 // indirect
+	go.opentelemetry.io/otel/metric v1.20.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.0.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
