@@ -29,7 +29,7 @@ import (
 const tracerHostnameTagKey = "hostname"
 
 // InitTracer initializes and registers jaeger to global TracerProvider.
-func InitTracer(ctx context.Context) (shutdown func()) {
+func InitTracer(ctx context.Context) (shutdown func(ctx context.Context)) {
 	if appEnv, err := env.New(ctx); err != nil {
 		g.Log().Fatal(ctx, "InitTracer env new failed, error:", err)
 	} else {
@@ -44,7 +44,7 @@ func InitTracer(ctx context.Context) (shutdown func()) {
 //
 // The output parameter `Shutdown` is used for waiting exported tracing spans to be uploaded,
 // which is useful if your program is ending, and you do not want to lose recent spans.
-func Init(serviceName, endpoint, traceToken, version, environment string) (func(), error) {
+func Init(serviceName, endpoint, traceToken, version, environment string) (func(ctx context.Context), error) {
 	// Try retrieving host ip for tracing info.
 	var (
 		intranetIPArray, err = gipv4.GetIntranetIpArray()
@@ -104,7 +104,7 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 	otel.SetTextMapPropagator(propagation.TraceContext{})
 	otel.SetTracerProvider(tracerProvider)
 
-	return func() {
+	return func(ctx context.Context) {
 		// Shutdown flushes any remaining spans and shuts down the exporter.
 		ctx, cancel := context.WithTimeout(ctx, time.Second)
 		defer cancel()
@@ -120,7 +120,7 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 //
 // The output parameter `Shutdown` is used for waiting exported trace spans to be uploaded,
 // which is useful if your program is ending, and you do not want to lose recent spans.
-func InitOtlpHTTP(serviceName, endpoint, path, version, environment string) (func(), error) {
+func InitOtlpHTTP(serviceName, endpoint, path, version, environment string) (func(ctx context.Context), error) {
 	// Try retrieving host ip for tracing info.
 	var (
 		intranetIPArray, err = gipv4.GetIntranetIpArray()
@@ -178,7 +178,7 @@ func InitOtlpHTTP(serviceName, endpoint, path, version, environment string) (fun
 	otel.SetTextMapPropagator(propagation.TraceContext{})
 	otel.SetTracerProvider(tracerProvider)
 
-	return func() {
+	return func(ctx context.Context) {
 		ctx, cancel := context.WithTimeout(ctx, time.Second)
 		defer cancel()
 		if err = traceExp.Shutdown(ctx); err != nil {

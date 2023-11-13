@@ -22,6 +22,6 @@ import (
 func main() {
 	ctx := gctx.New()
 	shutdown := tracing.InitTracer(ctx)
-	defer shutdown()
+	defer shutdown(ctx)
 	cmd.Main.Run(ctx)
 }
