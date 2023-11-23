@@ -265,12 +265,12 @@ github.com/gobwas/ws v1.3.1/go.mod h1:hRKAFb8wOxFROYNsT1bqfWnhX+b5MFeJM9r2ZSwg/K
 github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7 h1:P6YEJ9LErLTWth0DtY02MByUcyUQu2VjU8WYx7KUCbk=
 github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7/go.mod h1:+3ubospV5oXJSO/ihl2uGGL4cBR+tyrf2znNcYJGWwM=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.6 h1:oR9F4LVoKa/fjf/o6Y/CQRNiYy35Bszo07WwvMWYMxo=
-github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.6/go.mod h1:gvHSRqCpv2c+N0gDHsEldHgU/yM9tcCBdIEKZ32/TaE=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.7 h1:S6r4QJSoqmOv/Vqhu/gHt4if4dHrNyaQIUbjWc4W7sg=
+github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.7/go.mod h1:1/X4iVHxtSHjOMGYvnmFMTdk5zLLhQ6PEkslKTBcTSI=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.6 h1:JPhmDok7Q85TB2TOJhhJUz3U3U/4GUES1SXhuSnwjSw=
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.6/go.mod h1:gwY76zchpp+xhS+akLTORyMGkI3CXA1CoQFeS3PeF4w=
-github.com/gogf/gf/v2 v2.5.6 h1:a1UK1yUP3s+l+vPxmV91+8gTarAP9b1IEOw0W7LNl6E=
-github.com/gogf/gf/v2 v2.5.6/go.mod h1:17K/gBYrp0bHGC3XYC7bSPoywmZ6MrZHrZakTfh4eIQ=
+github.com/gogf/gf/v2 v2.5.7 h1:h+JSoD6z3d2q0uGszvtahrSm4DiM2ECyNjyTwKIo8wE=
+github.com/gogf/gf/v2 v2.5.7/go.mod h1:x2XONYcI4hRQ/4gMNbWHmZrNzSEIg20s2NULbzom5k0=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.3.2/go.mod h1:P1XiOD3dCwIKUDQYPy72D8LYyHL2YPYrpS2s69NZV8Q=
 github.com/goji/httpauth v0.0.0-20160601135302-2da839ab0f4d/go.mod h1:nnjvkQ9ptGaCkuDUx6wNykzzlUixGxvkme+H/lnzb+A=
