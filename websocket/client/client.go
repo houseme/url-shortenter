@@ -23,7 +23,11 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to connect to WebSocket server:", err)
 	}
-	defer conn.Close()
+	defer func() {
+		// Close the WebSocket connection when the main function exits.
+		_ = conn.Close()
+		log.Println("WebSocket connection closed.")
+	}()
 	log.Println("WebSocket connection established.")
 	// Start a goroutine to handle incoming messages.
 	go handleMessagesClient(conn)
@@ -41,7 +45,10 @@ func main() {
 func handleMessagesClient(conn *websocket.Conn) {
 	defer func() {
 		// Close the WebSocket connection when the handleMessages function exits.
-		conn.Close()
+		defer func() {
+			_ = conn.Close()
+			log.Println("WebSocket connection closed.")
+		}()
 		log.Println("WebSocket connection closed.")
 	}()
 	for {

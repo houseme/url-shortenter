@@ -268,7 +268,7 @@ func (u *UtilHelper) RequestTime(_ context.Context, ts string) *gtime.Time {
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
-// ConcatenateSignSource get sign url 排序并拼接签名的内容信息
+// ConcatenateSignSource get sign URL 排序并拼接签名的内容信息
 func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}) string {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-enterprise-utility-ConcatenateSignSource")
 	defer span.End()
@@ -279,13 +279,13 @@ func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		count  = v.NumField()
 		keys   = make([]string, 0, count)
 		params = make(map[string]string)
-		log    = g.Log(u.Logger(ctx))
+		logger = g.Log(u.Logger(ctx))
 	)
 
-	log.Debug(ctx, "helper ConcatenateSignSource tt", tt, " v1", v)
+	logger.Debug(ctx, "helper ConcatenateSignSource tt", tt, " v1", v)
 	for i := 0; i < count; i++ {
 		if v.Field(i).CanInterface() { // 判断是否为可导出字段
-			log.Printf(ctx, "%s %s = %v1 -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(), tt.Field(i).Tag)
+			logger.Printf(ctx, "%s %s = %v1 -tag:%s", tt.Field(i).Name, tt.Field(i).Type, v.Field(i).Interface(), tt.Field(i).Tag)
 			keys = append(keys, u.LcFirst(tt.Field(i).Name))
 			params[u.LcFirst(tt.Field(i).Name)] = gconv.String(v.Field(i).Interface())
 		}
@@ -304,8 +304,9 @@ func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 		buf.WriteString("&")
 	}
 	buf.Truncate(buf.Len() - 1)
-	log.Debug(ctx, "helper ConcatenateSignSource string start:", buf.String())
-	return buf.String()
+	result := buf.String()
+	logger.Debug(ctx, "helper ConcatenateSignSource string start:", result)
+	return result
 }
 
 // DecryptSignDataInfo sign data 数据执行 aes 解密
@@ -408,14 +409,14 @@ func (u *UtilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (t
 	var (
 		hash      []byte
 		initTrxID = u.InitTrxID(ctx, accountNo)
-		log       = g.Log(u.Logger(ctx))
+		logger    = g.Log(u.Logger(ctx))
 	)
-	log.Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
+	logger.Debug(ctx, "utilHelper CreateAccessToken accountNo: ", accountNo, " initTrxID: ", initTrxID)
 	if hash, err = u.Sha256OfShort(gconv.String(initTrxID)); err != nil {
 		err = gerror.Wrap(err, "utilHelper CreateAccessToken Sha256OfShort error")
 		return
 	}
 	token = hex.EncodeToString(hash)
-	log.Debug(ctx, "utilHelper CreateAccessToken token:", token)
+	logger.Debug(ctx, "utilHelper CreateAccessToken token:", token)
 	return
 }
