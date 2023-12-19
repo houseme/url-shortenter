@@ -4,34 +4,34 @@ go 1.21
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.634
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.637
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.1+incompatible
-	github.com/btcsuite/btcd/btcutil v1.1.3
+	github.com/btcsuite/btcd/btcutil v1.1.4
 	github.com/chromedp/chromedp v0.9.3
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.112
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.7
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.7
-	github.com/gogf/gf/v2 v2.5.7
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.0
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.6.0
+	github.com/gogf/gf/v2 v2.6.0
 	github.com/google/uuid v1.5.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/icp-filing v1.5.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.817
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.817
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.821
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.821
 	go.opentelemetry.io/otel v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.21.0
 	go.opentelemetry.io/otel/sdk v1.21.0
 	go.opentelemetry.io/otel/trace v1.21.0
-	golang.org/x/crypto v0.16.0
+	golang.org/x/crypto v0.17.0
 	golang.org/x/sync v0.5.0
-	google.golang.org/grpc v1.60.0
+	google.golang.org/grpc v1.60.1
 	google.golang.org/protobuf v1.31.0
 )
 
@@ -96,8 +96,8 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20231211222908-989df2bf70f3 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231211222908-989df2bf70f3 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231212172506-995d672761c0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
