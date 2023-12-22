@@ -3,3 +3,13 @@
 // =================================================================================
 
 package home
+
+import (
+	"github.com/houseme/url-shortenter/app/front/api/home"
+)
+
+type ControllerV1 struct{}
+
+func NewV1() home.IHomeV1 {
+	return &ControllerV1{}
+}

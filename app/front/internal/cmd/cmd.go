@@ -30,13 +30,13 @@ var (
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().MiddlewareHandlerResponse, service.Middleware().MiddlewareHandlerRequest)
 				group.Bind(
-					home.New(),
+					home.NewV1(),
 				)
 			})
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
-					hello.New(),
+					hello.NewV1(),
 				)
 			})
 			s.Run()

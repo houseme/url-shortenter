@@ -12,12 +12,12 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// Req is a hello request.
-type Req struct {
+// HelloReq is a hello request.
+type HelloReq struct {
 	g.Meta `path:"/hello" tags:"Hello" method:"get" summary:"You first hello api"`
 }
 
-// Res is a hello response.
-type Res struct {
+// HelloRes is a hello response.
+type HelloRes struct {
 	g.Meta `mime:"text/html" example:"string"`
 }

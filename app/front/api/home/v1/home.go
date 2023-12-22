@@ -14,11 +14,11 @@ import (
 	"github.com/houseme/url-shortenter/app/front/internal/model"
 )
 
-// Req is the request struct for :short.
-type Req struct {
+// HomeReq is the request struct for :short.
+type HomeReq struct {
 	g.Meta `path:"/:short" tags:"home" method:"get" summary:"You first home api"`
 	*model.HomeInput
 }
 
-// Res is the response struct.
-type Res string
+// HomeRes is the response struct.
+type HomeRes string

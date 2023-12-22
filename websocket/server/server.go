@@ -13,7 +13,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/google/uuid"
+	"github.com/gogf/gf/v2/util/grand"
 	"github.com/gorilla/websocket"
 )
 
@@ -49,7 +49,7 @@ func handleWebsocketServer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Generate a unique ID for the connection.
-	id := uuid.New().String()
+	id := grand.Letters(32)
 
 	// Create a new connection object.
 	conn := &Connection{

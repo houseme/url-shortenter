@@ -4,7 +4,7 @@
 // If a copy of the MIT was not distributed with this file,
 // You can obtain one at https://github.com/houseme/url-shortenter.
 
-// Package middleware .
+// Package middleware is a middleware package for middleware.
 package middleware
 
 import (
@@ -16,6 +16,7 @@ import (
 
 	v1 "github.com/houseme/url-shortenter/app/front/api/home/v1"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sMiddleware struct {
@@ -38,16 +39,16 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	}
 
 	var (
-		err = r.GetError()
-		res = r.GetHandlerResponse()
-		log = g.Log()
+		err    = r.GetError()
+		res    = r.GetHandlerResponse()
+		logger = g.Log(helper.Helper().Logger(ctx))
 	)
-	log.Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
+	logger.Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
 	if g.IsNil(res) || g.IsEmpty(res) {
 		r.Response.Status = http.StatusNotFound
 	}
 	if err != nil {
-		log.Error(ctx, "MiddlewareHandlerResponse err:", err)
+		logger.Errorf(ctx, "MiddlewareHandlerResponse err:%+v", err)
 		r.Response.Status = http.StatusInternalServerError
 		if internalErr := r.Response.WriteTpl("error.html", g.Map{
 			"title":   "内部错误 - 短链平台",
@@ -55,7 +56,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": err.Error(),
 			"label":   "Error",
 		}); internalErr != nil {
-			log.Errorf(ctx, `r.Response.WriteTpl internalErr %+v1`, internalErr)
+			logger.Errorf(ctx, `r.Response.WriteTpl internalErr %+v`, internalErr)
 		}
 	}
 	if r.Response.Status > 0 && r.Response.Status != http.StatusOK && r.Response.Status != http.StatusFound {
@@ -65,14 +66,14 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 			"message": "您访问的页面已失效",
 			"label":   http.StatusText(r.Response.Status),
 		}); internalErr != nil {
-			log.Errorf(ctx, `r.Response.WriteTpl 404 err: %+v1`, internalErr)
+			logger.Errorf(ctx, `r.Response.WriteTpl 404 err: %+v`, internalErr)
 		}
 	}
 
-	str := res.(*v1.Res)
-	log.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
+	str := res.(*v1.HomeRes)
+	logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
 	if !g.IsNil(res) && !g.IsEmpty(res) {
-		log.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
+		logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
 		r.Response.RedirectTo(string(*str), http.StatusFound)
 	}
 }
