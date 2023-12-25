@@ -27,33 +27,31 @@ var (
 	Main = gcmd.Command{
 		Name:  "main",
 		Usage: "main",
-		Brief: "start http server",
+		Brief: "start HTTP server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
 			s.Group("/api.v1", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().ConsoleLogger, service.Middleware().Logger, service.Middleware().HandlerResponse)
+				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().Initializer, service.Middleware().Logger, service.Middleware().HandlerResponse)
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Bind(
-						auth.New(),
+						auth.NewV1(),
 					)
 				})
 
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Middleware(service.Middleware().AuthorizationForAPI)
 					group.Bind(
-						echo.New(),
-						account.New(),
-						short.New(),
+						echo.NewV1(),
+						account.NewV1(),
+						short.NewV1(),
 					)
 				})
 				group.Group("/console", func(group *ghttp.RouterGroup) {
 					group.Middleware(service.Middleware().AuthorizationForConsole)
 					group.Bind(
-						home.New(),
-						// controller.Account,
-						// controller.Short,
-						domain.New(),
+						home.NewV1(),
+						domain.NewV1(),
 					)
 				})
 			})

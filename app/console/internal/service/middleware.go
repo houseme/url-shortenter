@@ -9,7 +9,7 @@ import (
 )
 
 type IMiddleware interface {
-	ConsoleLogger(r *ghttp.Request)
+	Initializer(r *ghttp.Request)
 	Logger(r *ghttp.Request)
 	HandlerResponse(r *ghttp.Request)
 	AuthorizationForAPI(r *ghttp.Request)

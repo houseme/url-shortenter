@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/gogf/gf/v2/container/gvar"
+	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -36,9 +37,9 @@ func init() {
 	service.RegisterMiddleware(&sMiddleware{})
 }
 
-// ConsoleLogger is a middleware handler for ghttp.Request.
-func (s *sMiddleware) ConsoleLogger(r *ghttp.Request) {
-	r.SetCtxVar("logger", consts.AppDefaultLoggerName)
+// Initializer is a middleware handler for ghttp.Request.
+func (s *sMiddleware) Initializer(r *ghttp.Request) {
+	r.SetCtxVar("logger", consts.DefaultLogger)
 	r.Middleware.Next()
 }
 
@@ -47,7 +48,7 @@ func (s *sMiddleware) Logger(r *ghttp.Request) {
 	r.Middleware.Next()
 	errStr := "success"
 	if err := r.GetError(); err != nil {
-		g.Log(r.GetCtxVar("logger").String()).Error(r.GetCtx(), "Server logger Error:", err)
+		g.Log(r.GetCtxVar("logger").String()).Errorf(r.GetCtx(), "Server logger Error:%+v", err)
 		errStr = err.Error()
 	}
 	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "status: ", r.Response.Status, "path: ", r.URL.Path, "msg: ", errStr)
@@ -57,14 +58,14 @@ func (s *sMiddleware) Logger(r *ghttp.Request) {
 func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 	r.Middleware.Next()
 
+	ctx, span := gtrace.NewSpan(r.GetCtx(), "tracing-service-middleware-HandlerResponse")
+	r.SetCtx(ctx)
+	defer span.End()
+
 	// There's custom buffer content, it then exits the current handler.
 	if r.Response.BufferLength() > 0 {
 		return
 	}
-
-	ctx, span := gtrace.NewSpan(r.GetCtx(), "tracing-service-middleware-HandlerResponse")
-	r.SetCtx(ctx)
-	defer span.End()
 
 	// 设置公共参数
 	tracing.SetAttributes(r, span)
@@ -76,7 +77,6 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 		code = gerror.Code(err)
 	)
 	if err != nil {
-		span.RecordError(err, tracing.CommonEventOption(r.GetCtx(), "console-service-middleware-HandlerResponse"))
 		if code == gcode.CodeNil {
 			code = gcode.CodeInternalError
 		}
@@ -95,9 +95,12 @@ func (s *sMiddleware) HandlerResponse(r *ghttp.Request) {
 		default:
 			code = gcode.CodeUnknown
 		}
+		err = gerror.NewCode(code, msg)
+		r.SetError(err)
 	} else {
 		code = gcode.New(http.StatusOK, "success", nil)
 		msg = code.Message()
+		g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "HandlerResponse body res:", res)
 	}
 	r.Response.WriteJson(&model.DefaultHandlerResponse{
 		Code:    code.Code(),
@@ -130,7 +133,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 
 	var (
 		authHeader = gstr.Trim(r.GetHeader(consts.AuthorizationHeaderKey))
-		log        = g.Log(r.GetCtxVar("logger").String())
+		logger     = g.Log(r.GetCtxVar("logger").String())
 		resp       = &model.DefaultHandlerResponse{
 			Code:    http.StatusMovedPermanently,
 			Message: http.StatusText(http.StatusMovedPermanently),
@@ -139,7 +142,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 			TraceID: span.SpanContext().TraceID().String(),
 		}
 	)
-	log.Debug(r.GetCtx(), "authorization authHeader: ", authHeader)
+	logger.Debug(r.GetCtx(), "authorization authHeader: ", authHeader)
 	fields := strings.Fields(authHeader)
 	if len(fields) < 2 {
 		resp.Message = "Invalid authorization Header"
@@ -153,23 +156,23 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 		return false
 	}
 
-	var res, err = validateToken(r.GetCtx(), fields[1], authType, log)
+	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
 	if err != nil {
-		log.Error(r.GetCtx(), "authorization failed: ", err)
+		logger.Error(r.GetCtx(), "authorization failed: ", err)
 		resp.Message = "authorization failed reason: " + err.Error()
 		s.middlewareResponse(r, span, resp)
 		return false
 	}
 
 	if res == nil {
-		log.Debug(r.GetCtx(), "authorization failed")
+		logger.Debug(r.GetCtx(), "authorization failed")
 		resp.Message = "authorization failed"
 		s.middlewareResponse(r, span, resp)
 		return false
 	}
 
 	if res.AuthToken != fields[1] {
-		log.Debug(r.GetCtx(), "authorization token is Refresh new token:", res.AuthToken)
+		logger.Debug(r.GetCtx(), "authorization token is Refresh new token:", res.AuthToken)
 		resp.Code = http.StatusFound
 		resp.Message = "token is Refresh"
 		resp.Data = g.Map{
@@ -188,36 +191,35 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 }
 
 // validateToken is a middleware handler for ghttp.Request.
-func validateToken(ctx context.Context, token, authType string, log glog.ILogger) (*model.AuthorizationToken, error) {
+func validateToken(ctx context.Context, token, authType string, logger glog.ILogger) (authToken *model.AuthorizationToken, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-console-service-middleware-validateToken")
 	defer span.End()
 
-	var (
-		redisKey       = cache.RedisCache().ShortAccessTokenKey(ctx, token)
-		conn, err      = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Conn(ctx)
-		isAuthPassword = false
-	)
-
 	defer func() {
 		if err != nil {
-			log.Error(ctx, "validateToken failed error:", err)
+			logger.Errorf(ctx, "validateToken failed error:%+v", err)
 		}
+		logger.Debug(ctx, "validateToken end")
 	}()
-
-	if err != nil {
-		err = gerror.Wrap(err, "validateToken redis conn failed")
+	var conn gredis.Conn
+	if conn, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Conn(ctx); err != nil {
+		err = gerror.Wrap(err, "validateToken Redis conn failed")
 		return nil, err
 	}
 	defer func() {
 		_ = conn.Close(ctx)
 	}()
+	var (
+		redisKey       = cache.RedisCache().ShortAccessTokenKey(ctx, token)
+		isAuthPassword = false
+	)
 	if authType == consts.AuthTypePassword {
 		isAuthPassword = true
 		redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
 	}
 	var val *gvar.Var
 	if val, err = conn.Do(ctx, "GET", redisKey); err != nil {
-		err = gerror.Wrap(err, "validateToken redis get failed(001)")
+		err = gerror.Wrap(err, "validateToken Redis get failed(001)")
 		return nil, err
 	}
 
@@ -226,14 +228,13 @@ func validateToken(ctx context.Context, token, authType string, log glog.ILogger
 		return nil, err
 	}
 
-	var authToken *model.AuthorizationToken
 	if err = val.Scan(&authToken); err != nil {
-		err = gerror.Wrap(err, "validateToken redis scan failed")
+		err = gerror.Wrap(err, "validateToken Redis scan failed")
 		return nil, err
 	}
 
 	if authToken == nil {
-		err = gerror.New("validateToken redis get failed(002)")
+		err = gerror.New("validateToken Redis get failed(002)")
 		return nil, err
 	}
 
@@ -254,7 +255,7 @@ func validateToken(ctx context.Context, token, authType string, log glog.ILogger
 
 		authToken.AuthTime = now.Unix()
 		if now.Unix()-consts.PasswordExpireTime > authTime {
-			log.Debug(ctx, "validateToken auth token password expired 2 hours")
+			logger.Debug(ctx, "validateToken auth token password expired 2 hours")
 			if token, err = helper.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
 				err = gerror.Wrap(err, "validateToken CreateAccessToken failed")
 				return nil, err
@@ -262,12 +263,12 @@ func validateToken(ctx context.Context, token, authType string, log glog.ILogger
 			authToken.AuthToken = token
 			redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
 		}
-		log.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
+		logger.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
 		if val, err = conn.Do(ctx, "SETEX", redisKey, consts.TokenExpireTime, authToken); err != nil {
-			err = gerror.Wrap(err, "validateToken redis set failed")
+			err = gerror.Wrap(err, "validateToken Redis set failed")
 			return nil, err
 		}
-		log.Debug(ctx, "validateToken auth token set redis value:", val)
+		logger.Debug(ctx, "validateToken auth token set Redis value:", val)
 		return authToken, nil
 	}
 	if now.Unix()-consts.APIKeyExpireTime > authTime {

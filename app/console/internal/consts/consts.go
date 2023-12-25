@@ -10,8 +10,8 @@ const (
 	// AppID 应用 ID
 	AppID = `console`
 
-	// AppDefaultLoggerName 应用默认日志名称
-	AppDefaultLoggerName = `console`
+	// DefaultLogger 应用默认日志名称
+	DefaultLogger = `console`
 
 	// AuthorizationHeaderKey 授权头
 	AuthorizationHeaderKey = "authorization"

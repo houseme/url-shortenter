@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.643
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.644
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.1+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.4
 	github.com/chromedp/chromedp v0.9.3
@@ -19,8 +19,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.824
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.824
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.825
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.825
 	go.opentelemetry.io/otel v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.21.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.21.0
@@ -30,7 +30,7 @@ require (
 	golang.org/x/crypto v0.17.0
 	golang.org/x/sync v0.5.0
 	google.golang.org/grpc v1.60.1
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.32.0
 )
 
 require (
