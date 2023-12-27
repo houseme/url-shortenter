@@ -33,8 +33,8 @@ func (s *sAccount) Stat(ctx context.Context, in *model.AccountStatInput) (out *m
 	defer span.End()
 
 	var (
-		log = g.Log(helper.Helper().Logger(ctx))
+		logger = g.Log(helper.Helper().Logger(ctx))
 	)
-	log.Debug(ctx, "account-Stat in:", in)
+	logger.Debug(ctx, "account-Stat in:", in)
 	return
 }
