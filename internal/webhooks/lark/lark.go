@@ -15,19 +15,20 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-type iLark struct {
+// ILark .
+type ILark struct {
 	ctx  context.Context
 	lark *lark.Lark
 }
 
 // Lark .
-func Lark() *iLark {
-	return &iLark{}
+func Lark() *ILark {
+	return &ILark{}
 }
 
 // NewLark create iLark
-func NewLark(ctx context.Context, appID, appSecret, encryptKey, verificationToken string) *iLark {
-	return &iLark{
+func NewLark(ctx context.Context, appID, appSecret, encryptKey, verificationToken string) *ILark {
+	return &ILark{
 		ctx: ctx,
 		lark: lark.New(
 			lark.WithAppCredential(appID, appSecret),
@@ -37,16 +38,16 @@ func NewLark(ctx context.Context, appID, appSecret, encryptKey, verificationToke
 }
 
 // NewCustomBot new customer bot
-func NewCustomBot(ctx context.Context, customBotWebHookURL, customBotSecret string) *iLark {
+func NewCustomBot(ctx context.Context, customBotWebHookURL, customBotSecret string) *ILark {
 	g.Log().Debug(ctx, "customBotWebHookURL: ", customBotWebHookURL)
-	return &iLark{
+	return &ILark{
 		ctx:  ctx,
 		lark: lark.New(lark.WithCustomBot(customBotWebHookURL, customBotSecret)),
 	}
 }
 
 // SendRawMessage  sends raw message
-func (s *iLark) SendRawMessage(ctx context.Context) {
+func (s *ILark) SendRawMessage(ctx context.Context) {
 	// oc_eaffbb5e6622ea1beccc9751ad7060f4
 	//
 	resp, res, err := s.lark.Message.SendRawMessage(ctx, &lark.SendRawMessageReq{
@@ -63,7 +64,7 @@ func (s *iLark) SendRawMessage(ctx context.Context) {
 }
 
 // SendCustomMessage  sends Custom message
-func (s *iLark) SendCustomMessage(ctx context.Context) {
+func (s *ILark) SendCustomMessage(ctx context.Context) {
 	resp, res, err := s.lark.Message.Send().SendText(ctx, `测试自定义 网页异常 https://www.baidu.com`)
 	if err != nil {
 		g.Log().Error(ctx, err)
