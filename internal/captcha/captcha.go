@@ -55,8 +55,8 @@ func generateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 		driver = param.DriverDigit
 	}
 	c := base64Captcha.NewCaptcha(driver, store)
-	id, b64s, err := c.Generate()
-	body := map[string]interface{}{"code": 1, "data": b64s, "captchaId": id, "msg": "success"}
+	id, b64s, answer, err := c.Generate()
+	body := map[string]interface{}{"code": 1, "data": b64s, "captchaId": id, "msg": "success", "answer": answer}
 	if err != nil {
 		body = map[string]interface{}{"code": 0, "msg": err.Error()}
 	}
