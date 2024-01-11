@@ -9,7 +9,7 @@ require (
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/chromedp/chromedp v0.9.3
 	github.com/chyroc/go-ptr v1.7.0
-	github.com/chyroc/lark v0.0.112
+	github.com/chyroc/lark v0.0.113
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.1
