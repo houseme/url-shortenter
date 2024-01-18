@@ -33,7 +33,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	ctx, span := gtrace.NewSpan(r.GetCtx(), "tracing-service-new-MiddlewareHandlerResponse")
 	r.SetCtx(ctx)
 	defer span.End()
-	// There's custom buffer content, it then exits current handler.
+	// There's custom buffer content, it then exits the current handler.
 	if r.Response.BufferLength() > 0 {
 		return
 	}
