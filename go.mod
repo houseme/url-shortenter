@@ -12,9 +12,9 @@ require (
 	github.com/chyroc/lark v0.0.113
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.1
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.2
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.6.1
-	github.com/gogf/gf/v2 v2.6.1
+	github.com/gogf/gf/v2 v2.6.2
 	github.com/gorilla/websocket v1.5.1
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
