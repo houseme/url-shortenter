@@ -146,29 +146,25 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 	fields := strings.Fields(authHeader)
 	if len(fields) < 2 {
 		resp.Message = "Invalid authorization Header"
-		s.middlewareResponse(r, span, resp)
-		return false
+		return s.middlewareResponse(r, span, resp)
 	}
 
 	if fields[0] != consts.AuthorizationTypeBearer {
 		resp.Message = "Unsupported authorization Type"
-		s.middlewareResponse(r, span, resp)
-		return false
+		return s.middlewareResponse(r, span, resp)
 	}
 
 	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
 	if err != nil {
 		logger.Error(r.GetCtx(), "authorization failed: ", err)
 		resp.Message = "authorization failed reason: " + err.Error()
-		s.middlewareResponse(r, span, resp)
-		return false
+		return s.middlewareResponse(r, span, resp)
 	}
 
 	if res == nil {
 		logger.Debug(r.GetCtx(), "authorization failed")
 		resp.Message = "authorization failed"
-		s.middlewareResponse(r, span, resp)
-		return false
+		return s.middlewareResponse(r, span, resp)
 	}
 
 	if res.AuthToken != fields[1] {
@@ -178,8 +174,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 		resp.Data = g.Map{
 			"token": res.AuthToken,
 		}
-		s.middlewareResponse(r, span, resp)
-		return false
+		return s.middlewareResponse(r, span, resp)
 	}
 
 	r.SetParam("authAccountNo", res.AuthAccountNo)
@@ -280,9 +275,10 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 }
 
 // middlewareResponse intercept the response
-func (s *sMiddleware) middlewareResponse(r *ghttp.Request, span *gtrace.Span, resp *model.DefaultHandlerResponse) {
+func (s *sMiddleware) middlewareResponse(r *ghttp.Request, span *gtrace.Span, resp *model.DefaultHandlerResponse) bool {
 	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "middlewareResponse body resp:", resp)
 	// 设置公共参数
 	tracing.SetAttributes(r, span)
 	r.Response.WriteJson(resp)
+	return false
 }
