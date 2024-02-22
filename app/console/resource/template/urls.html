@@ -4,17 +4,17 @@
 <div class="pusher">
     {{template "admin-left-menu.html" . -}}
     {{template "admin-top-menu.html" . -}}
-    <div id="admin-right-content" class="ui basic segment">
+    <div class="ui basic segment" id="admin-right-content">
         <div class="ui grid stackable padded">
             <div class="column">
                 <table class="ui celled striped table">
                     <thead>
                     <tr>
                         <th colspan="3">
-                            <form id="form-search-url" action="/admin/urls" method="get">
+                            <form action="/admin/urls" id="form-search-url" method="get">
                                 <div class="ui labeled action input">
                                     <div class="ui label">{{.prefix}}</div>
-                                    <input name="url" type="text" value="{{.url}}" placeholder="短链接">
+                                    <input name="url" placeholder="短链接" type="text" value="{{.url}}">
                                 </div>
                                 <button class="ui teal right labeled icon button" type="submit"><i
                                         class="search icon"></i>查询
@@ -24,7 +24,7 @@
                             </form>
                         </th>
                         <th colspan="7">
-                            <button id="btn-new-shorturl-modal" class="ui primary button">新建短链接</button>
+                            <button class="ui primary button" id="btn-new-shorturl-modal">新建短链接</button>
                         </th>
                     </tr>
                     <tr>
@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                     {{range .shortUrls}}
-                    <tr {{if not .Valid}}class="negative" {{end}}>
+                    <tr .Valid}}class="negative" not {{end}} {{if>
                         <td class="collapsing"><a href="{{$.prefix}}{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a>
                         </td>
                         <td class="center aligned collapsing">{{.CreatedAt | date "2006-01-02 15:04:05"}}</td>
@@ -58,7 +58,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th colspan="10" class="center aligned">
+                        <th class="center aligned" colspan="10">
                             {{if not .first_page}}
                             <a class="ui small labeled icon button"
                                href="/admin/urls?url={{.url}}&page={{sub .page 1}}"><i
@@ -77,7 +77,7 @@
         </div><!--end fo grid-->
     </div><!--end of segment-->
 </div><!--end of pusher-->
-<div id="new-shorturl-modal" class="ui modal">
+<div class="ui modal" id="new-shorturl-modal">
     <i class="close icon"></i>
     <div class="header">新建短链接</div>
     <div class="content">
@@ -98,7 +98,7 @@
         <div class="ui black deny button">
             放弃
         </div>
-        <div id="btn-gen-short-url" class="ui primary right labeled icon button">
+        <div class="ui primary right labeled icon button" id="btn-gen-short-url">
             确认新建
             <i class="checkmark icon"></i>
         </div>

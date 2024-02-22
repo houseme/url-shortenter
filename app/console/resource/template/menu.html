@@ -1,5 +1,5 @@
 {{define "sidebar.html" -}}
-<div id="sidebar-menu" class="ui inverted vertical sidebar menu left">
+<div class="ui inverted vertical sidebar menu left" id="sidebar-menu">
     <div class="item">
         <div class="ui inverted header">业务管理</div>
         <div class="menu">
@@ -18,13 +18,13 @@
 {{end -}}
 
 {{define "admin-top-menu.html" -}}
-<div id="admin-top-menu" class="ui top fixed inverted borderless menu">
-    <div id="sidebar-menu-toggler" class="header item"><a><i class="big sidebar icon"></i></a>ohUrlShortener</div>
+<div class="ui top fixed inverted borderless menu" id="admin-top-menu">
+    <div class="header item" id="sidebar-menu-toggler"><a><i class="big sidebar icon"></i></a>ohUrlShortener</div>
 </div><!--end of admin-top-menu -->
 {{end -}}
 
 {{define "admin-left-menu.html" -}}
-<div id="admin-left-menu" class="ui inverted vertical left fixed menu">
+<div class="ui inverted vertical left fixed menu" id="admin-left-menu">
     <div class="ui inverted header item">ohUrlShortener</div>
     <div class="item">
         <div class="ui inverted header">业务管理</div>
@@ -39,6 +39,6 @@
             href="/admin/access_logs">访问日志</a>
         </div>
     </div>
-    <a class="item" target="_self" href="javascript:sign_out_config()">安全退出</a>
+    <a class="item" href="javascript:sign_out_config()" target="_self">安全退出</a>
 </div><!--end of left-menu-->
 {{end -}}
