@@ -15,7 +15,7 @@ linters:
   enable:
     - bodyclose
     # - deadcode
-    # - depguard
+    - depguard
     - dogsled
     # - dupl
     - errcheck
@@ -177,3 +177,53 @@ linters-settings:
     # Minimal code complexity to report.
     # Default: 30 (but we recommend 10-20)
     min-complexity: 30
+  depguard:
+    rules:
+      # Name of a rule.
+      main:
+        # Used to determine the package matching priority.
+        # There are three different modes: `original`, `strict`, and `lax`.
+        # Default: "original"
+        list-mode: lax
+        # List of file globs that will match this list of settings to compare against.
+        # Default: $all
+        files:
+          - "!**/*_a _file.go"
+        # List of allowed packages.
+        allow:
+          - $gostd
+          - $gogithub
+          - $gok8s
+          - $gogoogle
+          - $golang
+          - $gocloud
+          - $golang_org
+          - $golang_org_x
+        # Packages that are not allowed where the value is a suggestion.
+        deny:
+          - pkg: "github.com/sirupsen/logrus"
+            desc: not allowed
+          - pkg: "github.com/pkg/errors"
+            desc: Should be replaced by standard lib errors package
+      prevent_unmaintained_packages:
+        list-mode: lax # allow unless explicitely denied
+        files:
+          - $all
+          - "!$test"
+          - "!_test.go"
+        allow:
+          - $gostd
+          - $gogithub
+          - $gok8s
+          - $gogoogle
+          - $golang
+          - $gocloud
+          - $golang_org
+          - $golang_org_x
+        deny:
+          - pkg: io/ioutil
+            desc: "replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil"
+          - pkg: "github.com/sirupsen/logrus"
+            desc: not allowed
+          - pkg: "github.com/pkg/errors"
+            desc: Should be replaced by standard lib errors package
