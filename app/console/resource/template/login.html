@@ -2,30 +2,30 @@
 {{- template "header.html" .}}
 <div class="ui inverted borderless large menu">
     <div class="ui container">
-        <a class="ui inverted header item" target="_self" href="https://gitee.com/barat/ohurlshortener">
+        <a class="ui inverted header item" href="https://gitee.com/barat/ohurlshortener" target="_self">
             <div class="content">ohUrlShortener</div>
         </a>
     </div>
 </div>
-<div id="login-grid" class="ui middle aligned center aligned grid">
+<div class="ui middle aligned center aligned grid" id="login-grid">
     <div class="column">
         <h2 class="ui image header">
             <div class="content">
                 ohUrlShortener Admin Login
             </div>
         </h2>
-        <form id="login-form" class="ui large form" action="/login" method="post">
+        <form action="/login" class="ui large form" id="login-form" method="post">
             <div class="ui stacked segment">
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="account" placeholder="Account">
+                        <input name="account" placeholder="Account" type="text">
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input type="password" name="password" placeholder="Password">
+                        <input name="password" placeholder="Password" type="password">
                     </div>
                 </div>
                 <div class="field">
@@ -33,10 +33,10 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="image icon"></i>
-                                <input type="text" name="captcha-text" placeholder="验证码">
+                                <input name="captcha-text" placeholder="验证码" type="text">
                             </div>
                         </div>
-                        <div id="captcha-image" class="field"><a class="ui input" href="javascript:reload_captcha()">点击获取验证码</a>
+                        <div class="field" id="captcha-image"><a class="ui input" href="javascript:reload_captcha()">点击获取验证码</a>
                         </div>
                     </div>
                 </div>
