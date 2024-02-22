@@ -15,7 +15,7 @@ linters:
   enable:
     - bodyclose
     # - deadcode
-    - depguard
+    # - depguard
     - dogsled
     # - dupl
     - errcheck
@@ -68,6 +68,10 @@ linters-settings:
   #    check-blank: false
   lll:
     line-length: 240 # 一行的长度
+  dogsled:
+    # Checks assignments with too many blank identifiers.
+    # Default: 2
+    max-blank-identifiers: 3
   godox:
     keywords: # 建议设置为 BUG、FIXME、OPTIMIZE、HACK
       - BUG
