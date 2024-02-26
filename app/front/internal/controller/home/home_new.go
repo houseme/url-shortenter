@@ -10,8 +10,10 @@ import (
 	"github.com/houseme/url-shortenter/app/front/api/home"
 )
 
+// ControllerV1  is the controller for the home API version 1.
 type ControllerV1 struct{}
 
+// NewV1 creates and returns a new home controller.
 func NewV1() home.IHomeV1 {
 	return &ControllerV1{}
 }

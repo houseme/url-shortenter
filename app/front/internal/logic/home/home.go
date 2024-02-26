@@ -27,6 +27,7 @@ import (
 	"github.com/houseme/url-shortenter/app/front/internal/model"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/internal/database/dao"
+	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/internal/protocol"
 	"github.com/houseme/url-shortenter/utility/cache"
@@ -86,7 +87,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	v, err, _ := sfg.Do(in.Short, func() (interface{}, error) {
 		// query DB
 		var ent = (*entity.ShortUrls)(nil)
-		if err = dao.ShortUrls.Ctx(ctx).Scan(&ent, "short_url = ?", in.Short); err != nil {
+		if err = dao.ShortUrls.Ctx(ctx).Scan(&ent, do.ShortUrls{ShortUrl: in.Short}); err != nil {
 			return nil, err
 		}
 
@@ -104,7 +105,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 
 		// set cache
 		if val, err = conn.Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
-			logger.Error(ctx, "home-short-detail storage.Redis Set failed err:", err)
+			logger.Errorf(ctx, "home-short-detail storage.Redis Set failed err:%+v", err)
 		}
 
 		logger.Info(ctx, "home-short-detail set redis cache end shortUrl:", in.Short, "destUrl:", ent.DestUrl)
@@ -151,13 +152,13 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 		log = g.Log(helper.Helper().Logger(ctx))
 	)
 	if err != nil {
-		log.Error(ctx, "home-new-access-log get intranet ip failed err:", err)
+		log.Errorf(ctx, "home-new-access-log get intranet ip failed err:%+v", err)
 		l.ServerIp = helper.Helper().GetOutBoundIP(ctx)
 	}
 	var val *gvar.Var
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
 		cache.RedisCache().ShortAccessLogQueue(ctx), l); err != nil {
-		log.Error(ctx, "NewAccessLog err:", err)
+		log.Errorf(ctx, "NewAccessLog err: %+v", err)
 	}
 	log.Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	v1 "github.com/houseme/url-shortenter/app/front/api/home/v1"
+	"github.com/houseme/url-shortenter/app/front/internal/consts"
 	"github.com/houseme/url-shortenter/app/front/internal/service"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
@@ -24,6 +25,31 @@ type sMiddleware struct {
 
 func init() {
 	service.RegisterMiddleware(&sMiddleware{})
+}
+
+// Initializer is a middleware handler for ghttp.Request.
+func (s *sMiddleware) Initializer(r *ghttp.Request) {
+	r.SetCtxVar("logger", consts.DefaultLogger)
+	r.Middleware.Next()
+}
+
+// ClientIP sets the client ip to the context.
+func (s *sMiddleware) ClientIP(r *ghttp.Request) {
+	r.SetParam("clientIP", r.GetClientIp())
+	r.SetParam("userAgent", r.UserAgent())
+	r.SetParam("header", r.Header)
+	r.Middleware.Next()
+}
+
+// Logger Middleware Log
+func (s *sMiddleware) Logger(r *ghttp.Request) {
+	r.Middleware.Next()
+	errStr := "success"
+	if err := r.GetError(); err != nil {
+		errStr = err.Error()
+		g.Log(r.GetCtxVar("logger").String()).Errorf(r.GetCtx(), "Server logger Error:%+v", err)
+	}
+	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "status: ", r.Response.Status, "path: ", r.URL.Path, "msg: ", errStr)
 }
 
 // MiddlewareHandlerResponse 响应处理
@@ -70,10 +96,10 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 		}
 	}
 
-	str := res.(*v1.HomeRes)
 	logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
 	if !g.IsNil(res) && !g.IsEmpty(res) {
 		logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
+		str := res.(*v1.HomeRes)
 		r.Response.RedirectTo(string(*str), http.StatusFound)
 	}
 }
@@ -87,9 +113,9 @@ func (s *sMiddleware) MiddlewareHandlerRequest(r *ghttp.Request) {
 	g.Log().Debug(ctx, "MiddlewareHandlerRequest start")
 	r.SetParam("rawQuery", r.Request.URL.RawQuery)
 	r.SetParam("shortAll", r.Request.URL.String())
-	r.SetParam("clientIp", r.GetClientIp())
-	r.SetParam("userAgent", r.UserAgent())
 	r.SetParam("referer", r.Referer())
+	r.SetParam("path", r.URL.Path)
+	r.SetParam("origin", r.GetHeader("Origin"))
 	r.SetParam("host", r.Request.Host)
 	r.Middleware.Next()
 }
