@@ -8,6 +8,9 @@
 package consts
 
 const (
+	// DefaultLogger 默认日志
+	DefaultLogger = "default"
+
 	// ShortValid 有效状态 0 默认 100 正常 200 失效
 	ShortValid = 100
 	// ShortInvalid 失效状态

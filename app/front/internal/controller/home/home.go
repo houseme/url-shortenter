@@ -4,4 +4,5 @@
 // If a copy of the MIT was not distributed with this file,
 // You can obtain one at https://github.com/houseme/url-shortenter.
 
+// Package home defines the home page of the application.
 package home
