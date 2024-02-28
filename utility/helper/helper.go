@@ -382,15 +382,15 @@ func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
 
 // GenerateShortLink generate short link
 func (u *UtilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
-	log := g.Log(u.Logger(ctx))
-	log.Debug(ctx, "utilHelper GenerateShortLink url:", url)
+	logger := g.Log(u.Logger(ctx))
+	logger.Debug(ctx, "utilHelper GenerateShortLink url:", url)
 	algorithm := sha256.New()
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(url))); err != nil {
 		return "", gerror.Wrap(err, "Sha256OfShort write error")
 	}
 	urlHash := algorithm.Sum(nil)
 	str := base58.Encode(urlHash)
-	log.Debug(ctx, "utilHelper GenerateShortLink str:", str)
+	logger.Debug(ctx, "utilHelper GenerateShortLink str:", str)
 	return str[:8], nil
 }
 

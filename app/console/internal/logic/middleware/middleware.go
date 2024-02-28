@@ -156,7 +156,6 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 
 	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
 	if err != nil {
-		logger.Error(r.GetCtx(), "authorization failed: ", err)
 		resp.Message = "authorization failed reason: " + err.Error()
 		return s.middlewareResponse(r, span, resp)
 	}
@@ -199,7 +198,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 	var conn gredis.Conn
 	if conn, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Conn(ctx); err != nil {
 		err = gerror.Wrap(err, "validateToken Redis conn failed")
-		return nil, err
+		return
 	}
 	defer func() {
 		_ = conn.Close(ctx)
@@ -215,27 +214,27 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 	var val *gvar.Var
 	if val, err = conn.Do(ctx, "GET", redisKey); err != nil {
 		err = gerror.Wrap(err, "validateToken Redis get failed(001)")
-		return nil, err
+		return
 	}
 
 	if val.IsNil() || val.IsEmpty() {
 		err = gerror.New("validateToken auth token not found")
-		return nil, err
+		return
 	}
 
 	if err = val.Scan(&authToken); err != nil {
 		err = gerror.Wrap(err, "validateToken Redis scan failed")
-		return nil, err
+		return
 	}
 
 	if authToken == nil {
 		err = gerror.New("validateToken Redis get failed(002)")
-		return nil, err
+		return
 	}
 
 	if authToken.AuthType != authType {
 		err = gerror.New("validateToken auth token type not match")
-		return nil, err
+		return
 	}
 	var (
 		authTime = authToken.AuthTime
@@ -245,7 +244,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 	if isAuthPassword {
 		if now.Unix()-consts.RefreshTokenExpireTime > authTime {
 			err = gerror.New("validateToken auth token expired")
-			return nil, err
+			return
 		}
 
 		authToken.AuthTime = now.Unix()
@@ -253,7 +252,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 			logger.Debug(ctx, "validateToken auth token password expired 2 hours")
 			if token, err = helper.Helper().CreateAccessToken(ctx, authToken.AuthAccountNo); err != nil {
 				err = gerror.Wrap(err, "validateToken CreateAccessToken failed")
-				return nil, err
+				return
 			}
 			authToken.AuthToken = token
 			redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
@@ -261,17 +260,17 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 		logger.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
 		if val, err = conn.Do(ctx, "SETEX", redisKey, consts.TokenExpireTime, authToken); err != nil {
 			err = gerror.Wrap(err, "validateToken Redis set failed")
-			return nil, err
+			return
 		}
 		logger.Debug(ctx, "validateToken auth token set Redis value:", val)
-		return authToken, nil
+		return
 	}
 	if now.Unix()-consts.APIKeyExpireTime > authTime {
 		err = gerror.New("validateToken auth token expired")
-		return nil, err
+		return
 	}
 
-	return authToken, nil
+	return
 }
 
 // middlewareResponse intercept the response

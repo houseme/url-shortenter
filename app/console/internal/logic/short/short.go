@@ -34,8 +34,8 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-CreateShort")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "short-CreateShort in:", in)
+	var logger = g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-CreateShort in:", in)
 
 	return
 }
