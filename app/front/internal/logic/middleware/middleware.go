@@ -52,7 +52,7 @@ func (s *sMiddleware) Logger(r *ghttp.Request) {
 	g.Log(r.GetCtxVar("logger").String()).Debug(r.GetCtx(), "status: ", r.Response.Status, "path: ", r.URL.Path, "msg: ", errStr)
 }
 
-// MiddlewareHandlerResponse 响应处理
+// MiddlewareHandlerResponse response
 func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	r.Middleware.Next()
 
