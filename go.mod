@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.1
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.686
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.688
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/chromedp/chromedp v0.9.5
@@ -12,15 +12,15 @@ require (
 	github.com/chyroc/lark v0.0.113
 	github.com/geziyor/geziyor v0.0.0-20230315135110-a242b58aaa65
 	github.com/gocolly/colly/v2 v2.1.1-0.20230620150846-a6e3d81fe6b7
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.3
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.6.3
-	github.com/gogf/gf/v2 v2.6.3
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.6.4
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.6.4
+	github.com/gogf/gf/v2 v2.6.4
 	github.com/gorilla/websocket v1.5.1
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.868
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.868
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.870
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.870
 	go.opentelemetry.io/otel v1.24.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.24.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.24.0
@@ -29,8 +29,8 @@ require (
 	go.opentelemetry.io/otel/trace v1.24.0
 	golang.org/x/crypto v0.21.0
 	golang.org/x/sync v0.6.0
-	google.golang.org/grpc v1.62.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/grpc v1.62.1
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
@@ -60,7 +60,7 @@ require (
 	github.com/gobwas/ws v1.3.2 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/grokify/html-strip-tags-go v0.1.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
