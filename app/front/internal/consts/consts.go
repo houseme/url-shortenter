@@ -4,7 +4,7 @@
 // If a copy of the MIT was not distributed with this file,
 // You can obtain one at https://github.com/houseme/url-shortenter.
 
-// Package consts
+// Package consts defines the constants of the application.
 package consts
 
 const (
