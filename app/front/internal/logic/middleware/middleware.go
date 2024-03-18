@@ -98,7 +98,6 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 
 	logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse end")
 	if !g.IsNil(res) && !g.IsEmpty(res) {
-		logger.Debug(r.GetCtx(), "MiddlewareHandlerResponse redirect url:", res)
 		str := res.(*v1.HomeRes)
 		r.Response.RedirectTo(string(*str), http.StatusFound)
 	}

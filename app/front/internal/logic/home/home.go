@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/container/gvar"
-	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gipv4"
@@ -49,8 +48,8 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	defer span.End()
 
 	var (
-		logger    = g.Log(helper.Helper().Logger(ctx))
 		isSendLog bool
+		logger    = g.Log(helper.Helper().Logger(ctx))
 	)
 	logger.Debug(ctx, "home-short-detail in:", in)
 	in.VisitState = consts.VisitState
@@ -60,20 +59,9 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		}
 	}()
 
-	var conn gredis.Conn
-	if conn, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.Wrap(err, "failed to get redis connection")
-		return
-	}
-	defer func() {
-		if errs := conn.Close(ctx); errs != nil {
-			logger.Error(ctx, "failed to close redis connection err:", errs)
-		}
-	}()
-
 	var val *gvar.Var
-	if val, err = conn.Do(ctx, "GET", in.Short); err != nil {
-		logger.Error(ctx, "home-short-detail get redis value failed err:", err)
+	if val, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "GET", in.Short); err != nil {
+		logger.Errorf(ctx, "home-short-detail get redis value failed err:%+v", err)
 	}
 	if !val.IsNil() && !val.IsEmpty() && val.String() != "" {
 		out = val.String()
@@ -104,7 +92,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		}
 
 		// set cache
-		if val, err = conn.Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
+		if val, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
 			logger.Errorf(ctx, "home-short-detail storage.Redis Set failed err:%+v", err)
 		}
 
@@ -133,9 +121,8 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 	defer span.End()
 
 	var (
-		t             = gtime.Now()
-		serverIP, err = gipv4.GetIntranetIp()
-		l             = entity.AccessLogs{
+		t = gtime.Now()
+		l = entity.AccessLogs{
 			ShortUrl:   in.Short,
 			AccessTime: t,
 			AccessDate: t,
@@ -147,17 +134,13 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			ShortAll:   in.ShortAll,
 			TraceId:    span.SpanContext().TraceID().String(),
 			VisitState: in.VisitState,
-			ServerIp:   serverIP,
+			ServerIp:   helper.Helper().GetOutBoundIP(ctx),
 		}
-		log = g.Log(helper.Helper().Logger(ctx))
+		log      = g.Log(helper.Helper().Logger(ctx))
+		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
+			cache.RedisCache().ShortAccessLogQueue(ctx), l)
 	)
 	if err != nil {
-		log.Errorf(ctx, "home-new-access-log get intranet ip failed err:%+v", err)
-		l.ServerIp = helper.Helper().GetOutBoundIP(ctx)
-	}
-	var val *gvar.Var
-	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
-		cache.RedisCache().ShortAccessLogQueue(ctx), l); err != nil {
 		log.Errorf(ctx, "NewAccessLog err: %+v", err)
 	}
 	log.Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)

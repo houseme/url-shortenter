@@ -26,9 +26,12 @@ func (c *ControllerV1) Home(ctx context.Context, req *v1.HomeReq) (res *v1.HomeR
 	ctx, span := gtrace.NewSpan(ctx, "tracing-controller-Home-Index")
 	defer span.End()
 
-	logger := g.Log(helper.Helper().Logger(ctx))
+	var (
+		out    string
+		logger = g.Log(helper.Helper().Logger(ctx))
+	)
+
 	logger.Debug(ctx, "home index in:", req)
-	var out string
 	if out, err = service.Home().ShortDetail(ctx, req.HomeInput); err != nil {
 		err = gerror.NewCode(gcode.CodeNotFound, "The short link does not exist")
 		return
