@@ -30,14 +30,13 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	// 请替换成您的 AccessKey ID、AccessKey Secret。
 	var (
 		cpf             = profile.NewClientProfile()
-		logger          = helper.Helper().Logger(ctx)
+		logger          = g.Log(helper.Helper().Logger(ctx))
 		tencentEnv, err = env.NewTencentEnv(ctx)
 	)
 	if err != nil {
-		g.Log(logger).Error(ctx, "tencentEnv.NewTencentEnv error: ", err)
 		return "", err
 	}
-	g.Log(logger).Debug(ctx, "tencentEnv: ", tencentEnv.String(ctx))
+	logger.Debug(ctx, "tencentEnv: ", tencentEnv.String(ctx))
 
 	credential := common.NewCredential(tencentEnv.SecretID(ctx), tencentEnv.SecretKey(ctx))
 	cpf.HttpProfile.Endpoint = tencentEnv.Endpoint(ctx)
@@ -55,12 +54,13 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	request.FileUrl = common.StringPtr(fileName)
 	response, err = client.ImageModeration(request)
 	if _, ok := err.(*errors.TencentCloudSDKError); ok {
-		g.Log(logger).Error(ctx, "ims.ImageModeration error: ", err)
+		logger.Error(ctx, "ims.ImageModeration error: ", err)
 	}
 	if err != nil {
 		err = gerror.Wrap(err, "ims.ImageModeration error")
 		return "", err
 	}
-	g.Log(logger).Info(ctx, "response: ", response.ToJsonString())
-	return response.ToJsonString(), nil
+	content := response.ToJsonString()
+	logger.Info(ctx, "response: ", content)
+	return content, nil
 }

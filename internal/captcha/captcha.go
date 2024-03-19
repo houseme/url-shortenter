@@ -38,7 +38,9 @@ func generateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
 	var driver base64Captcha.Driver
 
 	// create base64 encoding captcha
@@ -73,7 +75,9 @@ func captchaVerifyHandle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
 	// verify the captcha
 	body := map[string]interface{}{"code": 0, "msg": "failed"}
 	if store.Verify(param.Id, param.VerifyValue, true) {
@@ -100,7 +104,6 @@ func TestCaptcha(t *testing.T) {
 
 	if err := http.ListenAndServe(":8777", nil); err != nil {
 		log.Fatal(err)
-		t.Fatal(err)
 	}
 	t.Log("end a net/http server")
 }

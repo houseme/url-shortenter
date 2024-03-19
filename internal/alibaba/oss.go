@@ -10,6 +10,7 @@ import (
 	"context"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 
 	"github.com/houseme/url-shortenter/utility/env"
@@ -19,16 +20,15 @@ import (
 // Upload file upload oss
 func Upload(ctx context.Context, fileName, basePath string) error {
 	var (
-		logger          = helper.Helper().Logger(ctx)
+		logger          = g.Log(helper.Helper().Logger(ctx))
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
-	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
+	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
 	if err != nil {
-		g.Log(logger).Error(ctx, "alibabaEnv.NewAlibabaEnv error: ", err)
-		return err
+		return gerror.Wrap(err, "env.NewAlibabaEnv failed")
 	}
 
-	g.Log(logger).Info(ctx, "Upload file to oss fileName:"+fileName+" basePath:"+basePath)
+	logger.Debug(ctx, "Upload file to oss fileName:"+fileName+" basePath:"+basePath)
 	// 创建 OSSClient 实例。
 	client, err := oss.New(alibabaEnv.Endpoint(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx))
 	if err != nil {
@@ -40,8 +40,7 @@ func Upload(ctx context.Context, fileName, basePath string) error {
 		return err
 	}
 	// 上传文件。
-	err = bucket.PutObjectFromFile(basePath+fileName, fileName)
-	if err != nil {
+	if err = bucket.PutObjectFromFile(basePath+fileName, fileName); err != nil {
 		return err
 	}
 	return nil

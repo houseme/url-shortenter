@@ -200,6 +200,59 @@ func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
 	return ""
 }
 
+// GetLocalIPAddresses 获取本地所有的 IP 地址
+func (u *UtilHelper) GetLocalIPAddresses(ctx context.Context) (mp map[int][]net.IP, err error) {
+	var (
+		ifaces []net.Interface
+		logger = g.Log(u.Logger(ctx))
+	)
+	logger.Debug(ctx, "GetLocalIPAddresses start")
+	if ifaces, err = net.Interfaces(); err != nil {
+		err = gerror.Wrap(err, "GetLocalIPAddresses net.Interfaces failed")
+		return
+	}
+	mp = map[int][]net.IP{
+		4: make([]net.IP, 0),
+		6: make([]net.IP, 0),
+	}
+	for _, iface := range ifaces {
+		if iface.Flags&net.FlagUp == 0 {
+			logger.Debug(ctx, "GetLocalIPAddresses iface.Flags&net.FlagUp == 0")
+			continue // Skip down interfaces
+		}
+
+		var addrs []net.Addr
+		if addrs, err = iface.Addrs(); err != nil {
+			logger.Errorf(ctx, "GetLocalIPAddresses Error getting addresses for interface: %+v", err)
+			continue
+		}
+
+		for _, addr := range addrs {
+			var ip net.IP
+			switch v := addr.(type) {
+			case *net.IPNet:
+				ip = v.IP
+			case *net.IPAddr:
+				ip = v.IP
+			}
+
+			if ip.IsLoopback() {
+				logger.Debug(ctx, "GetLocalIPAddresses ip.IsLoopback() ip:", ip.String())
+				continue // Skip loopback addresses
+			}
+
+			if ip.To4() != nil {
+				mp[4] = append(mp[4], ip)
+			} else {
+				mp[6] = append(mp[6], ip)
+			}
+		}
+	}
+	logger.Debug(ctx, "GetLocalIPAddresses end")
+
+	return
+}
+
 // Logger .获取上下文中的 logger
 func (u *UtilHelper) Logger(ctx context.Context) string {
 	return gconv.String(ctx.Value("logger"))
@@ -214,14 +267,9 @@ func (u *UtilHelper) SetLogger(ctx context.Context, logger string) context.Conte
 func (u *UtilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-EncryptSignData")
 	defer span.End()
-	var (
-		logger        = u.Logger(ctx)
-		byteInfo, err = gjson.Encode(data)
-	)
-	g.Log(logger).Debug(ctx, "EncryptSignData data:", data)
+	byteInfo, err := gjson.Encode(data)
 	if err != nil {
-		err = gerror.Wrap(err, "EncryptSignData gf json.Encode error")
-		return byteInfo, err
+		return nil, gerror.Wrap(err, "EncryptSignData gf json.Encode failed")
 	}
 	return aes.NewAESCrypt(key).Encrypt(byteInfo, gocrypto.ECB)
 }
@@ -333,13 +381,12 @@ func (u *UtilHelper) Sha256Of(input []byte) string {
 func (u *UtilHelper) CheckFileExists(ctx context.Context, filePath string) (err error) {
 	if !gfile.Exists(filePath) {
 		if err = gfile.Mkdir(filePath); err != nil {
-			g.Log(u.Logger(ctx)).Error(ctx, "CheckFileExists gf file.Mkdir error:", err)
-			return err
+			err = gerror.Wrap(err, "CheckFileExists gf file.Mkdir failed")
+			return
 		}
 	} else if !gfile.IsDir(filePath) {
 		return gerror.NewCode(gcode.CodeInvalidParameter, `parameter "dirPath" should be a directory path`)
 	}
-	g.Log(u.Logger(ctx)).Info(ctx, "CheckFileExists filePath:", filePath)
 	return nil
 }
 
@@ -350,7 +397,7 @@ func (u *UtilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 		data, err = u.Sha256OfShort(input)
 	)
 	if err != nil {
-		return "", gerror.Wrap(err, "UserAgentIPHash Sha256OfShort failed")
+		return "", err
 	}
 
 	str := u.Base58Encode(data)
@@ -361,7 +408,7 @@ func (u *UtilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 func (u *UtilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
-		return nil, gerror.Wrap(err, "Sha256OfShort write error")
+		return nil, gerror.Wrap(err, "Sha256OfShort write failed")
 	}
 	return algorithm.Sum(nil), nil
 }
@@ -375,22 +422,25 @@ func (u *UtilHelper) Base58Encode(data []byte) string {
 func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
 	data, err := u.Sha256OfShort(password)
 	if err != nil {
-		return "", gerror.Wrap(err, "utilHelper PasswordBase58Hash Sha256OfShort error")
+		return "", err
 	}
 	return u.Base58Encode(data), nil
 }
 
 // GenerateShortLink generate short link
 func (u *UtilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
-	logger := g.Log(u.Logger(ctx))
-	logger.Debug(ctx, "utilHelper GenerateShortLink url:", url)
-	algorithm := sha256.New()
-	if _, err := algorithm.Write([]byte(strings.TrimSpace(url))); err != nil {
-		return "", gerror.Wrap(err, "Sha256OfShort write error")
+	var (
+		logger    = g.Log(u.Logger(ctx))
+		data, err = u.Sha256OfShort(url)
+	)
+	logger.Debug(ctx, "utilHelper GenerateShortLink start url:", url)
+
+	if err != nil {
+		return "", err
 	}
-	urlHash := algorithm.Sum(nil)
-	str := base58.Encode(urlHash)
-	logger.Debug(ctx, "utilHelper GenerateShortLink str:", str)
+	logger.Debug(ctx, "utilHelper GenerateShortLink sha256 data:", string(data))
+	str := base58.Encode(data)
+	logger.Debug(ctx, "utilHelper GenerateShortLink base58 encode str:", str)
 	return str[:8], nil
 }
 

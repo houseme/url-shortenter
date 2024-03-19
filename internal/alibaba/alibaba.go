@@ -28,18 +28,16 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 
 	// 请替换成您的 AccessKey ID、AccessKey Secret。
 	var (
-		logger          = helper.Helper().Logger(ctx)
+		logger          = g.Log(helper.Helper().Logger(ctx))
 		client          *green.Client
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
-	g.Log(logger).Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
+	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
 	if err != nil {
-		g.Log(logger).Error(ctx, "alibabaEnv.NewAlibabaEnv error: ", err)
 		return "", err
 	}
 	if client, err = green.NewClientWithAccessKey(alibabaEnv.Region(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx)); err != nil {
-		g.Log(logger).Error(ctx, "green.NewClientWithAccessKey error: ", err)
-		return "", err
+		return "", gerror.Wrap(err, "green.NewClientWithAccessKey failed")
 	}
 
 	task1 := map[string]interface{}{"dataId": gconv.String(trxID), "url": fileName}
@@ -54,8 +52,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	request.SetContent(content)
 	response, err := client.ImageSyncScan(request)
 	if err != nil {
-		err = gerror.Wrap(err, "client.ImageSyncScan failed")
-		return "", err
+		return "", gerror.Wrap(err, "client.ImageSyncScan failed")
 	}
 	if response.GetHttpStatus() != 200 {
 		return "", gerror.New("response not success. status:" + strconv.Itoa(response.GetHttpStatus()))
