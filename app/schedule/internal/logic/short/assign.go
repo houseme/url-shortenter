@@ -13,7 +13,6 @@ import (
 
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
@@ -61,22 +60,10 @@ func (s *sShort) AssignTask(ctx context.Context) (err error) {
 		return
 	}
 
-	var conn gredis.Conn
-	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.Wrap(err, "redis conn failed")
-		return
-	}
-	logger.Info(ctx, "AssignTask list len", len(list))
-	defer func() {
-		if errs := conn.Close(ctx); errs != nil {
-			logger.Errorf(ctx, "AssignTask conn.Close failed:%+v", errs)
-		}
-		logger.Info(ctx, "AssignTask conn.Close")
-	}()
-	var result *gvar.Var
 	for i := 0; i < len(list); i++ {
-		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortMirrorQueue(ctx), list[i].ShortNo); err != nil {
-			logger.Error(ctx, "AssignTask redis list left push failed:", err)
+		var result *gvar.Var
+		if result, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortMirrorQueue(ctx), list[i].ShortNo); err != nil {
+			logger.Errorf(ctx, "AssignTask redis list left push failed:%+v", err)
 		}
 		logger.Info(ctx, "AssignTask list left push result:", result)
 	}
@@ -110,20 +97,10 @@ func (s *sShort) AuditAssignTask(ctx context.Context) (err error) {
 		return
 	}
 
-	var conn gredis.Conn
-	if conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.Wrap(err, "redis conn failed")
-		return
-	}
-	defer func() {
-		if errs := conn.Close(ctx); errs != nil {
-			logger.Error(ctx, "AuditAssignTask conn.Close failed:", errs)
-		}
-	}()
-	var result *gvar.Var
 	logger.Info(ctx, "AuditAssignTask list len", len(list))
 	for i := 0; i < len(list); i++ {
-		if result, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAuditQueue(ctx), list[i].ShortNo); err != nil {
+		var result *gvar.Var
+		if result, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAuditQueue(ctx), list[i].ShortNo); err != nil {
 			logger.Errorf(ctx, "AuditAssignTask redis list left push failed:%+v", err)
 			continue
 		}
@@ -170,8 +147,8 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-QueryShortAndGrabAudit")
 	defer span.End()
 	var (
-		logger    = g.Log(helper.Helper().Logger(ctx))
-		conn, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Conn(ctx)
+		logger      = g.Log(helper.Helper().Logger(ctx))
+		result, err = g.Redis(cache.RedisCache().ShortConn(ctx)).Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx))
 	)
 
 	defer func() {
@@ -182,15 +159,6 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}()
 
 	if err != nil {
-		err = gerror.Wrap(err, "redis conn failed")
-		return
-	}
-
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
-	var result *gvar.Var
-	if result, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAuditQueue(ctx)); err != nil {
 		err = gerror.Wrap(err, "QueryShortAndGrabAudit redis list right pop failed")
 		return
 	}
@@ -200,7 +168,7 @@ func (s *sShort) QueryShortAndGrabAudit(ctx context.Context) {
 	}
 	logger.Info(ctx, "QueryShortAndGrabAudit shortNo:", result.String())
 	var shortURL = (*entity.ShortUrls)(nil)
-	if err = dao.ShortUrls.Ctx(ctx).Scan(&shortURL, "short_no = ?", result.Uint64()); err != nil {
+	if err = dao.ShortUrls.Ctx(ctx).Scan(&shortURL, do.ShortUrls{ShortNo: result.Uint64()}); err != nil {
 		err = gerror.Wrap(err, "QueryShortAndGrabAudit query short urls scan failed")
 		return
 	}
@@ -354,26 +322,22 @@ func (s *sShort) GrabImageAudit(ctx context.Context, shortURL *entity.ShortUrls)
 }
 
 // ReportHashChange 上报阿里云和腾讯云校验结果
-func (s *sShort) ReportHashChange(ctx context.Context, shortAudit *entity.ShortAuditLog, basePath string) error {
+func (s *sShort) ReportHashChange(ctx context.Context, shortAudit *entity.ShortAuditLog, basePath string) (err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-GrabImageAudit")
 	defer span.End()
 
-	var (
-		log = g.Log(helper.Helper().Logger(ctx))
-		err error
-	)
-	log.Info(ctx, "ReportHashChange shortAudit: ", shortAudit)
-
+	var logger = g.Log(helper.Helper().Logger(ctx))
+	logger.Info(ctx, "ReportHashChange shortAudit: ", shortAudit)
 	if shortAudit.SafetyAuditTencent, err = tencent.Main(ctx, shortAudit.TrxId, basePath+shortAudit.FullScreenshot); err != nil {
-		log.Error(ctx, "ReportHashChange tencent.Main failed:", err)
 		err = gerror.Wrap(err, "ReportHashChange tencent.Main failed")
-		return err
+		return
 	}
+	logger.Debug(ctx, "ReportHashChange tencent.Main end ")
 	if shortAudit.SafetyAuditAlibaba, err = alibaba.Main(ctx, shortAudit.TrxId,
 		basePath+shortAudit.FullScreenshot); err != nil {
-		log.Error(ctx, "ReportHashChange alibaba.Main failed:", err)
 		err = gerror.Wrap(err, "ReportHashChange alibaba.Main failed")
-		return err
+		return
 	}
-	return nil
+	logger.Debug(ctx, "ReportHashChange shortAudit end ")
+	return
 }

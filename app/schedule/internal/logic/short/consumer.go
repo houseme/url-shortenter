@@ -10,11 +10,10 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/container/gvar"
-	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/os/gtime"
 	"golang.org/x/sync/singleflight"
 
 	"github.com/houseme/url-shortenter/app/schedule/internal/consts"
@@ -29,27 +28,14 @@ var sfg singleflight.Group
 
 // AccessLog is the struct of access log
 func (s *sShort) AccessLog(ctx context.Context) (err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-AccessLog")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-sShort-AccessLog")
 	defer span.End()
 
 	var (
 		logger = g.Log(helper.Helper().Logger(ctx))
-		conn   gredis.Conn
+		val    *gvar.Var
 	)
-	if conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.Wrap(err, "access logger create Redis connection failed")
-		return err
-	}
-
-	defer func() {
-		_ = conn.Close(ctx)
-		if err != nil {
-			logger.Errorf(ctx, "access logger error is: %+v ", err)
-		}
-	}()
-
-	var val *gvar.Var
-	if val, err = conn.Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
+	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
 		err = gerror.Wrap(err, "access logger get queue length failed")
 		return err
 	}
@@ -76,25 +62,15 @@ func (s *sShort) AccessLog(ctx context.Context) (err error) {
 
 // dealAccessLog is the function of deal access log
 func (s *sShort) dealAccessLog(ctx context.Context) (err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-dealAccessLog")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-sShort-dealAccessLog")
 	defer span.End()
 
 	var (
 		logger = g.Log(helper.Helper().Logger(ctx))
-		conn   gredis.Conn
+		val    *gvar.Var
 	)
-
-	if conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.New("access logger create redis connection failed")
-		return err
-	}
-
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
-
-	var val *gvar.Var
-	if val, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
+	logger.Debug(ctx, "access logger right pop queue start")
+	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "RPOP", cache.RedisCache().ShortAccessLogQueue(ctx)); err != nil {
 		err = gerror.Wrap(err, "access logger right pop queue failed")
 		return
 	}
@@ -128,7 +104,7 @@ func (s *sShort) dealAccessLog(ctx context.Context) (err error) {
 		return
 	}
 	logger.Info(ctx, "access logger insert success last id is ", lastID)
-	if val, err = conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), lastID); err != nil {
+	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), lastID); err != nil {
 		err = gerror.Wrap(err, "access logger left push ShortAccessLogSummaryQueue failed")
 		return
 	}
@@ -138,74 +114,53 @@ func (s *sShort) dealAccessLog(ctx context.Context) (err error) {
 
 // ShortAccessLogSummary is the struct of short access log summary
 func (s *sShort) ShortAccessLogSummary(ctx context.Context) error {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-ShortAccessLogSummary")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-sShort-ShortAccessLogSummary")
 	defer span.End()
 
 	var (
-		log       = g.Log(helper.Helper().Logger(ctx))
-		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
+		logger   = g.Log(helper.Helper().Logger(ctx))
+		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogSummaryQueue(ctx))
 	)
 	if err != nil {
-		log.Error(ctx, "access log Summary create redis connection error", err)
-		return err
-	}
-
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
-
-	var val *gvar.Var
-	if val, err = conn.Do(ctx, "LLEN", cache.RedisCache().ShortAccessLogSummaryQueue(ctx)); err != nil {
-		log.Error(ctx, "access log summary get queue length error", err)
-		return err
+		return gerror.Wrap(err, "access logger summary get queue length error")
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		log.Info(ctx, "access log summary queue is empty")
-		return gerror.New("access log summary queue is empty")
+		logger.Debug(ctx, "access logger summary queue is empty")
+		return nil
 	}
 	listLen := val.Int()
-	log.Info(ctx, "access log summary queue length is ", listLen)
+	logger.Debug(ctx, "access logger summary queue length is ", listLen)
 	if listLen <= 0 {
-		log.Error(ctx, "access log Summary queue is empty length is zero")
-		return gerror.New("access log Summary queue is empty length is zero")
+		logger.Debug(ctx, "access logger Summary queue is empty length is zero")
+		return nil
 	}
 
 	for i := 0; i < listLen; i++ {
 		if err = s.dealLogSummary(ctx); err != nil {
-			log.Error(ctx, "access log summary deal error", err)
+			logger.Errorf(ctx, "access logger summary deal error:%+v", err)
 		}
 	}
-	log.Info(ctx, "access log queue end")
+	logger.Info(ctx, "access logger queue end")
 	return nil
 }
 
 func (s *sShort) dealLogSummary(ctx context.Context) error {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-sShort-dealLogSummary")
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-sShort-dealLogSummary")
 	defer span.End()
 
 	var (
-		log       = g.Log(helper.Helper().Logger(ctx))
-		val       *gvar.Var
-		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
+		logger   = g.Log(helper.Helper().Logger(ctx))
+		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "RPOP", cache.RedisCache().ShortAccessLogSummaryQueue(ctx))
 	)
+
 	if err != nil {
-		err = gerror.Wrap(err, "access log Summary create redis connection error")
-		return err
-	}
-
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
-
-	if val, err = conn.Do(ctx, "RPOP", cache.RedisCache().ShortAccessLogSummaryQueue(ctx)); err != nil {
-		err = gerror.Wrap(err, "access log summary get queue length error")
-		return err
+		return gerror.Wrap(err, "access logger summary get queue length failed")
 	}
 
 	if val.IsNil() || val.IsEmpty() {
-		log.Info(ctx, "access log summary queue is empty")
-		return gerror.New("access log summary queue is empty")
+		logger.Debug(ctx, "access logger summary queue is empty")
+		return nil
 	}
 
 	var (
@@ -215,24 +170,25 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 
 	defer func() {
 		if err != nil {
-			if _, errs := conn.Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID); errs != nil {
-				log.Error(ctx, "access log summary left push error", errs)
+			if _, errs := g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogSummaryQueue(ctx), ID); errs != nil {
+				logger.Error(ctx, "access logger summary left push error", errs)
 			}
 		}
 	}()
 
-	if err = dao.AccessLogs.Ctx(ctx).OmitEmpty().Scan(&alg, "id = ?", ID); err != nil {
-		err = gerror.Wrap(err, "access log summary select db  error")
-		return err
+	if err = dao.AccessLogs.Ctx(ctx).Scan(&alg, do.AccessLogs{Id: ID}); err != nil {
+		return gerror.Wrap(err, "access logger summary select db  failed")
 	}
 
 	if alg == nil {
-		log.Info(ctx, "access log is nil")
-		err = gerror.New("access log is nil")
-		return err
+		logger.Debug(ctx, "access logger is nil")
+		return nil
 	}
 
-	var slts *entity.AccessLogsSummary
+	var (
+		slts   *entity.AccessLogsSummary
+		lastID int64
+	)
 	if err = dao.AccessLogsSummary.Ctx(ctx).Scan(&slts, do.AccessLogsSummary{
 		AccountNo:  alg.AccountNo,
 		ShortNo:    alg.ShortNo,
@@ -242,10 +198,8 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 		DayTime:    alg.AccessTime.Day(),
 		AccessDate: alg.AccessDate,
 	}); err != nil {
-		err = gerror.Wrap(err, "access log select summary from db error")
-		return err
+		return gerror.Wrap(err, "access logger select summary from db failed")
 	}
-
 	if slts == nil {
 		slts = &entity.AccessLogsSummary{
 			ShortNo:    alg.ShortNo,
@@ -268,12 +222,11 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 		if alg.VisitState == consts.VisitStateInvalid {
 			slts.FailSum = 1
 		}
-		var lastID int64
+
 		if lastID, err = dao.AccessLogsSummary.Ctx(ctx).OmitEmpty().Unscoped().InsertAndGetId(slts); err != nil {
-			err = gerror.Wrap(err, "access log summary insert error")
-			return err
+			return gerror.Wrap(err, "access logger summary insert failed")
 		}
-		log.Info(ctx, "access log summary insert success last id is ", lastID)
+		logger.Info(ctx, "access logger summary insert success last id is ", lastID)
 	} else {
 		if alg.VisitState == consts.VisitStateNormal {
 			slts.SuccessSum = slts.SuccessSum + 1
@@ -282,18 +235,20 @@ func (s *sShort) dealLogSummary(ctx context.Context) error {
 			slts.FailSum = slts.FailSum + 1
 		}
 
-		if _, err = dao.AccessLogsSummary.Ctx(ctx).OmitEmpty().Unscoped().Where("id = ?", slts.Id).Update(g.Map{
-			dao.AccessLogsSummary.Columns().Summary:    slts.Summary + 1,
-			dao.AccessLogsSummary.Columns().SuccessSum: slts.SuccessSum,
-			dao.AccessLogsSummary.Columns().FailSum:    slts.FailSum,
-			dao.AccessLogsSummary.Columns().ModifyTime: gdb.Raw("current_timestamp(6)"),
+		if lastID, err = dao.AccessLogsSummary.Ctx(ctx).OmitEmpty().Unscoped().UpdateAndGetAffected(do.AccessLogsSummary{
+			Summary:    slts.Summary + 1,
+			SuccessSum: slts.SuccessSum,
+			FailSum:    slts.FailSum,
+			ModifyTime: gtime.Now(),
+		}, do.AccessLogsSummary{
+			Id: slts.Id,
 		}); err != nil {
-			err = gerror.Wrap(err, "access log summary update error")
-			return err
+			return gerror.Wrap(err, "access logger summary update error")
 		}
-		log.Info(ctx, "access log summary update success")
+		logger.Info(ctx, "access logger summary update success lastID:", lastID)
 	}
-	log.Info(ctx, "access log summary modify end success")
+
+	logger.Info(ctx, "access logger summary modify end success")
 
 	return nil
 }
@@ -304,65 +259,42 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 	defer span.End()
 
 	var (
-		log       = g.Log(helper.Helper().Logger(ctx))
-		conn, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Conn(ctx)
+		log      = g.Log(helper.Helper().Logger(ctx))
+		su       *entity.ShortUrls
+		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "GET", cache.RedisCache().ShortCacheObject(ctx, short))
 	)
+
 	if err != nil {
-		log.Error(ctx, "get short cache create redis connection error", err)
-		return nil, err
+		log.Errorf(ctx, "get short cache get from redis error:%+v", err)
 	}
 
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
-	var (
-		val *gvar.Var
-		su  *entity.ShortUrls
-	)
-	if val, err = conn.Do(ctx, "GET", cache.RedisCache().ShortCacheObject(ctx, short)); err == nil {
-		if !val.IsNil() && !val.IsEmpty() {
-			if err = val.Scan(&su); err == nil {
-				if su != nil {
-					log.Info(ctx, "get short cache success", su)
-					return su, nil
-				}
-				log.Info(ctx, "get short cache scan after su is nil")
-			} else {
-				log.Error(ctx, "get short cache scan error", err)
-			}
+	if !val.IsNil() && !val.IsEmpty() {
+		if err = val.Scan(&su); err == nil && su != nil {
+			log.Debug(ctx, "get short cache success", su)
+			return su, nil
+		}
+		if err != nil {
+			log.Errorf(ctx, "get short cache scan error:%+v", err)
 		} else {
-			log.Info(ctx, "get short cache is nil")
+			log.Info(ctx, "get short cache scan after su is nil")
 		}
-	} else {
-		log.Error(ctx, "get short cache get from redis error", err)
 	}
-	// prevent cache breakdown
-	v, err, _ := sfg.Do(short, func() (interface{}, error) {
-		// query DB
-		if err = dao.ShortUrls.Ctx(ctx).Scan(&su, "short_url=?", short); err != nil {
-			log.Error(ctx, "get short cache query db error", err)
-			return nil, err
-		}
-		if su == nil {
-			log.Info(ctx, "get short cache query db su is nil")
-			return nil, nil
-		}
 
-		// set cache
-		if val, err = conn.Do(ctx, "SETEX", cache.RedisCache().ShortCacheObject(ctx, short), 1800, su); err != nil {
-			log.Error(ctx, "get short cache set cache error", err)
-		}
-		log.Info(ctx, "get short cache set cache success", su)
-		return su, err
-	})
-
-	if err != nil {
+	log.Debug(ctx, "get short cache is nil")
+	// query DB
+	if err = dao.ShortUrls.Ctx(ctx).Scan(&su, do.ShortUrls{ShortUrl: short}); err != nil {
+		log.Errorf(ctx, "get short cache query db error:%+v", err)
 		return nil, err
 	}
-
-	if v == nil {
-		log.Info(ctx, "get short cache from db v1 is nil")
-		return nil, gerror.New("get short cache from db v1 is nil")
+	if su == nil {
+		log.Info(ctx, "get short cache query db su is nil")
+		return nil, nil
 	}
-	return v.(*entity.ShortUrls), nil
+
+	// set cache
+	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "SETEX", cache.RedisCache().ShortCacheObject(ctx, short), 1800, su); err != nil {
+		log.Error(ctx, "get short cache set cache error", err)
+	}
+	log.Info(ctx, "get short cache set cache success", su)
+	return su, nil
 }
