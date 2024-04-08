@@ -23,8 +23,8 @@ mkdir -p style_tool
 
 cd style_tool
 
-wget https://github.com/incu6us/goimports-reviser/releases/download/v3.1.1/goimports-reviser_3.1.1_linux_amd64.tar.gz
-tar -zxvf goimports-reviser_3.1.1_linux_amd64.tar.gz
+wget https://github.com/incu6us/goimports-reviser/releases/download/v3.6.4/goimports-reviser_3.6.4_linux_amd64.tar.gz
+tar -zxvf goimports-reviser_3.6.4_linux_amd64.tar.gz
 mv goimports-reviser ../
 
 cd ../

@@ -108,11 +108,10 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 		// Shutdown flushes any remaining spans and shuts down the exporter.
 		ctx, cancel := context.WithTimeout(ctx, time.Second)
 		defer cancel()
-		if err = traceExp.Shutdown(ctx); err != nil {
-			g.Log().Errorf(ctx, "Shutdown traceExp failed err:%+v", err)
-			otel.Handle(err)
+		if err = tracerProvider.Shutdown(ctx); err != nil {
+			g.Log().Errorf(ctx, "Shutdown tracer provider failed err:%+v", err)
 		}
-		g.Log().Debug(ctx, "Shutdown traceExp success")
+		g.Log().Debug(ctx, "Shutdown tracer provider success")
 	}, nil
 }
 
@@ -181,10 +180,9 @@ func InitOtlpHTTP(serviceName, endpoint, path, version, environment string) (fun
 	return func(ctx context.Context) {
 		ctx, cancel := context.WithTimeout(ctx, time.Second)
 		defer cancel()
-		if err = traceExp.Shutdown(ctx); err != nil {
-			g.Log().Errorf(ctx, "Shutdown traceExp failed err:%+v", err)
-			otel.Handle(err)
+		if err = tracerProvider.Shutdown(ctx); err != nil {
+			g.Log().Errorf(ctx, "Shutdown trace provider failed err:%+v", err)
 		}
-		g.Log().Debug(ctx, "Shutdown traceExp success")
+		g.Log().Debug(ctx, "Shutdown trace provider success")
 	}, nil
 }
