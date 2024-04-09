@@ -37,7 +37,7 @@ func (c *ControllerV1) Home(ctx context.Context, req *v1.HomeReq) (res *v1.HomeR
 		return
 	}
 
-	if err == nil && gstr.Trim(out) == "" {
+	if gstr.Trim(out) == "" {
 		g.RequestFromCtx(ctx).Response.Status = http.StatusNotFound
 		return
 	}
