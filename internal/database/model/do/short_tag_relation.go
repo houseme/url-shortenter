@@ -13,7 +13,7 @@ import (
 type ShortTagRelation struct {
 	g.Meta     `orm:"table:short_tag_relation, do:true"`
 	Id         interface{} // ID
-	AccountNo  interface{} // 用户标识
+	UserNo     interface{} // 用户标识
 	TagNo      interface{} // 标签标识
 	ShortNo    interface{} // 短链的唯一 ID
 	State      interface{} // 状态 0 默认 100 正常 200 失效

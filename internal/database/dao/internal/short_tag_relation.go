@@ -21,7 +21,7 @@ type ShortTagRelationDao struct {
 // ShortTagRelationColumns defines and stores column names for table short_tag_relation.
 type ShortTagRelationColumns struct {
 	Id         string // ID
-	AccountNo  string // 用户标识
+	UserNo     string // 用户标识
 	TagNo      string // 标签标识
 	ShortNo    string // 短链的唯一 ID
 	State      string // 状态 0 默认 100 正常 200 失效
@@ -32,7 +32,7 @@ type ShortTagRelationColumns struct {
 // shortTagRelationColumns holds the columns for table short_tag_relation.
 var shortTagRelationColumns = ShortTagRelationColumns{
 	Id:         "id",
-	AccountNo:  "account_no",
+	UserNo:     "user_no",
 	TagNo:      "tag_no",
 	ShortNo:    "short_no",
 	State:      "state",
