@@ -8,7 +8,7 @@ import (
 	"github.com/houseme/url-shortenter/app/console/api/domain"
 )
 
-// ControllerV1 is the implement of the interface Controller.
+// ControllerV1 is the implement of the interface IDomainV1 Controller.
 type ControllerV1 struct{}
 
 // NewV1 creates and returns a new ControllerV1 object.

@@ -8,10 +8,10 @@ import (
 	"github.com/houseme/url-shortenter/app/console/api/account"
 )
 
-// ControllerV1 is for account controller implementation.
+// ControllerV1 is the implement of the interface IAccountV1 Controller.
 type ControllerV1 struct{}
 
-// NewV1 creates and returns a new account controller object.
+// NewV1 creates and returns a new account ControllerV1 object.
 func NewV1() account.IAccountV1 {
 	return &ControllerV1{}
 }

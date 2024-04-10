@@ -20,6 +20,7 @@ type CreateShortInput struct {
 // CreateShortOutput is the output of CreateShort
 type CreateShortOutput struct {
 	ShortURL string `json:"shortUrl" dc:"短链"`
+	ShortNo  uint64 `json:"shortNo,string" dc:"短链编号"`
 }
 
 // QueryShortInput is the input for QueryShort

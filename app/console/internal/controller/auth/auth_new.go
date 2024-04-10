@@ -8,10 +8,10 @@ import (
 	"github.com/houseme/url-shortenter/app/console/api/auth"
 )
 
-// ControllerV1 is for account controller implementation.
+// ControllerV1 is the implement of the interface IAuthV1 Controller.
 type ControllerV1 struct{}
 
-// NewV1 creates and returns a new account controller object.
+// NewV1 creates and returns a new auth ControllerV1 object.
 func NewV1() auth.IAuthV1 {
 	return &ControllerV1{}
 }

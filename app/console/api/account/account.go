@@ -7,7 +7,7 @@ package account
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/account/v1"
+	"github.com/houseme/url-shortenter/app/console/api/account/v1"
 )
 
 type IAccountV1 interface {
