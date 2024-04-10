@@ -2,14 +2,15 @@
 // Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
 // =================================================================================
 
-package home
+package access
 
 import (
 	"context"
 
-	"github.com/houseme/url-shortenter/app/front/api/home/v1"
+	"github.com/houseme/url-shortenter/app/console/api/access/v1"
 )
 
-type IHomeV1 interface {
-	Home(ctx context.Context, req *v1.HomeReq) (res *v1.HomeRes, err error)
+type IAccessV1 interface {
+	List(ctx context.Context, req *v1.ListReq) (res *v1.ListRes, err error)
+	Detail(ctx context.Context, req *v1.DetailReq) (res *v1.DetailRes, err error)
 }

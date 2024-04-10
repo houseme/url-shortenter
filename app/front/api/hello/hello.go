@@ -7,7 +7,7 @@ package hello
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/front/api/hello/v1"
+	"github.com/houseme/url-shortenter/app/front/api/hello/v1"
 )
 
 type IHelloV1 interface {

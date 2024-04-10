@@ -7,7 +7,7 @@ package echo
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/echo/v1"
+	"github.com/houseme/url-shortenter/app/console/api/echo/v1"
 )
 
 type IEchoV1 interface {

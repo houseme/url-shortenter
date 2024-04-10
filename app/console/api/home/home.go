@@ -7,7 +7,7 @@ package home
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/home/v1"
+	"github.com/houseme/url-shortenter/app/console/api/home/v1"
 )
 
 type IHomeV1 interface {

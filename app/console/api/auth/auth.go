@@ -7,7 +7,7 @@ package auth
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/auth/v1"
+	"github.com/houseme/url-shortenter/app/console/api/auth/v1"
 )
 
 type IAuthV1 interface {

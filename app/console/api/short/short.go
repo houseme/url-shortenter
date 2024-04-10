@@ -7,7 +7,7 @@ package short
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/short/v1"
+	"github.com/houseme/url-shortenter/app/console/api/short/v1"
 )
 
 type IShortV1 interface {
@@ -16,4 +16,7 @@ type IShortV1 interface {
 	ModifyShort(ctx context.Context, req *v1.ModifyShortReq) (res *v1.ModifyShortRes, err error)
 	QueryStat(ctx context.Context, req *v1.QueryStatReq) (res *v1.QueryStatRes, err error)
 	ShortDomain(ctx context.Context, req *v1.ShortDomainReq) (res *v1.ShortDomainRes, err error)
+	CreateTag(ctx context.Context, req *v1.CreateTagReq) (res *v1.CreateTagRes, err error)
+	DelTag(ctx context.Context, req *v1.DelTagReq) (res *v1.DelTagRes, err error)
+	AddTag(ctx context.Context, req *v1.AddTagReq) (res *v1.AddTagRes, err error)
 }

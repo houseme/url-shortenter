@@ -7,7 +7,7 @@ package domain
 import (
 	"context"
 
-	v1 "github.com/houseme/url-shortenter/app/console/api/domain/v1"
+	"github.com/houseme/url-shortenter/app/console/api/domain/v1"
 )
 
 type IDomainV1 interface {
