@@ -21,5 +21,6 @@ gfcli:
         noModelComment: true
         tables: ""
         group: "default"
+        clear: true
         overwriteDao: true
         path: "internal/database"
