@@ -19,8 +19,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.896
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.896
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.897
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.897
 	go.opentelemetry.io/otel v1.25.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.25.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.25.0
@@ -80,7 +80,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/prometheus/client_golang v1.19.0 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.52.2 // indirect
+	github.com/prometheus/common v0.52.3 // indirect
 	github.com/prometheus/procfs v0.13.0 // indirect
 	github.com/redis/go-redis/v9 v9.5.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
