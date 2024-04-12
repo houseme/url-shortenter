@@ -9,6 +9,7 @@ package model
 // Base is the base model
 type Base struct {
 	AuthAccountNo    uint64 `json:"authAccountNo" dc:"认证账号"`
+	AuthUserNo       uint64 `json:"authUserNo" dc:"认证用户"`
 	AuthAccountLevel uint   `json:"authAccountLevel" dc:"账号级别"`
 }
 

@@ -65,4 +65,25 @@ const (
 	ShortDomainStateNormal = 100
 	// ShortDomainStateInvalid 失效
 	ShortDomainStateInvalid = 200
+
+	// TagStateDefault 标签状态 0 默认 100 正常 200 失效
+	TagStateDefault = 0
+	// TagStateNormal 正常
+	TagStateNormal = 100
+	// TagStateInvalid 失效
+	TagStateInvalid = 200
+
+	// ResponseCodeDefault 响应 code 值，0 默认，100 成功，200 失败
+	ResponseCodeDefault = 0
+	// ResponseCodeSuccess 成功
+	ResponseCodeSuccess = 100
+	// ResponseCodeFailed 失败
+	ResponseCodeFailed = 200
+
+	// ResponseMsgDefault 响应消息，0 默认，100 成功，200 失败
+	ResponseMsgDefault = "处理中"
+	// ResponseMsgSuccess 成功
+	ResponseMsgSuccess = "成功"
+	// ResponseMsgFailed 失败
+	ResponseMsgFailed = "失败"
 )
