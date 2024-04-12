@@ -569,10 +569,10 @@ github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7/go.mod h1:q4W45
 github.com/temoto/robotstxt v1.1.1/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
 github.com/temoto/robotstxt v1.1.2 h1:W2pOjSJ6SWvldyEuiFXNxz3xZ8aiWX5LbfDiOFd7Fxg=
 github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.897 h1:FdBhC7GpdpgiDvreo8EQjh7y9oWAFWw+2U8kH4GsX1k=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.897/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.897 h1:eaP4gOpxyhrgzBN8g3/3USnNfWAVzRec0W8RaHeHewM=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.897/go.mod h1:HHhsnNNLQvovHVbZpQifVtwOE2MpR87ZSeQOjFEbkNM=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.898 h1:ERwcXqhc94L9cFxtiI0pvt7IJtlHl/p/Jayl3mLw+ms=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.898/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.898 h1:Mw7BqMqHU+/bB3x6H2+cSjpbgCU5mrLJNFPvQSBJMuI=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.898/go.mod h1:a/RXaQxbZuO2xVRe7/k5Le3aDodIix45TYhwf63whOw=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/uber/jaeger-client-go v2.30.0+incompatible h1:D6wyKGCecFaSRUpo8lCVbaOOb6ThwMmTEbhRwtKR97o=
 github.com/uber/jaeger-client-go v2.30.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
