@@ -12,6 +12,7 @@ import (
 type ShortUrls struct {
 	Id            uint64      `json:"id"            orm:"id"              description:"ID"`
 	AccountNo     uint64      `json:"accountNo"     orm:"account_no"      description:"所属用户表示"`
+	UserNo        uint64      `json:"userNo"        orm:"user_no"         description:"用户表示"`
 	ShortNo       uint64      `json:"shortNo"       orm:"short_no"        description:"短链的唯一 ID"`
 	ShortUrl      string      `json:"shortUrl"      orm:"short_url"       description:"短链内容"`
 	ShortDomain   string      `json:"shortDomain"   orm:"short_domain"    description:"短链域名"`

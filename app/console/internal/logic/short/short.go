@@ -19,11 +19,11 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 	"github.com/houseme/url-shortenter/internal/database/dao"
 	"github.com/houseme/url-shortenter/internal/database/model/do"
+	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sShort struct {
-}
+type sShort struct{}
 
 // init
 func init() {
@@ -35,8 +35,26 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-CreateShort")
 	defer span.End()
 
-	var logger = g.Log(helper.Helper().Logger(ctx))
+	var (
+		logger = g.Log(helper.Helper().Logger(ctx))
+		base   = (*entity.ShortUrls)(nil)
+	)
 	logger.Debug(ctx, "short-CreateShort in:", in)
+	if err = dao.ShortUrls.Ctx(ctx).Scan(&base, do.ShortUrls{
+		UserNo:   in.AuthUserNo,
+		ShortUrl: in.DestURL,
+	}); err != nil {
+		return
+	}
+
+	// If the short url already exists, return the existing short url
+	if base != nil {
+		out = &model.CreateShortOutput{
+			ShortURL: base.ShortUrl,
+			ShortNo:  base.ShortNo,
+		}
+		return
+	}
 
 	return
 }
@@ -46,8 +64,8 @@ func (s *sShort) ModifyShort(ctx context.Context, in *model.ModifyShortInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-ModifyShort")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "short-ModifyShort in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-ModifyShort in:", in)
 
 	return
 }
@@ -57,8 +75,8 @@ func (s *sShort) QueryShort(ctx context.Context, in *model.QueryShortInput) (out
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryShort")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "short-QueryShort in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-QueryShort in:", in)
 
 	return
 }
@@ -68,8 +86,8 @@ func (s *sShort) QueryStat(ctx context.Context, in *model.QueryStatInput) (out *
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryStat")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "short-QueryStat in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-QueryStat in:", in)
 
 	return
 }
@@ -79,15 +97,15 @@ func (s *sShort) ShortDomain(ctx context.Context, in *model.ShortDomainInput) (o
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-ShortDomain")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "short-ShortDomain in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-ShortDomain in:", in)
 	out = &model.ShortDomainOutput{
 		List: []*model.ShortDomainItem{},
 	}
 
 	defer func() {
 		if err != nil {
-			log.Error(ctx, "short-ShortDomain error:", err)
+			logger.Error(ctx, "short-ShortDomain error:", err)
 			return
 		}
 	}()
@@ -101,6 +119,6 @@ func (s *sShort) ShortDomain(ctx context.Context, in *model.ShortDomainInput) (o
 		err = gerror.New("short-ShortDomain error")
 		return
 	}
-	log.Debug(ctx, "short-ShortDomain out:", out)
+	logger.Debug(ctx, "short-ShortDomain out:", out)
 	return
 }

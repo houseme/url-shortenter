@@ -14,6 +14,7 @@ type ShortUrls struct {
 	g.Meta        `orm:"table:short_urls, do:true"`
 	Id            interface{} // ID
 	AccountNo     interface{} // 所属用户表示
+	UserNo        interface{} // 用户表示
 	ShortNo       interface{} // 短链的唯一 ID
 	ShortUrl      interface{} // 短链内容
 	ShortDomain   interface{} // 短链域名
