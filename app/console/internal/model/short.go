@@ -13,8 +13,9 @@ import (
 // CreateShortInput is the input for creating a short
 type CreateShortInput struct {
 	*Base   `json:"-"`
-	Memo    string `json:"memo" dc:"备注"`
-	DestURL string `json:"destUrl" dc:"目标链接"`
+	Memo    string   `json:"memo" dc:"备注" v:"required#请输入备注"`
+	DestURL string   `json:"destUrl" dc:"目标链接" v:"required#请输入目标链接"`
+	TagList []uint64 `json:"tagList" dc:"标签列表"`
 }
 
 // CreateShortOutput is the output of CreateShort

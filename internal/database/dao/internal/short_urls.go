@@ -22,6 +22,7 @@ type ShortUrlsDao struct {
 type ShortUrlsColumns struct {
 	Id            string // ID
 	AccountNo     string // 所属用户表示
+	UserNo        string // 用户表示
 	ShortNo       string // 短链的唯一 ID
 	ShortUrl      string // 短链内容
 	ShortDomain   string // 短链域名
@@ -45,6 +46,7 @@ type ShortUrlsColumns struct {
 var shortUrlsColumns = ShortUrlsColumns{
 	Id:            "id",
 	AccountNo:     "account_no",
+	UserNo:        "user_no",
 	ShortNo:       "short_no",
 	ShortUrl:      "short_url",
 	ShortDomain:   "short_domain",
