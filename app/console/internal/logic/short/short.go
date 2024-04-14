@@ -55,6 +55,9 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 		}
 		return
 	}
+	// Create a new short url
+	shortNo := helper.Helper().InitTrxID(ctx, in.AuthUserNo)
+	logger.Debug(ctx, "short-CreateShort shortNo:", shortNo)
 
 	return
 }
