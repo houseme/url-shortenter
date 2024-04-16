@@ -12,12 +12,13 @@ package statistic
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/net/gtrace"
+
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-type sStatistic struct {
-}
+type sStatistic struct{}
 
 // init is the initialization of sStatistic.
 func init() {
@@ -26,10 +27,16 @@ func init() {
 
 // List is used to list statistic.
 func (s *sStatistic) List(ctx context.Context, in *model.StatisticListInput) (out *model.StatisticListOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-statistic-List")
+	defer span.End()
+
 	return
 }
 
 // Detail is used to get a statistic detail.
 func (s *sStatistic) Detail(ctx context.Context, in *model.StatisticDetailInput) (out *model.StatisticDetailOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-statistic-Detail")
+	defer span.End()
+
 	return
 }
