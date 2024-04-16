@@ -22,8 +22,7 @@ import (
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sUser struct {
-}
+type sUser struct{}
 
 func init() {
 	service.RegisterUser(&sUser{})
@@ -34,8 +33,8 @@ func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInpu
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-CreateMerchant")
 	defer span.End()
 
-	var log = g.Log(helper.Helper().Logger(ctx))
-	log.Debug(ctx, "user-CreateMerchant in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "user-CreateMerchant in:", in)
 
 	return
 }
@@ -46,10 +45,10 @@ func (s *sUser) QueryMerchant(ctx context.Context, in *model.QueryMerchantInput)
 	defer span.End()
 
 	var (
-		log      = g.Log(helper.Helper().Logger(ctx))
+		logger   = g.Log(helper.Helper().Logger(ctx))
 		merchant = (*entity.UsersMerchant)(nil)
 	)
-	log.Debug(ctx, "user-QueryMerchant in:", in)
+	logger.Debug(ctx, "user-QueryMerchant in:", in)
 	if err = dao.UsersMerchant.Ctx(ctx).Scan(&merchant, do.UsersMerchant{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "dao.UsersMerchant.Scan failed")
 		return
@@ -68,9 +67,23 @@ func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *mod
 	defer span.End()
 
 	var (
-		log = g.Log(helper.Helper().Logger(ctx))
+		logger = g.Log(helper.Helper().Logger(ctx))
+		base   = (*entity.Users)(nil)
 	)
-	log.Debug(ctx, "user-Detail in:", in)
+	logger.Debug(ctx, "user-Detail in:", in)
+	if err = dao.Users.Ctx(ctx).Scan(&base, do.Users{UserNo: in.AuthUserNo}); err != nil {
+		err = gerror.Wrap(err, "dao.Users.Scan failed")
+		return
+	}
+
+	if base == nil {
+		err = gerror.New("user not found")
+		return
+	}
+	out = &model.UserDetailOutput{
+		Username: "",
+		Avatar:   "",
+	}
 
 	return
 }

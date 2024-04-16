@@ -18,8 +18,7 @@ import (
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sHome struct {
-}
+type sHome struct{}
 
 func init() {
 	service.RegisterHome(&sHome{})
@@ -30,10 +29,8 @@ func (s *sHome) Index(ctx context.Context, in *model.HomeIndexInput) (out *model
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-home-Index")
 	defer span.End()
 
-	var (
-		log = g.Log(helper.Helper().Logger(ctx))
-	)
-	log.Debug(ctx, "home-Index in:", in)
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "home-Index in:", in)
 
 	return
 }

@@ -13,7 +13,6 @@ import (
 	"strings"
 
 	"github.com/gogf/gf/v2/container/gvar"
-	"github.com/gogf/gf/v2/database/gredis"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -31,8 +30,7 @@ import (
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sMiddleware struct {
-}
+type sMiddleware struct{}
 
 func init() {
 	service.RegisterMiddleware(&sMiddleware{})
@@ -155,7 +153,7 @@ func (s *sMiddleware) authorization(r *ghttp.Request, authType string) bool {
 		return s.middlewareResponse(r, span, resp)
 	}
 
-	var res, err = validateToken(r.GetCtx(), fields[1], authType, logger)
+	res, err := validateToken(r.GetCtx(), fields[1], authType, logger)
 	if err != nil {
 		resp.Message = "authorization failed reason: " + err.Error()
 		return s.middlewareResponse(r, span, resp)
@@ -196,14 +194,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 		}
 		logger.Debug(ctx, "validateToken end")
 	}()
-	var conn gredis.Conn
-	if conn, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Conn(ctx); err != nil {
-		err = gerror.Wrap(err, "validateToken Redis conn failed")
-		return
-	}
-	defer func() {
-		_ = conn.Close(ctx)
-	}()
+
 	var (
 		redisKey       = cache.RedisCache().ShortAccessTokenKey(ctx, token)
 		isAuthPassword = false
@@ -213,7 +204,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 		redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
 	}
 	var val *gvar.Var
-	if val, err = conn.Do(ctx, "GET", redisKey); err != nil {
+	if val, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Do(ctx, "GET", redisKey); err != nil {
 		err = gerror.Wrap(err, "validateToken Redis get failed(001)")
 		return
 	}
@@ -259,7 +250,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 			redisKey = cache.RedisCache().ShortAuthorizationKey(ctx, token)
 		}
 		logger.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
-		if val, err = conn.Do(ctx, "SETEX", redisKey, consts.TokenExpireTime, authToken); err != nil {
+		if val, err = g.Redis(cache.RedisCache().ShortAccessTokenConn(ctx)).Do(ctx, "SETEX", redisKey, consts.TokenExpireTime, authToken); err != nil {
 			err = gerror.Wrap(err, "validateToken Redis set failed")
 			return
 		}
@@ -270,7 +261,7 @@ func validateToken(ctx context.Context, token, authType string, logger glog.ILog
 		err = gerror.New("validateToken auth token expired")
 		return
 	}
-
+	logger.Debug(ctx, "validateToken auth token authTime:", authTime, "now:", now.Unix(), " authToken:", authToken)
 	return
 }
 
