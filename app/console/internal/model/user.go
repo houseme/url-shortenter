@@ -38,8 +38,7 @@ type CreateMerchantInput struct {
 }
 
 // CreateMerchantOutput is the output of CreateMerchant.
-type CreateMerchantOutput struct {
-}
+type CreateMerchantOutput struct{}
 
 // CreateKeySecretInput is the input of CreateKeySecret.
 type CreateKeySecretInput struct {
@@ -99,3 +98,20 @@ type UserDetailOutput struct {
 	Username string `json:"username" description:"用户名"`
 	Avatar   string `json:"avatar" description:"头像"`
 }
+
+// UpdateUserInput is the input of UpdateUser.
+type UpdateUserInput struct {
+	*Base `json:"-"`
+}
+
+// UpdateUserOutput is the output of UpdateUser.
+type UpdateUserOutput struct{}
+
+// UpdatePasswordInput is the input of UpdatePassword.
+type UpdatePasswordInput struct {
+	*Base    `json:"-"`
+	Password string `json:"password" v:"required#密码不能为空"`
+}
+
+// UpdatePasswordOutput is the output of UpdatePassword.
+type UpdatePasswordOutput struct{}
