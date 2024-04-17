@@ -3,7 +3,6 @@ package home
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	v1 "github.com/houseme/url-shortenter/app/console/api/home/v1"
@@ -16,8 +15,6 @@ func (c *ControllerV1) HomeIndex(ctx context.Context, req *v1.HomeIndexReq) (res
 	defer span.End()
 
 	res = &v1.HomeIndexRes{}
-	if res.HomeIndexOutput, err = service.Home().Index(ctx, req.HomeIndexInput); err != nil {
-		err = gerror.Wrap(err, "home-index failed")
-	}
+	res.HomeIndexOutput, err = service.Home().Index(ctx, req.HomeIndexInput)
 	return
 }

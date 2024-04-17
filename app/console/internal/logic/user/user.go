@@ -28,39 +28,6 @@ func init() {
 	service.RegisterUser(&sUser{})
 }
 
-// CreateMerchant creates a new merchant.
-func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInput) (out *model.CreateMerchantOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-CreateMerchant")
-	defer span.End()
-
-	logger := g.Log(helper.Helper().Logger(ctx))
-	logger.Debug(ctx, "user-CreateMerchant in:", in)
-
-	return
-}
-
-// QueryMerchant queries merchant by id.
-func (s *sUser) QueryMerchant(ctx context.Context, in *model.QueryMerchantInput) (out *model.QueryMerchantOutput, err error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-QueryMerchant")
-	defer span.End()
-
-	var (
-		logger   = g.Log(helper.Helper().Logger(ctx))
-		merchant = (*entity.UsersMerchant)(nil)
-	)
-	logger.Debug(ctx, "user-QueryMerchant in:", in)
-	if err = dao.UsersMerchant.Ctx(ctx).Scan(&merchant, do.UsersMerchant{AccountNo: in.AuthAccountNo}); err != nil {
-		err = gerror.Wrap(err, "dao.UsersMerchant.Scan failed")
-		return
-	}
-	if merchant == nil {
-		err = gerror.New("merchant not found")
-		return
-	}
-
-	return
-}
-
 // Detail is the handler for Detail
 func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *model.UserDetailOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-Detail")
@@ -84,6 +51,28 @@ func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *mod
 		Username: "",
 		Avatar:   "",
 	}
+
+	return
+}
+
+// Update is the handler for Update
+func (s *sUser) Update(ctx context.Context, in *model.UpdateUserInput) (out *model.UpdateUserOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-Update")
+	defer span.End()
+
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "user-Update in:", in)
+
+	return
+}
+
+// UpdatePassword is the handler for UpdatePassword
+func (s *sUser) UpdatePassword(ctx context.Context, in *model.UpdatePasswordInput) (out *model.UpdatePasswordOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-user-UpdatePassword")
+	defer span.End()
+
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "user-UpdatePassword in:", in)
 
 	return
 }
