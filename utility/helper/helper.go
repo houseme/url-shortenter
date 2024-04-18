@@ -470,3 +470,20 @@ func (u *UtilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (t
 	logger.Debug(ctx, "utilHelper CreateAccessToken token:", token)
 	return
 }
+
+// GeneratePasswordHash 生成密码哈希
+func (u *UtilHelper) GeneratePasswordHash(ctx context.Context, password, systemSalt string) (string, error) {
+	// 使用系统盐值和用户密码生成哈希
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password+systemSalt), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hashedPassword), nil
+}
+
+// VerifyPassword 校验密码
+func (u *UtilHelper) VerifyPassword(ctx context.Context, hashedPassword, userInputPassword, systemSalt string) error {
+	// 首次创建产生密码哈希时已经包含了系统盐值
+	// 直接根据哈希值进行校验即可
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(userInputPassword+systemSalt))
+}
