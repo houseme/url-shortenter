@@ -22,11 +22,15 @@ type UsersDao struct {
 type UsersColumns struct {
 	Id         string // ID
 	UserNo     string // 账号唯一标识
+	Username   string // 用户名称
 	Account    string // 账号
 	Password   string // 密码
 	State      string // 状态 0 默认 100 正常 200 失效
+	Avatar     string // 头像
 	GroupLevel string // 用户等级 0 默认超级 1000 商户管理员，10000 普通管理员
 	AccountNo  string // 用户关联企业 ID 同企业管理员 ID 一致
+	Deadline   string // 截止时间
+	Salt       string // 盐值
 	CreateTime string // 创建时间
 	ModifyTime string // 更新时间
 }
@@ -35,11 +39,15 @@ type UsersColumns struct {
 var usersColumns = UsersColumns{
 	Id:         "id",
 	UserNo:     "user_no",
+	Username:   "username",
 	Account:    "account",
 	Password:   "password",
 	State:      "state",
+	Avatar:     "avatar",
 	GroupLevel: "group_level",
 	AccountNo:  "account_no",
+	Deadline:   "deadline",
+	Salt:       "salt",
 	CreateTime: "create_time",
 	ModifyTime: "modify_time",
 }

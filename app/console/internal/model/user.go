@@ -101,11 +101,15 @@ type UserDetailOutput struct {
 
 // UpdateUserInput is the input of UpdateUser.
 type UpdateUserInput struct {
-	*Base `json:"-"`
+	*Base  `json:"-"`
+	Avatar string `json:"avatar" description:"头像"`
 }
 
 // UpdateUserOutput is the output of UpdateUser.
-type UpdateUserOutput struct{}
+type UpdateUserOutput struct {
+	ResultCode int    `json:"resultCode" description:"结果码"`
+	ResultMsg  string `json:"resultMsg" description:"结果信息"`
+}
 
 // UpdatePasswordInput is the input of UpdatePassword.
 type UpdatePasswordInput struct {
@@ -114,4 +118,7 @@ type UpdatePasswordInput struct {
 }
 
 // UpdatePasswordOutput is the output of UpdatePassword.
-type UpdatePasswordOutput struct{}
+type UpdatePasswordOutput struct {
+	ResultCode int    `json:"resultCode" description:"结果码"`
+	ResultMsg  string `json:"resultMsg" description:"结果信息"`
+}
