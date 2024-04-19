@@ -19,44 +19,44 @@ import (
 	"github.com/houseme/url-shortenter/app/console/internal/controller/echo"
 	"github.com/houseme/url-shortenter/app/console/internal/controller/home"
 	"github.com/houseme/url-shortenter/app/console/internal/controller/short"
+	"github.com/houseme/url-shortenter/app/console/internal/controller/user"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
 )
 
-var (
-	// Main command.
-	Main = gcmd.Command{
-		Name:  "main",
-		Usage: "main",
-		Brief: "start HTTP server",
-		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
-			s := g.Server()
-			s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
-			s.Group("/api.v1", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareCORS, service.Middleware().Initializer, service.Middleware().Logger, service.Middleware().HandlerResponse)
-				group.Group("/console", func(group *ghttp.RouterGroup) {
-					group.Bind(
-						auth.NewV1(),
-					)
-				})
-
-				group.Group("/console", func(group *ghttp.RouterGroup) {
-					group.Middleware(service.Middleware().AuthorizationForAPI)
-					group.Bind(
-						echo.NewV1(),
-						account.NewV1(),
-						short.NewV1(),
-					)
-				})
-				group.Group("/console", func(group *ghttp.RouterGroup) {
-					group.Middleware(service.Middleware().AuthorizationForConsole)
-					group.Bind(
-						home.NewV1(),
-						domain.NewV1(),
-					)
-				})
+// Main command.
+var Main = gcmd.Command{
+	Name:  "main",
+	Usage: "main",
+	Brief: "start HTTP server",
+	Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+		s := g.Server()
+		s.SetRewrite("/favicon.ico", "/resource/image/favicon.ico")
+		s.Group("/api.v1", func(group *ghttp.RouterGroup) {
+			group.Middleware(ghttp.MiddlewareCORS, service.Middleware().Initializer, service.Middleware().Logger, service.Middleware().HandlerResponse)
+			group.Group("/console", func(group *ghttp.RouterGroup) {
+				group.Bind(
+					auth.NewV1(),
+				)
 			})
-			s.Run()
-			return nil
-		},
-	}
-)
+
+			group.Group("/console", func(group *ghttp.RouterGroup) {
+				group.Middleware(service.Middleware().AuthorizationForAPI)
+				group.Bind(
+					echo.NewV1(),
+					account.NewV1(),
+					short.NewV1(),
+				)
+			})
+			group.Group("/console", func(group *ghttp.RouterGroup) {
+				group.Middleware(service.Middleware().AuthorizationForConsole)
+				group.Bind(
+					home.NewV1(),
+					domain.NewV1(),
+					user.NewV1(),
+				)
+			})
+		})
+		s.Run()
+		return nil
+	},
+}

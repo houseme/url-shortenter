@@ -264,11 +264,7 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "GET", cache.RedisCache().ShortCacheObject(ctx, short))
 	)
 
-	if err != nil {
-		log.Errorf(ctx, "get short cache get from redis error:%+v", err)
-	}
-
-	if !val.IsNil() && !val.IsEmpty() {
+	if err == nil && !val.IsNil() && !val.IsEmpty() {
 		if err = val.Scan(&su); err == nil && su != nil {
 			log.Debug(ctx, "get short cache success", su)
 			return su, nil
@@ -278,9 +274,10 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 		} else {
 			log.Info(ctx, "get short cache scan after su is nil")
 		}
+	} else {
+		log.Errorf(ctx, "get short cache get from redis error:%+v", err)
 	}
 
-	log.Debug(ctx, "get short cache is nil")
 	// query DB
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&su, do.ShortUrls{ShortUrl: short}); err != nil {
 		log.Errorf(ctx, "get short cache query db error:%+v", err)
@@ -288,7 +285,7 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 	}
 	if su == nil {
 		log.Info(ctx, "get short cache query db su is nil")
-		return nil, nil
+		return nil, gerror.New("short url not found")
 	}
 
 	// set cache
