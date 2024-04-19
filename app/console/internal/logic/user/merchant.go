@@ -30,6 +30,18 @@ func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInpu
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "user-CreateMerchant in:", in)
 
+	merchant := (*entity.UsersMerchant)(nil)
+	if err = dao.UsersMerchant.Ctx(ctx).Scan(&merchant, do.UsersMerchant{
+		AccountNo:        in.AuthAccountNo,
+		SocialCreditCode: in.SocialCreditCode,
+	}); err != nil {
+		err = gerror.Wrap(err, "dao.UsersMerchant.Scan failed")
+		return
+	}
+	if merchant != nil {
+		err = gerror.New("merchant SocialCreditCode is found")
+		return
+	}
 	return
 }
 
