@@ -32,10 +32,11 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 		client          *green.Client
 		alibabaEnv, err = env.NewAlibabaEnv(ctx)
 	)
-	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
+	logger.Debug(ctx, "fileName: ", fileName)
 	if err != nil {
 		return "", err
 	}
+	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
 	if client, err = green.NewClientWithAccessKey(alibabaEnv.Region(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx)); err != nil {
 		return "", gerror.Wrap(err, "green.NewClientWithAccessKey failed")
 	}
