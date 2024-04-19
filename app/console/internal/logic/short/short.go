@@ -77,6 +77,28 @@ func (s *sShort) QueryShort(ctx context.Context, in *model.QueryShortInput) (out
 
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "short-QueryShort in:", in)
+	short := (*entity.ShortUrls)(nil)
+	if err = dao.ShortUrls.Ctx(ctx).Scan(&short, do.ShortUrls{
+		ShortNo: in.ShortNo,
+	}); err != nil {
+		return
+	}
+
+	if short == nil {
+		err = gerror.New("short-QueryShort error")
+		return
+	}
+
+	return
+}
+
+// QueryShortList is the handler for QueryShortList
+func (s *sShort) QueryShortList(ctx context.Context, in *model.QueryShortListInput) (out *model.QueryShortListOutput, err error) {
+	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-short-QueryShortList")
+	defer span.End()
+
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "short-QueryShortList in:", in)
 
 	return
 }
