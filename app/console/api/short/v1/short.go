@@ -27,13 +27,24 @@ type CreateShortRes struct {
 
 // QueryShortReq is the request struct for the QueryShort endpoint.
 type QueryShortReq struct {
-	g.Meta `path:"/url/:shortUrl" tags:"Account Service" method:"Get" summary:"query a short url"`
+	g.Meta `path:"/url/:shortNo" tags:"Account Service" method:"Get" summary:"query a short url"`
 	*model.QueryShortInput
 }
 
 // QueryShortRes is the response struct for the QueryShort endpoint.
 type QueryShortRes struct {
 	*model.QueryShortOutput
+}
+
+// QueryShortListReq is the request struct for the QueryShortList endpoint.
+type QueryShortListReq struct {
+	g.Meta `path:"/url/list" tags:"Account Service" method:"Get" summary:"query short url list"`
+	*model.QueryShortListInput
+}
+
+// QueryShortListRes is the response struct for the QueryShortList endpoint.
+type QueryShortListRes struct {
+	*model.QueryShortListOutput
 }
 
 // ModifyShortReq is the request struct for the ModifyShort endpoint.

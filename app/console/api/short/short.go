@@ -13,6 +13,7 @@ import (
 type IShortV1 interface {
 	CreateShort(ctx context.Context, req *v1.CreateShortReq) (res *v1.CreateShortRes, err error)
 	QueryShort(ctx context.Context, req *v1.QueryShortReq) (res *v1.QueryShortRes, err error)
+	QueryShortList(ctx context.Context, req *v1.QueryShortListReq) (res *v1.QueryShortListRes, err error)
 	ModifyShort(ctx context.Context, req *v1.ModifyShortReq) (res *v1.ModifyShortRes, err error)
 	QueryStat(ctx context.Context, req *v1.QueryStatReq) (res *v1.QueryStatRes, err error)
 	ShortDomain(ctx context.Context, req *v1.ShortDomainReq) (res *v1.ShortDomainRes, err error)
