@@ -12,10 +12,12 @@ package statistic
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/utility/helper"
 )
 
 type sStatistic struct{}
@@ -30,6 +32,9 @@ func (s *sStatistic) List(ctx context.Context, in *model.StatisticListInput) (ou
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-statistic-List")
 	defer span.End()
 
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "statistic-List in:", in)
+
 	return
 }
 
@@ -37,6 +42,9 @@ func (s *sStatistic) List(ctx context.Context, in *model.StatisticListInput) (ou
 func (s *sStatistic) Detail(ctx context.Context, in *model.StatisticDetailInput) (out *model.StatisticDetailOutput, err error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-logic-statistic-Detail")
 	defer span.End()
+
+	logger := g.Log(helper.Helper().Logger(ctx))
+	logger.Debug(ctx, "statistic-Detail in:", in)
 
 	return
 }

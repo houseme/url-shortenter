@@ -26,18 +26,37 @@ type CreateShortOutput struct {
 
 // QueryShortInput is the input for QueryShort
 type QueryShortInput struct {
-	*Base    `json:"-"`
-	ShortURL string `json:"shortUrl" dc:"短链"`
+	*Base   `json:"-"`
+	ShortNo uint64 `json:"shortNo,string" dc:"短链编号"`
 }
 
 // QueryShortOutput is the output of QueryShort
 type QueryShortOutput struct {
+	*ShortItem
+}
+
+// ShortItem is the item of Short
+type ShortItem struct {
+	ShortNo     uint64      `json:"shortNo,string" dc:"短链编号"`
+	ShortURL    string      `json:"shortUrl" dc:"短链"`
 	DestURL     string      `json:"destUrl" dc:"destUrl 原始 url"`
 	Memo        string      `json:"memo,omitempty" dc:"备注"`
 	State       uint        `json:"state" dc:"状态"`
 	StateMsg    string      `json:"stateMsg" dc:"状态描述"`
 	DisableTime *gtime.Time `json:"disableTime,omitempty" dc:"禁用时间"`
 	CreateTime  *gtime.Time `json:"createTime" dc:"创建时间"`
+}
+
+// QueryShortListInput is the input for QueryShortList
+type QueryShortListInput struct {
+	*Base `json:"-"`
+	*PageInfoInput
+}
+
+// QueryShortListOutput is the output of QueryShortList
+type QueryShortListOutput struct {
+	List     []*ShortItem    `json:"list" description:"访问短链列表"`
+	Paginate *PageInfoOutput `json:"paginate" description:"分页信息"`
 }
 
 // QueryStatInput is the input for QueryStat

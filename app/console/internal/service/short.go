@@ -19,6 +19,8 @@ type (
 		ModifyShort(ctx context.Context, in *model.ModifyShortInput) (out *model.ModifyShortOutput, err error)
 		// QueryShort is the handler for QueryShort
 		QueryShort(ctx context.Context, in *model.QueryShortInput) (out *model.QueryShortOutput, err error)
+		// QueryShortList is the handler for QueryShortList
+		QueryShortList(ctx context.Context, in *model.QueryShortListInput) (out *model.QueryShortListOutput, err error)
 		// QueryStat is the handler for QueryStat
 		QueryStat(ctx context.Context, in *model.QueryStatInput) (out *model.QueryStatOutput, err error)
 		// ShortDomain is the handler for ShortDomain
