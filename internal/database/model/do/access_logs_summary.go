@@ -13,7 +13,9 @@ import (
 type AccessLogsSummary struct {
 	g.Meta     `orm:"table:access_logs_summary, do:true"`
 	Id         interface{} // ID
+	SummaryNo  interface{} // 统计记录唯一标识
 	AccountNo  interface{} // 账号标识
+	UserNo     interface{} // 用户标识
 	ShortNo    interface{} // 短链标识
 	ShortUrl   interface{} // 短链内容
 	ShortAll   interface{} // 带参数 URL

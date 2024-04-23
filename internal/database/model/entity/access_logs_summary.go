@@ -11,7 +11,9 @@ import (
 // AccessLogsSummary is the golang structure for table access_logs_summary.
 type AccessLogsSummary struct {
 	Id         uint64      `json:"id"         orm:"id"          description:"ID"`
+	SummaryNo  uint64      `json:"summaryNo"  orm:"summary_no"  description:"统计记录唯一标识"`
 	AccountNo  uint64      `json:"accountNo"  orm:"account_no"  description:"账号标识"`
+	UserNo     uint64      `json:"userNo"     orm:"user_no"     description:"用户标识"`
 	ShortNo    uint64      `json:"shortNo"    orm:"short_no"    description:"短链标识"`
 	ShortUrl   string      `json:"shortUrl"   orm:"short_url"   description:"短链内容"`
 	ShortAll   string      `json:"shortAll"   orm:"short_all"   description:"带参数 URL"`

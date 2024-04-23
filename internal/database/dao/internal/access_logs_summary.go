@@ -21,7 +21,9 @@ type AccessLogsSummaryDao struct {
 // AccessLogsSummaryColumns defines and stores column names for table access_logs_summary.
 type AccessLogsSummaryColumns struct {
 	Id         string // ID
+	SummaryNo  string // 统计记录唯一标识
 	AccountNo  string // 账号标识
+	UserNo     string // 用户标识
 	ShortNo    string // 短链标识
 	ShortUrl   string // 短链内容
 	ShortAll   string // 带参数 URL
@@ -41,7 +43,9 @@ type AccessLogsSummaryColumns struct {
 // accessLogsSummaryColumns holds the columns for table access_logs_summary.
 var accessLogsSummaryColumns = AccessLogsSummaryColumns{
 	Id:         "id",
+	SummaryNo:  "summary_no",
 	AccountNo:  "account_no",
+	UserNo:     "user_no",
 	ShortNo:    "short_no",
 	ShortUrl:   "short_url",
 	ShortAll:   "short_all",

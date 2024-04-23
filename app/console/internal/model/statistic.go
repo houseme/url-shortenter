@@ -8,10 +8,18 @@
 
 package model
 
+import (
+	"github.com/gogf/gf/v2/os/gtime"
+)
+
 // StatisticListInput is the input of StatisticList.
 type StatisticListInput struct {
 	*Base `json:"-"`
 	*PageInfoInput
+	SummaryNo  uint64      `json:"summaryNo,string" description:"统计记录编号"`
+	ShortNo    uint64      `json:"shortNo,string" description:"短链编号"`
+	ShortURL   string      `json:"shortUrl" description:"短链"`
+	AccessDate *gtime.Time `json:"accessDate" description:"访问日期"`
 }
 
 // StatisticListOutput is the output of StatisticList.
@@ -29,7 +37,11 @@ type StatisticItem struct {
 
 // StatisticDetailInput is the input of StatisticDetail.
 type StatisticDetailInput struct {
-	*Base `json:"-"`
+	*Base      `json:"-"`
+	SummaryNo  uint64      `json:"summaryNo,string" description:"统计记录编号"`
+	ShortNo    uint64      `json:"shortNo,string" description:"短链编号"`
+	ShortURL   string      `json:"shortUrl" description:"短链"`
+	AccessDate *gtime.Time `json:"accessDate" description:"访问日期"`
 }
 
 // StatisticDetailOutput is the output of StatisticDetail.
