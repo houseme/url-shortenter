@@ -121,8 +121,8 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 	defer span.End()
 
 	var (
-		t = gtime.Now()
-		l = entity.AccessLogs{
+		t          = gtime.Now()
+		accessLogs = entity.AccessLogs{
 			ShortUrl:   in.Short,
 			AccessTime: t,
 			AccessDate: t,
@@ -136,14 +136,22 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 			VisitState: in.VisitState,
 			ServerIp:   helper.Helper().GetOutBoundIP(ctx),
 		}
-		log      = g.Log(helper.Helper().Logger(ctx))
-		val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH",
-			cache.RedisCache().ShortAccessLogQueue(ctx), l)
+		serverIP, err = gipv4.GetIntranetIp()
+		logger        = g.Log(helper.Helper().Logger(ctx))
+		val           *gvar.Var
 	)
-	if err != nil {
-		log.Errorf(ctx, "NewAccessLog err: %+v", err)
+
+	if err == nil {
+		accessLogs.ServerIp = serverIP
+	} else {
+		logger.Errorf(ctx, "NewAccessLog get server ip failed err:%+v", err)
 	}
-	log.Debug(ctx, "NewAccessLog set redis :", val, " access log:", l)
+	logger.Debug(ctx, "NewAccessLog AccessLogs:", accessLogs)
+	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogQueue(ctx), accessLogs); err != nil {
+		logger.Errorf(ctx, "NewAccessLog err: %+v", err)
+		return
+	}
+	logger.Debug(ctx, "NewAccessLog set redis :", val)
 }
 
 // ShortAll 短链列表
