@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersTagRelation is the golang structure for table users_tag_relation.
-type UsersTagRelation struct {
+// UserTagRelation is the golang structure for table user_tag_relation.
+type UserTagRelation struct {
 	Id         uint64      `json:"id"         orm:"id"          description:"ID"`
 	UserNo     uint64      `json:"userNo"     orm:"user_no"     description:"用户标识"`
 	TagNo      uint64      `json:"tagNo"      orm:"tag_no"      description:"标签标识"`

@@ -8,10 +8,11 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersDomainAudit is the golang structure for table users_domain_audit.
-type UsersDomainAudit struct {
+// UserDomainAudit is the golang structure for table user_domain_audit.
+type UserDomainAudit struct {
 	Id             uint64      `json:"id"             orm:"id"               description:"ID"`
 	AccountNo      uint64      `json:"accountNo"      orm:"account_no"       description:"用户标识"`
+	UserNo         uint64      `json:"userNo"         orm:"user_no"          description:"用户标识"`
 	DomainNo       uint64      `json:"domainNo"       orm:"domain_no"        description:"用户认证域名 ID"`
 	Icp            string      `json:"icp"            orm:"icp"              description:"icp 备案号"`
 	QueryResult    string      `json:"queryResult"    orm:"query_result"     description:"查询结果"`

@@ -41,15 +41,15 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 
 	var (
 		logger       = g.Log(helper.Helper().Logger(ctx))
-		account      = (*entity.Users)(nil)
-		accessSecret = (*entity.UsersAccessSecret)(nil)
+		account      = (*entity.User)(nil)
+		accessSecret = (*entity.UserAccessSecret)(nil)
 	)
 	logger.Debug(ctx, "auth create access token AppID:", in.AppID)
-	if err = dao.UsersAccessSecret.Ctx(ctx).Scan(&account, do.UsersAccessSecret{
+	if err = dao.UserAccessSecret.Ctx(ctx).Scan(&account, do.UserAccessSecret{
 		SecretId:  in.AppID,
 		GrantType: gstr.ToLower(in.GrantType),
 	}); err != nil {
-		err = gerror.Wrap(err, "query UsersAccessSecret failed  err:")
+		err = gerror.Wrap(err, "query UserAccessSecret failed  err:")
 	}
 	if accessSecret == nil {
 		err = gerror.New("AppID not found")
@@ -73,11 +73,11 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 	}
 	// salt 16 位 salt key 16 位 需要加密的内容位 salt+secret aes 加密之后于数据库对比  检验完成 处理 accessToken 相关的处理
 	// 创建 accessToken
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{
+	if err = dao.User.Ctx(ctx).Scan(&account, do.User{
 		AccountNo:  accessSecret.AccountNo,
 		GroupLevel: consts.AccountLevelBusiness,
 	}); err != nil {
-		err = gerror.Wrap(err, "query Users failed  err:")
+		err = gerror.Wrap(err, "query User failed  err:")
 		return
 	}
 
@@ -98,7 +98,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 			AuthType:         consts.AuthTypeAPIKey,
 			AuthTime:         gtime.Now().Unix(),
 		}
-		v     *gvar.Var
+		value *gvar.Var
 		token string
 	)
 	if token, err = helper.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
@@ -106,7 +106,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		return
 	}
 	authToken.AuthToken = token
-	if v, err = s.setRedisToken(ctx,
+	if value, err = s.setRedisToken(ctx,
 		&model.TokenCache{
 			Token:     token,
 			ExpiresIn: consts.APIKeyExpireTime + grand.N(10, 50),
@@ -116,7 +116,7 @@ func (s *sAuth) CreateAccessToken(ctx context.Context, in *model.CreateAccessTok
 		return
 	}
 
-	logger.Debug(ctx, "auth-CreateAccessToken v1:", v)
+	logger.Debug(ctx, "auth-CreateAccessToken v1:", value)
 	out = &model.CreateAccessTokenOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,
@@ -131,11 +131,11 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 
 	var (
 		logger  = g.Log(helper.Helper().Logger(ctx))
-		account = (*entity.Users)(nil)
+		account = (*entity.User)(nil)
 	)
 	logger.Debug(ctx, "auth-authorization params account:", in.Account)
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.Account}); err != nil {
-		err = gerror.Wrap(err, "query Users failed  err:")
+	if err = dao.User.Ctx(ctx).Scan(&account, do.User{AccountNo: in.Account}); err != nil {
+		err = gerror.Wrap(err, "query User failed  err:")
 		return
 	}
 
@@ -166,7 +166,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 			AuthType:         consts.AuthTypePassword,
 			AuthTime:         gtime.Now().Unix(),
 		}
-		v     *gvar.Var
+		value *gvar.Var
 		token string
 	)
 	if token, err = helper.Helper().CreateAccessToken(ctx, account.AccountNo); err != nil {
@@ -175,7 +175,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 	}
 	authToken.AuthToken = token
 
-	if v, err = s.setRedisToken(ctx,
+	if value, err = s.setRedisToken(ctx,
 		&model.TokenCache{
 			Token:     token,
 			ExpiresIn: consts.AccessTokenExpireTime + grand.N(10, 50),
@@ -184,7 +184,7 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		err = gerror.Wrap(err, "Redis SETEX failed")
 		return
 	}
-	logger.Debug(ctx, "auth-authorization v1:", v)
+	logger.Debug(ctx, "auth-authorization v1:", value)
 	out = &model.AuthOutput{
 		AccessToken: token,
 		ExpiresIn:   consts.AccessTokenExpireTime,

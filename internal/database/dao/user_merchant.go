@@ -8,19 +8,19 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/dao/internal"
 )
 
-// internalUsersTagRelationDao is internal type for wrapping internal DAO implements.
-type internalUsersTagRelationDao = *internal.UsersTagRelationDao
+// internalUserMerchantDao is internal type for wrapping internal DAO implements.
+type internalUserMerchantDao = *internal.UserMerchantDao
 
-// usersTagRelationDao is the data access object for table users_tag_relation.
+// userMerchantDao is the data access object for table user_merchant.
 // You can define custom methods on it to extend its functionality as you wish.
-type usersTagRelationDao struct {
-	internalUsersTagRelationDao
+type userMerchantDao struct {
+	internalUserMerchantDao
 }
 
 var (
-	// UsersTagRelation is globally public accessible object for table users_tag_relation operations.
-	UsersTagRelation = usersTagRelationDao{
-		internal.NewUsersTagRelationDao(),
+	// UserMerchant is globally public accessible object for table user_merchant operations.
+	UserMerchant = userMerchantDao{
+		internal.NewUserMerchantDao(),
 	}
 )
 

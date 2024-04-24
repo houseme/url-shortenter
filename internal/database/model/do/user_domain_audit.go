@@ -9,11 +9,12 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersDomainAudit is the golang structure of table users_domain_audit for DAO operations like Where/Data.
-type UsersDomainAudit struct {
-	g.Meta         `orm:"table:users_domain_audit, do:true"`
+// UserDomainAudit is the golang structure of table user_domain_audit for DAO operations like Where/Data.
+type UserDomainAudit struct {
+	g.Meta         `orm:"table:user_domain_audit, do:true"`
 	Id             interface{} // ID
 	AccountNo      interface{} // 用户标识
+	UserNo         interface{} // 用户标识
 	DomainNo       interface{} // 用户认证域名 ID
 	Icp            interface{} // icp 备案号
 	QueryResult    interface{} // 查询结果

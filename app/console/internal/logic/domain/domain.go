@@ -9,11 +9,15 @@ package domain
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
 
 	"github.com/houseme/url-shortenter/app/console/internal/model"
 	"github.com/houseme/url-shortenter/app/console/internal/service"
+	"github.com/houseme/url-shortenter/internal/database/dao"
+	"github.com/houseme/url-shortenter/internal/database/model/do"
+	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
@@ -30,6 +34,14 @@ func (s *sDomain) CreateDomainAuthorize(ctx context.Context, in *model.DomainAut
 
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "CreateDomainAuthorize params:", in)
+	userDomain := (*entity.UserDomain)(nil)
+	if err = dao.UserDomain.Ctx(ctx).Scan(&userDomain, do.UserDomain{
+		UserNo: in.AuthUserNo,
+		Domain: in.Domain,
+	}); err != nil {
+		err = gerror.Wrap(err, "query UsersDomain failed  err:")
+		return
+	}
 
 	return
 }

@@ -8,10 +8,11 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersMerchant is the golang structure for table users_merchant.
-type UsersMerchant struct {
+// UserMerchant is the golang structure for table user_merchant.
+type UserMerchant struct {
 	Id                  uint64      `json:"id"                  orm:"id"                    description:"ID"`
 	AccountNo           uint64      `json:"accountNo"           orm:"account_no"            description:"合作伙伴 用户 ID"`
+	UserNo              uint64      `json:"userNo"              orm:"user_no"               description:"用户标识"`
 	AppKey              uint64      `json:"appKey"              orm:"app_key"               description:"渠道 Key 合作来源 ID"`
 	AppSecret           string      `json:"appSecret"           orm:"app_secret"            description:"渠道合作密钥"`
 	MerName             string      `json:"merName"             orm:"mer_name"              description:"昵称"`

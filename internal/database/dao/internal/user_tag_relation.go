@@ -11,15 +11,15 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// UsersTagRelationDao is the data access object for table users_tag_relation.
-type UsersTagRelationDao struct {
-	table   string                  // table is the underlying table name of the DAO.
-	group   string                  // group is the database configuration group name of current DAO.
-	columns UsersTagRelationColumns // columns contains all the column names of Table for convenient usage.
+// UserTagRelationDao is the data access object for table user_tag_relation.
+type UserTagRelationDao struct {
+	table   string                 // table is the underlying table name of the DAO.
+	group   string                 // group is the database configuration group name of current DAO.
+	columns UserTagRelationColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// UsersTagRelationColumns defines and stores column names for table users_tag_relation.
-type UsersTagRelationColumns struct {
+// UserTagRelationColumns defines and stores column names for table user_tag_relation.
+type UserTagRelationColumns struct {
 	Id         string // ID
 	UserNo     string // 用户标识
 	TagNo      string // 标签标识
@@ -28,8 +28,8 @@ type UsersTagRelationColumns struct {
 	ModifyTime string // 更新时间
 }
 
-// usersTagRelationColumns holds the columns for table users_tag_relation.
-var usersTagRelationColumns = UsersTagRelationColumns{
+// userTagRelationColumns holds the columns for table user_tag_relation.
+var userTagRelationColumns = UserTagRelationColumns{
 	Id:         "id",
 	UserNo:     "user_no",
 	TagNo:      "tag_no",
@@ -38,37 +38,37 @@ var usersTagRelationColumns = UsersTagRelationColumns{
 	ModifyTime: "modify_time",
 }
 
-// NewUsersTagRelationDao creates and returns a new DAO object for table data access.
-func NewUsersTagRelationDao() *UsersTagRelationDao {
-	return &UsersTagRelationDao{
+// NewUserTagRelationDao creates and returns a new DAO object for table data access.
+func NewUserTagRelationDao() *UserTagRelationDao {
+	return &UserTagRelationDao{
 		group:   "default",
-		table:   "users_tag_relation",
-		columns: usersTagRelationColumns,
+		table:   "user_tag_relation",
+		columns: userTagRelationColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *UsersTagRelationDao) DB() gdb.DB {
+func (dao *UserTagRelationDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *UsersTagRelationDao) Table() string {
+func (dao *UserTagRelationDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *UsersTagRelationDao) Columns() UsersTagRelationColumns {
+func (dao *UserTagRelationDao) Columns() UserTagRelationColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *UsersTagRelationDao) Group() string {
+func (dao *UserTagRelationDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *UsersTagRelationDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *UserTagRelationDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -78,6 +78,6 @@ func (dao *UsersTagRelationDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersTagRelationDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *UserTagRelationDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

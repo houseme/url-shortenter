@@ -37,10 +37,10 @@ func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *mod
 
 	var (
 		logger = g.Log(helper.Helper().Logger(ctx))
-		base   = (*entity.Users)(nil)
+		base   = (*entity.User)(nil)
 	)
 	logger.Debug(ctx, "user-Detail in:", in)
-	if err = dao.Users.Ctx(ctx).Scan(&base, do.Users{UserNo: in.AuthUserNo}); err != nil {
+	if err = dao.User.Ctx(ctx).Scan(&base, do.User{UserNo: in.AuthUserNo}); err != nil {
 		err = gerror.Wrap(err, "dao.Users.Scan failed")
 		return
 	}
@@ -65,26 +65,26 @@ func (s *sUser) Update(ctx context.Context, in *model.UpdateUserInput) (out *mod
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "user-Update in:", in)
 
-	base := (*entity.Users)(nil)
-	if err = dao.Users.Ctx(ctx).Scan(&base, do.Users{UserNo: in.AuthUserNo}); err != nil {
-		err = gerror.Wrap(err, "dao.Users.Scan failed")
+	base := (*entity.User)(nil)
+	if err = dao.User.Ctx(ctx).Scan(&base, do.User{UserNo: in.AuthUserNo}); err != nil {
+		err = gerror.Wrap(err, "dao.User.Scan failed")
 		return
 	}
 	if base == nil {
 		err = gerror.New("user not found")
 		return
 	}
-	doUser := do.Users{
+	doUser := do.User{
 		ModifyTime: gtime.Now(),
 	}
 	if in.Avatar != "" {
 		doUser.Avatar = in.Avatar
 	}
 	var lastID int64
-	if lastID, err = dao.Users.Ctx(ctx).UpdateAndGetAffected(doUser, do.Users{
+	if lastID, err = dao.User.Ctx(ctx).UpdateAndGetAffected(doUser, do.User{
 		UserNo: in.AuthUserNo,
 	}); err != nil {
-		err = gerror.Wrap(err, "dao.Users.UpdateAndGetAffected failed")
+		err = gerror.Wrap(err, "dao.User.UpdateAndGetAffected failed")
 		return
 	}
 	logger.Debug(ctx, "user-UpdatePassword update user db lastID:", lastID)
@@ -103,9 +103,9 @@ func (s *sUser) UpdatePassword(ctx context.Context, in *model.UpdatePasswordInpu
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "user-UpdatePassword in:", in)
 
-	base := (*entity.Users)(nil)
-	if err = dao.Users.Ctx(ctx).Scan(&base, do.Users{UserNo: in.AuthUserNo}); err != nil {
-		err = gerror.Wrap(err, "dao.Users.Scan failed")
+	base := (*entity.User)(nil)
+	if err = dao.User.Ctx(ctx).Scan(&base, do.User{UserNo: in.AuthUserNo}); err != nil {
+		err = gerror.Wrap(err, "dao.User.Scan failed")
 		return
 	}
 	if base == nil {
@@ -127,13 +127,13 @@ func (s *sUser) UpdatePassword(ctx context.Context, in *model.UpdatePasswordInpu
 	}
 
 	var lastID int64
-	if lastID, err = dao.Users.Ctx(ctx).UpdateAndGetAffected(do.Users{
+	if lastID, err = dao.User.Ctx(ctx).UpdateAndGetAffected(do.User{
 		Password:   newPass,
 		ModifyTime: gtime.Now(),
-	}, do.Users{
+	}, do.User{
 		UserNo: in.AuthUserNo,
 	}); err != nil {
-		err = gerror.Wrap(err, "dao.Users.UpdateAndGetAffected failed")
+		err = gerror.Wrap(err, "dao.User.UpdateAndGetAffected failed")
 		return
 	}
 	logger.Debug(ctx, "user-UpdatePassword update user db lastID:", lastID)
