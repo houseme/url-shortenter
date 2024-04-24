@@ -8,10 +8,11 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersDomain is the golang structure for table users_domain.
-type UsersDomain struct {
+// UserDomain is the golang structure for table user_domain.
+type UserDomain struct {
 	Id          uint64      `json:"id"          orm:"id"           description:"ID"`
 	AccountNo   uint64      `json:"accountNo"   orm:"account_no"   description:"账号标识"`
+	UserNo      uint64      `json:"userNo"      orm:"user_no"      description:"用户标识"`
 	DomainNo    uint64      `json:"domainNo"    orm:"domain_no"    description:"域名标识"`
 	Domain      string      `json:"domain"      orm:"domain"       description:"域名 不需要 http 等协议信息"`
 	Memo        string      `json:"memo"        orm:"memo"         description:"备注信息"`

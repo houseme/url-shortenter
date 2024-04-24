@@ -11,17 +11,18 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// UsersMerchantDao is the data access object for table users_merchant.
-type UsersMerchantDao struct {
-	table   string               // table is the underlying table name of the DAO.
-	group   string               // group is the database configuration group name of current DAO.
-	columns UsersMerchantColumns // columns contains all the column names of Table for convenient usage.
+// UserMerchantDao is the data access object for table user_merchant.
+type UserMerchantDao struct {
+	table   string              // table is the underlying table name of the DAO.
+	group   string              // group is the database configuration group name of current DAO.
+	columns UserMerchantColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// UsersMerchantColumns defines and stores column names for table users_merchant.
-type UsersMerchantColumns struct {
+// UserMerchantColumns defines and stores column names for table user_merchant.
+type UserMerchantColumns struct {
 	Id                  string // ID
 	AccountNo           string // 合作伙伴 用户 ID
+	UserNo              string // 用户标识
 	AppKey              string // 渠道 Key 合作来源 ID
 	AppSecret           string // 渠道合作密钥
 	MerName             string // 昵称
@@ -57,10 +58,11 @@ type UsersMerchantColumns struct {
 	ModifyTime          string // 更新时间
 }
 
-// usersMerchantColumns holds the columns for table users_merchant.
-var usersMerchantColumns = UsersMerchantColumns{
+// userMerchantColumns holds the columns for table user_merchant.
+var userMerchantColumns = UserMerchantColumns{
 	Id:                  "id",
 	AccountNo:           "account_no",
+	UserNo:              "user_no",
 	AppKey:              "app_key",
 	AppSecret:           "app_secret",
 	MerName:             "mer_name",
@@ -96,37 +98,37 @@ var usersMerchantColumns = UsersMerchantColumns{
 	ModifyTime:          "modify_time",
 }
 
-// NewUsersMerchantDao creates and returns a new DAO object for table data access.
-func NewUsersMerchantDao() *UsersMerchantDao {
-	return &UsersMerchantDao{
+// NewUserMerchantDao creates and returns a new DAO object for table data access.
+func NewUserMerchantDao() *UserMerchantDao {
+	return &UserMerchantDao{
 		group:   "default",
-		table:   "users_merchant",
-		columns: usersMerchantColumns,
+		table:   "user_merchant",
+		columns: userMerchantColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *UsersMerchantDao) DB() gdb.DB {
+func (dao *UserMerchantDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *UsersMerchantDao) Table() string {
+func (dao *UserMerchantDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *UsersMerchantDao) Columns() UsersMerchantColumns {
+func (dao *UserMerchantDao) Columns() UserMerchantColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *UsersMerchantDao) Group() string {
+func (dao *UserMerchantDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *UsersMerchantDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *UserMerchantDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -136,6 +138,6 @@ func (dao *UsersMerchantDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersMerchantDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *UserMerchantDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

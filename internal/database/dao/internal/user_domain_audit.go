@@ -11,17 +11,18 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// UsersDomainAuditDao is the data access object for table users_domain_audit.
-type UsersDomainAuditDao struct {
-	table   string                  // table is the underlying table name of the DAO.
-	group   string                  // group is the database configuration group name of current DAO.
-	columns UsersDomainAuditColumns // columns contains all the column names of Table for convenient usage.
+// UserDomainAuditDao is the data access object for table user_domain_audit.
+type UserDomainAuditDao struct {
+	table   string                 // table is the underlying table name of the DAO.
+	group   string                 // group is the database configuration group name of current DAO.
+	columns UserDomainAuditColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// UsersDomainAuditColumns defines and stores column names for table users_domain_audit.
-type UsersDomainAuditColumns struct {
+// UserDomainAuditColumns defines and stores column names for table user_domain_audit.
+type UserDomainAuditColumns struct {
 	Id             string // ID
 	AccountNo      string // 用户标识
+	UserNo         string // 用户标识
 	DomainNo       string // 用户认证域名 ID
 	Icp            string // icp 备案号
 	QueryResult    string // 查询结果
@@ -32,10 +33,11 @@ type UsersDomainAuditColumns struct {
 	ModifyTime     string // 修改时间
 }
 
-// usersDomainAuditColumns holds the columns for table users_domain_audit.
-var usersDomainAuditColumns = UsersDomainAuditColumns{
+// userDomainAuditColumns holds the columns for table user_domain_audit.
+var userDomainAuditColumns = UserDomainAuditColumns{
 	Id:             "id",
 	AccountNo:      "account_no",
+	UserNo:         "user_no",
 	DomainNo:       "domain_no",
 	Icp:            "icp",
 	QueryResult:    "query_result",
@@ -46,37 +48,37 @@ var usersDomainAuditColumns = UsersDomainAuditColumns{
 	ModifyTime:     "modify_time",
 }
 
-// NewUsersDomainAuditDao creates and returns a new DAO object for table data access.
-func NewUsersDomainAuditDao() *UsersDomainAuditDao {
-	return &UsersDomainAuditDao{
+// NewUserDomainAuditDao creates and returns a new DAO object for table data access.
+func NewUserDomainAuditDao() *UserDomainAuditDao {
+	return &UserDomainAuditDao{
 		group:   "default",
-		table:   "users_domain_audit",
-		columns: usersDomainAuditColumns,
+		table:   "user_domain_audit",
+		columns: userDomainAuditColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *UsersDomainAuditDao) DB() gdb.DB {
+func (dao *UserDomainAuditDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *UsersDomainAuditDao) Table() string {
+func (dao *UserDomainAuditDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *UsersDomainAuditDao) Columns() UsersDomainAuditColumns {
+func (dao *UserDomainAuditDao) Columns() UserDomainAuditColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *UsersDomainAuditDao) Group() string {
+func (dao *UserDomainAuditDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *UsersDomainAuditDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *UserDomainAuditDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -86,6 +88,6 @@ func (dao *UsersDomainAuditDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersDomainAuditDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *UserDomainAuditDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

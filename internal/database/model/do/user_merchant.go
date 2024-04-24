@@ -9,11 +9,12 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersMerchant is the golang structure of table users_merchant for DAO operations like Where/Data.
-type UsersMerchant struct {
-	g.Meta              `orm:"table:users_merchant, do:true"`
+// UserMerchant is the golang structure of table user_merchant for DAO operations like Where/Data.
+type UserMerchant struct {
+	g.Meta              `orm:"table:user_merchant, do:true"`
 	Id                  interface{} // ID
 	AccountNo           interface{} // 合作伙伴 用户 ID
+	UserNo              interface{} // 用户标识
 	AppKey              interface{} // 渠道 Key 合作来源 ID
 	AppSecret           interface{} // 渠道合作密钥
 	MerName             interface{} // 昵称

@@ -31,11 +31,11 @@ func (s *sShort) CreateTag(ctx context.Context, in *model.CreateTagInput) (out *
 
 	var (
 		logger  = g.Log(helper.Helper().Logger(ctx))
-		tagInfo = (*entity.UsersTagRelation)(nil)
+		tagInfo = (*entity.UserTagRelation)(nil)
 	)
 	logger.Debug(ctx, "short-CreateTag in:", in)
 	// 查询用户是否与标签绑定关系
-	if err = dao.UsersTagRelation.Ctx(ctx).Scan(&tagInfo, entity.ShortTag{
+	if err = dao.UserTagRelation.Ctx(ctx).Scan(&tagInfo, entity.ShortTag{
 		TagName: in.Name,
 	}); err != nil {
 		return
@@ -71,7 +71,7 @@ func (s *sShort) CreateTag(ctx context.Context, in *model.CreateTagInput) (out *
 				logger.Debug(ctx, "short-CreateTag insert short tag db lastID:", lastID)
 			}
 			// 创建用户与标签的关系
-			if lastID, err = dao.UsersTagRelation.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.UsersTagRelation{
+			if lastID, err = dao.UserTagRelation.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.UserTagRelation{
 				TagNo:  TagNo,
 				UserNo: in.AuthAccountNo,
 				State:  consts.TagStateNormal,
@@ -83,7 +83,7 @@ func (s *sShort) CreateTag(ctx context.Context, in *model.CreateTagInput) (out *
 		}); err != nil {
 			return
 		}
-		tagInfo = &entity.UsersTagRelation{
+		tagInfo = &entity.UserTagRelation{
 			TagNo: TagNo,
 		}
 	}
@@ -169,8 +169,8 @@ func (s *sShort) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.
 		}
 		return
 	}
-	var userTagRelation = (*entity.UsersTagRelation)(nil)
-	if err = dao.UsersTagRelation.Ctx(ctx).Scan(&userTagRelation, do.UsersTagRelation{
+	var userTagRelation = (*entity.UserTagRelation)(nil)
+	if err = dao.UserTagRelation.Ctx(ctx).Scan(&userTagRelation, do.UserTagRelation{
 		UserNo: in.AuthUserNo,
 		TagNo:  in.TagNo,
 	}); err != nil {
@@ -191,7 +191,7 @@ func (s *sShort) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.
 		}
 		logger.Debug(ctx, "short-AddTag insert short tag relation db lastID:", lastID)
 		if userTagRelation == nil {
-			if lastID, err = dao.UsersTagRelation.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.UsersTagRelation{
+			if lastID, err = dao.UserTagRelation.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.UserTagRelation{
 				UserNo:     in.AuthUserNo,
 				TagNo:      in.TagNo,
 				State:      consts.TagStateNormal,

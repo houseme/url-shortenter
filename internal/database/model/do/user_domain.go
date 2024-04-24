@@ -9,11 +9,12 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersDomain is the golang structure of table users_domain for DAO operations like Where/Data.
-type UsersDomain struct {
-	g.Meta      `orm:"table:users_domain, do:true"`
+// UserDomain is the golang structure of table user_domain for DAO operations like Where/Data.
+type UserDomain struct {
+	g.Meta      `orm:"table:user_domain, do:true"`
 	Id          interface{} // ID
 	AccountNo   interface{} // 账号标识
+	UserNo      interface{} // 用户标识
 	DomainNo    interface{} // 域名标识
 	Domain      interface{} // 域名 不需要 http 等协议信息
 	Memo        interface{} // 备注信息

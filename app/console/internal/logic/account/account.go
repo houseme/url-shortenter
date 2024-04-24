@@ -10,10 +10,10 @@ package account
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/os/gtime"
 
 	"github.com/houseme/url-shortenter/app/console/internal/consts"
 	"github.com/houseme/url-shortenter/app/console/internal/model"
@@ -37,7 +37,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 
 	var (
 		logger  = g.Log(helper.Helper().Logger(ctx))
-		account = (*entity.Users)(nil)
+		account = (*entity.User)(nil)
 		output  = false
 	)
 
@@ -55,7 +55,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	}
 
 	// 校验数据
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{Account: in.Account}); err != nil {
+	if err = dao.User.Ctx(ctx).Scan(&account, do.User{Account: in.Account}); err != nil {
 		err = gerror.Wrap(err, "query users failed  err:")
 		return
 	}
@@ -72,7 +72,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	}
 
 	// 创建用户
-	account = &entity.Users{
+	account = &entity.User{
 		Account:    in.Account,
 		Password:   hashPwd,
 		GroupLevel: in.AuthAccountLevel,
@@ -87,7 +87,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		account.AccountNo = helper.Helper().InitTrxID(ctx, in.AuthAccountNo)
 	}
 
-	if _, err = dao.Users.Ctx(ctx).OmitEmpty().Unscoped().Insert(account); err != nil {
+	if _, err = dao.User.Ctx(ctx).OmitEmpty().Unscoped().Insert(account); err != nil {
 		err = gerror.Wrap(err, "insert users failed")
 		return
 	}
@@ -105,10 +105,10 @@ func (s *sAccount) ModifyAccount(ctx context.Context, in *model.ModifyAccountInp
 
 	var (
 		logger  = g.Log(helper.Helper().Logger(ctx))
-		account = (*entity.Users)(nil)
+		account = (*entity.User)(nil)
 	)
 	logger.Debug(ctx, "account modify account in:", in)
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
+	if err = dao.User.Ctx(ctx).Scan(&account, do.User{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "account modify query failed")
 		return
 	}
@@ -129,13 +129,13 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 
 	var (
 		logger  = g.Log(helper.Helper().Logger(ctx))
-		account = (*entity.Users)(nil)
+		account = (*entity.User)(nil)
 		output  = false
 	)
 	out = (*model.ModifyPasswordOutput)(&output)
 
 	logger.Debug(ctx, "account modify password in:", in)
-	if err = dao.Users.Ctx(ctx).Scan(&account, do.Users{AccountNo: in.AuthAccountNo}); err != nil {
+	if err = dao.User.Ctx(ctx).Scan(&account, do.User{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "query users failed  err:")
 		return
 	}
@@ -150,11 +150,17 @@ func (s *sAccount) ModifyPassword(ctx context.Context, in *model.ModifyPasswordI
 		err = gerror.Wrap(err, "hash password failed")
 		return
 	}
+
+	if hashPwd == account.Password {
+		err = gerror.New("consistent with the original password")
+		return
+	}
+
 	logger.Debug(ctx, "account modify password hash password:", hashPwd)
-	if _, err = dao.Users.Ctx(ctx).Where("id = ?", account.Id).Update(g.Map{
-		dao.Users.Columns().Password:   hashPwd,
-		dao.Users.Columns().ModifyTime: gdb.Raw("current_timestamp(6)"),
-	}); err != nil {
+	if _, err = dao.User.Ctx(ctx).Update(do.User{
+		Password:   hashPwd,
+		ModifyTime: gtime.Now(),
+	}, do.User{Id: account.Id}); err != nil {
 		err = gerror.Wrap(err, "update users failed")
 		return
 	}

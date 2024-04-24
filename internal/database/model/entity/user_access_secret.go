@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersAccessSecret is the golang structure for table users_access_secret.
-type UsersAccessSecret struct {
+// UserAccessSecret is the golang structure for table user_access_secret.
+type UserAccessSecret struct {
 	Id         uint64      `json:"id"         orm:"id"          description:"ID"`
 	AccountNo  uint64      `json:"accountNo"  orm:"account_no"  description:"企业管理员 ID 一致"`
 	SecretId   string      `json:"secretId"   orm:"secret_id"   description:"授权应用 ID"`

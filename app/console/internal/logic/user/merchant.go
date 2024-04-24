@@ -30,8 +30,8 @@ func (s *sUser) CreateMerchant(ctx context.Context, in *model.CreateMerchantInpu
 	logger := g.Log(helper.Helper().Logger(ctx))
 	logger.Debug(ctx, "user-CreateMerchant in:", in)
 
-	merchant := (*entity.UsersMerchant)(nil)
-	if err = dao.UsersMerchant.Ctx(ctx).Scan(&merchant, do.UsersMerchant{
+	merchant := (*entity.UserMerchant)(nil)
+	if err = dao.UserMerchant.Ctx(ctx).Scan(&merchant, do.UserMerchant{
 		AccountNo:        in.AuthAccountNo,
 		SocialCreditCode: in.SocialCreditCode,
 	}); err != nil {
@@ -52,10 +52,10 @@ func (s *sUser) QueryMerchant(ctx context.Context, in *model.QueryMerchantInput)
 
 	var (
 		logger   = g.Log(helper.Helper().Logger(ctx))
-		merchant = (*entity.UsersMerchant)(nil)
+		merchant = (*entity.UserMerchant)(nil)
 	)
 	logger.Debug(ctx, "user-QueryMerchant in:", in)
-	if err = dao.UsersMerchant.Ctx(ctx).Scan(&merchant, do.UsersMerchant{AccountNo: in.AuthAccountNo}); err != nil {
+	if err = dao.UserMerchant.Ctx(ctx).Scan(&merchant, do.UserMerchant{AccountNo: in.AuthAccountNo}); err != nil {
 		err = gerror.Wrap(err, "dao.UsersMerchant.Scan failed")
 		return
 	}

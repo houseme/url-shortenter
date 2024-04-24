@@ -9,9 +9,9 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// UsersAccessSecret is the golang structure of table users_access_secret for DAO operations like Where/Data.
-type UsersAccessSecret struct {
-	g.Meta     `orm:"table:users_access_secret, do:true"`
+// UserAccessSecret is the golang structure of table user_access_secret for DAO operations like Where/Data.
+type UserAccessSecret struct {
+	g.Meta     `orm:"table:user_access_secret, do:true"`
 	Id         interface{} // ID
 	AccountNo  interface{} // 企业管理员 ID 一致
 	SecretId   interface{} // 授权应用 ID

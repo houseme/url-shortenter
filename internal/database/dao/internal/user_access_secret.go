@@ -11,15 +11,15 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// UsersAccessSecretDao is the data access object for table users_access_secret.
-type UsersAccessSecretDao struct {
-	table   string                   // table is the underlying table name of the DAO.
-	group   string                   // group is the database configuration group name of current DAO.
-	columns UsersAccessSecretColumns // columns contains all the column names of Table for convenient usage.
+// UserAccessSecretDao is the data access object for table user_access_secret.
+type UserAccessSecretDao struct {
+	table   string                  // table is the underlying table name of the DAO.
+	group   string                  // group is the database configuration group name of current DAO.
+	columns UserAccessSecretColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// UsersAccessSecretColumns defines and stores column names for table users_access_secret.
-type UsersAccessSecretColumns struct {
+// UserAccessSecretColumns defines and stores column names for table user_access_secret.
+type UserAccessSecretColumns struct {
 	Id         string // ID
 	AccountNo  string // 企业管理员 ID 一致
 	SecretId   string // 授权应用 ID
@@ -32,8 +32,8 @@ type UsersAccessSecretColumns struct {
 	ModifyTime string // 修改时间
 }
 
-// usersAccessSecretColumns holds the columns for table users_access_secret.
-var usersAccessSecretColumns = UsersAccessSecretColumns{
+// userAccessSecretColumns holds the columns for table user_access_secret.
+var userAccessSecretColumns = UserAccessSecretColumns{
 	Id:         "id",
 	AccountNo:  "account_no",
 	SecretId:   "secret_id",
@@ -46,37 +46,37 @@ var usersAccessSecretColumns = UsersAccessSecretColumns{
 	ModifyTime: "modify_time",
 }
 
-// NewUsersAccessSecretDao creates and returns a new DAO object for table data access.
-func NewUsersAccessSecretDao() *UsersAccessSecretDao {
-	return &UsersAccessSecretDao{
+// NewUserAccessSecretDao creates and returns a new DAO object for table data access.
+func NewUserAccessSecretDao() *UserAccessSecretDao {
+	return &UserAccessSecretDao{
 		group:   "default",
-		table:   "users_access_secret",
-		columns: usersAccessSecretColumns,
+		table:   "user_access_secret",
+		columns: userAccessSecretColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *UsersAccessSecretDao) DB() gdb.DB {
+func (dao *UserAccessSecretDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *UsersAccessSecretDao) Table() string {
+func (dao *UserAccessSecretDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *UsersAccessSecretDao) Columns() UsersAccessSecretColumns {
+func (dao *UserAccessSecretDao) Columns() UserAccessSecretColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *UsersAccessSecretDao) Group() string {
+func (dao *UserAccessSecretDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *UsersAccessSecretDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *UserAccessSecretDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -86,6 +86,6 @@ func (dao *UsersAccessSecretDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UsersAccessSecretDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *UserAccessSecretDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }
