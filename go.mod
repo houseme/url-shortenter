@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.21
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.728
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.730
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/chromedp/chromedp v0.9.5
@@ -26,7 +26,7 @@ require (
 	golang.org/x/crypto v0.22.0
 	golang.org/x/sync v0.7.0
 	google.golang.org/grpc v1.63.2
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.34.0
 )
 
 require (
@@ -34,7 +34,7 @@ require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20240426225625-909263490071 // indirect
+	github.com/chromedp/cdproto v0.0.0-20240501202034-ef67d660e9fd // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
