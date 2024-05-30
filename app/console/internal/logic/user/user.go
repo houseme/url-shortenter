@@ -50,8 +50,8 @@ func (s *sUser) Detail(ctx context.Context, in *model.UserDetailInput) (out *mod
 		return
 	}
 	out = &model.UserDetailOutput{
-		Username: "",
-		Avatar:   "",
+		Username: base.Username,
+		Avatar:   base.Avatar,
 	}
 
 	return
