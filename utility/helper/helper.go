@@ -74,7 +74,7 @@ func (u *UtilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-InitTrxID")
 	defer span.End()
 
-	appEnv, err := env.NewSnowflakeEnv(ctx)
+	var appEnv, err = env.NewSnowflakeEnv(ctx)
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, "config get fail err:", err)
 		return u.InitTrxID(ctx, ano)
