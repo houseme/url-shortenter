@@ -74,7 +74,7 @@ func (u *UtilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-InitTrxID")
 	defer span.End()
 
-	var appEnv, err = env.NewSnowflakeEnv(ctx)
+	appEnv, err := env.NewSnowflakeEnv(ctx)
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, "config get fail err:", err)
 		return u.InitTrxID(ctx, ano)
@@ -264,9 +264,7 @@ func (u *UtilHelper) SetLogger(ctx context.Context, logger string) context.Conte
 }
 
 // EncryptSignData sign data
-func (u *UtilHelper) EncryptSignData(ctx context.Context, data interface{}, key []byte) ([]byte, error) {
-	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-EncryptSignData")
-	defer span.End()
+func (u *UtilHelper) EncryptSignData(_ context.Context, data interface{}, key []byte) ([]byte, error) {
 	byteInfo, err := gjson.Encode(data)
 	if err != nil {
 		return nil, gerror.Wrap(err, "EncryptSignData gf json.Encode failed")
@@ -482,7 +480,7 @@ func (u *UtilHelper) GeneratePasswordHash(ctx context.Context, password, systemS
 }
 
 // VerifyPassword 校验密码
-func (u *UtilHelper) VerifyPassword(ctx context.Context, hashedPassword, userInputPassword, systemSalt string) error {
+func (u *UtilHelper) VerifyPassword(_ context.Context, hashedPassword, userInputPassword, systemSalt string) error {
 	// 首次创建产生密码哈希时已经包含了系统盐值
 	// 直接根据哈希值进行校验即可
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(userInputPassword+systemSalt))
