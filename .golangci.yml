@@ -96,7 +96,7 @@ linters-settings:
       - name: atomic
       - name: line-length-limit
         severity: error
-        arguments: [ 180 ]
+        arguments: [ 220 ]
       - name: unhandled-error
         arguments: [ "fmt.Printf", "myFunction" ]
       - name: var-naming
