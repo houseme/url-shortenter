@@ -4,6 +4,21 @@ confidence = 0.8
 errorCode = 0
 warningCode = 0
 
+[[rule]]
+name = "missing-method-doc"
+severity = "error"
+message = "Method is missing a documentation comment."
+
+[rule.missing-method-doc]
+match = '''
+^\s*func\s+\w+\s*\(.*\)\s*\{$
+'''
+
+[rule.missing-method-doc.exclude]
+expression = '''
+^\s*func\s+\w+\s*\(.*\)\s*\{$
+'''
+
 [rule.blank-imports]
 [rule.context-as-argument]
 [rule.context-keys-type]
