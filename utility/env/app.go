@@ -115,7 +115,10 @@ func (e *AppEnv) ApplicationService() string {
 
 // String
 func (e *AppEnv) String(_ context.Context) string {
-	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","jaegerEndpoint":"` + e.jaegerEndpoint + `","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath + `","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application + `","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
+	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","jaegerEndpoint":"` + e.jaegerEndpoint +
+		`","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath +
+		`","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application +
+		`","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
 }
 
 // New create app environment
@@ -130,7 +133,7 @@ func New(ctx context.Context) (*AppEnv, error) {
 	if value.IsNil() || value.IsEmpty() {
 		return nil, gerror.New("config app is empty")
 	}
-	var config = value.MapStrStr()
+	config := value.MapStrStr()
 	return &AppEnv{
 		config:         config,
 		env:            config["env"],

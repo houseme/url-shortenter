@@ -20,7 +20,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.25.0"
-	"google.golang.org/grpc"
+	"google.golang.org/grpc/encoding/gzip"
 
 	"github.com/houseme/url-shortenter/utility/env"
 )
@@ -67,7 +67,7 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 		otlptracegrpc.WithInsecure(),
 		otlptracegrpc.WithEndpoint(endpoint), // Replace the otel Agent Addr with the access point obtained in the prerequisite。
 		otlptracegrpc.WithHeaders(map[string]string{"Authentication": traceToken}),
-		otlptracegrpc.WithDialOption(grpc.WithBlock()),
+		otlptracegrpc.WithCompressor(gzip.Name),
 	)
 	ctx := context.Background()
 	traceExp, err := otlptrace.New(ctx, traceClient)
