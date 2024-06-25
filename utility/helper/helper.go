@@ -52,7 +52,7 @@ const (
 	httpHeaderUserAgent = `Mozilla/5.0 (url-shorten; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36`
 )
 
-// Helper .
+// Helper returns an instance of the utility helper.
 func Helper() *UtilHelper {
 	return &UtilHelper{}
 }
@@ -62,6 +62,7 @@ var (
 	src            = rand.NewSource(time.Now().UnixNano())
 )
 
+// UtilHelper utility helper
 type UtilHelper struct{}
 
 // UserAgent is a default http userAgent
@@ -74,7 +75,7 @@ func (u *UtilHelper) InitTrxID(ctx context.Context, ano uint64) uint64 {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-Helper-InitTrxID")
 	defer span.End()
 
-	var appEnv, err = env.NewSnowflakeEnv(ctx)
+	appEnv, err := env.NewSnowflakeEnv(ctx)
 	if err != nil {
 		g.Log(u.Logger(ctx)).Error(ctx, "config get fail err:", err)
 		return u.InitTrxID(ctx, ano)
@@ -142,6 +143,7 @@ func (u *UtilHelper) InitRandStr(n int) string {
 }
 
 // UcFirst 首字母大些
+// UcFirst converts the first character of the string to uppercase.
 func (u *UtilHelper) UcFirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToUpper(v)) + str[i+1:]
@@ -150,6 +152,7 @@ func (u *UtilHelper) UcFirst(str string) string {
 }
 
 // LcFirst 首字母小写
+// LcFirst converts the first character of the string to lowercase.
 func (u *UtilHelper) LcFirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToLower(v)) + str[i+1:]
@@ -158,6 +161,7 @@ func (u *UtilHelper) LcFirst(str string) string {
 }
 
 // GetOutBoundIP 获取本机 iP
+// GetOutBoundIP gets the IP address of the current machine.
 func (u *UtilHelper) GetOutBoundIP(ctx context.Context) string {
 	conn, err := net.Dial("udp", "119.29.29.29:80")
 	if err != nil {
@@ -173,6 +177,7 @@ func (u *UtilHelper) GetOutBoundIP(ctx context.Context) string {
 }
 
 // GetLocalIpV4 获取 IPV4 IP，没有则返回空
+// GetLocalIpV4 gets the IPV4 IP of the current machine, if not, it returns empty.
 func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
 	inters, err := net.Interfaces()
 	if err != nil {
@@ -201,6 +206,7 @@ func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
 }
 
 // GetLocalIPAddresses 获取本地所有的 IP 地址
+// GetLocalIPAddresses gets all IP addresses of the current machine.
 func (u *UtilHelper) GetLocalIPAddresses(ctx context.Context) (mp map[int][]net.IP, err error) {
 	var (
 		ifaces []net.Interface
@@ -254,16 +260,19 @@ func (u *UtilHelper) GetLocalIPAddresses(ctx context.Context) (mp map[int][]net.
 }
 
 // Logger .获取上下文中的 logger
+// Logger gets the logger in the context.
 func (u *UtilHelper) Logger(ctx context.Context) string {
 	return gconv.String(ctx.Value("logger"))
 }
 
 // SetLogger .设置上下文中的 logger
+// SetLogger sets the logger in the context.
 func (u *UtilHelper) SetLogger(ctx context.Context, logger string) context.Context {
 	return context.WithValue(ctx, "logger", logger)
 }
 
 // EncryptSignData sign data
+// EncryptSignData encrypts the input data with the given key.
 func (u *UtilHelper) EncryptSignData(_ context.Context, data interface{}, key []byte) ([]byte, error) {
 	byteInfo, err := gjson.Encode(data)
 	if err != nil {
@@ -273,6 +282,7 @@ func (u *UtilHelper) EncryptSignData(_ context.Context, data interface{}, key []
 }
 
 // Header .
+// Header gets the default request header.
 func (u *UtilHelper) Header(_ context.Context) map[string]string {
 	return g.MapStrStr{
 		"Accept-Encoding": "gzip, deflate, br",
@@ -283,7 +293,7 @@ func (u *UtilHelper) Header(_ context.Context) map[string]string {
 	}
 }
 
-// HeaderToMap covert request headers to map.
+// HeaderToMap converts the request header to a map.
 func (u *UtilHelper) HeaderToMap(header http.Header) map[string]interface{} {
 	m := make(map[string]interface{})
 	for k, v := range header {
@@ -297,11 +307,13 @@ func (u *UtilHelper) HeaderToMap(header http.Header) map[string]interface{} {
 }
 
 // EncryptPass .加密处理
+// EncryptPass encrypts the input password.
 func (u *UtilHelper) EncryptPass(pass string) ([]byte, error) {
 	return bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
 }
 
 // CompareHashAndPassword 校验密码。
+// CompareHashAndPassword compares the input password with the hash.
 func (u *UtilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 	if err := bcrypt.CompareHashAndPassword([]byte(authPass), []byte(inputPass)); err != nil {
 		return false
@@ -310,11 +322,13 @@ func (u *UtilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 }
 
 // RequestTime .request time
+// RequestTime gets the time of the request.
 func (u *UtilHelper) RequestTime(_ context.Context, ts string) *gtime.Time {
 	return gtime.NewFromStrFormat(ts, "YmdHis")
 }
 
 // ConcatenateSignSource get sign URL 排序并拼接签名的内容信息
+// ConcatenateSignSource sorts and splices the content information of the signature URL.
 func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}) string {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-enterprise-utility-ConcatenateSignSource")
 	defer span.End()
@@ -356,11 +370,12 @@ func (u *UtilHelper) ConcatenateSignSource(ctx context.Context, data interface{}
 }
 
 // DecryptSignDataInfo sign data 数据执行 aes 解密
+// DecryptSignDataInfo decrypts the input data with the given key.
 func (u *UtilHelper) DecryptSignDataInfo(src []byte, key []byte) (dst []byte, err error) {
 	return aes.NewAESCrypt(key).Decrypt(src, gocrypto.ECB)
 }
 
-// HexDecodeString .
+// HexDecodeString decodes the input string.
 func (u *UtilHelper) HexDecodeString(_ context.Context, data string, key []byte) ([]byte, error) {
 	if signData, err := hex.DecodeString(data); err != nil {
 		return nil, gerror.Wrap(err, "helper HexDecodeString hex.DecodeString failed")
@@ -375,7 +390,7 @@ func (u *UtilHelper) Sha256Of(input []byte) string {
 	return hex.EncodeToString(sum[:])
 }
 
-// CheckFileExists .
+// CheckFileExists checks whether the file exists, if not, it creates the file.
 func (u *UtilHelper) CheckFileExists(ctx context.Context, filePath string) (err error) {
 	if !gfile.Exists(filePath) {
 		if err = gfile.Mkdir(filePath); err != nil {
@@ -388,7 +403,7 @@ func (u *UtilHelper) CheckFileExists(ctx context.Context, filePath string) (err 
 	return nil
 }
 
-// UserAgentIPHash user agent ip hash
+// UserAgentIPHash generates a hash based on the user agent and IP.
 func (u *UtilHelper) UserAgentIPHash(useragent string, ip string) (string, error) {
 	var (
 		input     = fmt.Sprintf("%s-%s-%s-%d", useragent, ip, time.Now().String(), rand.Int())
@@ -402,7 +417,7 @@ func (u *UtilHelper) UserAgentIPHash(useragent string, ip string) (string, error
 	return str[:10], nil
 }
 
-// Sha256OfShort returns the sha256 of the input string
+// Sha256OfShort calculates the sha256 of the input string.
 func (u *UtilHelper) Sha256OfShort(input string) ([]byte, error) {
 	algorithm := sha256.New()
 	if _, err := algorithm.Write([]byte(strings.TrimSpace(input))); err != nil {
@@ -416,7 +431,7 @@ func (u *UtilHelper) Base58Encode(data []byte) string {
 	return base58.Encode(data)
 }
 
-// PasswordBase58Hash password base58 hash
+// PasswordBase58Hash generates a base58 hash of the input password.
 func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
 	data, err := u.Sha256OfShort(password)
 	if err != nil {
@@ -425,7 +440,7 @@ func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
 	return u.Base58Encode(data), nil
 }
 
-// GenerateShortLink generate short link
+// GenerateShortLink generates a short link based on the input URL.
 func (u *UtilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
 	var (
 		logger    = g.Log(u.Logger(ctx))
@@ -452,7 +467,7 @@ func (u *UtilHelper) AESDecrypt(_ context.Context, key, data []byte) (string, er
 	return aes.NewAESCrypt(key).DecryptToString(gocrypto.Base64, data, gocrypto.ECB)
 }
 
-// CreateAccessToken create access token
+// CreateAccessToken creates an access token based on the input account number.
 func (u *UtilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (token string, err error) {
 	var (
 		hash      []byte
@@ -469,7 +484,7 @@ func (u *UtilHelper) CreateAccessToken(ctx context.Context, accountNo uint64) (t
 	return
 }
 
-// GeneratePasswordHash 生成密码哈希
+// GeneratePasswordHash generates a password hash based on the input password and system salt.
 func (u *UtilHelper) GeneratePasswordHash(ctx context.Context, password, systemSalt string) (string, error) {
 	// 使用系统盐值和用户密码生成哈希
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password+systemSalt), bcrypt.DefaultCost)
@@ -480,6 +495,7 @@ func (u *UtilHelper) GeneratePasswordHash(ctx context.Context, password, systemS
 }
 
 // VerifyPassword 校验密码
+// VerifyPassword verifies the input password with the hashed password.
 func (u *UtilHelper) VerifyPassword(_ context.Context, hashedPassword, userInputPassword, systemSalt string) error {
 	// 首次创建产生密码哈希时已经包含了系统盐值
 	// 直接根据哈希值进行校验即可
