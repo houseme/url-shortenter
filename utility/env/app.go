@@ -16,21 +16,21 @@ import (
 
 // AppEnv .
 type AppEnv struct {
-	config         map[string]string
-	env            string
-	environment    string
-	version        string
-	jaegerEndpoint string
-	traceType      string
-	endpoint       string
-	traceToken     string
-	service        string
-	application    string
-	uploadPath     string
-	visitPath      string
-	site           string
-	roleModel      string
-	frontSite      string
+	config      map[string]string
+	env         string
+	environment string
+	version     string
+	useTrace    string
+	traceType   string
+	endpoint    string
+	traceToken  string
+	service     string
+	application string
+	uploadPath  string
+	visitPath   string
+	site        string
+	roleModel   string
+	frontSite   string
 }
 
 // Env .
@@ -48,9 +48,9 @@ func (e *AppEnv) Version(_ context.Context) string {
 	return e.version
 }
 
-// JaegerEndpoint .
-func (e *AppEnv) JaegerEndpoint(_ context.Context) string {
-	return e.jaegerEndpoint
+// UseTrace .
+func (e *AppEnv) UseTrace(_ context.Context) string {
+	return e.useTrace
 }
 
 // TraceType .
@@ -115,7 +115,7 @@ func (e *AppEnv) ApplicationService() string {
 
 // String
 func (e *AppEnv) String(_ context.Context) string {
-	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","jaegerEndpoint":"` + e.jaegerEndpoint +
+	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","useTrace":"` + e.useTrace +
 		`","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath +
 		`","visitPath":"` + e.visitPath + `","service":"` + e.service + `","application":"` + e.application +
 		`","site":"` + e.site + `","roleModel":"` + e.roleModel + `","frontSite":"` + e.frontSite + `"}`
@@ -135,20 +135,20 @@ func New(ctx context.Context) (*AppEnv, error) {
 	}
 	config := value.MapStrStr()
 	return &AppEnv{
-		config:         config,
-		env:            config["env"],
-		environment:    config["environment"],
-		version:        config["version"],
-		jaegerEndpoint: config["jaegerEndpoint"],
-		traceType:      config["traceType"],
-		endpoint:       config["endpoint"],
-		traceToken:     config["traceToken"],
-		service:        config["service"],
-		application:    config["application"],
-		uploadPath:     config["uploadPath"],
-		visitPath:      config["visitPath"],
-		site:           config["site"],
-		roleModel:      config["roleModel"],
-		frontSite:      config["frontSite"],
+		config:      config,
+		env:         config["env"],
+		environment: config["environment"],
+		version:     config["version"],
+		useTrace:    config["useTrace"],
+		traceType:   config["traceType"],
+		endpoint:    config["endpoint"],
+		traceToken:  config["traceToken"],
+		service:     config["service"],
+		application: config["application"],
+		uploadPath:  config["uploadPath"],
+		visitPath:   config["visitPath"],
+		site:        config["site"],
+		roleModel:   config["roleModel"],
+		frontSite:   config["frontSite"],
 	}, nil
 }

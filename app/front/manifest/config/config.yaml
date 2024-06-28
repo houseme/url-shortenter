@@ -42,7 +42,6 @@ app:
   environment: "develop"
   application: "demo"
   version: "1.0.0"
-  jaegerEndpoint: ""
   endpoint: "tracing-analysis-dc-bj.aliyuncs.com:8090"
   traceToken: ""
   service: "front"
