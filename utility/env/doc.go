@@ -16,6 +16,7 @@ func Env() *UtilEnv {
 	return &UtilEnv{}
 }
 
+// UtilEnv util env
 type UtilEnv struct {
 }
 
@@ -24,6 +25,7 @@ const (
 	dev  = "dev"
 	prod = "prod"
 	test = "test"
+
 	// environment
 	develop    = "develop"
 	production = "production"

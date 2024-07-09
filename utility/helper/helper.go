@@ -29,6 +29,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -316,6 +317,7 @@ func (u *UtilHelper) EncryptPass(pass string) ([]byte, error) {
 // CompareHashAndPassword compares the input password with the hash.
 func (u *UtilHelper) CompareHashAndPassword(inputPass, authPass string) bool {
 	if err := bcrypt.CompareHashAndPassword([]byte(authPass), []byte(inputPass)); err != nil {
+		g.Log().Errorf(gctx.New(), "CompareHashAndPassword bcrypt.CompareHashAndPassword failed err: %+v", err)
 		return false
 	}
 	return true
