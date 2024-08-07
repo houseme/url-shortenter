@@ -33,8 +33,7 @@ import (
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sHome struct {
-}
+type sHome struct{}
 
 var sfg singleflight.Group
 
@@ -74,7 +73,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	// 开始查询数据库 防止缓存击穿
 	v, err, _ := sfg.Do(in.Short, func() (interface{}, error) {
 		// query DB
-		var ent = (*entity.ShortUrls)(nil)
+		ent := (*entity.ShortUrls)(nil)
 		if err = dao.ShortUrls.Ctx(ctx).Scan(&ent, do.ShortUrls{ShortUrl: in.Short}); err != nil {
 			return nil, err
 		}
@@ -106,6 +105,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 	}
 
 	if v == nil {
+		logger.Debug(ctx, "home-short-detail query from db result is nil")
 		return "", nil
 	}
 	isSendLog = true

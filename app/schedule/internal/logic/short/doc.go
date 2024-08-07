@@ -11,8 +11,7 @@ import (
 	"github.com/houseme/url-shortenter/app/schedule/internal/service"
 )
 
-type sShort struct {
-}
+type sShort struct{}
 
 func init() {
 	service.RegisterShort(&sShort{})
