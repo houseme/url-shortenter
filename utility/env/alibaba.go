@@ -24,22 +24,22 @@ type AlibabaEnv struct {
 	config          map[string]string
 }
 
-// AccessKeyID .
+// AccessKeyID access key id
 func (e *AlibabaEnv) AccessKeyID(_ context.Context) string {
 	return e.accessKeyID
 }
 
-// AccessKeySecret .
+// AccessKeySecret access key secret
 func (e *AlibabaEnv) AccessKeySecret(_ context.Context) string {
 	return e.accessKeySecret
 }
 
-// BucketName .
+// BucketName bucket name
 func (e *AlibabaEnv) BucketName(_ context.Context) string {
 	return e.bucketName
 }
 
-// Endpoint .
+// Endpoint endpoint
 func (e *AlibabaEnv) Endpoint(_ context.Context) string {
 	return e.endpoint
 }
@@ -60,19 +60,19 @@ func (e *AlibabaEnv) String(_ context.Context) string {
 		`","bucketName":"` + e.bucketName + `","endpoint":"` + e.endpoint + `","region":"` + e.region + `"}`
 }
 
-// NewAlibabaEnv .
+// NewAlibabaEnv new alibaba env return alibaba env
 func NewAlibabaEnv(ctx context.Context) (*AlibabaEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-env-NewAlibabaEnv")
 	defer span.End()
 
-	var v, err = g.Cfg().Get(ctx, "alibaba")
+	v, err := g.Cfg().Get(ctx, "alibaba")
 	if err != nil {
 		return nil, gerror.Wrap(err, "config alibaba get failed")
 	}
 	if v.IsNil() || v.IsEmpty() {
 		return nil, gerror.New("config alibaba is empty")
 	}
-	var config = v.MapStrStr()
+	config := v.MapStrStr()
 	return &AlibabaEnv{
 		accessKeyID:     config["accessKeyID"],
 		accessKeySecret: config["accessKeySecret"],

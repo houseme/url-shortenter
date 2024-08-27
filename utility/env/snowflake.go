@@ -23,12 +23,12 @@ type SnowflakeEnv struct {
 	config     map[string]*gvar.Var
 }
 
-// Datacenter .
+// Datacenter returns the datacenter id int64
 func (e *SnowflakeEnv) Datacenter(_ context.Context) int64 {
 	return e.datacenter
 }
 
-// Worker .
+// Worker returns the worker id int64
 func (e *SnowflakeEnv) Worker(_ context.Context) int64 {
 	return e.worker
 }

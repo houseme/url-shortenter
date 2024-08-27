@@ -36,6 +36,7 @@ const (
 	shortAuthorizationKey = "short_authorization_key_"
 )
 
+// IRedisCache is the interface for Redis cache
 type IRedisCache struct {
 	ctx context.Context
 }

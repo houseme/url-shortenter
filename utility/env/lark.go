@@ -25,12 +25,12 @@ type LarkEnv struct {
 	config              map[string]string
 }
 
-// NewLark .create a new lark environment
+// NewLark create a new lark environment
 func NewLark(ctx context.Context) (*LarkEnv, error) {
 	ctx, span := gtrace.NewSpan(ctx, "tracing-utility-lark-NewLark")
 	defer span.End()
 
-	var v, err = g.Cfg().Get(ctx, "lark")
+	v, err := g.Cfg().Get(ctx, "lark")
 	if err != nil {
 		return nil, gerror.Wrap(err, "config lark get failed")
 	}
@@ -39,7 +39,7 @@ func NewLark(ctx context.Context) (*LarkEnv, error) {
 		return nil, gerror.New("config lark is empty")
 	}
 
-	var config = v.MapStrStr()
+	config := v.MapStrStr()
 	return &LarkEnv{
 		appID:               config["appID"],
 		appSecret:           config["appSecret"],
@@ -51,12 +51,12 @@ func NewLark(ctx context.Context) (*LarkEnv, error) {
 	}, nil
 }
 
-// APPID .
+// APPID returns the app id.
 func (e *LarkEnv) APPID(_ context.Context) string {
 	return e.appID
 }
 
-// APPSecret .
+// APPSecret returns the app secret.
 func (e *LarkEnv) APPSecret(_ context.Context) string {
 	return e.appSecret
 }

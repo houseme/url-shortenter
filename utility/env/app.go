@@ -83,7 +83,7 @@ func (e *AppEnv) Config(_ context.Context) map[string]string {
 	return e.config
 }
 
-// UploadPath .	上传路径
+// UploadPath	上传路径 upload path
 func (e *AppEnv) UploadPath(_ context.Context) string {
 	return e.uploadPath
 }
@@ -108,12 +108,12 @@ func (e *AppEnv) FrontSite(_ context.Context) string {
 	return e.frontSite
 }
 
-// ApplicationService .
+// ApplicationService application service
 func (e *AppEnv) ApplicationService() string {
 	return e.application + "-" + e.service
 }
 
-// String
+// String return string
 func (e *AppEnv) String(_ context.Context) string {
 	return `{"env":"` + e.env + `","environment":"` + e.environment + `","version":"` + e.version + `","useTrace":"` + e.useTrace +
 		`","endpoint":"` + e.endpoint + `","traceToken":"` + e.traceToken + `","traceType":"` + e.traceType + `","uploadPath":"` + e.uploadPath +
