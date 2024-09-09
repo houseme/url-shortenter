@@ -290,7 +290,7 @@ func (s *sShort) GetShortCache(ctx context.Context, short string) (*entity.Short
 
 	// set cache
 	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "SETEX", cache.RedisCache().ShortCacheObject(ctx, short), 1800, su); err != nil {
-		log.Error(ctx, "get short cache set cache error", err)
+		log.Errorf(ctx, "get short cache set cache error:%+v", err)
 	}
 	log.Info(ctx, "get short cache set cache success", su, "val:", val)
 	return su, nil

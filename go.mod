@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.21
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.10
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.13
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.10.0
@@ -16,14 +16,14 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.993
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.993
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.998
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.998
 	go.opentelemetry.io/otel v1.29.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.29.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.29.0
 	go.opentelemetry.io/otel/sdk v1.29.0
 	go.opentelemetry.io/otel/trace v1.29.0
-	golang.org/x/crypto v0.26.0
+	golang.org/x/crypto v0.27.0
 	golang.org/x/sync v0.8.0
 	google.golang.org/grpc v1.66.0
 	google.golang.org/protobuf v1.34.2
@@ -67,13 +67,13 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/otel/metric v1.29.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
-	golang.org/x/image v0.19.0 // indirect
-	golang.org/x/net v0.28.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/image v0.20.0 // indirect
+	golang.org/x/net v0.29.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
 	golang.org/x/time v0.6.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240827150818-7e3bb234dfed // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240827150818-7e3bb234dfed // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
