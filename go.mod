@@ -9,15 +9,15 @@ require (
 	github.com/chromedp/chromedp v0.10.0
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.7.3
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.7.3
-	github.com/gogf/gf/v2 v2.7.3
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.7.4
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.7.4
+	github.com/gogf/gf/v2 v2.7.4
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1010
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1010
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1011
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1011
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.30.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.30.0
