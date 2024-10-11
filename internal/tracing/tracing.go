@@ -94,7 +94,7 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 
 	bsp := trace.NewBatchSpanProcessor(traceExp)
 	tracerProvider := trace.NewTracerProvider(
-		trace.WithSampler(trace.AlwaysSample()),
+		trace.WithSampler(trace.TraceIDRatioBased(0.5)),
 		trace.WithResource(res),
 		trace.WithSpanProcessor(bsp),
 	)
