@@ -2,8 +2,6 @@ module github.com/houseme/url-shortenter
 
 go 1.23
 
-toolchain go1.23.2
-
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.32
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
@@ -18,8 +16,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1025
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1025
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1026
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1026
 	go.opentelemetry.io/otel v1.31.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.31.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.31.0
