@@ -20,8 +20,7 @@ import (
 	"github.com/houseme/url-shortenter/utility/helper"
 )
 
-type sMiddleware struct {
-}
+type sMiddleware struct{}
 
 func init() {
 	service.RegisterMiddleware(&sMiddleware{})
@@ -71,7 +70,7 @@ func (s *sMiddleware) MiddlewareHandlerResponse(r *ghttp.Request) {
 	)
 	logger.Info(ctx, "MiddlewareHandlerResponse response:", res, " statusCode:", r.Response.Status)
 	if g.IsNil(res) || g.IsEmpty(res) {
-		r.Response.Status = http.StatusNotFound
+		r.Response.WriteHeader(http.StatusNotFound)
 	}
 	if err != nil {
 		logger.Errorf(ctx, "MiddlewareHandlerResponse err:%+v", err)

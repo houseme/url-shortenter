@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.23
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.32
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.33
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.11.0
@@ -16,8 +16,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1026
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1026
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1028
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1028
 	go.opentelemetry.io/otel v1.31.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.31.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.31.0
@@ -72,8 +72,8 @@ require (
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
 	golang.org/x/time v0.7.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241015192408-796eee8c2d53 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241015192408-796eee8c2d53 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241021214115-324edc3d5d38 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241021214115-324edc3d5d38 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
