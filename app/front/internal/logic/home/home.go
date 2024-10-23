@@ -58,12 +58,12 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		}
 	}()
 
-	var val *gvar.Var
-	if val, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "GET", in.Short); err != nil {
+	var value *gvar.Var
+	if value, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "GET", in.Short); err != nil {
 		logger.Errorf(ctx, "home-short-detail get redis value failed err:%+v", err)
 	}
-	if !val.IsNil() && !val.IsEmpty() && val.String() != "" {
-		out = val.String()
+	if !value.IsNil() && !value.IsEmpty() && value.String() != "" {
+		out = value.String()
 		logger.Debug(ctx, "home-short-detail from redis out:", out)
 		isSendLog = true
 		in.VisitState = consts.VisitStateNormal
@@ -91,7 +91,7 @@ func (s *sHome) ShortDetail(ctx context.Context, in *model.HomeInput) (out strin
 		}
 
 		// set cache
-		if val, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
+		if value, err = g.Redis(cache.RedisCache().ShortRequestConn(ctx)).Do(ctx, "SETEX", in.Short, 86400*2+grand.Intn(2022), ent.DestUrl); err != nil {
 			logger.Errorf(ctx, "home-short-detail storage.Redis Set failed err:%+v", err)
 		}
 
@@ -121,14 +121,14 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 	defer span.End()
 
 	var (
-		t          = gtime.Now()
+		now        = gtime.Now()
 		accessLogs = entity.AccessLogs{
 			ShortUrl:   in.Short,
-			AccessTime: t,
-			AccessDate: t,
-			YearTime:   uint(t.Year()),
-			MonthTime:  uint(t.Month()),
-			DayTime:    uint(t.Day()),
+			AccessTime: now,
+			AccessDate: now,
+			YearTime:   uint(now.Year()),
+			MonthTime:  uint(now.Month()),
+			DayTime:    uint(now.Day()),
 			Ip:         in.ClientIP,
 			UserAgent:  in.UserAgent,
 			ShortAll:   in.ShortAll,
@@ -138,7 +138,7 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 		}
 		serverIP, err = gipv4.GetIntranetIp()
 		logger        = g.Log(helper.Helper().Logger(ctx))
-		val           *gvar.Var
+		value         *gvar.Var
 	)
 
 	if err == nil {
@@ -147,11 +147,11 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 		logger.Errorf(ctx, "NewAccessLog get server ip failed err:%+v", err)
 	}
 	logger.Debug(ctx, "NewAccessLog AccessLogs:", accessLogs)
-	if val, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogQueue(ctx), accessLogs); err != nil {
-		logger.Errorf(ctx, "NewAccessLog err: %+v", err)
+	if value, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogQueue(ctx), accessLogs); err != nil {
+		logger.Errorf(ctx, "NewAccessLog redis left push failed err: %+v", err)
 		return
 	}
-	logger.Debug(ctx, "NewAccessLog set redis :", val)
+	logger.Debug(ctx, "NewAccessLog set redis success value:", value)
 }
 
 // ShortAll 短链列表
@@ -161,7 +161,7 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 
 	var (
 		logger          = g.Log(helper.Helper().Logger(ctx))
-		t               = gtime.Now()
+		now             = gtime.Now()
 		intranetIPArray []string
 		serverIP        = "NoHostIpFound"
 		isSendLog       bool
@@ -196,11 +196,11 @@ func (s *sHome) ShortAll(ctx context.Context, in *model.HomeInput) (out []entity
 		ServerIP:   &wrapperspb.StringValue{Value: serverIP},
 		TraceID:    &wrapperspb.StringValue{Value: span.SpanContext().TraceID().String()},
 		UserAgent:  &wrapperspb.StringValue{Value: in.UserAgent},
-		AccessTime: timestamppb.New(time.UnixMicro(t.UnixMicro())),
-		AccessDate: timestamppb.New(time.UnixMicro(t.UnixMicro())),
-		YearTime:   &wrapperspb.UInt64Value{Value: uint64(t.Year())},
-		MonthTime:  &wrapperspb.UInt64Value{Value: uint64(t.Month())},
-		DayTime:    &wrapperspb.UInt64Value{Value: uint64(t.Day())},
+		AccessTime: timestamppb.New(time.UnixMicro(now.UnixMicro())),
+		AccessDate: timestamppb.New(time.UnixMicro(now.UnixMicro())),
+		YearTime:   &wrapperspb.UInt64Value{Value: uint64(now.Year())},
+		MonthTime:  &wrapperspb.UInt64Value{Value: uint64(now.Month())},
+		DayTime:    &wrapperspb.UInt64Value{Value: uint64(now.Day())},
 	}
 	logger.Debug(ctx, "home-short-all acl:", acl)
 	return
