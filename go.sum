@@ -118,8 +118,8 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/grokify/html-strip-tags-go v0.1.0 h1:03UrQLjAny8xci+R+qjCce/MYnpNXCtgzltlQbOBae4=
 github.com/grokify/html-strip-tags-go v0.1.0/go.mod h1:ZdzgfHEzAfz9X6Xe5eBLVblWIxXfYSQ40S/VKrAOGpc=
-github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 h1:asbCHRVmodnJTuQ3qamDwqVOIjwqUPTYmYuemVOx+Ys=
-github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0/go.mod h1:ggCgvZ2r7uOoQjOyu2Y1NhHmEPPzzuhWgcza5M1Ji1I=
+github.com/grpc-ecosystem/grpc-gateway/v2 v2.23.0 h1:ad0vkEBuk23VJzZR9nkLVG0YAoN9coASF1GusYX6AlU=
+github.com/grpc-ecosystem/grpc-gateway/v2 v2.23.0/go.mod h1:igFoXX2ELCW06bol23DWPB5BEWfZISOzSP5K2sbLea0=
 github.com/houseme/gocrypto v1.2.1 h1:yQgO7LE0EnPeYZQzdP40qpRhwO5XfCwBUC56fS+CAcg=
 github.com/houseme/gocrypto v1.2.1/go.mod h1:HStVV9shxsDvOia0zzoi4UrLgWEF0k0usve4DIM7sKI=
 github.com/houseme/snowflake v1.6.5 h1:z979BLZujukeEVCMBjehc+8GOrMnTJmWY2JwA/PjRuU=
@@ -203,10 +203,10 @@ github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXl
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7/go.mod h1:q4W45IWZaF22tdD+VEXcAWRA037jwmWEB5VWYORlTpc=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1033 h1:g263/dapUpOAZJa1Y9x07WgfOl7Yy+FM5Mrf4WyttS8=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1033/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1033 h1:6lPUXzmurvFIpG5DrtH9fzf2xjjU/pJRHRaeX3eA8KY=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1033/go.mod h1:ytD+OGLOHOgF7JIWhvfyoZ63IgbWFXtmFClye64QiL0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1034 h1:T7ewuO2DD+5R2LRpD2kTRy25aCkVDVdYkmmyUS63i08=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1034/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1034 h1:FKJULxYnLVcI11Mo+UkWzn4+VM3zXSsG/geXldXcDX0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1034/go.mod h1:ln1iAVg7YT21PaGGUUeiqi7C5Oqkl1y2PzJZeUDPVtE=
 github.com/uber/jaeger-client-go v2.30.0+incompatible h1:D6wyKGCecFaSRUpo8lCVbaOOb6ThwMmTEbhRwtKR97o=
 github.com/uber/jaeger-client-go v2.30.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
 github.com/uber/jaeger-lib v2.4.1+incompatible h1:td4jdvLcExb4cBISKIpHuGoVXh+dVKhn2Um6rjCsSsg=
