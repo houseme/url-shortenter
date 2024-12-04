@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.23
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.60
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.63
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.11.2
@@ -16,8 +16,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1051
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1051
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1053
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1053
 	go.opentelemetry.io/otel v1.32.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.32.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.32.0
@@ -34,7 +34,7 @@ require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20241110205750-a72e6703cd9b // indirect
+	github.com/chromedp/cdproto v0.0.0-20241202193831-ec840381567d // indirect
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -66,14 +66,14 @@ require (
 	github.com/redis/go-redis/v9 v9.7.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/otel/metric v1.32.0 // indirect
-	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
+	go.opentelemetry.io/proto/otlp v1.4.0 // indirect
 	golang.org/x/image v0.22.0 // indirect
 	golang.org/x/net v0.31.0 // indirect
 	golang.org/x/sys v0.27.0 // indirect
 	golang.org/x/text v0.20.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241118233622-e639e219e697 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241118233622-e639e219e697 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241202173237-19429a94021a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241202173237-19429a94021a // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
