@@ -3,21 +3,21 @@ module github.com/houseme/url-shortenter
 go 1.23
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.68
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.71
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.11.2
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.8.2
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.8.2
-	github.com/gogf/gf/v2 v2.8.2
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.8.3
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.8.3
+	github.com/gogf/gf/v2 v2.8.3
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.6
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1062
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1062
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1064
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1064
 	go.opentelemetry.io/otel v1.33.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.33.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.33.0
@@ -25,7 +25,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.33.0
 	golang.org/x/crypto v0.31.0
 	golang.org/x/sync v0.10.0
-	google.golang.org/grpc v1.69.0
+	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.0
 )
 
@@ -69,7 +69,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.33.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.4.0 // indirect
 	golang.org/x/image v0.23.0 // indirect
-	golang.org/x/net v0.32.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
