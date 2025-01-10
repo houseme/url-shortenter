@@ -15,7 +15,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
-	github.com/mojocn/base64Captcha v1.3.6
+	github.com/mojocn/base64Captcha v1.3.8
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1077
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1077
 	go.opentelemetry.io/otel v1.33.0
