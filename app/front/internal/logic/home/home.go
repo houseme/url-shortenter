@@ -138,7 +138,6 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 		}
 		serverIP, err = gipv4.GetIntranetIp()
 		logger        = g.Log(helper.Helper().Logger(ctx))
-		value         *gvar.Var
 	)
 
 	if err == nil {
@@ -147,6 +146,7 @@ func (s *sHome) NewAccessLog(ctx context.Context, in *model.HomeInput) {
 		logger.Errorf(ctx, "NewAccessLog get server ip failed err:%+v", err)
 	}
 	logger.Debug(ctx, "NewAccessLog AccessLogs:", accessLogs)
+	var value *gvar.Var
 	if value, err = g.Redis(cache.RedisCache().ShortCacheConn(ctx)).Do(ctx, "LPUSH", cache.RedisCache().ShortAccessLogQueue(ctx), accessLogs); err != nil {
 		logger.Errorf(ctx, "NewAccessLog redis left push failed err: %+v", err)
 		return
