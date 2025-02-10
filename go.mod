@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.23
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.85
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.86
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.12.1
@@ -16,14 +16,14 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.8
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1093
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1093
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1094
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1094
 	go.opentelemetry.io/otel v1.34.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.34.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.34.0
 	go.opentelemetry.io/otel/sdk v1.34.0
 	go.opentelemetry.io/otel/trace v1.34.0
-	golang.org/x/crypto v0.32.0
+	golang.org/x/crypto v0.33.0
 	golang.org/x/sync v0.11.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
@@ -34,7 +34,7 @@ require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20250203011601-a3c71a042730 // indirect
+	github.com/chromedp/cdproto v0.0.0-20250208210249-fa305b1d5b8a // indirect
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -50,7 +50,7 @@ require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.1.0 // indirect
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.0 // indirect
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -73,8 +73,8 @@ require (
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.10.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250204164813-702378808489 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250204164813-702378808489 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250207221924-e9438ea467c6 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250207221924-e9438ea467c6 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
