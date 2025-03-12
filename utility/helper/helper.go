@@ -13,6 +13,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math/rand"
 	"net"
 	"net/http"
@@ -21,6 +22,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"unicode/utf16"
 	"unsafe"
 
 	"github.com/btcsuite/btcd/btcutil/base58"
@@ -503,4 +505,48 @@ func (u *UtilHelper) VerifyPassword(_ context.Context, hashedPassword, userInput
 	// 首次创建产生密码哈希时已经包含了系统盐值
 	// 直接根据哈希值进行校验即可
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(userInputPassword+systemSalt))
+}
+
+// DecodeUCS2 UCS2 解码
+func DecodeUCS2(src string) string {
+	decodeString, err := hex.DecodeString(src)
+	if err != nil {
+		log.Printf("UCS2 decode failed: %v", err)
+		return src
+	}
+	if len(decodeString)%2 != 0 {
+		log.Printf("UCS2 decode failed: odd length")
+		return src
+	}
+	uint16s := make([]uint16, len(decodeString)/2)
+	for i := 0; i < len(uint16s); i++ {
+		uint16s[i] = uint16(decodeString[2*i])<<8 | uint16(decodeString[2*i+1])
+	}
+	runeSlice := utf16.Decode(uint16s)
+	str := string(runeSlice)
+	return Transfer0x00(str)
+}
+
+// Transfer0x00 替换掉 0x00
+func Transfer0x00(str string) string {
+	return strings.Replace(str, "\x00", " ", -1)
+}
+
+// EncodeUCS2 UCS2 编码
+func EncodeUCS2(src string) string {
+	runes := utf16.Encode([]rune(src))
+	b := make([]byte, len(runes)*2)
+	for i, r := range runes {
+		b[2*i] = byte(r >> 8)
+		b[2*i+1] = byte(r & 0xFF)
+	}
+	return hex.EncodeToString(b)
+}
+
+func test_main() {
+	content := "测试一下！"
+	encode := EncodeUCS2(content)
+	fmt.Println("加密：", encode)
+	decode := DecodeUCS2(encode)
+	fmt.Println("解密：", decode)
 }
