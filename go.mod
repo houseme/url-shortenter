@@ -62,7 +62,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
-	github.com/redis/go-redis/v9 v9.7.1 // indirect
+	github.com/redis/go-redis/v9 v9.7.3 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel/metric v1.35.0 // indirect
