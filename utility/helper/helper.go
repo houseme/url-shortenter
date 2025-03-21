@@ -508,7 +508,7 @@ func (u *UtilHelper) VerifyPassword(_ context.Context, hashedPassword, userInput
 }
 
 // DecodeUCS2 UCS2 解码
-func DecodeUCS2(src string) string {
+func (u *UtilHelper) DecodeUCS2(src string) string {
 	decodeString, err := hex.DecodeString(src)
 	if err != nil {
 		log.Printf("UCS2 decode failed: %v", err)
@@ -524,16 +524,16 @@ func DecodeUCS2(src string) string {
 	}
 	runeSlice := utf16.Decode(uint16s)
 	str := string(runeSlice)
-	return Transfer0x00(str)
+	return u.Transfer0x00(str)
 }
 
 // Transfer0x00 替换掉 0x00
-func Transfer0x00(str string) string {
+func (u *UtilHelper) Transfer0x00(str string) string {
 	return strings.Replace(str, "\x00", " ", -1)
 }
 
 // EncodeUCS2 UCS2 编码
-func EncodeUCS2(src string) string {
+func (u *UtilHelper) EncodeUCS2(src string) string {
 	runes := utf16.Encode([]rune(src))
 	b := make([]byte, len(runes)*2)
 	for i, r := range runes {
@@ -541,12 +541,4 @@ func EncodeUCS2(src string) string {
 		b[2*i+1] = byte(r & 0xFF)
 	}
 	return hex.EncodeToString(b)
-}
-
-func test_main() {
-	content := "测试一下！"
-	encode := EncodeUCS2(content)
-	fmt.Println("加密：", encode)
-	decode := DecodeUCS2(encode)
-	fmt.Println("解密：", decode)
 }
