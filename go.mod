@@ -3,7 +3,7 @@ module github.com/houseme/url-shortenter
 go 1.24
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v1.63.100
+	github.com/aliyun/alibaba-cloud-sdk-go v1.63.102
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/chromedp/chromedp v0.13.3
