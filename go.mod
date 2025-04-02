@@ -6,7 +6,7 @@ require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.103
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/btcsuite/btcd/btcutil v1.1.6
-	github.com/chromedp/chromedp v0.13.3
+	github.com/chromedp/chromedp v0.13.5
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.0
@@ -34,7 +34,7 @@ require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20250319231242-a755498943c8 // indirect
+	github.com/chromedp/cdproto v0.0.0-20250401205909-91afd104e2b8 // indirect
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
