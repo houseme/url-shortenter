@@ -55,7 +55,7 @@ func (s *sShort) AssignTask(ctx context.Context) (err error) {
 		return
 	}
 
-	if list == nil || len(list) == 0 {
+	if list == nil {
 		logger.Info(ctx, "AssignTask list is nil or len(list) == 0")
 		return
 	}
@@ -92,7 +92,7 @@ func (s *sShort) AuditAssignTask(ctx context.Context) (err error) {
 		return
 	}
 
-	if list == nil || len(list) == 0 {
+	if list == nil {
 		logger.Info(ctx, "AuditAssignTask list is nil or len(list) == 0")
 		return
 	}

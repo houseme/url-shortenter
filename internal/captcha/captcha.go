@@ -15,9 +15,9 @@ import (
 	"github.com/mojocn/base64Captcha"
 )
 
-// configJsonBody json request body.
-type configJsonBody struct {
-	Id            string
+// configJSONBody json request body.
+type configJSONBody struct {
+	ID            string
 	CaptchaType   string
 	VerifyValue   string
 	DriverAudio   *base64Captcha.DriverAudio
@@ -33,7 +33,7 @@ var store = base64Captcha.DefaultMemStore
 func generateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request parameters
 	decoder := json.NewDecoder(r.Body)
-	var param configJsonBody
+	var param configJSONBody
 	err := decoder.Decode(&param)
 	if err != nil {
 		log.Println(err)
@@ -70,7 +70,7 @@ func generateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 func captchaVerifyHandle(w http.ResponseWriter, r *http.Request) {
 	// parse request json body
 	decoder := json.NewDecoder(r.Body)
-	var param configJsonBody
+	var param configJSONBody
 	err := decoder.Decode(&param)
 	if err != nil {
 		log.Println(err)
@@ -80,7 +80,7 @@ func captchaVerifyHandle(w http.ResponseWriter, r *http.Request) {
 	}()
 	// verify the captcha
 	body := map[string]interface{}{"code": 0, "msg": "failed"}
-	if store.Verify(param.Id, param.VerifyValue, true) {
+	if store.Verify(param.ID, param.VerifyValue, true) {
 		body = map[string]interface{}{"code": 1, "msg": "ok"}
 	}
 

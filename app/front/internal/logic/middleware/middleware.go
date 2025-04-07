@@ -109,11 +109,11 @@ func (s *sMiddleware) MiddlewareHandlerRequest(r *ghttp.Request) {
 	defer span.End()
 
 	g.Log().Debug(ctx, "MiddlewareHandlerRequest start")
-	r.SetParam("rawQuery", r.Request.URL.RawQuery)
-	r.SetParam("shortAll", r.Request.URL.String())
+	r.SetParam("rawQuery", r.URL.RawQuery)
+	r.SetParam("shortAll", r.URL.String())
 	r.SetParam("referer", r.Referer())
 	r.SetParam("path", r.URL.Path)
 	r.SetParam("origin", r.GetHeader("Origin"))
-	r.SetParam("host", r.Request.Host)
+	r.SetParam("host", r.Host)
 	r.Middleware.Next()
 }

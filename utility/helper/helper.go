@@ -180,9 +180,9 @@ func (u *UtilHelper) GetOutBoundIP(ctx context.Context) string {
 	return localAddr.IP.String()
 }
 
-// GetLocalIpV4 获取 IPV4 IP，没有则返回空
-// GetLocalIpV4 gets the IPV4 IP of the current machine, if not, it returns empty.
-func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
+// GetLocalIPV4 获取 IPV4 IP，没有则返回空
+// GetLocalIPV4 gets the IPV4 IP of the current machine, if not, it returns empty.
+func (u *UtilHelper) GetLocalIPV4(ctx context.Context) string {
 	inters, err := net.Interfaces()
 	if err != nil {
 		panic(err)
@@ -193,7 +193,7 @@ func (u *UtilHelper) GetLocalIpV4(ctx context.Context) string {
 			// 获取网卡下所有的地址
 			addrs, err := inter.Addrs()
 			if err != nil {
-				g.Log(u.Logger(ctx)).Error(ctx, " GetLocalIpV4 udp get Ip failed err: ", err)
+				g.Log(u.Logger(ctx)).Error(ctx, " GetLocalIPV4 udp get Ip failed err: ", err)
 				continue
 			}
 			for _, addr := range addrs {
@@ -529,7 +529,7 @@ func (u *UtilHelper) DecodeUCS2(src string) string {
 
 // Transfer0x00 替换掉 0x00
 func (u *UtilHelper) Transfer0x00(str string) string {
-	return strings.Replace(str, "\x00", " ", -1)
+	return strings.ReplaceAll(str, "\x00", " ")
 }
 
 // EncodeUCS2 UCS2 编码

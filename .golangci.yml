@@ -1,281 +1,267 @@
-# Options for analysis running.
+version: "2"
 run:
-  # Number of operating system threads (`GOMAXPROCS`) that can execute golangci-lint simultaneously.
-  # If it is explicitly set to 0 (i.e. not the default) then golangci-lint will automatically set the value to match Linux container CPU quota.
-  # Default: the number of logical CPUs in the machine
   concurrency: 4
-  # Timeout for analysis, e.g. 30s, 5m.
-  # Default: 1m
-  timeout: 5m
-  # Exit code when at least one issue was found.
-  # Default: 1
-  issues-exit-code: 2
-  # Include test files or not.
-  # Default: true
-  tests: false
-  # List of build tags, all linters use it.
-  # Default: []
+  go: "1.21"
   build-tags:
     - mytag
-  # If set, we pass it to "go list -mod={option}". From "go help modules":
-  # If invoked with -mod=readonly, the go command is disallowed from the implicit
-  # automatic updating of go.mod described above. Instead, it fails when any changes
-  # to go.mod are needed. This setting is most useful to check that go.mod does
-  # not need updates, such as in a continuous integration and testing system.
-  # If invoked with -mod=vendor, the go command assumes that the vendor
-  # directory holds the correct copies of dependencies and ignores
-  # the dependency descriptions in go.mod.
-  #
-  # Allowed values: readonly|vendor|mod
-  # Default: ""
   modules-download-mode: readonly
-  # Allow multiple parallel golangci-lint instances running.
-  # If false, golangci-lint acquires file lock on start.
-  # Default: false
+  issues-exit-code: 2
+  tests: false
   allow-parallel-runners: true
-  # Allow multiple golangci-lint instances running, but serialize them around a lock.
-  # If false, golangci-lint exits with an error if it fails to acquire file lock on start.
-  # Default: false
   allow-serial-runners: true
-  # Define the Go version limit.
-  # Mainly related to generics support since go1.18.
-  # Default: use Go version from the go.mod file, fallback on the env var `GOVERSION`, fallback on 1.17
-  go: '1.21'
-
 linters:
-  # please, do not use `enable-all`: it's deprecated and will be removed soon.
-  # inverted configuration with `enable-all` and `disable` is not scalable during updates of golangci-lint
-  disable-all: true
+  default: none
   enable:
     - bodyclose
-    # - deadcode
     - depguard
     - dogsled
-    # - dupl
     - errcheck
     - funlen
-    # - goconst
-    # - gocritic
     - gocyclo
-    - gofmt
-    - goimports
     - goprintffuncname
-    # - gosimple
     - govet
     - ineffassign
-    #    - misspell
     - nolintlint
     - revive
-    # - rowserrcheck
     - staticcheck
-#    - stylecheck
-    - typecheck
     - unconvert
     - unparam
-    # - unused
-    # - varcheck
     - whitespace
-
-issues:
-  # Excluding configuration per-path, per-linter, per-text and per-source
-  include:
-    - EXC0002 # disable excluding of issues about comments from golint
-  exclude-rules:
-    - linters:
-        - stylecheck
-      text: "ST1000:"
-    - path: _test\.go
-      linters:
-        - gomnd
-        - funlen
-        - goconst
-
-    # https://github.com/go-critic/go-critic/issues/926
-    - linters:
-        - gocritic
-      text: "unnecessaryDefer:"
-
-linters-settings:
-  #  errcheck:
-  #    check-type-assertions: true # 这里建议设置为 true，如果确实不需要检查，可以写成`num, _ := strconv.Atoi(numStr)`
-  #    check-blank: false
-  lll:
-    line-length: 240 # 一行的长度
-  dogsled:
-    # Checks assignments with too many blank identifiers.
-    # Default: 2
-    max-blank-identifiers: 3
-  godox:
-    keywords: # 建议设置为 BUG、FIXME、OPTIMIZE、HACK
-      - BUG
-      - FIXME
-      - OPTIMIZE
-      - HACK
-  misspell:
-    locale: US
-    ignore-words:
-      - cancelled
-  goimports:
-    local-prefixes: github.com/houseme/url-shortenter
-  godot:
-    # Comments to be checked: `declarations`, `toplevel`, or `all`.
-    # Default: declarations
-    scope: toplevel
-    exclude:
-      # Exclude sentence fragments for lists.
-      - '^[ ]*[-•]'
-      # Exclude sentences prefixing a list.
-      - ':$'
-    # Check that each sentence ends with a period.
-    # Default: true
-    period: false
-    # Check that each sentence starts with a capital letter.
-    # Default: false
-    capital: false
-  revive:
-    ignore-generated-header: true
-    severity: error
+  settings:
+    depguard:
+      rules:
+        main:
+          list-mode: lax
+          files:
+            - '!**/*_a _file.go'
+          allow:
+            - $gostd
+            - $gogithub
+            - $gok8s
+            - $gogoogle
+            - $golang
+            - $gocloud
+            - $golang_org
+            - $golang_org_x
+          deny:
+            - pkg: github.com/sirupsen/logrus
+              desc: not allowed
+            - pkg: github.com/pkg/errors
+              desc: Should be replaced by standard lib errors package
+        prevent_unmaintained_packages:
+          list-mode: lax
+          files:
+            - $all
+            - '!$test'
+            - '!_test.go'
+          allow:
+            - $gostd
+            - $gogithub
+            - $gok8s
+            - $gogoogle
+            - $golang
+            - $gocloud
+            - $golang_org
+            - $golang_org_x
+          deny:
+            - pkg: io/ioutil
+              desc: 'replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil'
+            - pkg: github.com/sirupsen/logrus
+              desc: not allowed
+            - pkg: github.com/pkg/errors
+              desc: Should be replaced by standard lib errors package
+    dogsled:
+      max-blank-identifiers: 3
+    funlen:
+      lines: 160
+      statements: -1
+    goconst:
+      match-constant: false
+      min-len: 2
+      min-occurrences: 3
+      numbers: true
+      min: 3
+      max: 3
+      ignore-calls: false
+    gocritic:
+      disabled-checks:
+        - ifElseChain
+        - assignOp
+        - appendAssign
+        - singleCaseSwitch
+    gocyclo:
+      min-complexity: 30
+    godot:
+      scope: toplevel
+      exclude:
+        - ^[ ]*[-•]
+        - :$
+      capital: false
+      period: false
+    godox:
+      keywords:
+        - BUG
+        - FIXME
+        - OPTIMIZE
+        - HACK
+    lll:
+      line-length: 240
+    misspell:
+      locale: US
+      ignore-rules:
+        - cancelled
+    revive:
+      severity: error
+      rules:
+        - name: atomic
+        - name: line-length-limit
+          arguments:
+            - 220
+          severity: error
+        - name: unhandled-error
+          arguments:
+            - fmt.Printf
+            - myFunction
+            - log.Printf
+            - fmt.Println
+            - bytes.Buffer.WriteString
+        - name: var-naming
+          arguments:
+            - - ID
+              - URL
+              - IP
+              - HTTP
+              - JSON
+              - API
+              - UID
+              - Id
+              - Api
+              - Uid
+              - Http
+              - Json
+              - Ip
+              - Url
+            - - VM
+          severity: warning
+          disabled: false
+        - name: string-format
+          arguments:
+            - - core.WriteError[1].Message
+              - /^([^A-Z]|$)/
+              - must not start with a capital letter
+            - - fmt.Errorf[0]
+              - /(^|[^\.!?])$/
+              - must not end in punctuation
+            - - panic
+              - /^[^\n]*$/
+              - must not contain line breaks
+          severity: warning
+          disabled: false
+        - name: function-result-limit
+          arguments:
+            - 4
+          severity: warning
+          disabled: false
+    staticcheck:
+      checks:
+        -QF1008
+        -SA4009
+        -SA1029
+        -SA4009
+        -ST1000
+        -ST1003
+        -ST1016
+        -ST1020
+        -ST1021
+        -ST1022
+        - all
+      initialisms:
+        - ACL
+        - API
+        - ASCII
+        - CPU
+        - CSS
+        - DNS
+        - EOF
+        - GUID
+        - HTML
+        - HTTP
+        - HTTPS
+        - ID
+        - IP
+        - JSON
+        - QPS
+        - RAM
+        - RPC
+        - SLA
+        - SMTP
+        - SQL
+        - SSH
+        - TCP
+        - TLS
+        - TTL
+        - UDP
+        - UI
+        - GID
+        - UID
+        - UUID
+        - URI
+        - URL
+        - UTF8
+        - VM
+        - XML
+        - XMPP
+        - XSRF
+        - XSS
+        - SIP
+        - RTP
+        - AMQP
+        - DB
+        - TS
+      dot-import-whitelist:
+        - fmt
+      http-status-code-whitelist:
+        - "200"
+        - "400"
+        - "404"
+        - "500"
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
     rules:
-      - name: atomic
-      - name: line-length-limit
-        severity: error
-        arguments: [ 220 ]
-      - name: unhandled-error
-        arguments: [ "fmt.Printf", "myFunction", "log.Printf","fmt.Println","bytes.Buffer.WriteString" ]
-      - name: var-naming
-        severity: warning
-        disabled: false
-        arguments:
-          - [ "ID","URL","IP","HTTP","JSON","API","UID","Id","Api","Uid","Http","Json","Ip","Url" ] # AllowList
-          - [ "VM" ] # DenyList
-      - name: string-format
-        severity: warning
-        disabled: false
-        arguments:
-          - - 'core.WriteError[1].Message'
-            - '/^([^A-Z]|$)/'
-            - must not start with a capital letter
-          - - 'fmt.Errorf[0]'
-            - '/(^|[^\.!?])$/'
-            - must not end in punctuation
-          - - panic
-            - '/^[^\n]*$/'
-            - must not contain line breaks
-      - name: function-result-limit
-        severity: warning
-        disabled: false
-        arguments: [ 4 ]
-  funlen:
-    # Checks the number of lines in a function.
-    # If lower than 0, disable the check.
-    # Default: 60
-    lines: 160
-    # Checks the number of statements in a function.
-    # If lower than 0, disable the check.
-    # Default: 40
-    statements: -1
-  goconst:
-    # Minimal length of string constant.
-    # Default: 3
-    min-len: 2
-    # Minimum occurrences of constant string count to trigger issue.
-    # Default: 3
-    # For subsequent optimization, the value is reduced.
-    min-occurrences: 3
-    # Ignore test files.
-    # Default: false
-    ignore-tests: true
-    # Look for existing constants matching the values.
-    # Default: true
-    match-constant: false
-    # Search also for duplicated numbers.
-    # Default: false
-    numbers: true
-    # Minimum value, only works with goconst.numbers
-    # Default: 3
-    min: 3
-    # Maximum value, only works with goconst.numbers
-    # Default: 3
-    max: 3
-    # Ignore when constant is not used as function argument.
-    # Default: true
-    ignore-calls: false
-  gocritic:
-    disabled-checks:
-      - ifElseChain
-      - assignOp
-      - appendAssign
-      - singleCaseSwitch
-  gocyclo:
-    # Minimal code complexity to report.
-    # Default: 30 (but we recommend 10-20)
-    min-complexity: 30
-  depguard:
-    rules:
-      # Name of a rule.
-      main:
-        # Used to determine the package matching priority.
-        # There are three different modes: `original`, `strict`, and `lax`.
-        # Default: "original"
-        list-mode: lax
-        # List of file globs that will match this list of settings to compare against.
-        # Default: $all
-        files:
-          - "!**/*_a _file.go"
-        # List of allowed packages.
-        allow:
-          - $gostd
-          - $gogithub
-          - $gok8s
-          - $gogoogle
-          - $golang
-          - $gocloud
-          - $golang_org
-          - $golang_org_x
-        # Packages that are not allowed where the value is a suggestion.
-        deny:
-          - pkg: "github.com/sirupsen/logrus"
-            desc: not allowed
-          - pkg: "github.com/pkg/errors"
-            desc: Should be replaced by standard lib errors package
-      prevent_unmaintained_packages:
-        list-mode: lax # allow unless explicitely denied
-        files:
-          - $all
-          - "!$test"
-          - "!_test.go"
-        allow:
-          - $gostd
-          - $gogithub
-          - $gok8s
-          - $gogoogle
-          - $golang
-          - $gocloud
-          - $golang_org
-          - $golang_org_x
-        deny:
-          - pkg: io/ioutil
-            desc: "replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil"
-          - pkg: "github.com/sirupsen/logrus"
-            desc: not allowed
-          - pkg: "github.com/pkg/errors"
-            desc: Should be replaced by standard lib errors package
-  stylecheck:
-    # STxxxx checks in https://staticcheck.io/docs/configuration/options/#checks
-    # Default: ["*"]
-    checks: ["all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022"]
-    # https://staticcheck.io/docs/configuration/options/#dot_import_whitelist
-    # Default: ["github.com/mmcloughlin/avo/build", "github.com/mmcloughlin/avo/operand", "github.com/mmcloughlin/avo/reg"]
-    dot-import-whitelist:
-      - fmt
-    # https://staticcheck.io/docs/configuration/options/#initialisms
-    # Default: ["ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS", "SIP", "RTP", "AMQP", "DB", "TS"]
-    initialisms: ["ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS", "SIP", "RTP", "AMQP", "DB", "TS"]
-    # https://staticcheck.io/docs/configuration/options/#http_status_code_whitelist
-    # Default: ["200", "400", "404", "500"]
-    http-status-code-whitelist: ["200", "400", "404", "500"]
-
-  staticcheck:
-    # SAxxxx checks in https://staticcheck.io/docs/configuration/options/#checks
-    # Default: ["*"]
-    checks: ["all","-SA4009","-SA1029"]
+      - linters:
+          - staticcheck
+        text: 'ST1000:'
+      - linters:
+          - funlen
+          - goconst
+          - mnd
+        path: _test\.go
+      - linters:
+          - gocritic
+        text: 'unnecessaryDefer:'
+      - linters:
+          - goconst
+        path: (.+)_test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/houseme/url-shortenter
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
