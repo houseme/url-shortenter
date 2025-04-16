@@ -49,7 +49,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 	}
 
 	if in.AuthAccountLevel == consts.AccountLevelPlatform && in.GroupLevel == consts.AccountLevelBusinessEmployee {
-		// 平台超级管理员禁止创建普通账号
+		// Platform super administrators prohibit creating ordinary accounts
 		err = gerror.New("Platform Super Admin forbids the creation of ordinary accounts")
 		return
 	}

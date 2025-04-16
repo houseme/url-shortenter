@@ -19,7 +19,7 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.26.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.30.0"
 	"google.golang.org/grpc/encoding/gzip"
 
 	"github.com/houseme/url-shortenter/utility/env"
@@ -81,10 +81,10 @@ func Init(serviceName, endpoint, traceToken, version, environment string) (func(
 		resource.WithHost(),
 		resource.WithAttributes(
 			// The name of the service displayed on the traceback end。
-			semconv.ServiceNameKey.String(serviceName+"-"+environment),
-			semconv.ServiceVersionKey.String(version),
-			semconv.DeploymentEnvironmentKey.String(environment),
-			semconv.HostNameKey.String(hostIP),
+			semconv.ServiceName(serviceName+"-"+environment),
+			semconv.ServiceVersion(version),
+			semconv.DeploymentEnvironmentName(environment),
+			semconv.HostName(hostIP),
 			attribute.String(tracerHostnameTagKey, hostIP),
 		),
 	)
