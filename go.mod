@@ -34,7 +34,7 @@ require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/chromedp/cdproto v0.0.0-20250417220500-b38043e8e6c8 // indirect
+	github.com/chromedp/cdproto v0.0.0-20250420205042-3f8c33ccbdec // indirect
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
