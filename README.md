@@ -78,4 +78,4 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 
 ## Thinks
 
-<a href="https://www.jetbrains.com/?from=URL-Shortenter"><img src="https://goframe.org/download/thumbnails/1114119/jetbrains.png" height="120" alt="JetBrains"/></a>
+<a href="https://www.jetbrains.com/?from=URL-Shortenter"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains-training-partner.png" height="120" alt="JetBrains"/></a>
