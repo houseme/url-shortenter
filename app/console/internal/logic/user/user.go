@@ -112,7 +112,7 @@ func (s *sUser) UpdatePassword(ctx context.Context, in *model.UpdatePasswordInpu
 		err = gerror.New("user not found")
 		return
 	}
-	// 新密码与系统中的就密码效验，如果一样则返回错误
+	// The password validity of the new password is valid for the system, if the same, the error will be returned
 	if err = helper.Helper().VerifyPassword(ctx, base.Password, in.Password, base.Salt); err == nil {
 		err = gerror.New("new password is the same as the old password")
 		return

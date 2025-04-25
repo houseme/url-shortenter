@@ -73,12 +73,12 @@ func (s *sStatistic) List(ctx context.Context, in *model.StatisticListInput) (ou
 		},
 	}
 	if out.Paginate.Total, err = m.Count(); err != nil {
-		err = gerror.Wrap(err, "获取统计总数失败")
+		err = gerror.Wrap(err, "failed to get the total count")
 		return
 	}
 	list := ([]*entity.AccessLogsSummary)(nil)
 	if err = m.Page(in.Page, in.PageSize).Scan(&list); err != nil {
-		err = gerror.Wrap(err, "获取统计列表失败")
+		err = gerror.Wrap(err, "failed to get the statistics list")
 		return
 	}
 
@@ -121,11 +121,11 @@ func (s *sStatistic) Detail(ctx context.Context, in *model.StatisticDetailInput)
 	if err = m.OrderDesc(dao.AccessLogsSummary.Columns().Id).Scan(&detail, do.AccessLogsSummary{
 		ShortNo: in.ShortNo,
 	}); err != nil {
-		err = gerror.Wrap(err, "获取统计详情失败")
+		err = gerror.Wrap(err, "failed to get statistics details")
 		return
 	}
 	if detail == nil {
-		err = gerror.New("统计详情不存在")
+		err = gerror.New("statistical details do not exist")
 		return
 	}
 

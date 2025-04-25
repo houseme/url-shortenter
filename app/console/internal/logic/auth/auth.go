@@ -157,8 +157,8 @@ func (s *sAuth) Authorization(ctx context.Context, in *model.AuthInput) (out *mo
 		err = gerror.New("Password is invalid")
 		return
 	}
-	// 检验完成 处理 accessToken 相关的处理
-	// 创建 accessToken
+	// Inspection completed Processing accessToken related processing
+	// Create accessToken
 	var (
 		authToken = &model.AuthorizationToken{
 			AuthAccountNo:    account.AccountNo,

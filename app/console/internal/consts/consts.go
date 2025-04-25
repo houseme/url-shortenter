@@ -10,7 +10,7 @@ const (
 	// AppID 应用 ID
 	AppID = `console`
 
-	// DefaultLogger 应用默认日志名称
+	// DefaultLogger apply the default log name
 	DefaultLogger = `console`
 
 	// AuthorizationHeaderKey 授权头
@@ -18,7 +18,7 @@ const (
 	// AuthorizationTypeBearer 授权类型
 	AuthorizationTypeBearer = "Bearer"
 
-	// AccountLevelPlatform 超级管理员 权限级别 0 默认平台超级管理员;1000 商家管理员;10000 商家员工
+	// AccountLevelPlatform Super Administrator Permission Level 0 Default Platform Super Administrator; 1000 Merchant Administrator; 10000 Merchant Employees
 	AccountLevelPlatform = 0
 	// AccountLevelBusiness 商家管理员
 	AccountLevelBusiness = 1000

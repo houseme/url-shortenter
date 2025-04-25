@@ -54,7 +54,7 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		return
 	}
 
-	// 校验数据
+	// verify data
 	if err = dao.User.Ctx(ctx).Scan(&account, do.User{Account: in.Account}); err != nil {
 		err = gerror.Wrap(err, "query users failed  err:")
 		return
@@ -64,14 +64,14 @@ func (s *sAccount) CreateAccount(ctx context.Context, in *model.CreateAccountInp
 		err = gerror.New("account exist")
 		return
 	}
-	// 创建 hash 密码
+	// create hash password
 	var hashPwd string
 	if hashPwd, err = helper.Helper().PasswordBase58Hash(in.Password); err != nil {
 		err = gerror.Wrap(err, "hash password failed")
 		return
 	}
 
-	// 创建用户
+	// create a user
 	account = &entity.User{
 		Account:    in.Account,
 		Password:   hashPwd,

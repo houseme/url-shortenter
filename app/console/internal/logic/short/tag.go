@@ -34,32 +34,32 @@ func (s *sShort) CreateTag(ctx context.Context, in *model.CreateTagInput) (out *
 		tagInfo = (*entity.UserTagRelation)(nil)
 	)
 	logger.Debug(ctx, "short-CreateTag in:", in)
-	// 查询用户是否与标签绑定关系
+	// query whether the user is bound to the tag
 	if err = dao.UserTagRelation.Ctx(ctx).Scan(&tagInfo, entity.ShortTag{
 		TagName: in.Name,
 	}); err != nil {
 		return
 	}
-	// 如果没有绑定关系则创建
+	// create if there is no binding relationship
 	if tagInfo == nil {
 		var (
 			baseTag = (*entity.ShortTag)(nil)
 			TagNo   = helper.Helper().InitTrxID(ctx, in.AuthUserNo)
 		)
-		// 先查询标签是否全局存在
+		// first check whether the tag exists globally
 		if err = dao.ShortTag.Ctx(ctx).Scan(&baseTag, entity.ShortTag{
 			TagName: in.Name,
 		}); err != nil {
 			return
 		}
-		// 如果标签存在就覆盖 tagNo 的值
+		// if the tag exists, overwrite the value of tag no
 		if baseTag != nil {
 			TagNo = baseTag.TagNo
 		}
 
 		if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) (err error) {
 			var lastID int64
-			// 如果标签不存在则创建
+			// create if the tag does not exist
 			if baseTag == nil {
 				if lastID, err = dao.ShortTag.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.ShortTag{
 					TagNo:   TagNo,
@@ -70,7 +70,7 @@ func (s *sShort) CreateTag(ctx context.Context, in *model.CreateTagInput) (out *
 				}
 				logger.Debug(ctx, "short-CreateTag insert short tag db lastID:", lastID)
 			}
-			// 创建用户与标签的关系
+			// create a user tagged relationship
 			if lastID, err = dao.UserTagRelation.Ctx(ctx).TX(tx).OmitEmpty().Unscoped().InsertAndGetId(do.UserTagRelation{
 				TagNo:  TagNo,
 				UserNo: in.AuthAccountNo,
@@ -103,7 +103,7 @@ func (s *sShort) DelTag(ctx context.Context, in *model.DelTagInput) (out *model.
 		tagInfo = (*entity.ShortTagRelation)(nil)
 	)
 	logger.Debug(ctx, "short-DelTag in:", in)
-	// 查询句子和标签的关系
+	// Query the relationship between sentences and labels
 	if err = dao.ShortTagRelation.Ctx(ctx).Scan(&tagInfo, do.ShortTagRelation{
 		UserNo:  in.AuthUserNo,
 		TagNo:   in.TagNo,
@@ -112,7 +112,7 @@ func (s *sShort) DelTag(ctx context.Context, in *model.DelTagInput) (out *model.
 		return
 	}
 
-	// 如果不存在，直接提示错误
+	// If it does not exist, it will directly prompt an error
 	if tagInfo == nil {
 		logger.Debug(ctx, "short-DelTag tag not found")
 		out = &model.DelTagOutput{
@@ -122,7 +122,7 @@ func (s *sShort) DelTag(ctx context.Context, in *model.DelTagInput) (out *model.
 		return
 	}
 
-	// 删除句子和标签的关系，设置为失效状态
+	// Delete the relationship between sentences and tags and set them to invalid state
 	var lastID int64
 	if lastID, err = dao.ShortTagRelation.Ctx(ctx).OmitEmpty().Unscoped().UpdateAndGetAffected(do.ShortTag{
 		State:      consts.TagStateInvalid,
@@ -160,7 +160,7 @@ func (s *sShort) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.
 		return
 	}
 
-	// 如果不存在，直接提示错误
+	// If it does not exist, it will directly prompt an error
 	if tagInfo != nil {
 		logger.Debug(ctx, "short-AddTag tag not found")
 		out = &model.AddTagOutput{
