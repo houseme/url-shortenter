@@ -1,6 +1,6 @@
 # URL-Shortenter 
 
-English｜[中文文档](README-zh.md)
+English｜[中文文档](README-ZH.md)
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/houseme/url-shortenter.svg)](https://pkg.go.dev/github.com/houseme/url-shortenter)
 [![Url-Shortenter CI](https://github.com/houseme/url-shortenter/actions/workflows/go.yml/badge.svg)](https://github.com/houseme/url-shortenter/actions/workflows/go.yml)
