@@ -1,6 +1,6 @@
-# URL-Shortenter 
+# URL-Shortenter
 
-English｜[中文文档](README-zh.md)
+[English](README.md)｜中文文档
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/houseme/url-shortenter.svg)](https://pkg.go.dev/github.com/houseme/url-shortenter)
 [![Url-Shortenter CI](https://github.com/houseme/url-shortenter/actions/workflows/go.yml/badge.svg)](https://github.com/houseme/url-shortenter/actions/workflows/go.yml)
@@ -9,24 +9,25 @@ English｜[中文文档](README-zh.md)
 
 A short link service system suitable for small and medium-sized community websites.
 
-Supports short link generation, query, 302 redirection, click statistics, independent IP statistics, and access log query.
+Support short link production, query and 302 redirection, and have its own click statistics, independent IP statistics,
+access log query.
 
-## Quick Start
+## 快速使用
 
 ```shell
 go install -u -v github.com/houseme/url-shortenter@latest
 ```
 
-## Console Default Account
+## Console 后台默认帐号
 
-Default account: `shortenter`  
-Default password: `B9Mazv5M2J6%1zU2@nxC`
+默认帐号：`shortenter`  
+默认密码：`B9Mazv5M2J6%1zU2@nxC`
 
-The database stores encrypted passwords, which are annotated in `document\structure.sql`. If you need to customize other passwords, you can modify them here.
+数据库中存储的是加密后的密码，在 `document\structure.sql` 中标有注释，如果需要自定义其他密码，可以修改这里
 
-Encryption rules are in `utility/helper.go`.
+加密规则 `utility/helper.go` 中
 
-```go
+```go 
 func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
 	data, err := u.Sha256OfShort(password)
 	if err != nil {
@@ -37,21 +38,21 @@ func (u *utilHelper) PasswordBase58Hash(password string) (string, error) {
 }
 ```
 
-## HTTP API Support
+## HTTP API 支持
 
-### `/api` Interface Permission Description
+### `/api` 接口权限说明
 
-All `/console/api/*` interfaces require `Bearer Token` authentication. That is, each request header must include:
+所有 `/console/api/*` 接口需要通过 `Bearer Token` 方式验证权限，亦即：每个请求 Header 须携带
 
 ```shell
  Authorization: Bearer {sha256_of_password}
 ```
 
-### 1. Add Short Link `POST /api/url`
+### 1. 新增短链接 `POST /api/url`
 
-## Short Link Generation Code
+## 短链接生产过程相关代码
 
-Located in `utility/helper.go`.
+所在文件 `utility/helper.go`
 
 ```go
 func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string, error) {
@@ -77,7 +78,6 @@ func (u *utilHelper) GenerateShortLink(ctx context.Context, url string) (string,
 
 `URL-Shortenter` is licensed under the [MIT License](LICENSE), 100% free and open-source, forever.
 
-## Thanks
+## Thinks
 
 <a href="https://www.jetbrains.com/?from=URL-Shortenter"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains-training-partner.png" height="120" alt="JetBrains"/></a>
-```
