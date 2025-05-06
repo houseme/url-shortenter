@@ -20,6 +20,7 @@ type ShortUrls struct {
 	ShortDomain   interface{} // 短链域名
 	ShortDomainNo interface{} // 短链域名标识
 	DestUrl       interface{} // 原始链接
+	DestHash      interface{} // 原始链接 Hash
 	Domain        interface{} // 主域名
 	IsValid       interface{} // 是否可用 0 默认 100 正常 200 失效
 	DisableTime   *gtime.Time // 失效时间

@@ -18,6 +18,7 @@ type ShortUrls struct {
 	ShortDomain   string      `json:"shortDomain"   orm:"short_domain"    description:"短链域名"`
 	ShortDomainNo uint64      `json:"shortDomainNo" orm:"short_domain_no" description:"短链域名标识"`
 	DestUrl       string      `json:"destUrl"       orm:"dest_url"        description:"原始链接"`
+	DestHash      string      `json:"destHash"      orm:"dest_hash"       description:"原始链接 Hash"`
 	Domain        string      `json:"domain"        orm:"domain"          description:"主域名"`
 	IsValid       uint        `json:"isValid"       orm:"is_valid"        description:"是否可用 0 默认 100 正常 200 失效"`
 	DisableTime   *gtime.Time `json:"disableTime"   orm:"disable_time"    description:"失效时间"`

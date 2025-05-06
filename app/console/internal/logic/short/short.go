@@ -13,6 +13,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/util/gconv"
 
 	"github.com/houseme/url-shortenter/app/console/internal/consts"
 	"github.com/houseme/url-shortenter/app/console/internal/model"
@@ -36,13 +37,30 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	defer span.End()
 
 	var (
-		logger = g.Log(helper.Helper().Logger(ctx))
-		base   = (*entity.ShortUrls)(nil)
+		logger   = g.Log(helper.Helper().Logger(ctx))
+		base     = (*entity.ShortUrls)(nil)
+		shortURL string
 	)
 	logger.Debug(ctx, "short-CreateShort in:", in)
+
+	// Create short url
+	if shortURL, err = helper.Helper().GenerateShortLink(ctx, in.DestURL+gconv.String(in.AuthAccountNo)+gconv.String(in.AuthUserNo)); err != nil {
+		err = gerror.Wrap(err, "short-CreateShort error")
+		return
+	}
+
+	hash := helper.Helper().GenerateFixedLengthHash(in.DestURL + gconv.String(in.AuthAccountNo) + gconv.String(in.AuthUserNo))
+	// 输出固定长度的哈希值
+	logger.Debug(ctx, "short-CreateShort hash:", hash)
+
+	var shortNo = helper.Helper().InitTrxID(ctx, in.AuthUserNo)
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&base, do.ShortUrls{
-		UserNo:   in.AuthUserNo,
-		ShortUrl: in.DestURL,
+		UserNo:      in.AuthUserNo,
+		DestUrl:     in.DestURL,
+		ShortDomain: consts.DefaultShortDomain,
+		ShortNo:     shortNo,
+		ShortUrl:    shortURL,
+		DestHash:    hash,
 	}); err != nil {
 		return
 	}

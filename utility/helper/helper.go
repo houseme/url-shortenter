@@ -431,6 +431,12 @@ func (u *UtilHelper) Sha256OfShort(input string) ([]byte, error) {
 	return algorithm.Sum(nil), nil
 }
 
+// GenerateFixedLengthHash generate a fixed length hash value
+func (u *UtilHelper) GenerateFixedLengthHash(input string) string {
+	hash := sha256.Sum256([]byte(input)) // Generate a fixed length 32-byte hash
+	return hex.EncodeToString(hash[:])   // Convert to hexadecimal string
+}
+
 // Base58Encode encodes the input byte array to base58 string
 func (u *UtilHelper) Base58Encode(data []byte) string {
 	return base58.Encode(data)

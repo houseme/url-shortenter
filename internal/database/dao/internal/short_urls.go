@@ -28,6 +28,7 @@ type ShortUrlsColumns struct {
 	ShortDomain   string // 短链域名
 	ShortDomainNo string // 短链域名标识
 	DestUrl       string // 原始链接
+	DestHash      string // 原始链接 Hash
 	Domain        string // 主域名
 	IsValid       string // 是否可用 0 默认 100 正常 200 失效
 	DisableTime   string // 失效时间
@@ -52,6 +53,7 @@ var shortUrlsColumns = ShortUrlsColumns{
 	ShortDomain:   "short_domain",
 	ShortDomainNo: "short_domain_no",
 	DestUrl:       "dest_url",
+	DestHash:      "dest_hash",
 	Domain:        "domain",
 	IsValid:       "is_valid",
 	DisableTime:   "disable_time",

@@ -86,4 +86,6 @@ const (
 	ResponseMsgSuccess = "成功"
 	// ResponseMsgFailed 失败
 	ResponseMsgFailed = "失败"
+
+	DefaultShortDomain = "hxg.la" // 默认短链域名
 )
