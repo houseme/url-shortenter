@@ -22,6 +22,7 @@ import (
 	"github.com/houseme/url-shortenter/internal/database/model/do"
 	"github.com/houseme/url-shortenter/internal/database/model/entity"
 	"github.com/houseme/url-shortenter/utility/helper"
+	"github.com/houseme/url-shortenter/utility/tld"
 )
 
 type sShort struct{}
@@ -53,14 +54,22 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	// 输出固定长度的哈希值
 	logger.Debug(ctx, "short-CreateShort hash:", hash)
 
+	var tldResp *tld.DomainTLDResp
+	if tldResp, err = tld.GetTLD(ctx, in.DestURL, 0); err != nil {
+		err = gerror.Wrap(err, "short-CreateShort error")
+		return
+	}
+
 	var shortNo = helper.Helper().InitTrxID(ctx, in.AuthUserNo)
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&base, do.ShortUrls{
-		UserNo:      in.AuthUserNo,
-		DestUrl:     in.DestURL,
-		ShortDomain: consts.DefaultShortDomain,
-		ShortNo:     shortNo,
-		ShortUrl:    shortURL,
-		DestHash:    hash,
+		UserNo:        in.AuthUserNo,
+		DestUrl:       in.DestURL,
+		ShortDomain:   consts.DefaultShortDomain,
+		ShortDomainNo: 0,
+		ShortNo:       shortNo,
+		ShortUrl:      shortURL,
+		DestHash:      hash,
+		Domain:        tldResp.Domain,
 	}); err != nil {
 		return
 	}

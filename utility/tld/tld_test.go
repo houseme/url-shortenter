@@ -20,13 +20,13 @@ func TestGetTld(t *testing.T) {
 	ctx := context.Background()
 	for _, url := range testUrls {
 		ss, dd, tld := GetSubdomain(ctx, url, 2)
-		t.Logf("resp：%s: %v, %s, %s\n", url, ss, dd, tld)
+		t.Logf("GetSubdomain resp：%s: %v, %s, %s\n", url, ss, dd, tld)
 		resp, err := GetTLD(ctx, url, 0)
 		if nil != err {
 			t.Error("Failed get TLD:" + err.Error())
 			return
 		}
-		t.Logf("resp：%s: %v, %s\n", url, resp.Tld, resp.Domain)
+		t.Logf("GetTLD resp：%s: %v, %s\n", url, resp.Tld, resp.Domain)
 	}
 
 	// t.Fail()

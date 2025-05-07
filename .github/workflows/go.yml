@@ -22,16 +22,16 @@ jobs:
     name: golangci-lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - name: Setup Golang ${{ matrix.go-version }}
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5.4.0
         with:
           go-version: ${{ matrix.go-version }}
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8.0.0
         with:
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v2.0
+          version: v2.1.0
 
   Reviveci:
     strategy:
@@ -40,13 +40,13 @@ jobs:
     name: Run Revive Action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - name: Setup Golang ${{ matrix.go-version }}
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5.4.0
         with:
           go-version: ${{ matrix.go-version }}
       - name: Run Revive Action
-        uses: morphy2k/revive-action@v2
+        uses: morphy2k/revive-action@v2.7.6
         with:
           # Path to your Revive config within the repo (optional)
           config: revive.toml
@@ -59,10 +59,10 @@ jobs:
         go: [ "1.24" ]
     steps:
       - name: Check source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: AutoCorrect
-        uses: huacnlee/autocorrect-action@main
+        uses: huacnlee/autocorrect-action@v2.13.3
   #        with:
   #          args: --lint --no-diff-bg-color $(git diff --diff-filter=AM --name-only ${{ github.event.pull_request.base.sha }}}
 
@@ -74,9 +74,9 @@ jobs:
         go: [ "1.24" ]
     
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - name: Set up Go ${{ matrix.go }}
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5.4.0
         with:
           go-version: ${{ matrix.go }}
 
