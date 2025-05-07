@@ -31,6 +31,7 @@ func (r *DomainTLDResp) String() string {
 	return `{"subdomain": "` + r.SubDomain + `", "domain": "` + r.Domain + `", "tld": "` + r.Tld + `", "label": ` + strconv.Itoa(r.Label) + `, "link": "` + r.Link + `"}`
 }
 
+//nolint:funlen
 func initTld() {
 	tldMap["ac"] = DomainTLD{Tld: "ac"}
 	tldMap["com.ac"] = DomainTLD{Tld: "com.ac"}
