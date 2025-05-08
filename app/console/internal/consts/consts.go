@@ -88,4 +88,23 @@ const (
 	ResponseMsgFailed = "失败"
 
 	DefaultShortDomain = "hxg.la" // 默认短链域名
+
+	// ShortUrlStateDefault 短链是否可用 0 默认 100 正常 200 失效
+	ShortUrlStateDefault = 0
+	// ShortUrlStateNormal 正常
+	ShortUrlStateNormal = 100
+	// ShortUrlStateInvalid 失效
+	ShortUrlStateInvalid = 200
+
+	// ShortUrlRawStateDefault 短链原始状态 0 默认 100 附带额外参数
+	ShortUrlRawStateDefault = 0
+	// ShortUrlRawStateExtra 附带额外参数
+	ShortUrlRawStateExtra = 100
+
+	// CollectStateDefault 网址内容镜像采集状态 0 默认 100 已采集 200 采集失败
+	CollectStateDefault = 0
+	// CollectStateNormal 已采集
+	CollectStateNormal = 100
+	// CollectStateInvalid 采集失败
+	CollectStateInvalid = 200
 )

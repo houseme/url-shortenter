@@ -13,6 +13,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtrace"
+	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 
 	"github.com/houseme/url-shortenter/app/console/internal/consts"
@@ -44,32 +45,21 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 	)
 	logger.Debug(ctx, "short-CreateShort in:", in)
 
-	// Create short url
-	if shortURL, err = helper.Helper().GenerateShortLink(ctx, in.DestURL+gconv.String(in.AuthAccountNo)+gconv.String(in.AuthUserNo)); err != nil {
+	// Generate a short URL using the destination URL and account number
+	if shortURL, err = helper.Helper().GenerateShortLink(ctx, in.DestURL+gconv.String(in.AuthAccountNo)); err != nil {
 		err = gerror.Wrap(err, "short-CreateShort error")
 		return
 	}
 
-	hash := helper.Helper().GenerateFixedLengthHash(in.DestURL + gconv.String(in.AuthAccountNo) + gconv.String(in.AuthUserNo))
+	// Generate a fixed-length hash for the destination URL and account number
+	hash := helper.Helper().GenerateFixedLengthHash(in.DestURL + gconv.String(in.AuthAccountNo))
 	// 输出固定长度的哈希值
 	logger.Debug(ctx, "short-CreateShort hash:", hash)
 
-	var tldResp *tld.DomainTLDResp
-	if tldResp, err = tld.GetTLD(ctx, in.DestURL, 0); err != nil {
-		err = gerror.Wrap(err, "short-CreateShort error")
-		return
-	}
-
-	var shortNo = helper.Helper().InitTrxID(ctx, in.AuthUserNo)
 	if err = dao.ShortUrls.Ctx(ctx).Scan(&base, do.ShortUrls{
-		UserNo:        in.AuthUserNo,
-		DestUrl:       in.DestURL,
-		ShortDomain:   consts.DefaultShortDomain,
-		ShortDomainNo: 0,
-		ShortNo:       shortNo,
-		ShortUrl:      shortURL,
-		DestHash:      hash,
-		Domain:        tldResp.Domain,
+		UserNo:   in.AuthUserNo,
+		ShortUrl: shortURL,
+		DestHash: hash,
 	}); err != nil {
 		return
 	}
@@ -83,6 +73,46 @@ func (s *sShort) CreateShort(ctx context.Context, in *model.CreateShortInput) (o
 		return
 	}
 
+	var (
+		shortNo = helper.Helper().InitTrxID(ctx, in.AuthUserNo)
+		now     = gtime.Now()
+		tldResp *tld.DomainTLDResp
+		lastID  int64
+	)
+	if tldResp, err = tld.GetTLD(ctx, in.DestURL, 0); err != nil {
+		err = gerror.Wrap(err, "short-CreateShort error")
+		return
+	}
+	if lastID, err = dao.ShortUrls.Ctx(ctx).Data(do.ShortUrls{
+		UserNo:        in.AuthUserNo,
+		DestUrl:       in.DestURL,
+		ShortDomain:   consts.DefaultShortDomain,
+		ShortDomainNo: 0,
+		ShortNo:       shortNo,
+		ShortUrl:      shortURL,
+		DestHash:      hash,
+		Domain:        tldResp.Domain,
+		IsValid:       consts.ShortUrlStateNormal,
+		Memo:          in.Memo,
+		RawState:      consts.ShortUrlRawStateDefault,
+		Sort:          now.TimestampMilli(),
+		CollectState:  consts.CollectStateDefault,
+		CreateTime:    now,
+		ModifyTime:    now,
+	}).InsertAndGetId(); err != nil {
+		err = gerror.Wrap(err, "short-CreateShort error")
+		return
+	}
+	logger.Debug(ctx, "short-CreateShort lastID:", lastID)
+	if lastID <= 0 {
+		err = gerror.New("short-CreateShort error")
+		return
+	}
+	out = &model.CreateShortOutput{
+		ShortURL: shortURL,
+		ShortNo:  shortNo,
+	}
+	logger.Debug(ctx, "short-CreateShort out:", out)
 	return
 }
 
