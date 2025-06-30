@@ -16,8 +16,8 @@ require (
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
 	github.com/mojocn/base64Captcha v1.3.8
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1195
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1157
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1196
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ims v1.0.1196
 	go.opentelemetry.io/otel v1.37.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.37.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.37.0
