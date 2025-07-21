@@ -46,7 +46,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - name: Run Revive Action
-        uses: morphy2k/revive-action@v2.7.7
+        uses: morphy2k/revive-action@v2.7.8
         with:
           # Path to your Revive config within the repo (optional)
           config: revive.toml
