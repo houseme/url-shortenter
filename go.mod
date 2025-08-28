@@ -9,7 +9,7 @@ require (
 	github.com/chromedp/chromedp v0.14.1
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.0
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.1
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.9.0
 	github.com/gogf/gf/v2 v2.9.1
 	github.com/gorilla/websocket v1.5.3
