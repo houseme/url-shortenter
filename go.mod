@@ -10,8 +10,8 @@ require (
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.1
-	github.com/gogf/gf/contrib/nosql/redis/v2 v2.9.2
-	github.com/gogf/gf/v2 v2.9.2
+	github.com/gogf/gf/contrib/nosql/redis/v2 v2.9.3
+	github.com/gogf/gf/v2 v2.9.3
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
