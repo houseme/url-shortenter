@@ -1,6 +1,6 @@
 module github.com/houseme/url-shortenter
 
-go 1.24
+go 1.24.0
 
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.107
@@ -24,7 +24,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.38.0
 	go.opentelemetry.io/otel/trace v1.38.0
 	golang.org/x/crypto v0.41.0
-	golang.org/x/sync v0.16.0
+	golang.org/x/sync v0.17.0
 	google.golang.org/grpc v1.75.0
 	google.golang.org/protobuf v1.36.8
 )
