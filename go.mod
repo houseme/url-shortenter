@@ -11,7 +11,7 @@ require (
 	github.com/chyroc/lark v0.0.113
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.3
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.9.3
-	github.com/gogf/gf/v2 v2.9.3
+	github.com/gogf/gf/v2 v2.9.4
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
@@ -62,7 +62,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/olekukonko/errors v1.1.0 // indirect
 	github.com/olekukonko/ll v0.0.9 // indirect
-	github.com/olekukonko/tablewriter v1.0.9 // indirect
+	github.com/olekukonko/tablewriter v1.1.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/redis/go-redis/v9 v9.12.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
