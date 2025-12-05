@@ -9,9 +9,9 @@ require (
 	github.com/chromedp/chromedp v0.14.2
 	github.com/chyroc/go-ptr v1.7.0
 	github.com/chyroc/lark v0.0.113
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.5
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.9.6
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.9.5
-	github.com/gogf/gf/v2 v2.9.5
+	github.com/gogf/gf/v2 v2.9.6
 	github.com/gorilla/websocket v1.5.3
 	github.com/houseme/gocrypto v1.2.1
 	github.com/houseme/snowflake v1.6.5
@@ -38,7 +38,7 @@ require (
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/emirpasic/gods/v2 v2.0.0-alpha // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-json-experiment/json v0.0.0-20250725192818-e39067aee2d2 // indirect
