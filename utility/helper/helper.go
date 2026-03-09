@@ -442,13 +442,13 @@ func (u *UtilHelper) Base58Encode(data []byte) string {
 	return base58.Encode(data)
 }
 
-// PasswordBase58Hash generates a base58 hash of the input password.
+// PasswordBase58Hash generates a base58-encoded bcrypt hash of the input password.
 func (u *UtilHelper) PasswordBase58Hash(password string) (string, error) {
-	data, err := u.Sha256OfShort(password)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
-	return u.Base58Encode(data), nil
+	return u.Base58Encode(hashedPassword), nil
 }
 
 // GenerateShortLink generates a short link based on the input URL.
