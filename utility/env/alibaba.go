@@ -56,7 +56,7 @@ func (e *AlibabaEnv) Config(_ context.Context) map[string]string {
 
 // String .
 func (e *AlibabaEnv) String(_ context.Context) string {
-	return `{"accessKeyId":"` + e.accessKeyID + `","accessKeySecret":"` + e.accessKeySecret +
+	return `{"accessKeyId":"***","accessKeySecret":"***"` +
 		`","bucketName":"` + e.bucketName + `","endpoint":"` + e.endpoint + `","region":"` + e.region + `"}`
 }
 
