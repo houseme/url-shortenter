@@ -27,7 +27,7 @@ func Upload(ctx context.Context, fileName, basePath string) error {
 	if err != nil {
 		return gerror.Wrap(err, "env.NewAlibabaEnv failed")
 	}
-	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
+	logger.Debug(ctx, "alibabaEnv region:", alibabaEnv.Region(ctx), " endpoint:", alibabaEnv.Endpoint(ctx))
 
 	// 创建 OSSClient 实例。
 	client, err := oss.New(alibabaEnv.Endpoint(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx))

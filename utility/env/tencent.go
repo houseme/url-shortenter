@@ -50,7 +50,7 @@ func (e *TencentEnv) Config(_ context.Context) map[string]string {
 
 // String .
 func (e *TencentEnv) String(_ context.Context) string {
-	return `{"secretId":"` + e.secretID + `","secretKey":"` + e.secretKey +
+	return `{"secretId":"***","secretKey":"***"` +
 		`","region":"` + e.region + `","endpoint":"` + e.endpoint + `"}`
 }
 
