@@ -36,7 +36,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	logger.Debug(ctx, "tencentEnv: ", tencentEnv.String(ctx))
+	logger.Debug(ctx, "tencentEnv region:", tencentEnv.Region(ctx), " endpoint:", tencentEnv.Endpoint(ctx))
 
 	credential := common.NewCredential(tencentEnv.SecretID(ctx), tencentEnv.SecretKey(ctx))
 	cpf.HttpProfile.Endpoint = tencentEnv.Endpoint(ctx)

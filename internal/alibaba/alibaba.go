@@ -36,7 +36,7 @@ func Main(ctx context.Context, trxID uint64, fileName string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	logger.Debug(ctx, "alibabaEnv: ", alibabaEnv.String(ctx))
+	logger.Debug(ctx, "alibabaEnv region:", alibabaEnv.Region(ctx))
 	if client, err = green.NewClientWithAccessKey(alibabaEnv.Region(ctx), alibabaEnv.AccessKeyID(ctx), alibabaEnv.AccessKeySecret(ctx)); err != nil {
 		return "", gerror.Wrap(err, "green.NewClientWithAccessKey failed")
 	}
